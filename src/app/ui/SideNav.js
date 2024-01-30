@@ -3,7 +3,7 @@ import SmileyFaceIco from './icons/SmileyFaceIco'
 
 export default function SideNav() {
   return (
-    <div className="h-screen bg-gray-100 p-2 flex flex-col items-center">
+    <div className="fixed h-screen bg-gradient-to-r from-gray-100 to-white p-2 flex flex-col items-center">
       <div className=" bg-blue-500 w-56 h-56 rounded-md shadow-md">
         <div className="relative w-48 h-48 m-4 flex justify-center items-center">
           <SmileyFaceIco />
