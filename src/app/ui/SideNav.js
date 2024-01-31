@@ -23,7 +23,7 @@ export default function SideNav() {
           <a href="/groups" className="nav-button pl-4">
             My Groups
           </a>
-          <a href="/settings" className="nav-button pl-4">
+          <a href="/my-profile" className="nav-button pl-4">
             My Profile
           </a>
           <div className="bg-white h-auto rounded-md grow shadow-md"></div>

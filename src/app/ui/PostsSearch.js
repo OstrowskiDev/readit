@@ -1,44 +1,33 @@
-import React from 'react'
+'use client'
+import { useSearchParams, usePathname, useRouter } from 'next/navigation'
+import { useDebouncedCallback } from 'use-debounce'
 
 export default function PostsSearch() {
+  const searchParams = useSearchParams()
+  const pathname = usePathname()
+  const { replace } = useRouter()
+
+  const handleSearch = useDebouncedCallback((term) => {
+    const params = new URLSearchParams(searchParams)
+    if (term) {
+      params.set('query', term)
+    } else {
+      params.delete('query')
+    }
+    replace(`${pathname}?${params.toString()}`)
+  }, 300)
   return (
-    <div className="flex items-center justify-end below-md:flex-col flex-grow rounded-md gap-4">
+    <div className="flex grow-2 below-md:mb-2">
       <input
         type="text"
-        className="
-          max-w-[40rem] w-full h-10 
-          py-2 px-4 mr-2 rounded-md 
-          bg-white border border-gray-300
-          focus:outline-none focus:ring-2 focus:ring-blue-500"
-        placeholder="Search for post..."
+        className="input-white w-full h-10 py-2 px-4"
+        placeholder="Search..."
+        onChange={(e) => {
+          handleSearch(e.target.value)
+        }}
+        defaultValue={searchParams.get('query')?.toString()}
       />
-      <div className="below-md:w-full flex">
-        <select
-          className="
-            below-md:w-full h-10
-            mr-2 py-2 px-4 rounded-md 
-            bg-white border border-gray-300
-            focus:outline-none focus:ring-2 focus:ring-blue-500"
-        >
-          <option value="All users">All users</option>
-          <option value="Sofia Schmidt">Sofia Schmidt</option>
-          <option value="Luca Müller">Luca Müller</option>
-          <option value="Matteo Rossi">Matteo Rossi</option>
-          <option value="Emma Jensen">Emma Jensen</option>
-          <option value="Jan Kowalski">Jan Kowalski</option>
-          <option value="Isabella Ivanova">Isabella Ivanova</option>
-        </select>
-        <button
-          className="
-            h-10 py-2 px-4 rounded-md
-            bg-blue-500 text-white 
-            hover:bg-blue-600 
-            focus:outline-none focus:ring-2 focus:ring-blue-500 
-            transition-all duration-200"
-        >
-          Search
-        </button>
-      </div>
+      <button className="btn-blue h-10 px-4 ml-2">Filter</button>
     </div>
   )
 }
