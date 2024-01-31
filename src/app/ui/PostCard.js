@@ -18,7 +18,7 @@ const PostCard = ({ id }) => {
 
   return (
     <div
-      className="flex flex-col justify-between flex-grow min-w-[200px] max-w-[500px] h-56 bg-white p-4 rounded-md 
+      className="flex flex-col justify-between flex-grow min-w-[200px] max-w-[600px] h-56 bg-white p-4 rounded-md 
       shadow-md hover:shadow-[1px_1px_15px_1px_rgba(0,0,0,0.3)]
       transition-all duration-300"
     >
