@@ -1,16 +1,14 @@
-'use client'
-
-import React from 'react'
 import PostCard from '../ui/PostCard'
 import PostsSearch from '../ui/PostsSearch'
 import CreateBtn from '../ui/CreateBtn'
 import postsJSON from '@/../mock-data/posts.json'
-import { useSearchParams } from 'next/navigation'
+import sanitizeHtml from 'sanitize-html'
 
-export default async function PostsPage() {
+export default async function Page({ searchParams }) {
   const posts = JSON.parse(JSON.stringify(postsJSON))
-  const params = useSearchParams()
-  const query = params.get('query') || ''
+  const dirtyQuery = searchParams?.query || ''
+  const query = sanitizeHtml(dirtyQuery, { allowedTags: null })
+  console.log(query)
   const matchingPosts = posts.filter(
     (post) =>
       post.title.toLowerCase().includes(query.toLowerCase()) ||
