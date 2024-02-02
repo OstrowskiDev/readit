@@ -15,7 +15,7 @@ export default function PostsSearch() {
       params.delete('query')
     }
     replace(`${pathname}?${params.toString()}`)
-  }, 300)
+  }, 700)
   return (
     <div className="flex grow-2 below-md:mb-2">
       <input

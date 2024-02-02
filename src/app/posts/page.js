@@ -1,14 +1,21 @@
 import PostCard from '../ui/PostCard'
 import PostsSearch from '../ui/PostsSearch'
 import CreateBtn from '../ui/CreateBtn'
-import postsJSON from '@/../mock-data/posts.json'
+// import postsJSON from '@/../mock-data/posts.json'
 import sanitizeHtml from 'sanitize-html'
+import { notFound } from 'next/navigation'
+
+async function getData() {
+  const res = await fetch('http://localhost:3000/api/posts', { cache: 'no-store' })
+  if (!res.ok) return notFound()
+  return res.json()
+}
 
 export default async function Page({ searchParams }) {
-  const posts = JSON.parse(JSON.stringify(postsJSON))
+  // const posts = JSON.parse(JSON.stringify(postsJSON))
+  const posts = await getData()
   const dirtyQuery = searchParams?.query || ''
   const query = sanitizeHtml(dirtyQuery, { allowedTags: null })
-  console.log(query)
   const matchingPosts = posts.filter(
     (post) =>
       post.title.toLowerCase().includes(query.toLowerCase()) ||
@@ -23,7 +30,7 @@ export default async function Page({ searchParams }) {
       </div>
       <div className="grid grid-cols-1 2col:grid-cols-2 xl:grid-cols-3 3xl:grid-cols-4 gap-6">
         {matchingPosts.map((post) => (
-          <PostCard key={post.id} id={post.id} />
+          <PostCard key={post._id} _id={post._id} />
         ))}
       </div>
     </div>

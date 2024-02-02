@@ -2,8 +2,9 @@
 
 import Link from 'next/link'
 import React, { useState } from 'react'
+import { createPost } from '@/app/lib/actions'
 
-export default function CreatePost() {
+export default function Page() {
   const [formData, setFormData] = useState({
     title: '',
     user: '',
@@ -15,17 +16,11 @@ export default function CreatePost() {
     setFormData({ ...formData, [name]: value })
   }
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    //form submission logic here
-    console.log('Form submitted:', formData)
-  }
-
   return (
     <div className="min-h-screen flex justify-center items-center w-full">
       <div className="mx-20 p-8 w-full xl:max-w-[58rem] rounded-lg  shadow-lg">
         <h2 className="text-2xl font-semibold text-gray-800 mb-4">Create Post</h2>
-        <form onSubmit={handleSubmit}>
+        <form action={createPost}>
           <div className="mb-4">
             <label htmlFor="title" className="label">
               Title
@@ -52,7 +47,7 @@ export default function CreatePost() {
               className="input-gray mt-1 w-full px-4 py-2"
             >
               <option value="">Select user</option>
-              <option value="Sofia Schmidt1">Sofia Schmidt</option>
+              <option value="Sofia Schmidt">Sofia Schmidt</option>
               <option value="Luca Müller">Luca Müller</option>
               <option value="Matteo Rossi">Matteo Rossi</option>
               <option value="Emma Jensen">Emma Jensen</option>

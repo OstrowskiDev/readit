@@ -1,9 +1,15 @@
 import React from 'react'
 import Link from 'next/link'
-import postsData from '@/../mock-data/posts.json'
 
-const PostCard = ({ id }) => {
-  const post = postsData.find((post) => post.id === id)
+async function getData() {
+  const res = await fetch('http://localhost:3000/api/posts', { cache: 'no-store' })
+  if (!res.ok) return notFound()
+  return res.json()
+}
+
+const PostCard = async ({ _id }) => {
+  const postsData = await getData()
+  const post = postsData.find((post) => post._id === _id)
 
   if (!post) {
     return <div>Post not found</div>
@@ -19,8 +25,8 @@ const PostCard = ({ id }) => {
       <h2 className="text-lg font-semibold">{post.title}</h2>
       <p className="text-gray-600 mb-2">
         By{' '}
-        <Link href={`/user/${post.user}`} className="text-blue-500 hover:underline">
-          {post.user}
+        <Link href={`/user/${post['user-id']}`} className="text-blue-500 hover:underline">
+          {post['user-id']}
         </Link>
       </p>
       <p className="max-lines-3">{post.content}</p>
