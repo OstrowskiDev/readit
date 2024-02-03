@@ -19,9 +19,9 @@ export async function createPost(formData) {
     console.log(formData)
     console.log(newPost)
     await newPost.save()
-    revalidatePath('/posts')
-    redirect('/posts')
   } catch (error) {
     console.error('Error saving post:', error)
   }
+  revalidatePath('/posts')
+  redirect('/posts')
 }
