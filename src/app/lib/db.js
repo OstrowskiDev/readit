@@ -15,15 +15,3 @@ async function connectToDatabase() {
 }
 
 export default connectToDatabase
-
-// async function getPosts() {
-//   await connectToDatabase()
-
-//   try {
-//     const posts = await Post.find({})
-//     return posts
-//   } catch (error) {
-//     console.error('Error fetching posts:', error)
-//     throw error
-//   }
-// }

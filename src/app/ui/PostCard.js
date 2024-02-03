@@ -1,15 +1,14 @@
 import React from 'react'
 import Link from 'next/link'
 
-async function getData() {
-  const res = await fetch('http://localhost:3000/api/posts', { cache: 'no-store' })
+async function getPost(postId) {
+  const res = await fetch(`http://localhost:3000/api/posts/post/${postId}`, { cache: 'no-store' })
   if (!res.ok) return notFound()
   return res.json()
 }
 
 const PostCard = async ({ _id }) => {
-  const postsData = await getData()
-  const post = postsData.find((post) => post._id === _id)
+  const post = await getPost(_id)
 
   if (!post) {
     return <div>Post not found</div>

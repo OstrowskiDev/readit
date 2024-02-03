@@ -4,7 +4,7 @@ import Post from './models/Post'
 import { v4 as uuidv4 } from 'uuid'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
-import { connectToDatabase } from './db'
+import connectToDatabase from './db'
 
 export async function createPost(formData) {
   try {

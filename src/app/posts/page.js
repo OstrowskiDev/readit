@@ -1,7 +1,6 @@
 import PostCard from '../ui/PostCard'
 import PostsSearch from '../ui/PostsSearch'
 import CreateBtn from '../ui/CreateBtn'
-// import postsJSON from '@/../mock-data/posts.json'
 import sanitizeHtml from 'sanitize-html'
 import { notFound } from 'next/navigation'
 
@@ -12,7 +11,6 @@ async function getData() {
 }
 
 export default async function Page({ searchParams }) {
-  // const posts = JSON.parse(JSON.stringify(postsJSON))
   const posts = await getData()
   const dirtyQuery = searchParams?.query || ''
   const query = sanitizeHtml(dirtyQuery, { allowedTags: null })
