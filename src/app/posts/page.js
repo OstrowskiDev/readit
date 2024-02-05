@@ -4,14 +4,9 @@ import CreateBtn from '../ui/CreateBtn'
 import sanitizeHtml from 'sanitize-html'
 import { notFound } from 'next/navigation'
 
-async function getData() {
-  const res = await fetch('http://localhost:3000/api/posts', { cache: 'no-store' })
-  if (!res.ok) return notFound()
-  return res.json()
-}
-
 export default async function Page({ searchParams }) {
-  const posts = await getData()
+  const posts = await getPosts()
+  const users = await getUsers()
   const dirtyQuery = searchParams?.query || ''
   const query = sanitizeHtml(dirtyQuery, { allowedTags: null })
   const matchingPosts = posts.filter(
@@ -28,9 +23,30 @@ export default async function Page({ searchParams }) {
       </div>
       <div className="grid grid-cols-1 2col:grid-cols-2 xl:grid-cols-3 3xl:grid-cols-4 gap-6">
         {matchingPosts.map((post) => (
-          <PostCard key={post._id} _id={post._id} />
+          <PostCard
+            key={post._id}
+            _id={post._id}
+            title={post.title}
+            user_id={post['user-id']}
+            user_name={
+              users.find((user) => user['user-id'] === post['user-id'])?.name || 'Unknown User'
+            }
+            content={post.content}
+          />
         ))}
       </div>
     </div>
   )
+}
+
+async function getPosts() {
+  const res = await fetch('http://localhost:3000/api/posts', { cache: 'no-store' })
+  if (!res.ok) return notFound()
+  return res.json()
+}
+
+async function getUsers() {
+  const res = await fetch('http://localhost:3000/api/users', { cache: 'no-store' })
+  if (!res.ok) return notFound()
+  return res.json()
 }
