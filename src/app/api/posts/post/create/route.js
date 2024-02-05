@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import connectToDatabase from '@/app/lib/db'
+import { connectToDatabase } from '@/app/lib/db'
 import Post from '@/app/lib/models/Post'
 import { v4 as uuidv4 } from 'uuid'
 

@@ -1,26 +1,52 @@
 'use client'
 
 import Link from 'next/link'
-import React, { useState } from 'react'
-import { createPost } from '@/app/lib/actions'
+import React, { useEffect, useState } from 'react'
+import { getPost } from '@/app/lib/db'
+import { updatePost } from '@/app/lib/actions'
+import { useParams } from 'next/navigation'
 
 export default function Page() {
+  const { id } = useParams()
+  const postId = id
   const [formData, setFormData] = useState({
+    _id: '',
     title: '',
     user: '',
     content: '',
   })
 
+  useEffect(() => {
+    async function fetchPostData() {
+      try {
+        const post = await getPost(postId)
+        setFormData({
+          _id: post._id,
+          title: post.title,
+          user: post['user-id'],
+          content: post.content,
+        })
+      } catch (error) {
+        console.log('Error fetching post data:', error)
+      }
+    }
+    fetchPostData()
+    console.log(formData)
+  }, [postId])
+
   const handleInputChange = (e) => {
     const { name, value } = e.target
     setFormData({ ...formData, [name]: value })
+    console.log(formData)
   }
+
+  const updatePostWithId = updatePost.bind(null, postId)
 
   return (
     <div className="min-h-screen flex justify-center items-center w-full">
       <div className="mx-20 p-8 w-full xl:max-w-[58rem] rounded-lg  shadow-center-lg">
-        <h2 className="text-2xl font-semibold text-gray-800 mb-4">Create Post</h2>
-        <form action={createPost}>
+        <h2 className="text-2xl font-semibold text-gray-800 mb-4">Update Post</h2>
+        <form action={updatePostWithId}>
           <div className="mb-4">
             <label htmlFor="title" className="label">
               Title
@@ -82,7 +108,7 @@ export default function Page() {
               className="btn-blue w-full lg:w-32 py-2"
               style={{ fontWeight: 'bold' }}
             >
-              Create
+              Update
             </button>
           </div>
         </form>

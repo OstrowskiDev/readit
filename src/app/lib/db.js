@@ -1,17 +1,27 @@
 import mongoose from 'mongoose'
+import { notFound } from 'next/navigation'
 
 const uri = process.env.DB_CONNECT
 
 async function connectToDatabase() {
   try {
-    await mongoose.connect(uri, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    })
+    await mongoose.connect(uri)
     console.log('Connected to MongoDB')
   } catch (error) {
     throw new Error('Error in connecting to mongodb')
   }
 }
 
-export default connectToDatabase
+async function getPost(postId) {
+  const res = await fetch(`http://localhost:3000/api/posts/post/${postId}`, { cache: 'no-store' })
+  if (!res.ok) return notFound()
+  return res.json()
+}
+
+async function getUser(userId) {
+  const res = await fetch(`http://localhost:3000/api/users/user/${userId}`, { cache: 'no-store' })
+  if (!res.ok) return notFound()
+  return res.json()
+}
+
+export { connectToDatabase, getPost, getUser }

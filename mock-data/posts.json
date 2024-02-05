@@ -1,116 +1,116 @@
 [
   {
-    "id": "b0dd5a8c-e1b4-42f5-b280-2025531eab22",
+    "_id": "b0dd5a8c-e1b4-42f5-b280-2025531eab22",
     "title": "Lorem Ipsum Dolor Sit Amet",
-    "user": "Sofia Schmidt",
+    "user-id": "ad4fc3a1-0e2c-46e8-9d31-d3d2c66d9ac2",
     "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur"
   },
   {
-    "id": "c6b300f4-33ec-4d36-90dd-fc9f97d2d1f3",
+    "_id": "c6b300f4-33ec-4d36-90dd-fc9f97d2d1f3",
     "title": "Consectetur Adipiscing Elit",
-    "user": "Luca Müller",
+    "user-id": "9e75c601-4ef2-4e85-b7de-3eb3a88299b9",
     "content": "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
   },
   {
-    "id": "fda12cb0-065d-4ff7-a157-0bbd365ff0bf",
+    "_id": "fda12cb0-065d-4ff7-a157-0bbd365ff0bf",
     "title": "Sed Do Eiusmod Tempor",
-    "user": "Matteo Rossi",
+    "user-id": "27278885-d8b4-4198-9a6f-4a61b145f206",
     "content": "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
   },
   {
-    "id": "17b88ac6-5d43-46f7-9b80-6fb2cbf930f0",
+    "_id": "17b88ac6-5d43-46f7-9b80-6fb2cbf930f0",
     "title": "Incididunt Ut Labore",
-    "user": "Emma Jensen",
+    "user-id": "ef3a0f16-1409-4e9a-b6a5-daf44d2b947c",
     "content": "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
   },
   {
-    "id": "f12d0a9f-bcb9-4db3-b179-9c7de0f6702f",
+    "_id": "f12d0a9f-bcb9-4db3-b179-9c7de0f6702f",
     "title": "Et Dolore Magna Aliqua",
-    "user": "Jan Kowalski",
+    "user-id": "1a460586-e61b-4a69-bc9e-f7fc02e0ac09",
     "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
   },
   {
-    "id": "ab196b0f-9b5d-4cd2-96d5-f89d7b150754",
+    "_id": "ab196b0f-9b5d-4cd2-96d5-f89d7b150754",
     "title": "Ut Enim Ad Minim Veniam",
-    "user": "Isabella Ivanova",
+    "user-id": "fb1a4e9e-4e24-4c07-b749-d775f1c3e20c",
     "content": "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
   },
   {
-    "id": "13ed36c4-b9da-4761-804f-60920db368df",
+    "_id": "13ed36c4-b9da-4761-804f-60920db368df",
     "title": "Quis Nostrud Exercitation",
-    "user": "Sofia Schmidt",
+    "user-id": "ad4fc3a1-0e2c-46e8-9d31-d3d2c66d9ac2",
     "content": "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
   },
   {
-    "id": "d2cd5e7d-76e1-42c6-ae53-66e39ad73b49",
+    "_id": "d2cd5e7d-76e1-42c6-ae53-66e39ad73b49",
     "title": "Ullamco Laboris Nisi",
-    "user": "Luca Müller",
+    "user-id": "9e75c601-4ef2-4e85-b7de-3eb3a88299b9",
     "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
   },
   {
-    "id": "68d27f53-e19a-4d0b-9912-3ebeedf03d8d",
+    "_id": "68d27f53-e19a-4d0b-9912-3ebeedf03d8d",
     "title": "Exercitation Ullamco Laboris",
-    "user": "Matteo Rossi",
+    "user-id": "27278885-d8b4-4198-9a6f-4a61b145f206",
     "content": "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
   },
   {
-    "id": "f2baf7aa-8dd2-41b5-b37c-64106f65de1b",
+    "_id": "f2baf7aa-8dd2-41b5-b37c-64106f65de1b",
     "title": "Consectetur Adipiscing Elit",
-    "user": "Emma Jensen",
+    "user-id": "ef3a0f16-1409-4e9a-b6a5-daf44d2b947c",
     "content": "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
   },
   {
-    "id": "b1cc2404-54a0-43d3-8179-2dd1cc18fc67",
+    "_id": "b1cc2404-54a0-43d3-8179-2dd1cc18fc67",
     "title": "Tempor Incididunt Ut Labore",
-    "user": "Jan Kowalski",
+    "user-id": "1a460586-e61b-4a69-bc9e-f7fc02e0ac09",
     "content": "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
   },
   {
-    "id": "32538b5f-2a80-4b28-bd27-817e93cfbe57",
+    "_id": "32538b5f-2a80-4b28-bd27-817e93cfbe57",
     "title": "Dolore Magna Aliqua",
-    "user": "Isabella Ivanova",
+    "user-id": "fb1a4e9e-4e24-4c07-b749-d775f1c3e20c",
     "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
   },
   {
-    "id": "d4f7a063-b9a3-466e-b91f-4c59790b05d3",
+    "_id": "d4f7a063-b9a3-466e-b91f-4c59790b05d3",
     "title": "Ut Enim Ad Minim Veniam",
-    "user": "Sofia Schmidt",
+    "user-id": "ad4fc3a1-0e2c-46e8-9d31-d3d2c66d9ac2",
     "content": "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
   },
   {
-    "id": "8d03e69f-bb8e-451e-87b9-df9cc7b535e0",
+    "_id": "8d03e69f-bb8e-451e-87b9-df9cc7b535e0",
     "title": "Nostrud Exercitation",
-    "user": "Luca Müller",
+    "user-id": "9e75c601-4ef2-4e85-b7de-3eb3a88299b9",
     "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
   },
   {
-    "id": "f5b719f5-c110-43e6-9b36-20b647a35b95",
+    "_id": "f5b719f5-c110-43e6-9b36-20b647a35b95",
     "title": "Laboris Nisi Ut Aliquip",
-    "user": "Matteo Rossi",
+    "user-id": "27278885-d8b4-4198-9a6f-4a61b145f206",
     "content": "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
   },
   {
-    "id": "4f2ee198-6b16-4787-a4bc-ee0cd458c482",
+    "_id": "4f2ee198-6b16-4787-a4bc-ee0cd458c482",
     "title": "Exercitation Ullamco Laboris",
-    "user": "Emma Jensen",
+    "user-id": "ef3a0f16-1409-4e9a-b6a5-daf44d2b947c",
     "content": "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
   },
   {
-    "id": "f5044f1a-7686-4e0e-b228-81d6cc8b6035",
+    "_id": "f5044f1a-7686-4e0e-b228-81d6cc8b6035",
     "title": "Tempor Incididunt Ut Labore",
-    "user": "Jan Kowalski",
+    "user-id": "1a460586-e61b-4a69-bc9e-f7fc02e0ac09",
     "content": "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
   },
   {
-    "id": "5dc3601e-f741-4db4-98b8-c059915f1c67",
+    "_id": "5dc3601e-f741-4db4-98b8-c059915f1c67",
     "title": "Dolore Magna Aliqua",
-    "user": "Isabella Ivanova",
+    "user-id": "fb1a4e9e-4e24-4c07-b749-d775f1c3e20c",
     "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
   },
   {
-    "id": "cbb8256e-06a1-4ef1-8547-6e3dd548a67a",
+    "_id": "cbb8256e-06a1-4ef1-8547-6e3dd548a67a",
     "title": "Ut Enim Ad Minim Veniam",
-    "user": "Sofia Schmidt",
+    "user-id": "ad4fc3a1-0e2c-46e8-9d31-d3d2c66d9ac2",
     "content": "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
   }
 ]
