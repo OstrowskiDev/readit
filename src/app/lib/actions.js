@@ -5,16 +5,24 @@ import { v4 as uuidv4 } from 'uuid'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { connectToDatabase } from './db'
+import { validateContent, validatePostTitle } from './validation'
 
 export async function createPost(formData) {
   try {
     await connectToDatabase()
     const uuid = uuidv4().toString()
+
+    //runtime validation logcic here
+    const inputTitle = formData.get('title')
+    const inputContent = formData.get('content')
+    const title = validatePostTitle(inputTitle)
+    const content = validateContent(inputContent)
+
     const newPost = new Post({
       _id: uuid,
-      title: formData.get('title'),
+      title: title,
       'user-id': formData.get('user'),
-      content: formData.get('content'),
+      content: content,
     })
     await newPost.save()
   } catch (error) {

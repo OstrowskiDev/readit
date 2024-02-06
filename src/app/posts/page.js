@@ -5,8 +5,7 @@ import sanitizeHtml from 'sanitize-html'
 import { notFound } from 'next/navigation'
 
 export default async function Page({ searchParams }) {
-  const posts = await getPosts()
-  const users = await getUsers()
+  const [posts, users] = await getData()
   const dirtyQuery = searchParams?.query || ''
   const query = sanitizeHtml(dirtyQuery, { allowedTags: null })
   const matchingPosts = posts.filter(
@@ -37,6 +36,16 @@ export default async function Page({ searchParams }) {
       </div>
     </div>
   )
+}
+
+async function getData() {
+  try {
+    const fetchedData = await Promise.all([getPosts(), getUsers()])
+    return fetchedData
+  } catch (error) {
+    console.error('Error fetching posts and/or users:', error)
+    return null
+  }
 }
 
 async function getPosts() {

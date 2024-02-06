@@ -2,10 +2,26 @@ import mongoose from 'mongoose'
 
 const postSchema = new mongoose.Schema(
   {
-    _id: String,
-    title: String,
-    'user-id': String,
-    content: String,
+    _id: {
+      type: String,
+      required: true,
+    },
+    title: {
+      type: String,
+      maxLength: 30,
+      required: true,
+      trim: true,
+    },
+    'user-id': {
+      type: String,
+      required: true,
+    },
+    content: {
+      type: String,
+      maxLength: 520,
+      required: true,
+      trim: true,
+    },
   },
   { timestamps: true }
 )
