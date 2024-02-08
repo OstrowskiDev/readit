@@ -52,3 +52,19 @@ export async function updatePost(postId, formData) {
   revalidatePath('/posts')
   redirect('/posts')
 }
+
+export async function deletePost(postId) {
+  try {
+    await connectToDatabase()
+    const deletedPost = await Post.findByIdAndDelete(postId)
+    if (!deletedPost) {
+      console.error('Post not found')
+    }
+    console.log('Post deleted successfully')
+  } catch (error) {
+    console.error('Error deleting post:', error)
+  }
+
+  revalidatePath('/posts')
+  redirect('/posts')
+}
