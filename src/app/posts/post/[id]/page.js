@@ -14,7 +14,7 @@ export default async function Page({ params }) {
       <div className="flex flex-col justify-between max-w-[680px] p-4 rounded-md shadow-center-sm">
         <div className="flex justify-between mb-4">
           <h2 className="text-xl pt-1 font-semibold">{post.title}</h2>
-          <EditPostBtn />
+          <EditPostBtn postId={postId} />
         </div>
 
         <p className="text-gray-600 mb-4">

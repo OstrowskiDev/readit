@@ -97,7 +97,7 @@ export default function Page() {
           </div>
           <div className="flex flex-col-reverse lg:flex-row justify-end gap-4">
             <Link
-              href="/posts"
+              href={`/posts/post/${postId}`}
               className="btn-gray flex justify-center w-full lg:w-24 py-2"
               style={{ color: 'black' }}
             >
