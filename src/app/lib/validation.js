@@ -1,6 +1,7 @@
 import validator from 'validator'
 
 function validatePostTitle(inputTitle) {
+  inputTitle = validateString(inputTitle)
   if (validator.isAlphanumeric(inputTitle)) {
     const validTitle = inputTitle
     return validTitle
@@ -12,9 +13,13 @@ function validatePostTitle(inputTitle) {
   }
 }
 
-function validateContent(inputContent) {
-  const isString = typeof inputContent === 'string'
-  return isString ? inputContent : toString()
+function validatePostContent(inputContent) {
+  return validateString(inputContent)
 }
 
-export { validatePostTitle, validateContent }
+function validateString(input) {
+  const isString = typeof input === 'string'
+  return isString ? input : input.toString()
+}
+
+export { validatePostTitle, validatePostContent }
