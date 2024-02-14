@@ -1,11 +1,16 @@
 import { getPost, getUser } from '@/app/lib/db'
-import Link from 'next/link'
 import PostAuthor from '@/app/ui/PostAuthor'
 import { EditPostBtn } from '@/app/ui/buttons/EditPostBtn'
 import { DeletePostBtn } from '@/app/ui/buttons/DeletePostBtn'
 import { LikeBtn } from '@/app/ui/buttons/LikeBtn'
 import { DislikeBtn } from '@/app/ui/buttons/DislikeBtn'
 import { ReplyBtn } from '@/app/ui/buttons/ReplyBtn'
+import { ShareCommentBtn } from '@/app/ui/buttons/ShareCommentBtn'
+import { LikeCount } from '@/app/ui/LikeCount'
+import { CommentPostBtn } from '@/app/ui/buttons/CommentPostBtn'
+import { SharePostBtn } from '@/app/ui/buttons/SharePostBtn'
+import { CommentsCount } from '@/app/ui/CommentsCount'
+import { OptionsBtn } from '@/app/ui/buttons/OptionsBtn'
 
 export default async function Page({ params }) {
   const postId = params.id
@@ -17,12 +22,12 @@ export default async function Page({ params }) {
   const comments = [
     {
       id: 1,
-      userName: 'User1',
+      userName: 'John Strayf',
       body: 'This is the first comment.  Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit!',
       replies: [
         {
           id: 4,
-          userName: 'User4',
+          userName: 'Mikkaa Fika',
           body: 'Reply to first comment. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
           replies: [],
         },
@@ -30,18 +35,18 @@ export default async function Page({ params }) {
     },
     {
       id: 2,
-      userName: 'User2',
+      userName: 'Dist McCoy',
       body: 'This is the second comment with multiple replies. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
       replies: [
         {
           id: 5,
-          userName: 'User5',
+          userName: 'Michael Brucci',
           body: 'Reply to second comment. Vd minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commod',
           replies: [
             {
               id: 6,
               userName: 'User6',
-              body: 'Reply to the first reply of second comment.',
+              body: 'Reply to the first reply of second comment. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit!',
               replies: [],
             },
           ],
@@ -79,12 +84,14 @@ export default async function Page({ params }) {
           <div className="comment-body-container ml-4">
             <p className="comment-body mt-1 text-lg">{comment.body}</p>
           </div>
-          <div className="comment-btns-container flex ml-4">
+          <div className="comment-btns-container flex items-center ml-4">
             <LikeBtn className="comment-btn-like" />
+            <LikeCount className="comment-likes-num" />
             <DislikeBtn className="comment-btn-dislike" />
             <ReplyBtn className="comment-btn-reply" />
+            <ShareCommentBtn className="comment-btn-share" />
           </div>
-          <div style={{ marginLeft: 20 }}>
+          <div className="ml-[20px]">
             {comment.replies.map((reply) => renderComment(reply, depth + 1))}
           </div>
         </div>
@@ -95,19 +102,29 @@ export default async function Page({ params }) {
   return (
     <div className="w-full my-8 px-4">
       <div className="post-card-container flex flex-col justify-between max-w-[680px] mx-6 p-4 rounded-md shadow-center-sm">
+        {/* Post header */}
         <div className="post-header flex justify-between mb-4">
           <h2 className="post-title text-xl pt-1 font-semibold">{post.title}</h2>
-          <div className="post-btn-container flex gap-2">
+          <div className="post-top-btns flex gap-2">
             <EditPostBtn postId={postId} />
             <DeletePostBtn postId={postId} />
           </div>
         </div>
-        <PostAuthor postId={post['user-id']} userName={user.name} />
-        <p className="post-text break-words">{post.content}</p>
-        <div className="post-btn-container comment-btn mt-2 flex justify-end">
-          <Link href={`/`} className="btn-blue px-3 py-1 rounded-md">
-            Comment
-          </Link>
+
+        {/* Post body */}
+        <PostAuthor className="post-body-author" postId={post['user-id']} userName={user.name} />
+        <p className="post-body-text break-words">{post.content}</p>
+
+        {/* Post bottom buttons */}
+        <div className="post-bottom-btns-container flex justify-between items-center p-2">
+          <div className="post-bottom-btns-left flex items-center gap-3">
+            <CommentsCount />
+            <SharePostBtn />
+            <OptionsBtn />
+          </div>
+          <div className="post-bottom-btns-right comment-btn mt-2 flex justify-end">
+            <CommentPostBtn />
+          </div>
         </div>
 
         {/* Comments section */}
