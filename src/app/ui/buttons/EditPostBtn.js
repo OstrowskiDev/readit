@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import EditIco from './icons/EditIco'
+import EditIco from '../icons/EditIco'
 
 export function EditPostBtn({ postId }) {
   return (

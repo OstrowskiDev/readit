@@ -14,6 +14,28 @@
   -webkit-line-clamp: 3;
 }
 
+.comment-vertical-line {
+  height: calc(100% - 48px);
+}
+
+.comment-vertical-line::before {
+  content: '';
+  position: absolute;
+  display: block;
+  width: 2px;
+  left: 5px;
+  height: calc(100%);
+  background-color: lightgray;
+}
+
+.comment-vertical-line:hover {
+  cursor: pointer;
+}
+
+.comment-vertical-line:hover::before {
+  background-color: blue;
+}
+
 .nav-button {
   @apply w-full mr-1 md:mr-0 bg-white text-gray-800 py-2 rounded-md hover:bg-blue-100 focus:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200 shadow-md;
 }

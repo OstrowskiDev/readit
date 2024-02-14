@@ -1,6 +1,6 @@
 import PostCard from '../ui/PostCard'
 import PostsSearch from '../ui/PostsSearch'
-import CreateBtn from '../ui/CreateBtn'
+import CreateBtn from '../ui/buttons/CreateBtn'
 import sanitizeHtml from 'sanitize-html'
 import { notFound } from 'next/navigation'
 

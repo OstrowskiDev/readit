@@ -1,5 +1,5 @@
-import DeleteIco from './icons/DeleteIco'
-import { deletePost } from '../lib/actions'
+import DeleteIco from '../icons/DeleteIco'
+import { deletePost } from '../../lib/actions'
 
 export function DeletePostBtn({ postId }) {
   const deletePostWithId = deletePost.bind(null, postId)
