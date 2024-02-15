@@ -75,3 +75,5 @@ export async function deletePost(postId) {
   revalidatePath('/posts')
   redirect('/posts')
 }
+
+export async function createReply(parentId, formData) {}

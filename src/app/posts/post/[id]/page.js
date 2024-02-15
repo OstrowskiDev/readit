@@ -11,29 +11,26 @@ import { CommentPostBtn } from '@/app/ui/buttons/CommentPostBtn'
 import { SharePostBtn } from '@/app/ui/buttons/SharePostBtn'
 import { CommentsCount } from '@/app/ui/CommentsCount'
 import { OptionsBtn } from '@/app/ui/buttons/OptionsBtn'
-import comments_new from '@/../../mock-data/comments_new'
+import allComments from '@/../../mock-data/comments_new'
+import { CommentReplyForm } from '@/app/ui/CommentReplyForm'
 
 export default async function Page({ params }) {
   const postId = params.id
   const post = await getPost(postId)
+
   const userId = post['user-id']
   const user = await getUser(userId)
 
-  const topCommentIDs = [
-    'c13a619f-4a38-4b6c-bd0b-9a21d5c40571',
-    '30e3a0e5-4f5d-442b-88dc-7f9993c70ac7',
-    '5e19f5b2-2c27-4b7b-a2a2-7ed7e00be64b',
-  ]
-
-  const allComments = comments_new
-
   // Render comment and its replies recursively
-  function renderComments(commentId, allComments, depth = 0) {
+  async function renderComments(commentId, allComments, depth = 0) {
     const comment = allComments.find((c) => c._id === commentId)
 
     if (!comment) {
       return null
     }
+
+    const commentAuthorId = comment.user_id
+    const commentAuthor = await getUser(commentAuthorId)
 
     return (
       <div
@@ -42,10 +39,10 @@ export default async function Page({ params }) {
         style={{ marginLeft: depth * 20 }}
       >
         <div className="comment-styling-element comment-vertical-line absolute left-[-6px] top-14 w-3"></div>
-        <div className="comment-main-content-container">
+        <div className="comment-main-content-container w-full">
           <div className="comment-username-container relative right-6 flex items-center">
             <div className="comment-avatar w-8 h-8 bg-blue-400 rounded-md"></div>
-            <p className="comment-username ml-1 text-blue-900">{comment.user_id}</p>
+            <p className="comment-author ml-1 text-blue-900">{commentAuthor.name}</p>
           </div>
           <div className="comment-body-container ml-4">
             <p className="comment-body mt-1 text-lg">{comment.content}</p>
@@ -57,6 +54,7 @@ export default async function Page({ params }) {
             <ReplyBtn className="comment-btn-reply" />
             <ShareCommentBtn className="comment-btn-share" />
           </div>
+          <CommentReplyForm parentId={comment._id} />
           <div className="ml-[20px]">
             {comment.replies.map((replyId) => renderComments(replyId, allComments, depth + 1))}
           </div>
@@ -94,9 +92,10 @@ export default async function Page({ params }) {
         </div>
 
         {/* Comments section */}
+        {/* add conditional rendering, this should not render when no comments were created  */}
         <h3 className="comments-section-title text-lg pt-1 font-semibold">Comments:</h3>
         <div className="comments-section bg-gray-100 pl-8 pr-3 pb-6 mt-1 rounded-md">
-          {topCommentIDs.map((commentId) => renderComments(commentId, allComments))}
+          {post.comments?.map((commentId) => renderComments(commentId, allComments))}
         </div>
       </div>
     </div>
