@@ -1,0 +1,9 @@
+[
+  {
+    "_id": "b0dd5a8c-e1b4-42f5-b280-2025531eab22",
+    "title": "Lorem Ipsum Dolor Sit Amet",
+    "user-id": "ad4fc3a1-0e2c-46e8-9d31-d3d2c66d9ac2",
+    "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur",
+    "comments": ["c13a619f-4a38-4b6c-bd0b-9a21d5c40571", "30e3a0e5-4f5d-442b-88dc-7f9993c70ac7", "5e19f5b2-2c27-4b7b-a2a2-7ed7e00be64b"]
+  }
+]

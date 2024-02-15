@@ -68,7 +68,7 @@ export default async function Page({ params }) {
   ]
 
   // Render comment and its replies recursively
-  function renderComment(comment, depth = 0) {
+  function renderComments(comment, depth = 0) {
     return (
       <div
         className="comment-container relative flex pt-4 px-2"
@@ -92,7 +92,7 @@ export default async function Page({ params }) {
             <ShareCommentBtn className="comment-btn-share" />
           </div>
           <div className="ml-[20px]">
-            {comment.replies.map((reply) => renderComment(reply, depth + 1))}
+            {comment.replies.map((reply) => renderComments(reply, depth + 1))}
           </div>
         </div>
       </div>
@@ -100,8 +100,8 @@ export default async function Page({ params }) {
   }
 
   return (
-    <div className="w-full my-8 px-4">
-      <div className="post-card-container flex flex-col justify-between max-w-[680px] mx-6 p-4 rounded-md shadow-center-sm">
+    <div className="w-full flex justify-center my-8 px-4">
+      <div className="post-card-container flex flex-col justify-between max-w-[800px] p-4 rounded-md shadow-center-sm">
         {/* Post header */}
         <div className="post-header flex justify-between mb-4">
           <h2 className="post-title text-xl pt-1 font-semibold">{post.title}</h2>
@@ -130,7 +130,7 @@ export default async function Page({ params }) {
         {/* Comments section */}
         <h3 className="comments-section-title text-lg pt-1 font-semibold">Comments:</h3>
         <div className="comments-section bg-gray-100 pl-8 pr-3 pb-6 mt-1 rounded-md">
-          {comments.map((comment) => renderComment(comment))}
+          {comments.map((comment) => renderComments(comment))}
         </div>
       </div>
     </div>
