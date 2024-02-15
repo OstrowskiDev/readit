@@ -1,0 +1,32 @@
+[
+  {
+    "_id": "c13a619f-4a38-4b6c-bd0b-9a21d5c40571",
+    "user_id": "ad4fc3a1-0e2c-46e8-9d31-d3d2c66d9ac2",
+    "parent": {
+      "type": "post",
+      "_id": "b0dd5a8c-e1b4-42f5-b280-2025531eab22"
+    },
+    "content": "This comment is a direct child of the post. It has two children. The first child is short, and the second child is long. This comment is medium length.",
+    "replies": ["623ccbf1-62a2-4a5b-ba42-9d0762d69f2a", "cf2b218e-12d1-4f8a-b5e6-69e2bb94de67"]
+  },
+  {
+    "_id": "30e3a0e5-4f5d-442b-88dc-7f9993c70ac7",
+    "user_id": "9e75c601-4ef2-4e85-b7de-3eb3a88299b9",
+    "parent": {
+      "type": "post",
+      "_id": "b0dd5a8c-e1b4-42f5-b280-2025531eab22"
+    },
+    "content": "This comment is a direct child of the post. It has no children.",
+    "replies": []
+  },
+  {
+    "_id": "5e19f5b2-2c27-4b7b-a2a2-7ed7e00be64b",
+    "user_id": "27278885-d8b4-4198-9a6f-4a61b145f206",
+    "parent": {
+      "type": "post",
+      "_id": "b0dd5a8c-e1b4-42f5-b280-2025531eab22"
+    },
+    "content": "This comment is a direct child of the post. It has one child, and that child has one child.",
+    "replies": ["7ff48406-0cd4-42cb-bc61-c83a6f019c4a"]
+  }
+]
