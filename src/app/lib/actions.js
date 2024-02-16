@@ -1,6 +1,7 @@
 'use server'
 
 import Post from './models/Post'
+import Comment from './models/Comment'
 import { v4 as uuidv4 } from 'uuid'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
@@ -76,4 +77,42 @@ export async function deletePost(postId) {
   redirect('/posts')
 }
 
-export async function createReply(parentId, formData) {}
+export async function createReply(parentId, postId, userInput) {
+  const uuid = uuidv4().toString()
+  const content = validatePostContent(userInput)
+  const newReplyId = uuid
+
+  const newReply = new Comment({
+    _id: newReplyId,
+    user_id: 'ad4fc3a1-0e2c-46e8-9d31-d3d2c66d9ac2',
+    parent: {
+      type: 'comment',
+      _id: parentId,
+    },
+    content: content,
+    replies: [],
+  })
+  try {
+    await connectToDatabase()
+    await newReply.save()
+  } catch (error) {
+    console.error('Error saving post:', error)
+  }
+
+  //update parent replies prop
+  try {
+    await connectToDatabase()
+    const result = await Comment.updateOne({ _id: parentId }, { $push: { replies: newReplyId } })
+
+    if (result.modifiedCount === 1) {
+      console.log('Post updated successfully')
+    } else {
+      console.log('Post not found or not updated')
+    }
+  } catch (error) {
+    console.error('Error updating post:', error)
+  }
+
+  revalidatePath(`/posts/post/${postId}`)
+  redirect(`/posts/post/${postId}`)
+}

@@ -5,12 +5,12 @@ import mongoose from 'mongoose'
 const commentSchema = new mongoose.Schema(
   {
     _id: {
-      type: UUID,
+      type: String,
       default: () => randomUUID(),
       required: true,
     },
     user_id: {
-      type: UUID,
+      type: String,
       required: true,
     },
     parent: {
@@ -20,7 +20,7 @@ const commentSchema = new mongoose.Schema(
         required: true,
       },
       _id: {
-        type: UUID,
+        type: String,
         required: true,
       },
     },
@@ -30,7 +30,7 @@ const commentSchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
-    replies: [UUID],
+    replies: [String],
   },
   { timestamps: true }
 )
