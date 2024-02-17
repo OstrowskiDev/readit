@@ -10,7 +10,7 @@ import { CommentReplyForm } from './CommentReplyForm'
 import { CommentEditForm } from './CommentEditForm'
 import { useCommentContext } from '../lib/context/CommentContextProvider'
 
-export function CommentButtons({ commentId, postId }) {
+export function CommentButtons() {
   const { isVisible, isEditVisible } = useCommentContext()
   return (
     <>
@@ -20,14 +20,10 @@ export function CommentButtons({ commentId, postId }) {
         <DislikeBtn className="comment-btn-dislike" />
         <ReplyBtn className="comment-btn-reply" />
         <ShareCommentBtn className="comment-btn-share" />
-        <CommentMenuBtn className="comment-btn-menu" commentId={commentId} postId={postId} />
+        <CommentMenuBtn className="comment-btn-menu" />
       </div>
-      {isVisible && (
-        <CommentReplyForm className="comment-reply-form" parentId={commentId} postId={postId} />
-      )}
-      {isEditVisible && (
-        <CommentEditForm className="comment-edit-form" parentId={commentId} postId={postId} />
-      )}
+      {isVisible && <CommentReplyForm className="comment-reply-form" />}
+      {isEditVisible && <CommentEditForm className="comment-edit-form" />}
     </>
   )
 }

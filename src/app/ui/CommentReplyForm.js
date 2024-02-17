@@ -4,15 +4,15 @@ import { createReply } from '@/app/lib/actions'
 import { useState } from 'react'
 import { useCommentContext } from '../lib/context/CommentContextProvider'
 
-export function CommentReplyForm({ parentId, postId }) {
-  const { isVisible, setIsVisible } = useCommentContext()
+export function CommentReplyForm() {
+  const { isVisible, setIsVisible, parentId, postId } = useCommentContext()
   const [input, setInput] = useState('')
 
-  function onCancelClick(e) {
+  function onCancelClick() {
     setIsVisible(!isVisible)
   }
 
-  function onSubmit(e) {
+  function onSubmit() {
     setIsVisible(!isVisible)
     createReply(parentId, postId, input)
     setInput('')

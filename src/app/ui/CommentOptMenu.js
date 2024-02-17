@@ -3,8 +3,8 @@ import { useCommentContext } from '../lib/context/CommentContextProvider'
 import DeleteIco from './icons/DeleteIco'
 import EditIco from './icons/EditIco'
 
-export function CommentOptMenu({ commentId, postId, isMenuVisible, setIsMenuVisible }) {
-  const { isEditVisible, setIsEditVisible } = useCommentContext()
+export function CommentOptMenu({ isMenuVisible, setIsMenuVisible }) {
+  const { isEditVisible, setIsEditVisible, commentId, postId } = useCommentContext()
 
   function onEditClick() {
     setIsEditVisible(!isEditVisible)

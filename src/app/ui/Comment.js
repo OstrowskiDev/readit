@@ -24,7 +24,11 @@ export async function Comment({ commentId, depth, postId }) {
         <div className="comment-body-container ml-4">
           <p className="comment-body mt-1 text-lg">{comment.content}</p>
         </div>
-        <CommentBtnsContextWrapper commentId={comment._id} postId={postId} />
+        <CommentBtnsContextWrapper
+          commentId={comment._id}
+          postId={postId}
+          commentContent={comment.content}
+        />
         <div className="ml-[20px]">
           {comment.replies.map((replyId) => (
             <Comment commentId={replyId} depth={depth + 1} postId={postId} />

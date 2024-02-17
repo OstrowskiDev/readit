@@ -1,12 +1,9 @@
-import { randomUUID } from 'crypto'
-import { UUID } from 'mongodb'
 import mongoose from 'mongoose'
 
 const commentSchema = new mongoose.Schema(
   {
     _id: {
       type: String,
-      default: () => randomUUID(),
       required: true,
     },
     user_id: {

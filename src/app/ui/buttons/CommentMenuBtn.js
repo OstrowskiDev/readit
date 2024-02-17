@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { DotsIco } from '../icons/DotsIco'
 import { CommentOptMenu } from '../CommentOptMenu'
 
-export function CommentMenuBtn({ commentId, postId }) {
+export function CommentMenuBtn() {
   const [isMenuVisible, setIsMenuVisible] = useState(false)
 
   function handleClick() {
@@ -31,12 +31,7 @@ export function CommentMenuBtn({ commentId, postId }) {
         </div>
       </button>
       {isMenuVisible && (
-        <CommentOptMenu
-          commentId={commentId}
-          postId={postId}
-          isMenuVisible={isMenuVisible}
-          setIsMenuVisible={setIsMenuVisible}
-        />
+        <CommentOptMenu isMenuVisible={isMenuVisible} setIsMenuVisible={setIsMenuVisible} />
       )}
     </div>
   )

@@ -1,12 +1,12 @@
 'use client'
 
-import { createReply } from '@/app/lib/actions'
+import { updateReply } from '@/app/lib/actions'
 import { useState } from 'react'
 import { useCommentContext } from '../lib/context/CommentContextProvider'
 
-export function CommentEditForm({ parentId, postId }) {
-  const { isEditVisible, setIsEditVisible } = useCommentContext()
-  const [input, setInput] = useState('')
+export function CommentEditForm() {
+  const { isEditVisible, setIsEditVisible, commentId, postId, commentContent } = useCommentContext()
+  const [input, setInput] = useState(commentContent)
 
   function onCancelClick() {
     setIsEditVisible(!isEditVisible)
@@ -14,7 +14,7 @@ export function CommentEditForm({ parentId, postId }) {
 
   function onSubmit() {
     setIsEditVisible(!isEditVisible)
-    createReply(parentId, postId, input)
+    updateReply(commentId, postId, input)
     setInput('')
   }
 

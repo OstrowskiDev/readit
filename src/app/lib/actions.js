@@ -146,3 +146,28 @@ export async function deleteComment(commentId, postId) {
   revalidatePath(`/posts/post/${postId}`)
   redirect(`/posts/post/${postId}`)
 }
+
+export async function updateReply(commentId, postId, inputContent) {
+  const content = validatePostContent(inputContent)
+
+  const updatedData = new Comment({
+    _id: commentId,
+    content: content,
+  })
+
+  try {
+    await connectToDatabase()
+    const result = await Comment.updateOne({ _id: commentId }, { $set: updatedData })
+
+    if (result.modifiedCount === 1) {
+      console.log('Comment updated successfully')
+    } else {
+      console.log('Comment not found or not updated')
+    }
+  } catch (error) {
+    console.error('Error updating comment:', error)
+  }
+
+  revalidatePath(`/posts/post/${postId}`)
+  redirect(`/posts/post/${postId}`)
+}
