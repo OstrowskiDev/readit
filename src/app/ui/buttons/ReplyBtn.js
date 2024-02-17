@@ -1,8 +1,10 @@
 'use client'
 
+import { useCommentContext } from '@/app/lib/context/CommentContextProvider'
 import { ReplyIco } from '../icons/ReplyIco'
 
-export function ReplyBtn({ isVisible, setIsVisible }) {
+export function ReplyBtn() {
+  const { isVisible, setIsVisible } = useCommentContext()
   return (
     <div className="btn-container mt-[1px] ml-2 p-2 rounded-md hover:bg-gray-200">
       <button

@@ -1,8 +1,8 @@
+import { CommentBtnsContextWrapper } from '../lib/context/CommentBtnsContextWrapper'
 import { getUser } from '../lib/db'
-import { CommentButtons } from './CommentButtons'
 
 // Render comment and its replies recursively
-export async function PostComment({ commentId, depth, postId }) {
+export async function Comment({ commentId, depth, postId }) {
   const allComments = await getComments()
   const comment = allComments.find((c) => c._id === commentId)
   if (!comment) return null
@@ -24,10 +24,10 @@ export async function PostComment({ commentId, depth, postId }) {
         <div className="comment-body-container ml-4">
           <p className="comment-body mt-1 text-lg">{comment.content}</p>
         </div>
-        <CommentButtons parentId={comment._id} postId={postId} />
+        <CommentBtnsContextWrapper commentId={comment._id} postId={postId} />
         <div className="ml-[20px]">
           {comment.replies.map((replyId) => (
-            <PostComment commentId={replyId} depth={depth + 1} postId={postId} />
+            <Comment commentId={replyId} depth={depth + 1} postId={postId} />
           ))}
         </div>
       </div>

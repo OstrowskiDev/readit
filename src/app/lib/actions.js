@@ -116,3 +116,33 @@ export async function createReply(parentId, postId, userInput) {
   revalidatePath(`/posts/post/${postId}`)
   redirect(`/posts/post/${postId}`)
 }
+
+export async function deleteComment(commentId, postId) {
+  //delete comment
+  try {
+    await connectToDatabase()
+    const deleteComment = await Comment.findByIdAndDelete(commentId)
+    if (!deleteComment) {
+      console.error('Comment not found')
+    }
+    console.log('Comment deleted successfully')
+  } catch (error) {
+    console.error('Error deleting comment:', error)
+  }
+  //update parent children list
+  try {
+    await connectToDatabase()
+    const result = await Comment.updateOne({ _id: parentId }, { $pull: { replies: commentId } })
+
+    if (result.modifiedCount === 1) {
+      console.log('Comment updated successfully')
+    } else {
+      console.log('Comment not found or not updated')
+    }
+  } catch (error) {
+    console.error('Error updating comment:', error)
+  }
+
+  revalidatePath(`/posts/post/${postId}`)
+  redirect(`/posts/post/${postId}`)
+}

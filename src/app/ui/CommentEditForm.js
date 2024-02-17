@@ -4,16 +4,16 @@ import { createReply } from '@/app/lib/actions'
 import { useState } from 'react'
 import { useCommentContext } from '../lib/context/CommentContextProvider'
 
-export function CommentReplyForm({ parentId, postId }) {
-  const { isVisible, setIsVisible } = useCommentContext()
+export function CommentEditForm({ parentId, postId }) {
+  const { isEditVisible, setIsEditVisible } = useCommentContext()
   const [input, setInput] = useState('')
 
-  function onCancelClick(e) {
-    setIsVisible(!isVisible)
+  function onCancelClick() {
+    setIsEditVisible(!isEditVisible)
   }
 
-  function onSubmit(e) {
-    setIsVisible(!isVisible)
+  function onSubmit() {
+    setIsEditVisible(!isEditVisible)
     createReply(parentId, postId, input)
     setInput('')
   }
@@ -31,18 +31,18 @@ export function CommentReplyForm({ parentId, postId }) {
         />
         <div className="comment-reply-btns flex justify-end">
           <button
-            className="comment-reply-cancel-btn btn-gray py-1 px-2 mt-1"
+            className="comment-reply-cancel-btn btn-gray py-1 px-2 my-1"
             type="button"
             onClick={onCancelClick}
           >
             Cancel
           </button>
           <button
-            className="comment-reply-submit-btn btn-blue py-1 px-2 mx-2 mt-1"
+            className="comment-reply-submit-btn btn-blue py-1 px-6 mx-2 my-1"
             type="button"
             onClick={onSubmit}
           >
-            Comment
+            Edit
           </button>
         </div>
       </form>

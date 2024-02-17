@@ -6,7 +6,7 @@ import { CommentPostBtn } from '@/app/ui/buttons/CommentPostBtn'
 import { SharePostBtn } from '@/app/ui/buttons/SharePostBtn'
 import { CommentsCount } from '@/app/ui/CommentsCount'
 import { PostOptionsBtn } from '@/app/ui/buttons/PostOptionsBtn'
-import { PostComment } from '@/app/ui/PostComment'
+import { Comment } from '@/app/ui/Comment'
 
 export default async function Page({ params }) {
   const postId = params.id
@@ -48,7 +48,7 @@ export default async function Page({ params }) {
         <h3 className="comments-section-title text-lg pt-1 font-semibold">Comments:</h3>
         <div className="comments-section bg-gray-100 pl-8 pr-3 pb-6 mt-1 rounded-md">
           {post.comments?.map((commentId) => (
-            <PostComment commentId={commentId} depth={0} postId={postId} />
+            <Comment commentId={commentId} depth={0} postId={postId} />
           ))}
         </div>
       </div>
