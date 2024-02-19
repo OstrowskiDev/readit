@@ -78,6 +78,7 @@ export async function deletePost(postId) {
 }
 
 export async function createReply(parentId, postId, userInput) {
+  console.log(`parentId inside createReply server action: ${parentId}`)
   const uuid = uuidv4().toString()
   const content = validatePostContent(userInput)
   const newReplyId = uuid
@@ -148,6 +149,7 @@ export async function deleteComment(commentId, postId) {
 }
 
 export async function updateReply(commentId, postId, inputContent) {
+  console.log('Attempting to update replay....')
   const content = validatePostContent(inputContent)
 
   const updatedData = new Comment({
@@ -157,6 +159,8 @@ export async function updateReply(commentId, postId, inputContent) {
 
   try {
     await connectToDatabase()
+    console.log(`updateObject before sending it to db:`)
+    console.log(updatedData)
     const result = await Comment.updateOne({ _id: commentId }, { $set: updatedData })
 
     if (result.modifiedCount === 1) {

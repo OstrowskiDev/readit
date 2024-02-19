@@ -5,8 +5,9 @@ import { useState } from 'react'
 import { useCommentContext } from '../lib/context/CommentContextProvider'
 
 export function CommentReplyForm() {
-  const { isVisible, setIsVisible, parentId, postId } = useCommentContext()
+  const { isVisible, setIsVisible, commentId, postId } = useCommentContext()
   const [input, setInput] = useState('')
+  const parentId = commentId
 
   function onCancelClick() {
     setIsVisible(!isVisible)

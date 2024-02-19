@@ -27,7 +27,10 @@ const commentSchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
-    replies: [String],
+    replies: {
+      type: [String],
+      default: undefined, // this default value prevents mongoose form generating empty array by default. Alos it will not do that on update or updateOne when replies will not be defined in updateData object.
+    },
   },
   { timestamps: true }
 )

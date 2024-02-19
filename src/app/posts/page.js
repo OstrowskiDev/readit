@@ -40,6 +40,7 @@ export default async function Page({ searchParams }) {
 
 async function getData() {
   try {
+    console.log('Data fetching in progress...')
     const fetchedData = await Promise.all([getPosts(), getUsers()])
     return fetchedData
   } catch (error) {
