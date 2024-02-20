@@ -24,4 +24,27 @@ async function getUser(userId) {
   return res.json()
 }
 
-export { connectToDatabase, getPost, getUser }
+async function getData() {
+  try {
+    const fetchedData = await Promise.all([getPosts(), getUsers()])
+    return fetchedData
+  } catch (error) {
+    console.error('Error fetching posts and/or users:', error)
+    return null
+  }
+}
+
+async function getPosts() {
+  const res = await fetch('http://localhost:3000/api/posts', { cache: 'no-store' })
+  if (!res.ok) return notFound()
+  return res.json()
+}
+
+async function getUsers() {
+  const res = await fetch('http://localhost:3000/api/users', { cache: 'no-store' })
+  console.log('Response from getUsers:', res)
+  if (!res.ok) return notFound()
+  return res.json()
+}
+
+export { connectToDatabase, getPost, getUser, getPosts, getUsers, getData }

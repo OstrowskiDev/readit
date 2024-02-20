@@ -1,8 +1,6 @@
 import { Inter } from 'next/font/google'
 import './globals.css'
 import SideNav from './ui/SideNav'
-import { Suspense } from 'react'
-import { Loader } from './ui/Loader'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -19,14 +17,9 @@ export default function RootLayout({ children }) {
           <div className="w-full flex-none md:w-60">
             <SideNav />
           </div>
-          {/* {children} */}
-          <Suspense fallback={<Loading />}>{children}</Suspense>
+          {children}
         </div>
       </body>
     </html>
   )
-}
-
-function Loading() {
-  return <Loader />
 }

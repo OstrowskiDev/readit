@@ -14,9 +14,12 @@ export default async function PostCard({ _id, title, user_id, content, user_name
       <PostAuthor postId={user_id} userName={user_name} />
       <p className="card-text max-lines-3">{content}</p>
       <div className="card-btn-container mt-2 flex justify-end">
-        <Link href={`/posts/post/${_id}`} className="btn-blue px-4 py-2 rounded-md">
+        {/* <Link href={`/posts/post/${_id}`} className="btn-blue px-4 py-2 rounded-md">
           More
-        </Link>
+        </Link> */}
+        <a href={`/posts/post/${_id}`} className="btn-blue px-4 py-2 rounded-md">
+          More
+        </a>
       </div>
     </div>
   )
