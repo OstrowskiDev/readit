@@ -22,7 +22,9 @@ export async function Comment({ commentId, depth, postId }) {
           <p className="comment-author ml-1 text-blue-900">{commentAuthor.name}</p>
         </div>
         <div className="comment-body-container ml-4">
-          <p className="comment-body mt-1 text-lg">{comment.content}</p>
+          <pre className="comment-body mt-1 text-lg font-sans whitespace-pre-wrap">
+            {comment.content}
+          </pre>
         </div>
         <CommentBtnsContextWrapper
           commentId={commentId}

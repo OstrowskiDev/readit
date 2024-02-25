@@ -34,7 +34,7 @@ export default async function Page({ params }) {
 
         {/* Post body */}
         <PostAuthor className="post-body-author" userId={post['user-id']} userName={user.name} />
-        <p className="post-body-text break-words">{post.content}</p>
+        <pre className="post-body-text font-sans whitespace-pre-wrap">{post.content}</pre>
 
         {/* Post footer */}
         <PostFooter postId={postId} />
