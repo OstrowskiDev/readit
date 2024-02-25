@@ -1,7 +1,12 @@
 import GitHubProvider from 'next-auth/providers/github'
 import CredentialsProvider from 'next-auth/providers/credentials'
+import { getUserByEmail } from '@/app/lib/db'
 
-export const options = {
+export const authOptions = {
+  // pages: {
+  //   signIn: '/signin',
+  //   signOut: '/signout',
+  // },
   providers: [
     GitHubProvider({
       clientId: process.env.GITHUB_ID,
@@ -10,10 +15,9 @@ export const options = {
     CredentialsProvider({
       name: 'Credentials',
       credentials: {
-        username: {
-          label: 'Username:',
+        email: {
+          label: 'Email:',
           type: 'text',
-          placeholder: 'your username',
         },
         password: {
           label: 'Password:',
@@ -21,11 +25,9 @@ export const options = {
         },
       },
       async authorize(credentials) {
-        // Here you want to get data from database
-        // Docs: https://next-auth.js.org/configuration/providers/credentials
-        const user = { id: '42', name: 'Dave', password: 'DaveTheDiver' }
+        const user = await getUserByEmail(credentials?.email)
 
-        if (credentials?.username === user.name && credentials?.password === user.password) {
+        if (credentials?.email === user.email && credentials?.password === user.password) {
           return user
         } else {
           return null

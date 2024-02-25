@@ -1,5 +1,6 @@
 import React from 'react'
 import SmileyFaceIco from './icons/SmileyFaceIco'
+import { AuthBtn } from './buttons/AuthBtn'
 
 export default function SideNav() {
   return (
@@ -28,9 +29,7 @@ export default function SideNav() {
           </a>
           <div className="bg-white h-auto rounded-md grow shadow-md"></div>
         </div>
-        <div className="md:mt-2 md:w-full min-w-24">
-          <button className="nav-button ">Sign Out</button>
-        </div>
+        <AuthBtn />
       </nav>
     </div>
   )

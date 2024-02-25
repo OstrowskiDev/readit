@@ -24,6 +24,14 @@ async function getUser(userId) {
   return res.json()
 }
 
+async function getUserByEmail(email) {
+  const res = await fetch(`http://localhost:3000/api/users/user/email/${email}`, {
+    cache: 'no-store',
+  })
+  if (!res.ok) return notFound()
+  return res.json()
+}
+
 async function getData() {
   try {
     const fetchedData = await Promise.all([getPosts(), getUsers()])
@@ -46,4 +54,4 @@ async function getUsers() {
   return res.json()
 }
 
-export { connectToDatabase, getPost, getUser, getPosts, getUsers, getData }
+export { connectToDatabase, getPost, getUser, getPosts, getUsers, getData, getUserByEmail }
