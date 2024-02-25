@@ -12,8 +12,9 @@ export function PostReplyForm({ postId, isCommentFormVisible, setIsCommentFormVi
   }
 
   function onSubmit() {
+    const parentId = postId
     setIsCommentFormVisible(!isCommentFormVisible)
-    createComment(postId, input)
+    createComment(parentId, postId, input)
     setInput('')
   }
 

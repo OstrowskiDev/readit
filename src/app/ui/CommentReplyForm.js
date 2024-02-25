@@ -1,6 +1,6 @@
 'use client'
 
-import { createReply } from '@/app/lib/actions'
+import { createComment } from '@/app/lib/actions'
 import { useState } from 'react'
 import { useCommentContext } from '../lib/context/CommentContextProvider'
 
@@ -15,7 +15,7 @@ export function CommentReplyForm() {
 
   function onSubmit() {
     setIsVisible(!isVisible)
-    createReply(parentId, postId, input)
+    createComment(parentId, postId, input)
     setInput('')
   }
 

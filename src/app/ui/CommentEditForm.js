@@ -1,6 +1,6 @@
 'use client'
 
-import { updateReply } from '@/app/lib/actions'
+import { updateComment } from '@/app/lib/actions'
 import { useState } from 'react'
 import { useCommentContext } from '../lib/context/CommentContextProvider'
 
@@ -14,7 +14,7 @@ export function CommentEditForm() {
 
   function onSubmit() {
     setIsEditVisible(!isEditVisible)
-    updateReply(commentId, postId, input)
+    updateComment(commentId, postId, input)
     setInput('')
   }
 

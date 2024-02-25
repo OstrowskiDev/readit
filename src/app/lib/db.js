@@ -24,6 +24,14 @@ async function getUser(userId) {
   return res.json()
 }
 
+async function getComment(commentId) {
+  const res = await fetch(`http://localhost:3000/api/comments/comment/${commentId}`, {
+    cache: 'no-store',
+  })
+  if (!res.ok) return notFound()
+  return res.json()
+}
+
 async function getUserByEmail(email) {
   const res = await fetch(`http://localhost:3000/api/users/user/email/${email}`, {
     cache: 'no-store',
@@ -54,4 +62,13 @@ async function getUsers() {
   return res.json()
 }
 
-export { connectToDatabase, getPost, getUser, getPosts, getUsers, getData, getUserByEmail }
+export {
+  connectToDatabase,
+  getPost,
+  getUser,
+  getComment,
+  getPosts,
+  getUsers,
+  getData,
+  getUserByEmail,
+}

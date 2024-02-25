@@ -5,7 +5,7 @@ import Comment from './models/Comment'
 import { v4 as uuidv4 } from 'uuid'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
-import { connectToDatabase } from './db'
+import { connectToDatabase, getComment } from './db'
 import { validatePostContent, validatePostTitle } from './validation'
 import { getServerSession } from 'next-auth/next'
 import { authOptions } from '@/app/api/auth/[...nextauth]/authOptions'
@@ -81,58 +81,15 @@ export async function deletePost(postId) {
   redirect('/posts')
 }
 
-export async function createComment(postId, userInput) {
+export async function createComment(parentId, postId, userInput) {
   const session = await getServerSession(authOptions)
   const uuid = uuidv4().toString()
   const content = validatePostContent(userInput)
   const newCommentId = uuid
+  const parentIsPost = parentId === postId
 
-  //create new comment
   const newComment = new Comment({
     _id: newCommentId,
-    user_id: session.user.id,
-    parent: {
-      type: 'post',
-      _id: postId,
-    },
-    content: content,
-    replies: [],
-  })
-  try {
-    await connectToDatabase()
-    await newComment.save()
-  } catch (error) {
-    console.error('Error saving comment:', error)
-  }
-
-  //update parent post comments prop
-  try {
-    await connectToDatabase()
-    console.log(`newCommentId is ${newCommentId}`)
-    console.log(`postId is: ${postId}`)
-    const result = await Post.updateOne({ _id: postId }, { $push: { comments: newCommentId } })
-
-    if (result.modifiedCount === 1) {
-      console.log('Post updated successfully')
-    } else {
-      console.log('Post not found or not updated')
-    }
-  } catch (error) {
-    console.error('Error updating post:', error)
-  }
-
-  revalidatePath(`/posts/post/${postId}`)
-  redirect(`/posts/post/${postId}`)
-}
-
-export async function createReply(parentId, postId, userInput) {
-  const session = await getServerSession(authOptions)
-  const uuid = uuidv4().toString()
-  const content = validatePostContent(userInput)
-  const newReplyId = uuid
-
-  const newReply = new Comment({
-    _id: newReplyId,
     user_id: session.user.id,
     parent: {
       type: 'comment',
@@ -141,25 +98,32 @@ export async function createReply(parentId, postId, userInput) {
     content: content,
     replies: [],
   })
+
+  console.log(parentIsPost)
+  if (parentIsPost) newComment.parent.type = 'post'
+  console.log(newComment)
+
   try {
     await connectToDatabase()
-    await newReply.save()
+    await newComment.save()
   } catch (error) {
-    console.error('Error saving post:', error)
+    console.error('Error saving comment:', error)
   }
 
   //update parent replies prop
   try {
     await connectToDatabase()
-    const result = await Comment.updateOne({ _id: parentId }, { $push: { replies: newReplyId } })
+    const result = parentIsPost
+      ? await Post.updateOne({ _id: parentId }, { $push: { comments: newCommentId } })
+      : await Comment.updateOne({ _id: parentId }, { $push: { replies: newCommentId } })
 
     if (result.modifiedCount === 1) {
-      console.log('Comment updated successfully')
+      console.log('Post/Comment updated successfully')
     } else {
-      console.log('Comment not found or not updated')
+      console.log('Post/Comment not found or not updated')
     }
   } catch (error) {
-    console.error('Error updating comment:', error)
+    console.error('Error updating post/comment:', error)
   }
 
   revalidatePath(`/posts/post/${postId}`)
@@ -167,37 +131,56 @@ export async function createReply(parentId, postId, userInput) {
 }
 
 export async function deleteComment(commentId, postId) {
-  //delete comment
-  try {
-    await connectToDatabase()
-    const deleteComment = await Comment.findByIdAndDelete(commentId)
-    if (!deleteComment) {
-      console.error('Comment not found')
-    }
-    console.log('Comment deleted successfully')
-  } catch (error) {
-    console.error('Error deleting comment:', error)
-  }
-  //update parent children list
-  try {
-    await connectToDatabase()
-    const result = await Comment.updateOne({ _id: parentId }, { $pull: { replies: commentId } })
+  const commentData = await getComment(commentId)
+  const parentType = commentData.parent.type
+  const parentId = commentData.parent._id
+  const replies = commentData.replies
+  const hasReplies = Boolean(replies) && replies.length !== 0
 
-    if (result.modifiedCount === 1) {
-      console.log('Comment updated successfully')
-    } else {
-      console.log('Comment not found or not updated')
+  // delete comment if it has no replies
+  if (!hasReplies) {
+    try {
+      await connectToDatabase()
+      const deleteComment = await Comment.findByIdAndDelete(commentId)
+      if (!deleteComment) {
+        console.error('Comment not found')
+      }
+      console.log('Comment deleted successfully')
+    } catch (error) {
+      console.error('Error deleting comment:', error)
     }
-  } catch (error) {
-    console.error('Error updating comment:', error)
+
+    //update parent children list
+    try {
+      await connectToDatabase()
+      const result =
+        parentType === 'comment'
+          ? await Comment.updateOne({ _id: parentId }, { $pull: { replies: commentId } })
+          : await Post.updateOne({ _id: parentId }, { $pull: { comments: commentId } })
+
+      if (result.modifiedCount === 1) {
+        console.log('Comment updated successfully')
+      } else {
+        console.log('Comment not found or not updated')
+      }
+    } catch (error) {
+      console.error('Error updating comment:', error)
+    }
+
+    // soft delete when comment has replies
+  } else {
+    console.log("comment can't be deleted when it has replies")
+    // chenge deleted flag to true
+    // dont update comment or post children array:
+    // comment was not perma deleted so no need
   }
 
   revalidatePath(`/posts/post/${postId}`)
   redirect(`/posts/post/${postId}`)
 }
 
-export async function updateReply(commentId, postId, inputContent) {
-  const content = validatePostContent(inputContent)
+export async function updateComment(commentId, postId, userInput) {
+  const content = validatePostContent(userInput)
 
   const updatedData = new Comment({
     _id: commentId,
