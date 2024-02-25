@@ -7,7 +7,8 @@ export function CommentsCount() {
         <ReplyIco />
       </div>
       <p className="post-comments-num-text ml-2 font-semibold text-gray-500">
-        {Math.ceil(Math.random() * 100 + 100)} Comments
+        {/* {Math.ceil(Math.random() * 100 + 100)} */}
+        120 Comments
       </p>
     </div>
   )

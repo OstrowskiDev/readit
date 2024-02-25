@@ -7,8 +7,12 @@ import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { connectToDatabase } from './db'
 import { validatePostContent, validatePostTitle } from './validation'
+import { getServerSession } from 'next-auth/next'
+import { authOptions } from '@/app/api/auth/[...nextauth]/authOptions'
 
 export async function createPost(formData) {
+  const session = await getServerSession(authOptions)
+  const userId = session.user.id
   const uuid = uuidv4().toString()
   const inputTitle = formData.get('title')
   const title = validatePostTitle(inputTitle)
@@ -18,7 +22,7 @@ export async function createPost(formData) {
   const newPost = new Post({
     _id: uuid,
     title: title,
-    'user-id': formData.get('user'),
+    'user-id': userId,
     content: content,
   })
 
@@ -77,15 +81,59 @@ export async function deletePost(postId) {
   redirect('/posts')
 }
 
+export async function createComment(postId, userInput) {
+  const session = await getServerSession(authOptions)
+  const uuid = uuidv4().toString()
+  const content = validatePostContent(userInput)
+  const newCommentId = uuid
+
+  //create new comment
+  const newComment = new Comment({
+    _id: newCommentId,
+    user_id: session.user.id,
+    parent: {
+      type: 'post',
+      _id: postId,
+    },
+    content: content,
+    replies: [],
+  })
+  try {
+    await connectToDatabase()
+    await newComment.save()
+  } catch (error) {
+    console.error('Error saving comment:', error)
+  }
+
+  //update parent post comments prop
+  try {
+    await connectToDatabase()
+    console.log(`newCommentId is ${newCommentId}`)
+    console.log(`postId is: ${postId}`)
+    const result = await Post.updateOne({ _id: postId }, { $push: { comments: newCommentId } })
+
+    if (result.modifiedCount === 1) {
+      console.log('Post updated successfully')
+    } else {
+      console.log('Post not found or not updated')
+    }
+  } catch (error) {
+    console.error('Error updating post:', error)
+  }
+
+  revalidatePath(`/posts/post/${postId}`)
+  redirect(`/posts/post/${postId}`)
+}
+
 export async function createReply(parentId, postId, userInput) {
-  console.log(`parentId inside createReply server action: ${parentId}`)
+  const session = await getServerSession(authOptions)
   const uuid = uuidv4().toString()
   const content = validatePostContent(userInput)
   const newReplyId = uuid
 
   const newReply = new Comment({
     _id: newReplyId,
-    user_id: 'ad4fc3a1-0e2c-46e8-9d31-d3d2c66d9ac2',
+    user_id: session.user.id,
     parent: {
       type: 'comment',
       _id: parentId,
@@ -106,12 +154,12 @@ export async function createReply(parentId, postId, userInput) {
     const result = await Comment.updateOne({ _id: parentId }, { $push: { replies: newReplyId } })
 
     if (result.modifiedCount === 1) {
-      console.log('Post updated successfully')
+      console.log('Comment updated successfully')
     } else {
-      console.log('Post not found or not updated')
+      console.log('Comment not found or not updated')
     }
   } catch (error) {
-    console.error('Error updating post:', error)
+    console.error('Error updating comment:', error)
   }
 
   revalidatePath(`/posts/post/${postId}`)
@@ -149,7 +197,6 @@ export async function deleteComment(commentId, postId) {
 }
 
 export async function updateReply(commentId, postId, inputContent) {
-  console.log('Attempting to update replay....')
   const content = validatePostContent(inputContent)
 
   const updatedData = new Comment({
@@ -159,8 +206,6 @@ export async function updateReply(commentId, postId, inputContent) {
 
   try {
     await connectToDatabase()
-    console.log(`updateObject before sending it to db:`)
-    console.log(updatedData)
     const result = await Comment.updateOne({ _id: commentId }, { $set: updatedData })
 
     if (result.modifiedCount === 1) {

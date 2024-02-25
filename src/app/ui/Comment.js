@@ -27,6 +27,7 @@ export async function Comment({ commentId, depth, postId }) {
         <CommentBtnsContextWrapper
           commentId={commentId}
           postId={postId}
+          authorId={commentAuthorId}
           commentContent={comment.content}
         />
         <div className="ml-[20px]">
