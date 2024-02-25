@@ -3,10 +3,10 @@ import CredentialsProvider from 'next-auth/providers/credentials'
 import { getUserByEmail } from '@/app/lib/db'
 
 export const authOptions = {
-  // pages: {
-  //   signIn: '/signin',
-  //   signOut: '/signout',
-  // },
+  pages: {
+    signIn: '/login',
+    // signOut: '/signout',
+  },
   callbacks: {
     async session({ session }) {
       if (session?.user) {
