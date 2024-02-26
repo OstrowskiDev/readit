@@ -41,6 +41,8 @@ async function getLikeById(likeId) {
 }
 
 async function getLikeByItemAndUser(itemId, userId) {
+  console.log(`itemId ${itemId}`)
+  console.log(`userId ${userId}`)
   const res = await fetch(`http://localhost:3000/api/likes/like/find/${itemId}/${userId}`, {
     cache: 'no-store',
   })

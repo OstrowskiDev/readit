@@ -15,23 +15,6 @@ export const authOptions = {
       session.user.id = token.userId
       return session
     },
-    // jwt({ token, user }) {
-    //   console.log(`token is:`)
-    //   console.log(token)
-    //   console.log(`user is:`)
-    //   console.log(user)
-    //   if (user) token.userId = user['user-id']
-    //   console.log(`token.userId is: ${token.userId}`)
-    //   return token
-    // },
-    // session({ session, token }) {
-    //   console.log('session before token assigment:')
-    //   console.log(session)
-    //   session.user.id = token.userId
-    //   console.log('session after assigment:')
-    //   console.log(session)
-    //   return session
-    // },
   },
   providers: [
     GitHubProvider({
@@ -54,6 +37,7 @@ export const authOptions = {
         const user = await getUserByEmail(credentials?.email)
 
         if (credentials?.email === user.email && credentials?.password === user.password) {
+          console.log(user)
           return user
         } else {
           return null
