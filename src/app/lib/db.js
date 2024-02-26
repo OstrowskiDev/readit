@@ -32,24 +32,6 @@ async function getComment(commentId) {
   return res.json()
 }
 
-async function getLikeById(likeId) {
-  const res = await fetch(`http://localhost:3000/api/likes/like/id/${likeId}`, {
-    cache: 'no-store',
-  })
-  if (!res.ok) return notFound()
-  return res.json()
-}
-
-async function getLikeByItemAndUser(itemId, userId) {
-  console.log(`itemId ${itemId}`)
-  console.log(`userId ${userId}`)
-  const res = await fetch(`http://localhost:3000/api/likes/like/find/${itemId}/${userId}`, {
-    cache: 'no-store',
-  })
-  if (!res.ok) return notFound()
-  return res.json()
-}
-
 async function getUserByEmail(email) {
   const res = await fetch(`http://localhost:3000/api/users/user/email/${email}`, {
     cache: 'no-store',
@@ -85,8 +67,6 @@ export {
   getPost,
   getUser,
   getComment,
-  getLikeById,
-  getLikeByItemAndUser,
   getPosts,
   getUsers,
   getData,

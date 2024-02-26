@@ -29,7 +29,11 @@ const commentSchema = new mongoose.Schema(
     },
     replies: {
       type: [String],
-      default: undefined, // this default value prevents mongoose form generating empty array by default. Alos it will not do that on update or updateOne when replies will not be defined in updateData object.
+      default: undefined, // this default value prevents mongoose form generating empty array by default. This will also prevent accident reply deletion with update or updateOne with payload that doesn't have reply prop.
+    },
+    likes: {
+      type: [String],
+      default: undefined,
     },
   },
   { timestamps: true }

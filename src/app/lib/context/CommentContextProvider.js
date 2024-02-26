@@ -2,7 +2,14 @@ import { createContext, useContext, useState } from 'react'
 
 const CommentContext = createContext()
 
-export function CommentContextProvider({ children, commentId, postId, authorId, commentContent }) {
+export function CommentContextProvider({
+  children,
+  commentId,
+  postId,
+  authorId,
+  commentLikes,
+  commentContent,
+}) {
   const [isVisible, setIsVisible] = useState(false)
   const [isEditVisible, setIsEditVisible] = useState(false)
 
@@ -16,6 +23,7 @@ export function CommentContextProvider({ children, commentId, postId, authorId, 
         commentId,
         postId,
         authorId,
+        commentLikes,
         commentContent,
       }}
     >

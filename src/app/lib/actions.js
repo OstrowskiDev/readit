@@ -9,7 +9,6 @@ import { connectToDatabase, getComment } from './db'
 import { validatePostContent, validatePostTitle } from './validation'
 import { getServerSession } from 'next-auth/next'
 import { authOptions } from '@/app/api/auth/[...nextauth]/authOptions'
-import Like from './models/Like'
 
 export async function createPost(formData) {
   const session = await getServerSession(authOptions)
@@ -205,35 +204,29 @@ export async function updateComment(commentId, postId, userInput) {
   redirect(`/posts/post/${postId}`)
 }
 
-export async function likeComment(targetId, postId) {
+export async function likeComment(commentId, postId) {
   const session = await getServerSession(authOptions)
-  const userId = session.user.id
-  const existingLike = await Like.findOne({ itemId: targetId, userId: userId })
-  const likeExists = Boolean(existingLike)
+  if (!session) signIn()
 
-  if (likeExists) {
-    console.log('you already liked this!')
-    return
-  }
-
-  const uuid = uuidv4().toString()
-  const newLike = new Like({
-    _id: uuid,
-    itemId: targetId,
-    userId: userId,
-  })
+  const comment = await Comment.findOne({ _id: commentId })
+  if (!comment) return console.error('likeComment func: comment not found')
 
   try {
     await connectToDatabase()
-    await newLike.save()
+    const alreadyLiked = comment.likes?.includes(userId)
+    const userId = session.user.id
+    const result = alreadyLiked
+      ? await Comment.updateOne({ _id: commentId }, { $pull: { likes: userId } })
+      : await Comment.updateOne({ _id: commentId }, { $push: { likes: userId } })
+    if (result.modifiedCount === 1) {
+      console.log('Comment updated successfully')
+    } else {
+      console.log('Comment not found or not updated')
+    }
   } catch (error) {
-    console.error('Error saving like:', error)
+    console.error('Error updating comment:', error)
   }
-  revalidatePath(`/posts/post/${postId}`)
-  redirect(`/posts/post/${postId}`)
-}
 
-export async function likesCount(targetId, postId) {
   revalidatePath(`/posts/post/${postId}`)
   redirect(`/posts/post/${postId}`)
 }
