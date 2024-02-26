@@ -213,8 +213,8 @@ export async function likeComment(commentId, postId) {
 
   try {
     await connectToDatabase()
-    const alreadyLiked = comment.likes?.includes(userId)
     const userId = session.user.id
+    const alreadyLiked = comment.likes?.includes(userId)
     const result = alreadyLiked
       ? await Comment.updateOne({ _id: commentId }, { $pull: { likes: userId } })
       : await Comment.updateOne({ _id: commentId }, { $push: { likes: userId } })

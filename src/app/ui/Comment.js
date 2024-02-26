@@ -1,10 +1,11 @@
+'use server'
+
 import { CommentBtnsContextWrapper } from '../lib/context/CommentBtnsContextWrapper'
-import { getUser } from '../lib/db'
+import { getComment, getUser } from '../lib/db'
 
 // Render comment and its replies recursively
 export async function Comment({ commentId, depth, postId }) {
-  const allComments = await getComments()
-  const comment = allComments.find((c) => c._id === commentId)
+  const comment = await getComment(commentId)
   if (!comment) return null
   const commentAuthorId = comment.user_id
   const commentAuthor = await getUser(commentAuthorId)
@@ -44,8 +45,10 @@ export async function Comment({ commentId, depth, postId }) {
   )
 }
 
-async function getComments() {
-  const res = await fetch('http://localhost:3000/api/comments', { cache: 'no-store' })
-  if (!res.ok) return notFound()
-  return res.json()
-}
+// async function getComment(commentId) {
+//   const res = await fetch(`http://localhost:3000/api/comments/comment/${commentId}`, {
+//     cache: 'no-store',
+//   })
+//   if (!res.ok) return null
+//   return res.json()
+// }

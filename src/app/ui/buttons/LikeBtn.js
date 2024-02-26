@@ -6,7 +6,7 @@ import { LikeIcoActive } from '../icons/LikeIcoActive'
 import { useCommentContext } from '@/app/lib/context/CommentContextProvider'
 import { useSession } from 'next-auth/react'
 
-export async function LikeBtn() {
+export function LikeBtn() {
   const { commentId, postId, commentLikes } = useCommentContext()
   const { data: session } = useSession()
   const userId = session?.user?.id
