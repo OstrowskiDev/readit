@@ -3,8 +3,18 @@
 import { useCommentContext } from '../lib/context/CommentContextProvider'
 
 export function LikeCount() {
-  const { commentLikes } = useCommentContext()
-
+  const { commentLikes, commentDislikes } = useCommentContext()
   const noLikes = commentLikes ? commentLikes?.length : 0
-  return <p className="mx-1 font-bold text-gray-900">{noLikes}</p>
+  const noDislikes = commentDislikes ? commentDislikes?.length : 0
+  const score = noLikes - noDislikes
+
+  return (
+    <>
+      {score >= 0 ? (
+        <p className="mx-1 font-bold text-gray-900">{score}</p>
+      ) : (
+        <p className="mx-1 font-bold text-red-900">{score}</p>
+      )}
+    </>
+  )
 }

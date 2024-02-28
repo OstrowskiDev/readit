@@ -7,14 +7,14 @@ import { PostOptionsBtn } from '@/app/ui/buttons/PostOptionsBtn'
 import { PostReplyForm } from './PostReplyForm'
 import { useState } from 'react'
 
-export function PostFooter({ postId }) {
+export function PostFooter({ postId, commentNo }) {
   const [isCommentFormVisible, setIsCommentFormVisible] = useState(false)
 
   return (
     <div className="post-bottom-container">
       <div className="post-bottom-btns-container flex justify-between items-center p-2">
         <div className="post-bottom-btns-left flex items-center gap-3">
-          <CommentsCount />
+          <CommentsCount commentNo={commentNo} />
           <SharePostBtn />
           <PostOptionsBtn />
         </div>

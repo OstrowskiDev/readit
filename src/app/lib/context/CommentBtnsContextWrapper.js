@@ -8,6 +8,7 @@ export function CommentBtnsContextWrapper({
   postId,
   authorId,
   commentLikes,
+  commentDislikes,
   commentContent,
 }) {
   return (
@@ -16,6 +17,7 @@ export function CommentBtnsContextWrapper({
       postId={postId}
       authorId={authorId}
       commentLikes={commentLikes}
+      commentDislikes={commentDislikes}
       commentContent={commentContent}
     >
       <CommentButtons />

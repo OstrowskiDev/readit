@@ -10,6 +10,7 @@ export async function Comment({ commentId, depth, postId }) {
   const commentAuthorId = comment.user_id
   const commentAuthor = await getUser(commentAuthorId)
   const commentLikes = comment.likes
+  const commentDislikes = comment.dislikes
 
   return (
     <div
@@ -33,6 +34,7 @@ export async function Comment({ commentId, depth, postId }) {
           postId={postId}
           authorId={commentAuthorId}
           commentLikes={commentLikes}
+          commentDislikes={commentDislikes}
           commentContent={comment.content}
         />
         <div className="ml-[20px]">

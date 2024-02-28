@@ -8,6 +8,7 @@ export function CommentContextProvider({
   postId,
   authorId,
   commentLikes,
+  commentDislikes,
   commentContent,
 }) {
   const [isVisible, setIsVisible] = useState(false)
@@ -24,6 +25,7 @@ export function CommentContextProvider({
         postId,
         authorId,
         commentLikes,
+        commentDislikes,
         commentContent,
       }}
     >

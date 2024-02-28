@@ -215,11 +215,24 @@ export async function likeComment(commentId, postId) {
     await connectToDatabase()
     const userId = session.user.id
     const alreadyLiked = comment.likes?.includes(userId)
-    const result = alreadyLiked
-      ? await Comment.updateOne({ _id: commentId }, { $pull: { likes: userId } })
-      : await Comment.updateOne({ _id: commentId }, { $push: { likes: userId } })
-    if (result.modifiedCount === 1) {
-      console.log('Comment updated successfully')
+    const alreadyDisliked = comment.dislikes?.includes(userId)
+
+    let result
+    if (alreadyDisliked) {
+      result = await Promise.all([
+        Comment.updateOne({ _id: commentId }, { $pull: { dislikes: userId } }),
+        Comment.updateOne({ _id: commentId }, { $push: { likes: userId } }),
+      ])
+    } else if (alreadyLiked) {
+      result = await Comment.updateOne({ _id: commentId }, { $pull: { likes: userId } })
+    } else {
+      result = await Comment.updateOne({ _id: commentId }, { $push: { likes: userId } })
+    }
+
+    if (result.modifiedCount === 2) {
+      console.log('Two params of comment updated successfully')
+    } else if (result.modifiedCount === 1) {
+      console.log('One param of comment updated successfully')
     } else {
       console.log('Comment not found or not updated')
     }
@@ -229,4 +242,72 @@ export async function likeComment(commentId, postId) {
 
   revalidatePath(`/posts/post/${postId}`)
   redirect(`/posts/post/${postId}`)
+}
+
+export async function dislikeComment(commentId, postId) {
+  const session = await getServerSession(authOptions)
+  if (!session) signIn()
+
+  const comment = await Comment.findOne({ _id: commentId })
+  if (!comment) return console.error('likeComment func: comment not found')
+
+  try {
+    await connectToDatabase()
+    const userId = session.user.id
+    const alreadyLiked = comment.likes?.includes(userId)
+    const alreadyDisliked = comment.dislikes?.includes(userId)
+
+    let result
+    if (alreadyLiked) {
+      result = await Promise.all([
+        Comment.updateOne({ _id: commentId }, { $pull: { likes: userId } }),
+        Comment.updateOne({ _id: commentId }, { $push: { dislikes: userId } }),
+      ])
+    } else if (alreadyDisliked) {
+      result = await Comment.updateOne({ _id: commentId }, { $pull: { dislikes: userId } })
+    } else {
+      result = await Comment.updateOne({ _id: commentId }, { $push: { dislikes: userId } })
+    }
+
+    if (result.modifiedCount === 2) {
+      console.log('Two params of comment updated successfully')
+    } else if (result.modifiedCount === 1) {
+      console.log('One param of comment updated successfully')
+    } else {
+      console.log('Comment not found or not updated')
+    }
+  } catch (error) {
+    console.error('Error updating comment:', error)
+  }
+
+  revalidatePath(`/posts/post/${postId}`)
+  redirect(`/posts/post/${postId}`)
+}
+
+export async function countComments(postId) {
+  console.log('counting comments...')
+  let totalComments = 0
+  const post = await Post.findOne({ _id: postId })
+  if (!post || !post.comments) {
+    console.log("Post not found or doesn't have comments")
+    return totalComments
+  }
+  const postChildrenIds = post.comments
+  totalComments += postChildrenIds.length
+  for (const postChildId of postChildrenIds) {
+    await countCommentChildren(postChildId)
+  }
+  async function countCommentChildren(commentId) {
+    const comment = await Comment.findOne({ _id: commentId })
+    if (!comment || !comment.replies) {
+      return
+    }
+    const childrenIds = comment.replies
+    totalComments += childrenIds.length
+    for (const childId of childrenIds) {
+      await countCommentChildren(childId)
+    }
+  }
+  console.log(`returning summed up number of comments: ${totalComments}`)
+  return totalComments
 }

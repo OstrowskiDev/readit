@@ -7,6 +7,7 @@ import { getServerSession } from 'next-auth'
 import { authOptions } from '@/app/api/auth/[...nextauth]/authOptions'
 import { SavePostBtn } from '@/app/ui/buttons/SavePostBtn'
 import { PostFooter } from '@/app/ui/PostFooter'
+import { countComments } from '@/app/lib/actions'
 
 export default async function Page({ params }) {
   const session = await getServerSession(authOptions)
@@ -18,6 +19,9 @@ export default async function Page({ params }) {
 
   const sessionUserId = session?.user.id
   const isPostAuthor = userId === sessionUserId
+
+  const commentNo = await countComments(postId)
+  console.log(`accessing commentsNo inside PostPage, commentsNo: ${commentNo}`)
 
   return (
     <div className="w-full flex justify-center my-8 px-4">
@@ -37,7 +41,7 @@ export default async function Page({ params }) {
         <pre className="post-body-text font-sans whitespace-pre-wrap">{post.content}</pre>
 
         {/* Post footer */}
-        <PostFooter postId={postId} />
+        <PostFooter postId={postId} commentNo={commentNo} />
 
         {/* Comments section */}
         {post.comments && (
