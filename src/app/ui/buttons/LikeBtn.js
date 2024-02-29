@@ -23,5 +23,3 @@ export function LikeBtn() {
     </form>
   )
 }
-
-// w-[28px]

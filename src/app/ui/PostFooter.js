@@ -3,11 +3,12 @@
 import { CommentPostBtn } from '@/app/ui/buttons/CommentPostBtn'
 import { SharePostBtn } from '@/app/ui/buttons/SharePostBtn'
 import { CommentsCount } from '@/app/ui/CommentsCount'
-import { PostOptionsBtn } from '@/app/ui/buttons/PostOptionsBtn'
 import { PostReplyForm } from './PostReplyForm'
 import { useState } from 'react'
+import { LikePostBtn } from './buttons/LikePostBtn'
+import { DislikePostBtn } from './buttons/DislikePostBtn'
 
-export function PostFooter({ postId, commentNo }) {
+export function PostFooter({ postId, commentNo, postLikes, postDislikes }) {
   const [isCommentFormVisible, setIsCommentFormVisible] = useState(false)
 
   return (
@@ -15,6 +16,10 @@ export function PostFooter({ postId, commentNo }) {
       <div className="post-bottom-btns-container flex justify-between items-center p-2">
         <div className="post-bottom-btns-left flex items-center gap-3">
           <CommentsCount commentNo={commentNo} />
+          <div className="flex h-10 bg-gray-200 rounded-md">
+            <LikePostBtn postId={postId} postLikes={postLikes} />
+            <DislikePostBtn postId={postId} postDislikes={postDislikes} />
+          </div>
           <SharePostBtn />
         </div>
         <div className="post-bottom-btns-right comment-btn mt-2 flex justify-end">

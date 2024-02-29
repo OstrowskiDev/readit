@@ -13,6 +13,8 @@ export default async function PostPage({ params }) {
   const session = await getServerSession(authOptions)
   const postId = params.id
   const post = await getPost(postId)
+  const postLikes = post?.likes
+  const postDislikes = post?.dislikes
 
   const userId = post['user-id']
   const user = await getUser(userId)
@@ -21,7 +23,6 @@ export default async function PostPage({ params }) {
   const isPostAuthor = userId === sessionUserId
 
   const commentNo = await countComments(postId)
-  console.log(`accessing commentsNo inside PostPage, commentsNo: ${commentNo}`)
 
   return (
     <div className="w-full flex justify-center my-8 px-4">
@@ -41,7 +42,12 @@ export default async function PostPage({ params }) {
         <pre className="post-body-text font-sans whitespace-pre-wrap">{post.content}</pre>
 
         {/* Post footer */}
-        <PostFooter postId={postId} commentNo={commentNo} />
+        <PostFooter
+          postId={postId}
+          commentNo={commentNo}
+          postLikes={postLikes}
+          postDislikes={postDislikes}
+        />
 
         {/* Comments section */}
         {post.comments && (

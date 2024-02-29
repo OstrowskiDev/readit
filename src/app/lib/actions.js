@@ -228,28 +228,32 @@ export async function handleLikeClick(documentId, postId, collection) {
 
   async function updateDocument() {
     async function updateComment() {
+      let updateResult
       if (alreadyDisliked) {
-        result = await Promise.all([
+        updateResult = await Promise.all([
           Comment.updateOne({ _id: documentId }, { $pull: { dislikes: userId } }),
           Comment.updateOne({ _id: documentId }, { $push: { likes: userId } }),
         ])
       } else if (alreadyLiked) {
-        result = await Comment.updateOne({ _id: documentId }, { $pull: { likes: userId } })
+        updateResult = await Comment.updateOne({ _id: documentId }, { $pull: { likes: userId } })
       } else {
-        result = await Comment.updateOne({ _id: documentId }, { $push: { likes: userId } })
+        updateResult = await Comment.updateOne({ _id: documentId }, { $push: { likes: userId } })
       }
+      return updateResult
     }
     async function updatePost() {
+      let updateResult
       if (alreadyDisliked) {
-        result = await Promise.all([
+        updateResult = await Promise.all([
           Post.updateOne({ _id: documentId }, { $pull: { dislikes: userId } }),
           Post.updateOne({ _id: documentId }, { $push: { likes: userId } }),
         ])
       } else if (alreadyLiked) {
-        result = await Post.updateOne({ _id: documentId }, { $pull: { likes: userId } })
+        updateResult = await Post.updateOne({ _id: documentId }, { $pull: { likes: userId } })
       } else {
-        result = await Post.updateOne({ _id: documentId }, { $push: { likes: userId } })
+        updateResult = await Post.updateOne({ _id: documentId }, { $push: { likes: userId } })
       }
+      return updateResult
     }
 
     let updateResult
@@ -265,7 +269,7 @@ export async function handleLikeClick(documentId, postId, collection) {
   }
 
   function logResults(result) {
-    if (result.modifiedCount === 2) {
+    if (result[0]?.modifiedCount === 1 && result[1]?.modifiedCount === 1) {
       console.log('Two params of document updated successfully')
     } else if (result.modifiedCount === 1) {
       console.log('One param of document updated successfully')
@@ -288,48 +292,95 @@ export async function handleLikeClick(documentId, postId, collection) {
   }
 }
 
-export async function dislikeComment(commentId, postId) {
+export async function handleDislikeClick(documentId, postId, collection) {
   const session = await getServerSession(authOptions)
   if (!session) signIn()
 
-  const comment = await Comment.findOne({ _id: commentId })
-  if (!comment) return console.error('likeComment func: comment not found')
+  const document = await getDocument()
+  if (!document) return console.error('handleDislikeClick func: document not found')
+
+  const userId = session.user.id
+  const alreadyLiked = document.likes?.includes(userId)
+  const alreadyDisliked = document.dislikes?.includes(userId)
 
   try {
     await connectToDatabase()
-    const userId = session.user.id
-    const alreadyLiked = comment.likes?.includes(userId)
-    const alreadyDisliked = comment.dislikes?.includes(userId)
-
-    let result
-    if (alreadyLiked) {
-      result = await Promise.all([
-        Comment.updateOne({ _id: commentId }, { $pull: { likes: userId } }),
-        Comment.updateOne({ _id: commentId }, { $push: { dislikes: userId } }),
-      ])
-    } else if (alreadyDisliked) {
-      result = await Comment.updateOne({ _id: commentId }, { $pull: { dislikes: userId } })
-    } else {
-      result = await Comment.updateOne({ _id: commentId }, { $push: { dislikes: userId } })
-    }
-
-    if (result.modifiedCount === 2) {
-      console.log('Two params of comment updated successfully')
-    } else if (result.modifiedCount === 1) {
-      console.log('One param of comment updated successfully')
-    } else {
-      console.log('Comment not found or not updated')
-    }
+    const result = await updateDocument()
+    logResults(result)
   } catch (error) {
     console.error('Error updating comment:', error)
   }
 
   revalidatePath(`/posts/post/${postId}`)
   redirect(`/posts/post/${postId}`)
+
+  async function updateDocument() {
+    async function updateComment() {
+      let updateResult
+      if (alreadyLiked) {
+        updateResult = await Promise.all([
+          Comment.updateOne({ _id: documentId }, { $pull: { likes: userId } }),
+          Comment.updateOne({ _id: documentId }, { $push: { dislikes: userId } }),
+        ])
+      } else if (alreadyDisliked) {
+        updateResult = await Comment.updateOne({ _id: documentId }, { $pull: { dislikes: userId } })
+      } else {
+        updateResult = await Comment.updateOne({ _id: documentId }, { $push: { dislikes: userId } })
+      }
+      return updateResult
+    }
+    async function updatePost() {
+      let updateResult
+      if (alreadyLiked) {
+        updateResult = await Promise.all([
+          Post.updateOne({ _id: documentId }, { $pull: { likes: userId } }),
+          Post.updateOne({ _id: documentId }, { $push: { dislikes: userId } }),
+        ])
+      } else if (alreadyDisliked) {
+        updateResult = await Post.updateOne({ _id: documentId }, { $pull: { dislikes: userId } })
+      } else {
+        updateResult = await Post.updateOne({ _id: documentId }, { $push: { dislikes: userId } })
+      }
+      return updateResult
+    }
+
+    let updateResult
+    if (collection === 'posts') {
+      updateResult = await updatePost()
+    } else if (collection === 'comments') {
+      updateResult = await updateComment()
+    } else {
+      console.error('updateDocument func called with invalid value of collection')
+      return
+    }
+    return updateResult
+  }
+
+  function logResults(result) {
+    if (result[0]?.modifiedCount === 1 && result[1]?.modifiedCount === 1) {
+      console.log('Two params of document updated successfully')
+    } else if (result.modifiedCount === 1) {
+      console.log('One param of document updated successfully')
+    } else {
+      console.log('Document not found or not updated')
+    }
+  }
+
+  async function getDocument() {
+    let doc
+    if (collection === 'posts') {
+      doc = await Post.findOne({ _id: documentId })
+    } else if (collection === 'comments') {
+      doc = await Comment.findOne({ _id: documentId })
+    } else {
+      console.error('like func called with invalid value of collection prop')
+      return
+    }
+    return doc
+  }
 }
 
 export async function countComments(postId) {
-  console.log('counting comments...')
   let totalComments = 0
   const post = await Post.findOne({ _id: postId })
   if (!post || !post.comments) {
@@ -352,6 +403,5 @@ export async function countComments(postId) {
       await countCommentChildren(childId)
     }
   }
-  console.log(`returning summed up number of comments: ${totalComments}`)
   return totalComments
 }
