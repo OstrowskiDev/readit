@@ -15,10 +15,12 @@ export function LikeBtn() {
   const likeCommentWithId = likeComment.bind(null, commentId, postId)
 
   return (
-    <form action={likeCommentWithId} className="p-[3px] rounded-md hover:bg-gray-200">
-      <button className="w-[22px] m-1 flex justify-center items-center">
+    <form action={likeCommentWithId} className="rounded-md  hover:bg-gray-200">
+      <button className="w-11 h-11 px-[10px] py-2 flex justify-center items-center">
         {isAlreadyLiked ? <LikeIcoActive /> : <LikeIco />}
       </button>
     </form>
   )
 }
+
+// w-[28px]

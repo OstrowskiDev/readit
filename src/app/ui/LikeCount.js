@@ -11,9 +11,9 @@ export function LikeCount() {
   return (
     <>
       {score >= 0 ? (
-        <p className="mx-1 font-bold text-gray-900">{score}</p>
+        <p className="m-0 font-bold text-gray-900">{score}</p>
       ) : (
-        <p className="mx-1 font-bold text-red-900">{score}</p>
+        <p className="m-0 font-bold text-red-900">{score}</p>
       )}
     </>
   )

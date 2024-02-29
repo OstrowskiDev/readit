@@ -15,8 +15,8 @@ export function DislikeBtn() {
   const dislikeCommentWithId = dislikeComment.bind(null, commentId, postId)
 
   return (
-    <form action={dislikeCommentWithId} className="p-[3px] rounded-md hover:bg-gray-200">
-      <button className="w-[22px] m-1 pt-1 flex justify-center items-center">
+    <form action={dislikeCommentWithId} className="ml-[1px] rounded-md hover:bg-gray-200">
+      <button className="w-11 h-11 px-[10px] pt-[9px] pb-[7px] flex justify-center items-center">
         {isAlreadyDisliked ? <DislikeIcoActive /> : <DislikeIco />}
       </button>
     </form>
