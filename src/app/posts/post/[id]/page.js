@@ -5,9 +5,9 @@ import { DeletePostBtn } from '@/app/ui/buttons/DeletePostBtn'
 import { Comment } from '@/app/ui/Comment'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/app/api/auth/[...nextauth]/authOptions'
-import { SavePostBtn } from '@/app/ui/buttons/SavePostBtn'
 import { PostFooter } from '@/app/ui/PostFooter'
 import { countComments } from '@/app/lib/actions'
+import { PostOptionsBtn } from '@/app/ui/buttons/PostOptionsBtn'
 
 export default async function PostPage({ params }) {
   const session = await getServerSession(authOptions)
@@ -32,7 +32,7 @@ export default async function PostPage({ params }) {
           <div className="post-top-btns flex gap-2">
             {isPostAuthor && <EditPostBtn postId={postId} />}
             {isPostAuthor && <DeletePostBtn postId={postId} />}
-            <SavePostBtn postId={postId} />
+            <PostOptionsBtn postId={postId} />
           </div>
         </div>
 

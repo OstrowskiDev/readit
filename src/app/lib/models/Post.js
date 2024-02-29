@@ -26,6 +26,14 @@ const postSchema = new mongoose.Schema(
       type: [String],
       default: undefined,
     },
+    likes: {
+      type: [String],
+      default: undefined,
+    },
+    dislikes: {
+      type: [String],
+      default: undefined,
+    },
   },
   { timestamps: true }
 )

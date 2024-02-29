@@ -16,7 +16,6 @@ export function PostFooter({ postId, commentNo }) {
         <div className="post-bottom-btns-left flex items-center gap-3">
           <CommentsCount commentNo={commentNo} />
           <SharePostBtn />
-          <PostOptionsBtn />
         </div>
         <div className="post-bottom-btns-right comment-btn mt-2 flex justify-end">
           <CommentPostBtn

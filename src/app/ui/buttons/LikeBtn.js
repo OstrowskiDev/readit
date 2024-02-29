@@ -1,6 +1,6 @@
 'use client'
 
-import { likeComment } from '@/app/lib/actions'
+import { handleLikeClick } from '@/app/lib/actions'
 import { LikeIco } from '../icons/LikeIco'
 import { LikeIcoActive } from '../icons/LikeIcoActive'
 import { useCommentContext } from '@/app/lib/context/CommentContextProvider'
@@ -11,11 +11,12 @@ export function LikeBtn() {
   const { data: session } = useSession()
   const userId = session?.user?.id
   const isAlreadyLiked = commentLikes?.includes(userId)
+  const collection = 'comments'
 
-  const likeCommentWithId = likeComment.bind(null, commentId, postId)
+  const handleLikeWithId = handleLikeClick.bind(null, commentId, postId, collection)
 
   return (
-    <form action={likeCommentWithId} className="rounded-md  hover:bg-gray-200">
+    <form action={handleLikeWithId} className="rounded-md  hover:bg-gray-200">
       <button className="w-11 h-11 px-[10px] py-2 flex justify-center items-center">
         {isAlreadyLiked ? <LikeIcoActive /> : <LikeIco />}
       </button>

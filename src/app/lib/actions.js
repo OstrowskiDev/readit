@@ -204,44 +204,88 @@ export async function updateComment(commentId, postId, userInput) {
   redirect(`/posts/post/${postId}`)
 }
 
-export async function likeComment(commentId, postId) {
+export async function handleLikeClick(documentId, postId, collection) {
   const session = await getServerSession(authOptions)
   if (!session) signIn()
 
-  const comment = await Comment.findOne({ _id: commentId })
-  if (!comment) return console.error('likeComment func: comment not found')
+  const document = await getDocument()
+  if (!document) return console.error('likeComment func: document not found')
+
+  const userId = session.user.id
+  const alreadyLiked = document.likes?.includes(userId)
+  const alreadyDisliked = document.dislikes?.includes(userId)
 
   try {
     await connectToDatabase()
-    const userId = session.user.id
-    const alreadyLiked = comment.likes?.includes(userId)
-    const alreadyDisliked = comment.dislikes?.includes(userId)
-
-    let result
-    if (alreadyDisliked) {
-      result = await Promise.all([
-        Comment.updateOne({ _id: commentId }, { $pull: { dislikes: userId } }),
-        Comment.updateOne({ _id: commentId }, { $push: { likes: userId } }),
-      ])
-    } else if (alreadyLiked) {
-      result = await Comment.updateOne({ _id: commentId }, { $pull: { likes: userId } })
-    } else {
-      result = await Comment.updateOne({ _id: commentId }, { $push: { likes: userId } })
-    }
-
-    if (result.modifiedCount === 2) {
-      console.log('Two params of comment updated successfully')
-    } else if (result.modifiedCount === 1) {
-      console.log('One param of comment updated successfully')
-    } else {
-      console.log('Comment not found or not updated')
-    }
+    const result = await updateDocument()
+    logResults(result)
   } catch (error) {
-    console.error('Error updating comment:', error)
+    console.error('Error updating document:', error)
   }
 
   revalidatePath(`/posts/post/${postId}`)
   redirect(`/posts/post/${postId}`)
+
+  async function updateDocument() {
+    async function updateComment() {
+      if (alreadyDisliked) {
+        result = await Promise.all([
+          Comment.updateOne({ _id: documentId }, { $pull: { dislikes: userId } }),
+          Comment.updateOne({ _id: documentId }, { $push: { likes: userId } }),
+        ])
+      } else if (alreadyLiked) {
+        result = await Comment.updateOne({ _id: documentId }, { $pull: { likes: userId } })
+      } else {
+        result = await Comment.updateOne({ _id: documentId }, { $push: { likes: userId } })
+      }
+    }
+    async function updatePost() {
+      if (alreadyDisliked) {
+        result = await Promise.all([
+          Post.updateOne({ _id: documentId }, { $pull: { dislikes: userId } }),
+          Post.updateOne({ _id: documentId }, { $push: { likes: userId } }),
+        ])
+      } else if (alreadyLiked) {
+        result = await Post.updateOne({ _id: documentId }, { $pull: { likes: userId } })
+      } else {
+        result = await Post.updateOne({ _id: documentId }, { $push: { likes: userId } })
+      }
+    }
+
+    let updateResult
+    if (collection === 'posts') {
+      updateResult = await updatePost()
+    } else if (collection === 'comments') {
+      updateResult = await updateComment()
+    } else {
+      console.error('updateDocument func called with invalid value of collection')
+      return
+    }
+    return updateResult
+  }
+
+  function logResults(result) {
+    if (result.modifiedCount === 2) {
+      console.log('Two params of document updated successfully')
+    } else if (result.modifiedCount === 1) {
+      console.log('One param of document updated successfully')
+    } else {
+      console.log('Document not found or not updated')
+    }
+  }
+
+  async function getDocument() {
+    let doc
+    if (collection === 'posts') {
+      doc = await Post.findOne({ _id: documentId })
+    } else if (collection === 'comments') {
+      doc = await Comment.findOne({ _id: documentId })
+    } else {
+      console.error('like func called with invalid value of collection prop')
+      return
+    }
+    return doc
+  }
 }
 
 export async function dislikeComment(commentId, postId) {
