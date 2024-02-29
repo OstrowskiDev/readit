@@ -13,8 +13,8 @@ export default async function PostPage({ params }) {
   const session = await getServerSession(authOptions)
   const postId = params.id
   const post = await getPost(postId)
-  const postLikes = post?.likes
-  const postDislikes = post?.dislikes
+  const postLikes = post.likes
+  const postDislikes = post.dislikes
 
   const userId = post['user-id']
   const user = await getUser(userId)
