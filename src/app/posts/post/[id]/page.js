@@ -9,7 +9,7 @@ import { SavePostBtn } from '@/app/ui/buttons/SavePostBtn'
 import { PostFooter } from '@/app/ui/PostFooter'
 import { countComments } from '@/app/lib/actions'
 
-export default async function Page({ params }) {
+export default async function PostPage({ params }) {
   const session = await getServerSession(authOptions)
   const postId = params.id
   const post = await getPost(postId)
