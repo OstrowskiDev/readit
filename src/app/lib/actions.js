@@ -99,9 +99,7 @@ export async function createComment(parentId, postId, userInput) {
     replies: [],
   })
 
-  console.log(parentIsPost)
   if (parentIsPost) newComment.parent.type = 'post'
-  console.log(newComment)
 
   try {
     await connectToDatabase()
@@ -127,15 +125,27 @@ export async function createComment(parentId, postId, userInput) {
   }
 
   revalidatePath(`/posts/post/${postId}`)
-  redirect(`/posts/post/${postId}`)
+  return { state: 'success', message: 'Comment added successfully!' }
 }
 
 export async function deleteComment(commentId, postId) {
+  // pass and check userId to validate if he can delete comment
+  // instead of lines below
+  const session = await getServerSession(authOptions)
+  if (!session) {
+    redirect('/login')
+  }
+
   const commentData = await getComment(commentId)
+  if (!commentData) return console.error('likeComment func: document not found')
+
   const parentType = commentData.parent.type
   const parentId = commentData.parent._id
   const replies = commentData.replies
   const hasReplies = Boolean(replies) && replies.length !== 0
+
+  let message
+  let state
 
   // delete comment if it has no replies
   if (!hasReplies) {
@@ -143,7 +153,9 @@ export async function deleteComment(commentId, postId) {
       await connectToDatabase()
       const deleteComment = await Comment.findByIdAndDelete(commentId)
       if (!deleteComment) {
-        console.error('Comment not found')
+        message = 'Failed to delete comment'
+        state = 'error'
+        return console.error('Comment not found')
       }
       console.log('Comment deleted successfully')
     } catch (error) {
@@ -160,23 +172,31 @@ export async function deleteComment(commentId, postId) {
 
       if (result.modifiedCount === 1) {
         console.log('Comment updated successfully')
+        message = 'Comment deleted successfully'
+        state = 'success'
       } else {
         console.log('Comment not found or not updated')
+        message = 'Failed to delete comment'
+        state = 'error'
       }
     } catch (error) {
       console.error('Error updating comment:', error)
+      message = 'Failed to delete comment'
+      state = 'error'
     }
 
     // soft delete when comment has replies
   } else {
     console.log("comment can't be deleted when it has replies")
+    message = "comment can't be deleted when it has replies"
+    state = 'error'
     // chenge deleted flag to true
     // dont update comment or post children array:
     // comment was not perma deleted so no need
   }
 
-  revalidatePath(`/posts/post/${postId}`)
-  redirect(`/posts/post/${postId}`)
+  // revalidatePath(`/posts/post/${postId}`)
+  return { state: state, message: message }
 }
 
 export async function updateComment(commentId, postId, userInput) {
@@ -201,12 +221,13 @@ export async function updateComment(commentId, postId, userInput) {
   }
 
   revalidatePath(`/posts/post/${postId}`)
-  redirect(`/posts/post/${postId}`)
 }
 
 export async function handleLikeClick(documentId, postId, collection) {
   const session = await getServerSession(authOptions)
-  if (!session) signIn()
+  if (!session) {
+    redirect('/login')
+  }
 
   const document = await getDocument()
   if (!document) return console.error('likeComment func: document not found')
@@ -214,6 +235,8 @@ export async function handleLikeClick(documentId, postId, collection) {
   const userId = session.user.id
   const alreadyLiked = document.likes?.includes(userId)
   const alreadyDisliked = document.dislikes?.includes(userId)
+
+  let message
 
   try {
     await connectToDatabase()
@@ -224,7 +247,7 @@ export async function handleLikeClick(documentId, postId, collection) {
   }
 
   revalidatePath(`/posts/post/${postId}`)
-  redirect(`/posts/post/${postId}`)
+  return { state: 'success', message: message }
 
   async function updateDocument() {
     async function updateComment() {
@@ -234,10 +257,13 @@ export async function handleLikeClick(documentId, postId, collection) {
           Comment.updateOne({ _id: documentId }, { $pull: { dislikes: userId } }),
           Comment.updateOne({ _id: documentId }, { $push: { likes: userId } }),
         ])
+        message = 'Like added successfully!'
       } else if (alreadyLiked) {
         updateResult = await Comment.updateOne({ _id: documentId }, { $pull: { likes: userId } })
+        message = 'Like removed successfully!'
       } else {
         updateResult = await Comment.updateOne({ _id: documentId }, { $push: { likes: userId } })
+        message = 'Like added successfully!'
       }
       return updateResult
     }
@@ -248,10 +274,13 @@ export async function handleLikeClick(documentId, postId, collection) {
           Post.updateOne({ _id: documentId }, { $pull: { dislikes: userId } }),
           Post.updateOne({ _id: documentId }, { $push: { likes: userId } }),
         ])
+        message = 'Like added successfully!'
       } else if (alreadyLiked) {
         updateResult = await Post.updateOne({ _id: documentId }, { $pull: { likes: userId } })
+        message = 'Like removed successfully!'
       } else {
         updateResult = await Post.updateOne({ _id: documentId }, { $push: { likes: userId } })
+        message = 'Like added successfully!'
       }
       return updateResult
     }
@@ -263,6 +292,7 @@ export async function handleLikeClick(documentId, postId, collection) {
       updateResult = await updateComment()
     } else {
       console.error('updateDocument func called with invalid value of collection')
+      message = 'action failed'
       return
     }
     return updateResult
@@ -275,6 +305,7 @@ export async function handleLikeClick(documentId, postId, collection) {
       console.log('One param of document updated successfully')
     } else {
       console.log('Document not found or not updated')
+      message = 'action failed'
     }
   }
 
@@ -303,6 +334,8 @@ export async function handleDislikeClick(documentId, postId, collection) {
   const alreadyLiked = document.likes?.includes(userId)
   const alreadyDisliked = document.dislikes?.includes(userId)
 
+  let message
+
   try {
     await connectToDatabase()
     const result = await updateDocument()
@@ -312,7 +345,7 @@ export async function handleDislikeClick(documentId, postId, collection) {
   }
 
   revalidatePath(`/posts/post/${postId}`)
-  redirect(`/posts/post/${postId}`)
+  return { state: 'success', message: message }
 
   async function updateDocument() {
     async function updateComment() {
@@ -322,10 +355,13 @@ export async function handleDislikeClick(documentId, postId, collection) {
           Comment.updateOne({ _id: documentId }, { $pull: { likes: userId } }),
           Comment.updateOne({ _id: documentId }, { $push: { dislikes: userId } }),
         ])
+        message = 'Dislike added successfully!'
       } else if (alreadyDisliked) {
         updateResult = await Comment.updateOne({ _id: documentId }, { $pull: { dislikes: userId } })
+        message = 'Dislike removed successfully!'
       } else {
         updateResult = await Comment.updateOne({ _id: documentId }, { $push: { dislikes: userId } })
+        message = 'Dislike added successfully!'
       }
       return updateResult
     }
@@ -336,10 +372,13 @@ export async function handleDislikeClick(documentId, postId, collection) {
           Post.updateOne({ _id: documentId }, { $pull: { likes: userId } }),
           Post.updateOne({ _id: documentId }, { $push: { dislikes: userId } }),
         ])
+        message = 'Dislike added successfully!'
       } else if (alreadyDisliked) {
         updateResult = await Post.updateOne({ _id: documentId }, { $pull: { dislikes: userId } })
+        message = 'Dislike removed successfully!'
       } else {
         updateResult = await Post.updateOne({ _id: documentId }, { $push: { dislikes: userId } })
+        message = 'Dislike added successfully!'
       }
       return updateResult
     }

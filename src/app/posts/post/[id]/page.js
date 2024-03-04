@@ -8,6 +8,8 @@ import { authOptions } from '@/app/api/auth/[...nextauth]/authOptions'
 import { PostFooter } from '@/app/ui/PostFooter'
 import { countComments } from '@/app/lib/actions'
 import { PostOptionsBtn } from '@/app/ui/buttons/PostOptionsBtn'
+import { Toaster } from 'sonner'
+import { postToastOption } from '@/app/lib/toastOptions'
 
 export default async function PostPage({ params }) {
   const session = await getServerSession(authOptions)
@@ -60,6 +62,9 @@ export default async function PostPage({ params }) {
             </div>
           </div>
         )}
+
+        {/* Post toaster section */}
+        <Toaster richColors position="bottom-center" toastOptions={postToastOption} />
       </div>
     </div>
   )

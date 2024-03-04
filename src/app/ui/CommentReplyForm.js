@@ -3,25 +3,60 @@
 import { createComment } from '@/app/lib/actions'
 import { useState } from 'react'
 import { useCommentContext } from '../lib/context/CommentContextProvider'
+import { toast } from 'sonner'
+import { useFormState, useFormStatus } from 'react-dom'
+import { useEffect } from 'react'
+import { Loader } from './Loader'
 
 export function CommentReplyForm() {
   const { isVisible, setIsVisible, commentId, postId } = useCommentContext()
   const [input, setInput] = useState('')
   const parentId = commentId
 
-  function onCancelClick() {
-    setIsVisible(!isVisible)
+  const [submition, formAction] = useFormState(() => createComment(parentId, postId, input), {
+    state: null,
+    message: null,
+  })
+
+  useEffect(() => {
+    if (submition.state === 'success') {
+      toast.success(submition.message)
+      setIsVisible(!isVisible)
+      setInput('')
+    }
+    if (submition.state === 'error') {
+      toast.error(submition.message)
+      setIsVisible(!isVisible)
+      setInput('')
+    }
+  }, [submition])
+
+  function SubmitButton() {
+    const { pending } = useFormStatus()
+
+    return (
+      <button className="comment-reply-submit-btn btn-blue py-1 px-2 mx-2 mt-1" type="submit">
+        Comment
+        {pending && <Loader />}
+      </button>
+    )
   }
 
-  function onSubmit() {
-    setIsVisible(!isVisible)
-    createComment(parentId, postId, input)
-    setInput('')
+  function CancelButton() {
+    return (
+      <button
+        className="comment-reply-cancel-btn btn-gray py-1 px-2 mt-1"
+        type="button"
+        onClick={() => setIsVisible(!isVisible)}
+      >
+        Cancel
+      </button>
+    )
   }
 
   return (
     <div className="comment-reply-form change-border-on-child-focus p-2 ml-4 mr-1 my-1 bg-white border border-slate-300 rounded-lg">
-      <form>
+      <form action={formAction}>
         <textarea
           id="content"
           name="content"
@@ -31,20 +66,8 @@ export function CommentReplyForm() {
           onChange={(e) => setInput(e.target.value)}
         />
         <div className="comment-reply-btns flex justify-end">
-          <button
-            className="comment-reply-cancel-btn btn-gray py-1 px-2 mt-1"
-            type="button"
-            onClick={onCancelClick}
-          >
-            Cancel
-          </button>
-          <button
-            className="comment-reply-submit-btn btn-blue py-1 px-2 mx-2 mt-1"
-            type="button"
-            onClick={onSubmit}
-          >
-            Comment
-          </button>
+          <CancelButton />
+          <SubmitButton />
         </div>
       </form>
     </div>

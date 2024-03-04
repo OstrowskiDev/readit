@@ -13,7 +13,7 @@ export function CommentMenuBtn() {
   }
 
   function handleDocumentClick(e) {
-    if (!e.target.closest('.menu-btn')) {
+    if (!e.target.closest('.menu-btn-conatainer')) {
       setIsMenuVisible(false)
       document.removeEventListener('click', handleDocumentClick)
     }
@@ -33,6 +33,7 @@ export function CommentMenuBtn() {
       {isMenuVisible && (
         <CommentOptMenu isMenuVisible={isMenuVisible} setIsMenuVisible={setIsMenuVisible} />
       )}
+      {/* <CommentOptMenu isMenuVisible={isMenuVisible} setIsMenuVisible={setIsMenuVisible} /> */}
     </div>
   )
 }

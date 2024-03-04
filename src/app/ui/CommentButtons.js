@@ -9,9 +9,11 @@ import { CommentMenuBtn } from './buttons/CommentMenuBtn'
 import { CommentReplyForm } from './CommentReplyForm'
 import { CommentEditForm } from './CommentEditForm'
 import { useCommentContext } from '../lib/context/CommentContextProvider'
+import { DeleteCommentBtn } from './buttons/DeleteCommentBtn'
 
 export function CommentButtons() {
   const { isVisible, isEditVisible } = useCommentContext()
+
   return (
     <>
       <div className="comment-btns-container flex items-center ml-4">
@@ -20,6 +22,8 @@ export function CommentButtons() {
         <DislikeBtn className="comment-btn-dislike" />
         <ReplyBtn className="comment-btn-reply" />
         <ShareCommentBtn className="comment-btn-share" />
+        <DeleteCommentBtn />
+
         <CommentMenuBtn className="comment-btn-menu" />
       </div>
       {isVisible && <CommentReplyForm className="comment-reply-form" />}
