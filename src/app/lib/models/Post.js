@@ -12,7 +12,7 @@ const postSchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
-    'user-id': {
+    user_id: {
       type: String,
       required: true,
     },

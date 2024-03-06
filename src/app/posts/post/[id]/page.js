@@ -6,7 +6,7 @@ import { EditPostBtn } from '@/app/ui/buttons/EditPostBtn'
 import { DeletePostBtn } from '@/app/ui/buttons/DeletePostBtn'
 import { Comment } from '@/app/ui/Comment'
 import { PostFooter } from '@/app/ui/PostFooter'
-import { countComments, getPostComments } from '@/app/lib/actions'
+import { getCommentsAndAuthors } from '@/app/lib/actions'
 import { PostOptionsBtn } from '@/app/ui/buttons/PostOptionsBtn'
 import { Toaster } from 'sonner'
 import { postToastOption } from '@/app/lib/toastOptions'
@@ -21,30 +21,31 @@ export default function PostPage({ params }) {
   const [post, setPost] = useState(null)
   const [user, setUser] = useState(null)
   const [comments, setComments] = useState(null)
+  const [authors, setAuthors] = useState(null)
 
   useEffect(() => {
     async function fetchData() {
       const postData = await getPost(postId)
       setPost(postData)
 
-      const userData = await getUser(postData['user-id'])
+      const userData = await getUser(postData.user_id)
       setUser(userData)
 
-      const allPostComments = await getPostComments(postId)
-      setComments(allPostComments)
+      const [commentsArr, authorsArr] = await getCommentsAndAuthors(postId)
+      setComments(commentsArr)
+      setAuthors(authorsArr)
     }
 
     fetchData()
   }, [])
 
   if (!post || !user || !comments) {
-    // return null
     return <Loader />
   }
 
   const postLikes = post.likes
   const postDislikes = post.dislikes
-  const userId = post['user-id']
+  const userId = post.user_id
   const sessionUserId = session?.user.id
   const isPostAuthor = userId === sessionUserId
 
@@ -62,13 +63,12 @@ export default function PostPage({ params }) {
         </div>
 
         {/* Post body */}
-        <PostAuthor className="post-body-author" userId={post['user-id']} userName={user.name} />
+        <PostAuthor className="post-body-author" userId={post.user_id} userName={user.name} />
         <pre className="post-body-text font-sans whitespace-pre-wrap">{post.content}</pre>
 
         {/* Post footer */}
         <PostFooter
           postId={postId}
-          // commentNo={commentNo}
           commentNo={comments.length}
           postLikes={postLikes}
           postDislikes={postDislikes}
@@ -83,6 +83,7 @@ export default function PostPage({ params }) {
                 <Comment
                   key={commentId}
                   comments={comments}
+                  authors={authors}
                   commentId={commentId}
                   depth={0}
                   postId={postId}

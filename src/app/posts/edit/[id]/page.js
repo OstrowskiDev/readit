@@ -23,7 +23,7 @@ export default function Page() {
         setFormData({
           _id: post._id,
           title: post.title,
-          user: post['user-id'],
+          user: post.user_id,
           content: post.content,
         })
       } catch (error) {

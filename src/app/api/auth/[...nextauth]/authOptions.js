@@ -8,7 +8,7 @@ export const authOptions = {
   },
   callbacks: {
     jwt({ token, user }) {
-      if (user) token.userId = user['user-id']
+      if (user) token.userId = user._id
       return token
     },
     session({ session, token }) {

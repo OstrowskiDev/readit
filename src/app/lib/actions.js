@@ -2,6 +2,7 @@
 
 import Post from './models/Post'
 import Comment from './models/Comment'
+import User from './models/User'
 import { v4 as uuidv4 } from 'uuid'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
@@ -25,7 +26,7 @@ export async function createPost(formData) {
   const newPost = new Post({
     _id: uuid,
     title: title,
-    'user-id': userId,
+    user_id: userId,
     content: content,
   })
 
@@ -47,7 +48,7 @@ export async function updatePost(postId, formData) {
 
   const updatedData = new Post({
     title: title,
-    'user-id': formData.get('user'),
+    user_id: formData.get('user'),
     content: content,
   })
 
@@ -438,34 +439,9 @@ export async function handleDislikeClick(documentId, postId, collection) {
   }
 }
 
-export async function countComments(postId) {
-  let totalComments = 0
-  const post = await Post.findOne({ _id: postId })
-  if (!post || !post.comments) {
-    console.log("Post not found or doesn't have comments")
-    return totalComments
-  }
-  const postChildrenIds = post.comments
-  totalComments += postChildrenIds.length
-  for (const postChildId of postChildrenIds) {
-    await countCommentChildren(postChildId)
-  }
-  async function countCommentChildren(commentId) {
-    const comment = await Comment.findOne({ _id: commentId })
-    if (!comment || !comment.replies) {
-      return
-    }
-    const childrenIds = comment.replies
-    totalComments += childrenIds.length
-    for (const childId of childrenIds) {
-      await countCommentChildren(childId)
-    }
-  }
-  return totalComments
-}
-
-export async function getPostComments(postId) {
+export async function getCommentsAndAuthors(postId) {
   const comments = []
+  const authors = []
 
   const post = await Post.findOne({ _id: postId })
   if (!post || !post.comments) {
@@ -490,13 +466,20 @@ export async function getPostComments(postId) {
     const plainComment = comment.toObject()
     comments.push(plainComment)
 
+    const userId = comment.user_id
+    if (!authors.find((user) => user._id === userId)) {
+      const author = await User.findOne({ _id: userId })
+      const plainAuthor = author.toObject()
+      authors.push(plainAuthor)
+    }
+
     const childrenIds = comment.replies
     for (const childId of childrenIds) {
       await getCommentChildren(childId)
     }
   }
 
-  return comments
+  return [comments, authors]
 }
 
 function setToast(status, message) {

@@ -1,12 +1,12 @@
 import { NextResponse } from 'next/server'
 import { connectToDatabase } from '@/app/lib/db'
-import Users from '@/app/lib/models/Users'
+import User from '@/app/lib/models/User'
 
 export async function GET(request, { params }) {
   const email = params.email
   try {
     await connectToDatabase()
-    const user = await Users.findOne({ email: email })
+    const user = await User.findOne({ email: email })
     if (user) {
       return new NextResponse(JSON.stringify(user), { status: 200 })
     } else {

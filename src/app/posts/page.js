@@ -2,10 +2,9 @@ import PostCard from '../ui/PostCard'
 import PostsSearch from '../ui/PostsSearch'
 import CreateBtn from '../ui/buttons/CreateBtn'
 import sanitizeHtml from 'sanitize-html'
-import { getPosts, getUsers, getData } from '../lib/db'
+import { getPosts, getUsers } from '../lib/db'
 
 export default async function Page({ searchParams }) {
-  // const [posts, users] = await getData()
   const posts = await getPosts()
   const users = await getUsers()
   const dirtyQuery = searchParams?.query || ''
@@ -28,10 +27,8 @@ export default async function Page({ searchParams }) {
             key={post._id}
             _id={post._id}
             title={post.title}
-            user_id={post['user-id']}
-            user_name={
-              users.find((user) => user['user-id'] === post['user-id'])?.name || 'Unknown User'
-            }
+            user_id={post.user_id}
+            user_name={users.find((user) => user._id === post.user_id)?.name || 'Unknown User'}
             content={post.content}
           />
         ))}

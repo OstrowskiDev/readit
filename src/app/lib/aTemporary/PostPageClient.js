@@ -28,7 +28,7 @@ export default async function PostPage({ params }) {
       const postData = await getPost(postId)
       setPost(postData)
 
-      const userData = await getUser(postData['user-id'])
+      const userData = await getUser(postData.user_id)
       setUser(userData)
 
       const calcNoComments = await countComments(postId)
@@ -44,7 +44,7 @@ export default async function PostPage({ params }) {
 
   const postLikes = post.likes
   const postDislikes = post.dislikes
-  const userId = post['user-id']
+  const userId = post.user_id
   const sessionUserId = session?.user.id
   const isPostAuthor = userId === sessionUserId
 
@@ -62,7 +62,7 @@ export default async function PostPage({ params }) {
         </div>
 
         {/* Post body */}
-        <PostAuthor className="post-body-author" userId={post['user-id']} userName={user.name} />
+        <PostAuthor className="post-body-author" userId={post.user_id} userName={user.name} />
         <pre className="post-body-text font-sans whitespace-pre-wrap">{post.content}</pre>
 
         {/* Post footer */}

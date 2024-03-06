@@ -45,8 +45,6 @@ export function DeleteCommentBtn({ setIsMenuVisible }) {
     )
   }
 
-  // return <form action={formAction}>{isUsersComment && <SubmitButton />}</form>
-
   return (
     <form action={formAction}>
       <SubmitButton />

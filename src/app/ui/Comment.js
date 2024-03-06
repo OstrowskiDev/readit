@@ -3,30 +3,13 @@
 import { CommentBtnsContextWrapper } from '../lib/context/CommentBtnsContextWrapper'
 
 // Render comment and its replies recursively
-export function Comment({ comments, commentId, depth, postId }) {
-  console.log(comments)
+export function Comment({ authors, comments, commentId, depth, postId }) {
   if (!comments) return null
   const comment = comments.find((comment) => comment._id === commentId)
-  console.log(comment)
+
+  if (!comment || !authors) return null
   const authorId = comment.user_id
-
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     // const commentData = await getComment(commentId)
-  //     // setComment(commentData)
-  //     // const authorId = commentData.user_id
-  //     const authorData = await getUser(authorId)
-  //     setCommentAuthor(authorData)
-  //   }
-  //   fetchData()
-  // }, [])
-
-  // const comment = await getComment(commentId)
-  if (!comment || !authorId) return null
-  // const commentAuthorId = comment.user_id
-  // const commentAuthor = await getUser(commentAuthorId)
-  // const commentAuthorId = comment.user_id
-  const commentAuthorId = comment.user_id
+  const author = authors.find((author) => author._id === authorId)
   const commentLikes = comment.likes
   const commentDislikes = comment.dislikes
 
@@ -36,8 +19,7 @@ export function Comment({ comments, commentId, depth, postId }) {
       <div className="comment-main-content-container w-full">
         <div className="comment-username-container relative right-6 flex items-center">
           <div className="comment-avatar w-8 h-8 bg-blue-400 rounded-md"></div>
-          {/* <p className="comment-author ml-1 text-blue-900">{commentAuthor.name}</p> */}
-          <p className="comment-author ml-1 text-blue-900">Chad Faker</p>
+          <p className="comment-author ml-1 text-blue-900">{author.name}</p>
         </div>
         <div className="comment-body-container ml-4">
           <pre className="comment-body mt-1 text-lg font-sans whitespace-pre-wrap">
@@ -47,7 +29,6 @@ export function Comment({ comments, commentId, depth, postId }) {
         <CommentBtnsContextWrapper
           commentId={commentId}
           postId={postId}
-          // authorId={commentAuthorId}
           authorId={authorId}
           commentLikes={commentLikes}
           commentDislikes={commentDislikes}
@@ -57,6 +38,7 @@ export function Comment({ comments, commentId, depth, postId }) {
           {comment.replies.map((replyId) => (
             <Comment
               key={replyId}
+              authors={authors}
               comments={comments}
               commentId={replyId}
               depth={depth + 1}

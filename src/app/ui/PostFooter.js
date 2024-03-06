@@ -24,7 +24,7 @@ export function PostFooter({ postId, commentNo, postLikes, postDislikes }) {
           </div>
           <SharePostBtn />
         </div>
-        <div className="post-bottom-btns-right comment-btn mt-2 flex justify-end">
+        <div className="post-bottom-btns-right comment-btn flex justify-end min-w-36">
           <CommentPostBtn
             isCommentFormVisible={isCommentFormVisible}
             setIsCommentFormVisible={setIsCommentFormVisible}
