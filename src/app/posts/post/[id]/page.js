@@ -12,7 +12,7 @@ import { Toaster } from 'sonner'
 import { postToastOption } from '@/app/lib/toastOptions'
 import { useSession } from 'next-auth/react'
 import { useEffect, useState } from 'react'
-// import { Loader } from '@/app/ui/Loader'
+import { Loader } from '@/app/ui/Loader'
 
 export default function PostPage({ params }) {
   const { data: session } = useSession()
@@ -21,7 +21,6 @@ export default function PostPage({ params }) {
   const [post, setPost] = useState(null)
   const [user, setUser] = useState(null)
   const [comments, setComments] = useState(null)
-  // const [commentNo, setCommentNo] = useState(0)
 
   useEffect(() => {
     async function fetchData() {
@@ -33,20 +32,14 @@ export default function PostPage({ params }) {
 
       const allPostComments = await getPostComments(postId)
       setComments(allPostComments)
-
-      console.log(allPostComments)
-      console.log(allPostComments[0])
-
-      // const calcNoComments = await countComments(postId)
-      // setCommentNo(calcNoComments)
     }
 
     fetchData()
   }, [])
 
-  if (!post || !user) {
-    return null
-    // return <Loader />
+  if (!post || !user || !comments) {
+    // return null
+    return <Loader />
   }
 
   const postLikes = post.likes
@@ -76,7 +69,7 @@ export default function PostPage({ params }) {
         <PostFooter
           postId={postId}
           // commentNo={commentNo}
-          commentNo={777}
+          commentNo={comments.length}
           postLikes={postLikes}
           postDislikes={postDislikes}
         />
