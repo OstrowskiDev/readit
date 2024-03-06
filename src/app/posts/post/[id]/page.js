@@ -1,30 +1,59 @@
+'use client'
+
 import { getPost, getUser } from '@/app/lib/db'
 import PostAuthor from '@/app/ui/PostAuthor'
 import { EditPostBtn } from '@/app/ui/buttons/EditPostBtn'
 import { DeletePostBtn } from '@/app/ui/buttons/DeletePostBtn'
 import { Comment } from '@/app/ui/Comment'
-import { getServerSession } from 'next-auth'
-import { authOptions } from '@/app/api/auth/[...nextauth]/authOptions'
 import { PostFooter } from '@/app/ui/PostFooter'
-import { countComments } from '@/app/lib/actions'
+import { countComments, getPostComments } from '@/app/lib/actions'
 import { PostOptionsBtn } from '@/app/ui/buttons/PostOptionsBtn'
 import { Toaster } from 'sonner'
 import { postToastOption } from '@/app/lib/toastOptions'
+import { useSession } from 'next-auth/react'
+import { useEffect, useState } from 'react'
+// import { Loader } from '@/app/ui/Loader'
 
-export default async function PostPage({ params }) {
-  const session = await getServerSession(authOptions)
+export default function PostPage({ params }) {
+  const { data: session } = useSession()
   const postId = params.id
-  const post = await getPost(postId)
+
+  const [post, setPost] = useState(null)
+  const [user, setUser] = useState(null)
+  const [comments, setComments] = useState(null)
+  // const [commentNo, setCommentNo] = useState(0)
+
+  useEffect(() => {
+    async function fetchData() {
+      const postData = await getPost(postId)
+      setPost(postData)
+
+      const userData = await getUser(postData['user-id'])
+      setUser(userData)
+
+      const allPostComments = await getPostComments(postId)
+      setComments(allPostComments)
+
+      console.log(allPostComments)
+      console.log(allPostComments[0])
+
+      // const calcNoComments = await countComments(postId)
+      // setCommentNo(calcNoComments)
+    }
+
+    fetchData()
+  }, [])
+
+  if (!post || !user) {
+    return null
+    // return <Loader />
+  }
+
   const postLikes = post.likes
   const postDislikes = post.dislikes
-
   const userId = post['user-id']
-  const user = await getUser(userId)
-
   const sessionUserId = session?.user.id
   const isPostAuthor = userId === sessionUserId
-
-  const commentNo = await countComments(postId)
 
   return (
     <div className="w-full flex justify-center my-8 px-4">
@@ -46,7 +75,8 @@ export default async function PostPage({ params }) {
         {/* Post footer */}
         <PostFooter
           postId={postId}
-          commentNo={commentNo}
+          // commentNo={commentNo}
+          commentNo={777}
           postLikes={postLikes}
           postDislikes={postDislikes}
         />
@@ -57,7 +87,13 @@ export default async function PostPage({ params }) {
             <h3 className="comments-header text-lg pt-1 font-semibold">Comments:</h3>
             <div className="comments-list bg-gray-100 pl-8 pr-3 pb-6 mt-1 rounded-md">
               {post.comments?.map((commentId) => (
-                <Comment commentId={commentId} depth={0} postId={postId} />
+                <Comment
+                  key={commentId}
+                  comments={comments}
+                  commentId={commentId}
+                  depth={0}
+                  postId={postId}
+                />
               ))}
             </div>
           </div>

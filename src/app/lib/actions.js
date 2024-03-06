@@ -464,6 +464,41 @@ export async function countComments(postId) {
   return totalComments
 }
 
+export async function getPostComments(postId) {
+  const comments = []
+
+  const post = await Post.findOne({ _id: postId })
+  if (!post || !post.comments) {
+    console.log("Post not found or doesn't have comments")
+    return comments
+  }
+
+  const postChildrenIds = post.comments
+
+  for (const postChildId of postChildrenIds) {
+    await getCommentChildren(postChildId)
+  }
+
+  async function getCommentChildren(commentId) {
+    const comment = await Comment.findOne({ _id: commentId })
+    if (!comment || !comment.replies) {
+      return
+    }
+
+    // convert Mongoose document to plain JS object
+    // so it can be passed as props
+    const plainComment = comment.toObject()
+    comments.push(plainComment)
+
+    const childrenIds = comment.replies
+    for (const childId of childrenIds) {
+      await getCommentChildren(childId)
+    }
+  }
+
+  return comments
+}
+
 function setToast(status, message) {
   toastStatus = status
   toastMessage = message
