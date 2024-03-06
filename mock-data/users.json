@@ -5,7 +5,7 @@
     "address": "123 Main Street, Cityville",
     "email": "alice.johnson@example.com",
     "phone": "+1234567890",
-    "user-id": "ad4fc3a1-0e2c-46e8-9d31-d3d2c66d9ac2"
+    "_id": "ad4fc3a1-0e2c-46e8-9d31-d3d2c66d9ac2"
   },
   {
     "name": "Bob Smith",
@@ -13,7 +13,7 @@
     "address": "456 Oak Avenue, Townsville",
     "email": "bob.smith@example.com",
     "phone": "+9876543210",
-    "user-id": "9e75c601-4ef2-4e85-b7de-3eb3a88299b9"
+    "_id": "9e75c601-4ef2-4e85-b7de-3eb3a88299b9"
   },
   {
     "name": "Charlie Brown",
@@ -21,7 +21,7 @@
     "address": "789 Pine Road, Villageton",
     "email": "charlie.brown@example.com",
     "phone": "+1122334455",
-    "user-id": "27278885-d8b4-4198-9a6f-4a61b145f206"
+    "_id": "27278885-d8b4-4198-9a6f-4a61b145f206"
   },
   {
     "name": "Diana Miller",
@@ -29,7 +29,7 @@
     "address": "101 Elm Street, Hamletville",
     "email": "diana.miller@example.com",
     "phone": "+9988776655",
-    "user-id": "ef3a0f16-1409-4e9a-b6a5-daf44d2b947c"
+    "_id": "ef3a0f16-1409-4e9a-b6a5-daf44d2b947c"
   },
   {
     "name": "Edward Davis",
@@ -37,7 +37,7 @@
     "address": "202 Birch Lane, Countryside",
     "email": "edward.davis@example.com",
     "phone": "+1122334455",
-    "user-id": "1a460586-e61b-4a69-bc9e-f7fc02e0ac09"
+    "_id": "1a460586-e61b-4a69-bc9e-f7fc02e0ac09"
   },
   {
     "name": "Fiona Wilson",
@@ -45,6 +45,6 @@
     "address": "303 Cedar Street, Riverside",
     "email": "fiona.wilson@example.com",
     "phone": "+9988776655",
-    "user-id": "fb1a4e9e-4e24-4c07-b749-d775f1c3e20c"
+    "_id": "fb1a4e9e-4e24-4c07-b749-d775f1c3e20c"
   }
 ]
