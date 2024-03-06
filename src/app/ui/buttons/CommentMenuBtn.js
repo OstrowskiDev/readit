@@ -33,7 +33,6 @@ export function CommentMenuBtn() {
       {isMenuVisible && (
         <CommentOptMenu isMenuVisible={isMenuVisible} setIsMenuVisible={setIsMenuVisible} />
       )}
-      {/* <CommentOptMenu isMenuVisible={isMenuVisible} setIsMenuVisible={setIsMenuVisible} /> */}
     </div>
   )
 }

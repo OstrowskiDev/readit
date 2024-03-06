@@ -10,6 +10,9 @@ import { validatePostContent, validatePostTitle } from './validation'
 import { getServerSession } from 'next-auth/next'
 import { authOptions } from '@/app/api/auth/[...nextauth]/authOptions'
 
+let toastStatus
+let toastMessage
+
 export async function createPost(formData) {
   const session = await getServerSession(authOptions)
   const userId = session.user.id
@@ -87,19 +90,20 @@ export async function createComment(parentId, postId, userInput) {
   const content = validatePostContent(userInput)
   const newCommentId = uuid
   const parentIsPost = parentId === postId
+  const documentType = parentIsPost ? 'post' : 'comment'
+
+  resetToast()
 
   const newComment = new Comment({
     _id: newCommentId,
     user_id: session.user.id,
     parent: {
-      type: 'comment',
+      type: documentType,
       _id: parentId,
     },
     content: content,
     replies: [],
   })
-
-  if (parentIsPost) newComment.parent.type = 'post'
 
   try {
     await connectToDatabase()
@@ -116,16 +120,19 @@ export async function createComment(parentId, postId, userInput) {
       : await Comment.updateOne({ _id: parentId }, { $push: { replies: newCommentId } })
 
     if (result.modifiedCount === 1) {
-      console.log('Post/Comment updated successfully')
+      setToast('success', `${documentType} created successfully!`)
+      console.log(`${documentType} updated successfully`)
     } else {
-      console.log('Post/Comment not found or not updated')
+      setToast('error', `Failed to create ${documentType}`)
+      console.log(`${documentType} not found or not updated`)
     }
   } catch (error) {
-    console.error('Error updating post/comment:', error)
+    setToast('error', `Failed to create ${documentType}`)
+    console.error(`Error updating {documentType}:`, error)
   }
 
   revalidatePath(`/posts/post/${postId}`)
-  return { state: 'success', message: 'Comment added successfully!' }
+  return returnToast(toastStatus, toastMessage)
 }
 
 export async function deleteComment(commentId, postId) {
@@ -144,8 +151,7 @@ export async function deleteComment(commentId, postId) {
   const replies = commentData.replies
   const hasReplies = Boolean(replies) && replies.length !== 0
 
-  let message
-  let state
+  resetToast()
 
   // delete comment if it has no replies
   if (!hasReplies) {
@@ -153,13 +159,15 @@ export async function deleteComment(commentId, postId) {
       await connectToDatabase()
       const deleteComment = await Comment.findByIdAndDelete(commentId)
       if (!deleteComment) {
-        message = 'Failed to delete comment'
-        state = 'error'
-        return console.error('Comment not found')
+        setToast('error', 'Failed to delete comment')
+        console.error('Comment not found')
+        return
       }
       console.log('Comment deleted successfully')
     } catch (error) {
+      setToast('error', 'Failed to delete comment')
       console.error('Error deleting comment:', error)
+      return
     }
 
     //update parent children list
@@ -172,31 +180,27 @@ export async function deleteComment(commentId, postId) {
 
       if (result.modifiedCount === 1) {
         console.log('Comment updated successfully')
-        message = 'Comment deleted successfully'
-        state = 'success'
+        setToast('success', 'Comment deleted successfully')
       } else {
         console.log('Comment not found or not updated')
-        message = 'Failed to delete comment'
-        state = 'error'
+        setToast('error', 'Failed to delete comment')
       }
     } catch (error) {
       console.error('Error updating comment:', error)
-      message = 'Failed to delete comment'
-      state = 'error'
+      setToast('error', 'Failed to delete comment')
     }
 
     // soft delete when comment has replies
   } else {
     console.log("comment can't be deleted when it has replies")
-    message = "comment can't be deleted when it has replies"
-    state = 'error'
+    setToast('error', "Comment can't be deleted when it has replies")
+
     // chenge deleted flag to true
     // dont update comment or post children array:
     // comment was not perma deleted so no need
   }
 
-  // revalidatePath(`/posts/post/${postId}`)
-  return { state: state, message: message }
+  return { state: toastStatus, message: toastMessage }
 }
 
 export async function updateComment(commentId, postId, userInput) {
@@ -225,29 +229,33 @@ export async function updateComment(commentId, postId, userInput) {
 
 export async function handleLikeClick(documentId, postId, collection) {
   const session = await getServerSession(authOptions)
-  if (!session) {
-    redirect('/login')
-  }
+  if (!session) redirect('/login')
+
+  resetToast()
 
   const document = await getDocument()
-  if (!document) return console.error('likeComment func: document not found')
-
+  if (!document) {
+    setToast('error', 'Failed updating like')
+    console.error('likeComment func: document not found')
+    return returnToast(toastStatus, toastMessage)
+  }
   const userId = session.user.id
   const alreadyLiked = document.likes?.includes(userId)
   const alreadyDisliked = document.dislikes?.includes(userId)
 
-  let message
+  resetToast()
 
   try {
     await connectToDatabase()
     const result = await updateDocument()
     logResults(result)
   } catch (error) {
+    setToast('error', 'Failed updating like')
     console.error('Error updating document:', error)
   }
 
   revalidatePath(`/posts/post/${postId}`)
-  return { state: 'success', message: message }
+  return returnToast(toastStatus, toastMessage)
 
   async function updateDocument() {
     async function updateComment() {
@@ -257,13 +265,13 @@ export async function handleLikeClick(documentId, postId, collection) {
           Comment.updateOne({ _id: documentId }, { $pull: { dislikes: userId } }),
           Comment.updateOne({ _id: documentId }, { $push: { likes: userId } }),
         ])
-        message = 'Like added successfully!'
+        setToast('success', 'Like added successfully!')
       } else if (alreadyLiked) {
         updateResult = await Comment.updateOne({ _id: documentId }, { $pull: { likes: userId } })
-        message = 'Like removed successfully!'
+        setToast('success', 'Like removed successfully!')
       } else {
         updateResult = await Comment.updateOne({ _id: documentId }, { $push: { likes: userId } })
-        message = 'Like added successfully!'
+        setToast('success', 'Like added successfully!')
       }
       return updateResult
     }
@@ -274,13 +282,13 @@ export async function handleLikeClick(documentId, postId, collection) {
           Post.updateOne({ _id: documentId }, { $pull: { dislikes: userId } }),
           Post.updateOne({ _id: documentId }, { $push: { likes: userId } }),
         ])
-        message = 'Like added successfully!'
+        setToast('success', 'Like added successfully!')
       } else if (alreadyLiked) {
         updateResult = await Post.updateOne({ _id: documentId }, { $pull: { likes: userId } })
-        message = 'Like removed successfully!'
+        setToast('success', 'Like removed successfully!')
       } else {
         updateResult = await Post.updateOne({ _id: documentId }, { $push: { likes: userId } })
-        message = 'Like added successfully!'
+        setToast('success', 'Like added successfully!')
       }
       return updateResult
     }
@@ -291,8 +299,8 @@ export async function handleLikeClick(documentId, postId, collection) {
     } else if (collection === 'comments') {
       updateResult = await updateComment()
     } else {
-      console.error('updateDocument func called with invalid value of collection')
-      message = 'action failed'
+      setToast('error', 'Failed updating like')
+      console.error('updateDocument called with invalid value of collection')
       return
     }
     return updateResult
@@ -305,21 +313,24 @@ export async function handleLikeClick(documentId, postId, collection) {
       console.log('One param of document updated successfully')
     } else {
       console.log('Document not found or not updated')
-      message = 'action failed'
+      setToast('error', 'Failed to update like')
     }
   }
 
   async function getDocument() {
     let doc
-    if (collection === 'posts') {
-      doc = await Post.findOne({ _id: documentId })
-    } else if (collection === 'comments') {
-      doc = await Comment.findOne({ _id: documentId })
-    } else {
-      console.error('like func called with invalid value of collection prop')
-      return
+    try {
+      if (collection === 'posts') {
+        doc = await Post.findOne({ _id: documentId })
+      } else if (collection === 'comments') {
+        doc = await Comment.findOne({ _id: documentId })
+      } else {
+        console.error('like func called with invalid value of collection prop')
+      }
+      return doc
+    } catch {
+      console.error('Error occurred while finding document:', error)
     }
-    return doc
   }
 }
 
@@ -327,25 +338,30 @@ export async function handleDislikeClick(documentId, postId, collection) {
   const session = await getServerSession(authOptions)
   if (!session) signIn()
 
+  resetToast()
+
   const document = await getDocument()
-  if (!document) return console.error('handleDislikeClick func: document not found')
+  if (!document) {
+    setToast('error', 'Failed updating dislike')
+    console.error('handleDislikeClick func: document not found')
+    return returnToast(toastStatus, toastMessage)
+  }
 
   const userId = session.user.id
   const alreadyLiked = document.likes?.includes(userId)
   const alreadyDisliked = document.dislikes?.includes(userId)
-
-  let message
 
   try {
     await connectToDatabase()
     const result = await updateDocument()
     logResults(result)
   } catch (error) {
+    setToast('error', 'Failed updating dislike')
     console.error('Error updating comment:', error)
   }
 
   revalidatePath(`/posts/post/${postId}`)
-  return { state: 'success', message: message }
+  return returnToast(toastStatus, toastMessage)
 
   async function updateDocument() {
     async function updateComment() {
@@ -355,13 +371,13 @@ export async function handleDislikeClick(documentId, postId, collection) {
           Comment.updateOne({ _id: documentId }, { $pull: { likes: userId } }),
           Comment.updateOne({ _id: documentId }, { $push: { dislikes: userId } }),
         ])
-        message = 'Dislike added successfully!'
+        setToast('success', 'Dislike added successfully!')
       } else if (alreadyDisliked) {
         updateResult = await Comment.updateOne({ _id: documentId }, { $pull: { dislikes: userId } })
-        message = 'Dislike removed successfully!'
+        setToast('success', 'Dislike removed successfully!')
       } else {
         updateResult = await Comment.updateOne({ _id: documentId }, { $push: { dislikes: userId } })
-        message = 'Dislike added successfully!'
+        setToast('success', 'Dislike added successfully!')
       }
       return updateResult
     }
@@ -372,13 +388,13 @@ export async function handleDislikeClick(documentId, postId, collection) {
           Post.updateOne({ _id: documentId }, { $pull: { likes: userId } }),
           Post.updateOne({ _id: documentId }, { $push: { dislikes: userId } }),
         ])
-        message = 'Dislike added successfully!'
+        setToast('success', 'Dislike added successfully!')
       } else if (alreadyDisliked) {
         updateResult = await Post.updateOne({ _id: documentId }, { $pull: { dislikes: userId } })
-        message = 'Dislike removed successfully!'
+        setToast('success', 'Dislike removed successfully!')
       } else {
         updateResult = await Post.updateOne({ _id: documentId }, { $push: { dislikes: userId } })
-        message = 'Dislike added successfully!'
+        setToast('success', 'Dislike added successfully!')
       }
       return updateResult
     }
@@ -389,8 +405,7 @@ export async function handleDislikeClick(documentId, postId, collection) {
     } else if (collection === 'comments') {
       updateResult = await updateComment()
     } else {
-      console.error('updateDocument func called with invalid value of collection')
-      return
+      console.error('updateDocument called with invalid value of collection')
     }
     return updateResult
   }
@@ -401,21 +416,25 @@ export async function handleDislikeClick(documentId, postId, collection) {
     } else if (result.modifiedCount === 1) {
       console.log('One param of document updated successfully')
     } else {
-      console.log('Document not found or not updated')
+      setToast('error', 'Failed updating dislike')
+      console.error('Document not found or not updated')
     }
   }
 
   async function getDocument() {
     let doc
-    if (collection === 'posts') {
-      doc = await Post.findOne({ _id: documentId })
-    } else if (collection === 'comments') {
-      doc = await Comment.findOne({ _id: documentId })
-    } else {
-      console.error('like func called with invalid value of collection prop')
-      return
+    try {
+      if (collection === 'posts') {
+        doc = await Post.findOne({ _id: documentId })
+      } else if (collection === 'comments') {
+        doc = await Comment.findOne({ _id: documentId })
+      } else {
+        console.error('like func called with invalid value of collection prop')
+      }
+      return doc
+    } catch (error) {
+      console.error('Error occurred while finding document:', error)
     }
-    return doc
   }
 }
 
@@ -443,4 +462,18 @@ export async function countComments(postId) {
     }
   }
   return totalComments
+}
+
+function setToast(status, message) {
+  toastStatus = status
+  toastMessage = message
+}
+
+function resetToast() {
+  toastStatus = ''
+  toastMessage = ''
+}
+
+function returnToast(status, message) {
+  return { state: status, message: message }
 }

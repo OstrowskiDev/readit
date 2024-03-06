@@ -18,6 +18,6 @@ export const postToastOption = {
     width: 'auto',
     borderRadius: '25px',
     padding: '2px 20px',
-    fontSize: '22px',
+    fontSize: '20px',
   },
 }

@@ -24,7 +24,6 @@ export function LikeBtn() {
   })
 
   useEffect(() => {
-    console.log('like button submition triggered')
     if (submition.state === 'success') {
       toast.success(submition.message)
     }

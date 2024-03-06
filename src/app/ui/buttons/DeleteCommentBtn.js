@@ -4,22 +4,13 @@ import DeleteIco from '../icons/DeleteIco'
 import { toast } from 'sonner'
 import { useFormState, useFormStatus } from 'react-dom'
 import { useEffect } from 'react'
-import { useSession } from 'next-auth/react'
 import { Loader } from '../Loader'
 import { deleteComment } from '@/app/lib/actions'
 import { useCommentContext } from '@/app/lib/context/CommentContextProvider'
 
-export function DeleteCommentBtn() {
-  const { commentId, postId, authorId } = useCommentContext()
-  const { data: session } = useSession()
-  const usersId = session?.user.id
-  const isUsersComment = usersId === authorId
+export function DeleteCommentBtn({ setIsMenuVisible }) {
+  const { commentId, postId } = useCommentContext()
   const deleteCommentWithAtrib = deleteComment.bind(null, commentId, postId)
-
-  // function testingLog() {
-  //   console.log('form Action triggered')
-  //   return { state: 'success', message: 'oh my!' }
-  // }
 
   const [submition, formAction] = useFormState(deleteCommentWithAtrib, {
     state: null,
@@ -27,13 +18,13 @@ export function DeleteCommentBtn() {
   })
 
   useEffect(() => {
-    console.log('delete button submition was triggered')
-    // console.log(submition)
     if (submition.state === 'success') {
       toast.success(submition.message)
+      setIsMenuVisible(false)
     }
     if (submition.state === 'error') {
       toast.error(submition.message)
+      setIsMenuVisible(false)
     }
   }, [submition])
 

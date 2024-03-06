@@ -22,8 +22,6 @@ export function CommentButtons() {
         <DislikeBtn className="comment-btn-dislike" />
         <ReplyBtn className="comment-btn-reply" />
         <ShareCommentBtn className="comment-btn-share" />
-        <DeleteCommentBtn />
-
         <CommentMenuBtn className="comment-btn-menu" />
       </div>
       {isVisible && <CommentReplyForm className="comment-reply-form" />}

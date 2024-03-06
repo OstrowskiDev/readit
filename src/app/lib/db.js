@@ -12,6 +12,7 @@ async function connectToDatabase() {
 }
 
 async function getPost(postId) {
+  console.log(`fetching post ${postId} from database...`)
   const res = await fetch(`http://localhost:3000/api/posts/post/${postId}`, { cache: 'no-store' })
   if (!res.ok) return null
   return res.json()

@@ -1,4 +1,4 @@
-'use server'
+// 'use server'
 
 import { CommentBtnsContextWrapper } from '../lib/context/CommentBtnsContextWrapper'
 import { getComment, getUser } from '../lib/db'

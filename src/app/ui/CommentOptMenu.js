@@ -1,17 +1,16 @@
 'use client'
 
 import { useSession } from 'next-auth/react'
-import { deleteComment } from '../lib/actions'
 import { useCommentContext } from '../lib/context/CommentContextProvider'
 import EditIco from './icons/EditIco'
 import { SaveIco } from './icons/SaveIco'
+import { DeleteCommentBtn } from './buttons/DeleteCommentBtn'
 
-export function CommentOptMenu({ isMenuVisible, setIsMenuVisible }) {
-  const { isEditVisible, setIsEditVisible, commentId, postId, authorId } = useCommentContext()
+export function CommentOptMenu({ setIsMenuVisible }) {
+  const { isEditVisible, setIsEditVisible, authorId } = useCommentContext()
   const { data: session } = useSession()
   const usersId = session?.user.id
   const isUsersComment = usersId === authorId
-  const deleteCommentWithAtrib = deleteComment.bind(null, commentId, postId)
 
   function EditBtn() {
     function onEditClick() {
@@ -32,52 +31,6 @@ export function CommentOptMenu({ isMenuVisible, setIsMenuVisible }) {
       </button>
     )
   }
-
-  // function DeleteBtn() {
-  //   // function testingLog() {
-  //   //   console.log('form Action triggered')
-  //   //   return { state: 'success', message: 'oh my!' }
-  //   // }
-
-  //   const [submition, formAction] = useFormState(deleteCommentWithAtrib, {
-  //     state: null,
-  //     message: null,
-  //   })
-
-  //   useEffect(() => {
-  //     console.log('submition value inside useEffect:')
-  //     console.log(submition)
-  //     if (submition.state === 'success') {
-  //       toast.success(submition.message)
-  //     }
-  //     if (submition.state === 'error') {
-  //       toast.error(submition.message)
-  //     }
-  //   }, [submition])
-
-  //   function SubmitButton() {
-  //     const { pending } = useFormStatus()
-
-  //     return (
-  //       <button
-  //         className="menu-opt-delete-btn flex items-center px-8 py-2 hover:bg-gray-200"
-  //         type="submit"
-  //       >
-  //         <div className="menu-opt-delete-ico w-6 m-1 flex justify-center items-center">
-  //           <DeleteIco />
-  //         </div>
-  //         <p className="menu-opt-delete-text ml-2 text-lg">Delete</p>
-  //         {pending && <Loader />}
-  //       </button>
-  //     )
-  //   }
-
-  //   return (
-  //     <form action={formAction}>
-  //       <SubmitButton />
-  //     </form>
-  //   )
-  // }
 
   function SaveBtn() {
     function onSaveClick() {
@@ -103,7 +56,7 @@ export function CommentOptMenu({ isMenuVisible, setIsMenuVisible }) {
       className={`menu-container flex flex-col absolute z-10 top-10 right-0  bg-white border border-gray-300 rounded-md`}
     >
       {isUsersComment && <EditBtn />}
-      {/* {isUsersComment && <DeleteBtn />} */}
+      {isUsersComment && <DeleteCommentBtn setIsMenuVisible={setIsMenuVisible} />}
       <SaveBtn />
     </div>
   )

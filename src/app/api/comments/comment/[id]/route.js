@@ -13,7 +13,7 @@ export async function GET(request, { params }) {
       if (comment) {
         return new NextResponse(JSON.stringify(comment), { status: 200 })
       } else {
-        console.error('Comment with provided UUID not found')
+        console.error(`Comment with UUID: ${commentId} not found`)
         return new NextResponse('Comment not found', { status: 404 })
       }
     } else {
