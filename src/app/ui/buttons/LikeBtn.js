@@ -8,8 +8,8 @@ import { useSession } from 'next-auth/react'
 import { toast } from 'sonner'
 import { useFormState, useFormStatus } from 'react-dom'
 import { useEffect } from 'react'
-import { Loader } from '../Loader'
 import { usePostContext } from '@/app/lib/context/PostContextProvider'
+import { LoaderTiny } from '../LoaderTiny'
 
 export function LikeBtn() {
   const { commentId, postId, commentLikes } = useCommentContext()
@@ -69,7 +69,7 @@ export function LikeBtn() {
     return (
       <button className="w-11 h-11 px-[10px] py-2 flex justify-center items-center" type="submit">
         {isAlreadyLiked ? <LikeIcoActive /> : <LikeIco />}
-        {pending && <Loader />}
+        {pending && <LoaderTiny />}
       </button>
     )
   }
