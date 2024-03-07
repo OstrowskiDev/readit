@@ -12,21 +12,21 @@ export function DeleteCommentBtn({ setIsMenuVisible }) {
   const { commentId, postId } = useCommentContext()
   const deleteCommentWithAtrib = deleteComment.bind(null, commentId, postId)
 
-  const [submition, formAction] = useFormState(deleteCommentWithAtrib, {
+  const [response, formAction] = useFormState(deleteCommentWithAtrib, {
     state: null,
     message: null,
   })
 
   useEffect(() => {
-    if (submition.state === 'success') {
-      toast.success(submition.message)
+    if (response.state === 'success') {
+      toast.success(response.message)
       setIsMenuVisible(false)
     }
-    if (submition.state === 'error') {
-      toast.error(submition.message)
+    if (response.state === 'error') {
+      toast.error(response.message)
       setIsMenuVisible(false)
     }
-  }, [submition])
+  }, [response])
 
   function SubmitButton() {
     const { pending } = useFormStatus()

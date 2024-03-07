@@ -9,28 +9,59 @@ import { toast } from 'sonner'
 import { useFormState, useFormStatus } from 'react-dom'
 import { useEffect } from 'react'
 import { Loader } from '../Loader'
+import { usePostContext } from '@/app/lib/context/PostContextProvider'
 
 export function LikeBtn() {
   const { commentId, postId, commentLikes } = useCommentContext()
+  const { comments, setComments } = usePostContext()
   const { data: session } = useSession()
   const userId = session?.user?.id
   const isAlreadyLiked = commentLikes?.includes(userId)
 
   const collection = 'comments'
-  const handleLikeWithId = handleLikeClick.bind(null, commentId, postId, collection)
-  const [submition, formAction] = useFormState(handleLikeWithId, {
-    state: null,
-    message: null,
-  })
+  const [response, formAction] = useFormState(
+    async () => {
+      handleLikeOptimistially()
+      const serverResponse = await handleLikeClick(commentId, postId, collection)
+      return serverResponse
+    },
+    {
+      state: null,
+      message: null,
+    }
+  )
 
   useEffect(() => {
-    if (submition.state === 'success') {
-      toast.success(submition.message)
+    if (response?.state === 'success') {
+      toast.success(response.message)
     }
-    if (submition.state === 'error') {
-      toast.error(submition.message)
+    if (response?.state === 'error') {
+      toast.error(response.message)
     }
-  }, [submition])
+  }, [response])
+
+  function handleLikeOptimistially() {
+    if (!session) return
+    const newComments = [...comments]
+    const oldComment = comments.find((comment) => comment._id === commentId)
+    const newComment = { ...oldComment }
+    console.log(oldComment)
+
+    if (!oldComment.likes) {
+      newComment.likes = [userId]
+    } else if (!oldComment.likes.includes(userId)) {
+      newComment.likes = [...oldComment.likes, userId]
+    } else {
+      newComment.likes = oldComment.likes.filter((like) => like !== userId)
+    }
+
+    const index = newComments.findIndex((comment) => comment._id === commentId)
+    if (index !== -1) {
+      newComments[index] = newComment
+    }
+    console.log(newComment)
+    setComments(newComments)
+  }
 
   function SubmitButton() {
     const { pending } = useFormStatus()

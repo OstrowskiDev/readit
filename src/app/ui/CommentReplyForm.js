@@ -13,23 +13,23 @@ export function CommentReplyForm() {
   const [input, setInput] = useState('')
   const parentId = commentId
 
-  const [submition, formAction] = useFormState(() => createComment(parentId, postId, input), {
+  const [response, formAction] = useFormState(() => createComment(parentId, postId, input), {
     state: null,
     message: null,
   })
 
   useEffect(() => {
-    if (submition.state === 'success') {
-      toast.success(submition.message)
+    if (response.state === 'success') {
+      toast.success(response.message)
       setIsVisible(!isVisible)
       setInput('')
     }
-    if (submition.state === 'error') {
-      toast.error(submition.message)
+    if (response.state === 'error') {
+      toast.error(response.message)
       setIsVisible(!isVisible)
       setInput('')
     }
-  }, [submition])
+  }, [response])
 
   function SubmitButton() {
     const { pending } = useFormStatus()

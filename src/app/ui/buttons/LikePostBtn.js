@@ -16,19 +16,19 @@ export function LikePostBtn({ postId, postLikes }) {
 
   const collection = 'posts'
   const handleLikeWithId = handleLikeClick.bind(null, postId, postId, collection)
-  const [submition, formAction] = useFormState(handleLikeWithId, {
+  const [response, formAction] = useFormState(handleLikeWithId, {
     state: null,
     message: null,
   })
 
   useEffect(() => {
-    if (submition.state === 'success') {
-      toast.success(submition.message)
+    if (response.state === 'success') {
+      toast.success(response.message)
     }
-    if (submition.state === 'error') {
-      toast.error(submition.message)
+    if (response.state === 'error') {
+      toast.error(response.message)
     }
-  }, [submition])
+  }, [response])
 
   function SubmitButton() {
     const { pending } = useFormStatus()

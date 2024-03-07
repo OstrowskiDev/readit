@@ -16,19 +16,19 @@ export function DislikePostBtn({ postId, postDislikes }) {
 
   const collection = 'posts'
   const handleDislikeWithId = handleDislikeClick.bind(null, postId, postId, collection)
-  const [submition, formAction] = useFormState(handleDislikeWithId, {
+  const [response, formAction] = useFormState(handleDislikeWithId, {
     state: null,
     message: null,
   })
 
   useEffect(() => {
-    if (submition.state === 'success') {
-      toast.success(submition.message)
+    if (response.state === 'success') {
+      toast.success(response.message)
     }
-    if (submition.state === 'error') {
-      toast.error(submition.message)
+    if (response.state === 'error') {
+      toast.error(response.message)
     }
-  }, [submition])
+  }, [response])
 
   function SubmitButton() {
     const { pending } = useFormStatus()
