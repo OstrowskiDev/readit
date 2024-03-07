@@ -9,7 +9,6 @@ import { CommentMenuBtn } from './buttons/CommentMenuBtn'
 import { CommentReplyForm } from './CommentReplyForm'
 import { CommentEditForm } from './CommentEditForm'
 import { useCommentContext } from '../lib/context/CommentContextProvider'
-import { DeleteCommentBtn } from './buttons/DeleteCommentBtn'
 
 export function CommentButtons() {
   const { isVisible, isEditVisible } = useCommentContext()
@@ -23,7 +22,11 @@ export function CommentButtons() {
           styles={'w-11 h-11 px-[10px] py-2'}
         />
         <LikeCount className="comment-likes-num" />
-        <DislikeBtn className="comment-btn-dislike" />
+        <DislikeBtn
+          className="comment-btn-dislike"
+          collection="comments"
+          styles={'w-11 h-11 px-[10px] pt-[9px] pb-[7px]'}
+        />
         <ReplyBtn className="comment-btn-reply" />
         <ShareCommentBtn className="comment-btn-share" />
         <CommentMenuBtn className="comment-btn-menu" />

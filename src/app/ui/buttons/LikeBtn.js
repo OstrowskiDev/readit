@@ -4,11 +4,11 @@ import { handleLikeClick } from '@/app/lib/actions'
 import { LikeIco } from '../icons/LikeIco'
 import { LikeIcoActive } from '../icons/LikeIcoActive'
 import { useCommentContext } from '@/app/lib/context/CommentContextProvider'
-import { useSession } from 'next-auth/react'
-import { toast } from 'sonner'
-import { useFormStatus } from 'react-dom'
-import { useEffect, useState } from 'react'
 import { usePostContext } from '@/app/lib/context/PostContextProvider'
+import { toast } from 'sonner'
+import { useSession } from 'next-auth/react'
+import { useEffect, useState } from 'react'
+import { useFormStatus } from 'react-dom'
 import { LoaderTiny } from '../LoaderTiny'
 
 export function LikeBtn({ styles, collection }) {
@@ -38,11 +38,12 @@ export function LikeBtn({ styles, collection }) {
     collection === 'posts'
       ? handlePostOptimistically()
       : handleCommentOptimistically()
-    await new Promise((resolve) => setTimeout(resolve, 0))
+
     const serverResponse =
       collection === 'posts'
         ? await handleLikeClick(postId, postId, collection)
         : await handleLikeClick(commentId, postId, collection)
+
     setResponse(serverResponse)
   }
 
