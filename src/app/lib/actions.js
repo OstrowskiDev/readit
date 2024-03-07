@@ -248,6 +248,7 @@ export async function handleLikeClick(documentId, postId, collection) {
 
   try {
     await connectToDatabase()
+    await new Promise((resolve) => setTimeout(resolve, 1000))
     const result = await updateDocument()
     logResults(result)
   } catch (error) {

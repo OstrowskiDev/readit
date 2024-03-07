@@ -17,7 +17,11 @@ export function CommentButtons() {
   return (
     <>
       <div className="comment-btns-container flex items-center ml-4">
-        <LikeBtn className="comment-btn-like" />
+        <LikeBtn
+          className="comment-btn-like"
+          collection="comments"
+          styles={'w-11 h-11 px-[10px] py-2'}
+        />
         <LikeCount className="comment-likes-num" />
         <DislikeBtn className="comment-btn-dislike" />
         <ReplyBtn className="comment-btn-reply" />

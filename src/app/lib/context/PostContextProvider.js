@@ -2,9 +2,32 @@ import { createContext, useContext } from 'react'
 
 const PostContext = createContext()
 
-export function PostContextProvider({ children, comments, setComments, authors, setAuthors }) {
+export function PostContextProvider({
+  children,
+  comments,
+  setComments,
+  authors,
+  setAuthors,
+  post,
+  setPost,
+  postId,
+  postLikes,
+  postDislikes,
+}) {
   return (
-    <PostContext.Provider value={{ comments, setComments, authors, setAuthors }}>
+    <PostContext.Provider
+      value={{
+        comments,
+        setComments,
+        authors,
+        setAuthors,
+        post,
+        setPost,
+        postId,
+        postLikes,
+        postDislikes,
+      }}
+    >
       {children}
     </PostContext.Provider>
   )

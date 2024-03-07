@@ -6,30 +6,23 @@ import { LikeIcoActive } from '../icons/LikeIcoActive'
 import { useCommentContext } from '@/app/lib/context/CommentContextProvider'
 import { useSession } from 'next-auth/react'
 import { toast } from 'sonner'
-import { useFormState, useFormStatus } from 'react-dom'
-import { useEffect } from 'react'
+import { useFormStatus } from 'react-dom'
+import { useEffect, useState } from 'react'
 import { usePostContext } from '@/app/lib/context/PostContextProvider'
 import { LoaderTiny } from '../LoaderTiny'
 
-export function LikeBtn() {
-  const { commentId, postId, commentLikes } = useCommentContext()
-  const { comments, setComments } = usePostContext()
+export function LikeBtn({ styles, collection }) {
+  const { commentId, commentLikes } =
+    collection === 'comments' ? useCommentContext() : { undefined, undefined }
+  const { comments, setComments, post, setPost, postId, postLikes } =
+    usePostContext()
+  const [response, setResponse] = useState({ state: null, message: null })
   const { data: session } = useSession()
   const userId = session?.user?.id
-  const isAlreadyLiked = commentLikes?.includes(userId)
-
-  const collection = 'comments'
-  const [response, formAction] = useFormState(
-    async () => {
-      handleLikeOptimistially()
-      const serverResponse = await handleLikeClick(commentId, postId, collection)
-      return serverResponse
-    },
-    {
-      state: null,
-      message: null,
-    }
-  )
+  const isAlreadyLiked =
+    collection === 'posts'
+      ? postLikes?.includes(userId)
+      : commentLikes?.includes(userId)
 
   useEffect(() => {
     if (response?.state === 'success') {
@@ -37,15 +30,42 @@ export function LikeBtn() {
     }
     if (response?.state === 'error') {
       toast.error(response.message)
+      handleOptimisticError()
     }
   }, [response])
 
-  function handleLikeOptimistially() {
+  async function onClick() {
+    collection === 'posts'
+      ? handlePostOptimistically()
+      : handleCommentOptimistically()
+    await new Promise((resolve) => setTimeout(resolve, 0))
+    const serverResponse =
+      collection === 'posts'
+        ? await handleLikeClick(postId, postId, collection)
+        : await handleLikeClick(commentId, postId, collection)
+    setResponse(serverResponse)
+  }
+
+  function handlePostOptimistically() {
+    if (!session) return
+    const newPost = { ...post }
+
+    if (!post.likes) {
+      newPost.likes = [userId]
+    } else if (!post.likes.includes(userId)) {
+      newPost.likes = [...post.likes, userId]
+    } else {
+      newPost.likes = post.likes.filter((like) => like !== userId)
+    }
+
+    setPost(newPost)
+  }
+
+  function handleCommentOptimistically() {
     if (!session) return
     const newComments = [...comments]
     const oldComment = comments.find((comment) => comment._id === commentId)
     const newComment = { ...oldComment }
-    console.log(oldComment)
 
     if (!oldComment.likes) {
       newComment.likes = [userId]
@@ -59,23 +79,32 @@ export function LikeBtn() {
     if (index !== -1) {
       newComments[index] = newComment
     }
-    console.log(newComment)
     setComments(newComments)
   }
 
+  function handleOptimisticError() {
+    collection === 'posts'
+      ? handlePostOptimistically()
+      : handleCommentOptimistically()
+  }
+
   function SubmitButton() {
-    const { pending } = useFormStatus()
+    // const { pending } = useFormStatus()
 
     return (
-      <button className="w-11 h-11 px-[10px] py-2 flex justify-center items-center" type="submit">
+      <button
+        className={styles + ' flex justify-center items-center'}
+        type="submit"
+        onClick={onClick}
+      >
         {isAlreadyLiked ? <LikeIcoActive /> : <LikeIco />}
-        {pending && <LoaderTiny />}
+        {/* {pending && <LoaderTiny />} */}
       </button>
     )
   }
 
   return (
-    <form action={formAction} className="rounded-md  hover:bg-gray-200">
+    <form className="rounded-md  hover:bg-gray-200">
       <SubmitButton />
     </form>
   )
