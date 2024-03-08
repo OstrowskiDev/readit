@@ -143,15 +143,24 @@ export async function createComment(parentId, postId, userInput) {
 }
 
 export async function deleteComment(commentId, postId) {
-  // pass and check userId to validate if he can delete comment
-  // instead of lines below
   const session = await getServerSession(authOptions)
   if (!session) {
     redirect('/login')
   }
 
   const commentData = await getComment(commentId)
-  if (!commentData) return console.error('likeComment func: document not found')
+  if (!commentData) {
+    console.error('deleteComment func: document not found')
+    return returnToast('error', 'Failed to delete comment')
+  }
+
+  const commentAuthorId = commentData.user_id
+  if (session.user.id !== commentAuthorId) {
+    console.error(
+      "Warning! UserId dosen't match authorId inside deleteComment server function.",
+    )
+    return returnToast('error', 'Failed to delete comment')
+  }
 
   const parentType = commentData.parent.type
   const parentId = commentData.parent._id
@@ -166,15 +175,13 @@ export async function deleteComment(commentId, postId) {
       await connectToDatabase()
       const deleteComment = await Comment.findByIdAndDelete(commentId)
       if (!deleteComment) {
-        setToast('error', 'Failed to delete comment')
-        console.error('Comment not found')
-        return
+        console.error('deleteComment func: comment not found')
+        return returnToast('error', 'Failed to delete comment')
       }
       console.log('Comment deleted successfully')
     } catch (error) {
-      setToast('error', 'Failed to delete comment')
       console.error('Error deleting comment:', error)
-      return
+      return returnToast('error', 'Failed to delete comment')
     }
 
     //update parent children list
@@ -251,19 +258,15 @@ export async function handleLikeClick(documentId, postId, collection) {
 
   const document = await getDocument()
   if (!document) {
-    setToast('error', 'Failed updating like')
     console.error('likeComment func: document not found')
-    return returnToast(toastStatus, toastMessage)
+    return returnToast('error', 'Failed updating like')
   }
   const userId = session.user.id
   const alreadyLiked = document.likes?.includes(userId)
   const alreadyDisliked = document.dislikes?.includes(userId)
 
-  resetToast()
-
   try {
     await connectToDatabase()
-    await new Promise((resolve) => setTimeout(resolve, 1000))
     const result = await updateDocument()
     logResults(result)
   } catch (error) {
@@ -277,7 +280,6 @@ export async function handleLikeClick(documentId, postId, collection) {
     message: toastMessage,
     wasDisliked: alreadyDisliked,
   }
-  // return returnToast(toastStatus, toastMessage)
 
   async function updateDocument() {
     async function updateComment() {
@@ -379,9 +381,8 @@ export async function handleDislikeClick(documentId, postId, collection) {
 
   const document = await getDocument()
   if (!document) {
-    setToast('error', 'Failed updating dislike')
     console.error('handleDislikeClick func: document not found')
-    return returnToast(toastStatus, toastMessage)
+    return returnToast('error', 'Failed updating dislike')
   }
 
   const userId = session.user.id
