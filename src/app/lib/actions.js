@@ -398,7 +398,11 @@ export async function handleDislikeClick(documentId, postId, collection) {
   }
 
   revalidatePath(`/posts/post/${postId}`)
-  return returnToast(toastStatus, toastMessage)
+  return {
+    state: toastStatus,
+    message: toastMessage,
+    wasLiked: alreadyLiked,
+  }
 
   async function updateDocument() {
     async function updateComment() {

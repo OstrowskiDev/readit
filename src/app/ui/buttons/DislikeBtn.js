@@ -16,7 +16,11 @@ export function DislikeBtn({ styles, collection }) {
     collection === 'comments' ? useCommentContext() : { undefined, undefined }
   const { comments, setComments, post, setPost, postId, postDislikes } =
     usePostContext()
-  const [response, setResponse] = useState({ state: null, message: null })
+  const [response, setResponse] = useState({
+    state: null,
+    message: null,
+    wasLiked: false,
+  })
   const { data: session } = useSession()
   const userId = session?.user?.id
   const isAlreadyDisliked =
@@ -63,6 +67,10 @@ export function DislikeBtn({ styles, collection }) {
       newPost.likes = post.likes.filter((id) => id !== userId)
     }
 
+    if (response?.state === 'error' && response?.wasLiked === true) {
+      newPost.likes = [...newPost.likes, userId]
+    }
+
     setPost(newPost)
   }
 
@@ -82,6 +90,10 @@ export function DislikeBtn({ styles, collection }) {
 
     if (oldComment.likes?.includes(userId)) {
       newComment.likes = oldComment.likes.filter((id) => id !== userId)
+    }
+
+    if (response?.state === 'error' && response?.wasLiked === true) {
+      newComment.likes = [...newComment.likes, userId]
     }
 
     const index = newComments.findIndex((comment) => comment._id === commentId)
