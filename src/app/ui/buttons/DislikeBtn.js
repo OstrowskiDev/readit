@@ -59,6 +59,10 @@ export function DislikeBtn({ styles, collection }) {
       newPost.dislikes = post.dislikes.filter((id) => id !== userId)
     }
 
+    if (post.likes?.includes(userId)) {
+      newPost.likes = post.likes.filter((id) => id !== userId)
+    }
+
     setPost(newPost)
   }
 
@@ -74,6 +78,10 @@ export function DislikeBtn({ styles, collection }) {
       newComment.dislikes = [...oldComment.dislikes, userId]
     } else {
       newComment.dislikes = oldComment.dislikes.filter((id) => id !== userId)
+    }
+
+    if (oldComment.likes?.includes(userId)) {
+      newComment.likes = oldComment.likes.filter((id) => id !== userId)
     }
 
     const index = newComments.findIndex((comment) => comment._id === commentId)

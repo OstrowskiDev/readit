@@ -6,7 +6,7 @@ import { LikeIcoActive } from '../icons/LikeIcoActive'
 import { useCommentContext } from '@/app/lib/context/CommentContextProvider'
 import { usePostContext } from '@/app/lib/context/PostContextProvider'
 import { toast } from 'sonner'
-import { useSession } from 'next-auth/react'
+import { signIn, useSession } from 'next-auth/react'
 import { useEffect, useState } from 'react'
 import { useFormStatus } from 'react-dom'
 import { LoaderTiny } from '../LoaderTiny'
@@ -16,7 +16,11 @@ export function LikeBtn({ styles, collection }) {
     collection === 'comments' ? useCommentContext() : { undefined, undefined }
   const { comments, setComments, post, setPost, postId, postLikes } =
     usePostContext()
-  const [response, setResponse] = useState({ state: null, message: null })
+  const [response, setResponse] = useState({
+    state: null,
+    message: null,
+    wasDisliked: false,
+  })
   const { data: session } = useSession()
   const userId = session?.user?.id
   const isAlreadyLiked =
@@ -35,6 +39,8 @@ export function LikeBtn({ styles, collection }) {
   }, [response])
 
   async function onClick() {
+    if (!session) return signIn()
+
     collection === 'posts'
       ? handlePostOptimistically()
       : handleCommentOptimistically()
@@ -48,7 +54,6 @@ export function LikeBtn({ styles, collection }) {
   }
 
   function handlePostOptimistically() {
-    if (!session) return
     const newPost = { ...post }
 
     if (!post.likes) {
@@ -56,14 +61,21 @@ export function LikeBtn({ styles, collection }) {
     } else if (!post.likes.includes(userId)) {
       newPost.likes = [...post.likes, userId]
     } else {
-      newPost.likes = post.likes.filter((like) => like !== userId)
+      newPost.likes = post.likes.filter((id) => id !== userId)
+    }
+
+    if (post.dislikes?.includes(userId)) {
+      newPost.dislikes = post.dislikes.filter((id) => id !== userId)
+    }
+
+    if (response?.state === 'error' && response?.wasDisliked === true) {
+      newPost.dislikes = [...newPost.dislikes, userId]
     }
 
     setPost(newPost)
   }
 
   function handleCommentOptimistically() {
-    if (!session) return
     const newComments = [...comments]
     const oldComment = comments.find((comment) => comment._id === commentId)
     const newComment = { ...oldComment }
@@ -74,6 +86,14 @@ export function LikeBtn({ styles, collection }) {
       newComment.likes = [...oldComment.likes, userId]
     } else {
       newComment.likes = oldComment.likes.filter((like) => like !== userId)
+    }
+
+    if (oldComment.dislikes?.includes(userId)) {
+      newComment.dislikes = oldComment.dislikes.filter((id) => id !== userId)
+    }
+
+    if (response?.state === 'error' && response?.wasDisliked === true) {
+      newComment.dislikes = [...newComment.dislikes, userId]
     }
 
     const index = newComments.findIndex((comment) => comment._id === commentId)

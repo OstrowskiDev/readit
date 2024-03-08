@@ -117,8 +117,14 @@ export async function createComment(parentId, postId, userInput) {
   try {
     await connectToDatabase()
     const result = parentIsPost
-      ? await Post.updateOne({ _id: parentId }, { $push: { comments: newCommentId } })
-      : await Comment.updateOne({ _id: parentId }, { $push: { replies: newCommentId } })
+      ? await Post.updateOne(
+          { _id: parentId },
+          { $push: { comments: newCommentId } },
+        )
+      : await Comment.updateOne(
+          { _id: parentId },
+          { $push: { replies: newCommentId } },
+        )
 
     if (result.modifiedCount === 1) {
       setToast('success', `${documentType} created successfully!`)
@@ -176,8 +182,14 @@ export async function deleteComment(commentId, postId) {
       await connectToDatabase()
       const result =
         parentType === 'comment'
-          ? await Comment.updateOne({ _id: parentId }, { $pull: { replies: commentId } })
-          : await Post.updateOne({ _id: parentId }, { $pull: { comments: commentId } })
+          ? await Comment.updateOne(
+              { _id: parentId },
+              { $pull: { replies: commentId } },
+            )
+          : await Post.updateOne(
+              { _id: parentId },
+              { $pull: { comments: commentId } },
+            )
 
       if (result.modifiedCount === 1) {
         console.log('Comment updated successfully')
@@ -214,7 +226,10 @@ export async function updateComment(commentId, postId, userInput) {
 
   try {
     await connectToDatabase()
-    const result = await Comment.updateOne({ _id: commentId }, { $set: updatedData })
+    const result = await Comment.updateOne(
+      { _id: commentId },
+      { $set: updatedData },
+    )
 
     if (result.modifiedCount === 1) {
       console.log('Comment updated successfully')
@@ -257,22 +272,36 @@ export async function handleLikeClick(documentId, postId, collection) {
   }
 
   revalidatePath(`/posts/post/${postId}`)
-  return returnToast(toastStatus, toastMessage)
+  return {
+    state: toastStatus,
+    message: toastMessage,
+    wasDisliked: alreadyDisliked,
+  }
+  // return returnToast(toastStatus, toastMessage)
 
   async function updateDocument() {
     async function updateComment() {
       let updateResult
       if (alreadyDisliked) {
         updateResult = await Promise.all([
-          Comment.updateOne({ _id: documentId }, { $pull: { dislikes: userId } }),
+          Comment.updateOne(
+            { _id: documentId },
+            { $pull: { dislikes: userId } },
+          ),
           Comment.updateOne({ _id: documentId }, { $push: { likes: userId } }),
         ])
         setToast('success', 'Like added successfully!')
       } else if (alreadyLiked) {
-        updateResult = await Comment.updateOne({ _id: documentId }, { $pull: { likes: userId } })
+        updateResult = await Comment.updateOne(
+          { _id: documentId },
+          { $pull: { likes: userId } },
+        )
         setToast('success', 'Like removed successfully!')
       } else {
-        updateResult = await Comment.updateOne({ _id: documentId }, { $push: { likes: userId } })
+        updateResult = await Comment.updateOne(
+          { _id: documentId },
+          { $push: { likes: userId } },
+        )
         setToast('success', 'Like added successfully!')
       }
       return updateResult
@@ -286,10 +315,16 @@ export async function handleLikeClick(documentId, postId, collection) {
         ])
         setToast('success', 'Like added successfully!')
       } else if (alreadyLiked) {
-        updateResult = await Post.updateOne({ _id: documentId }, { $pull: { likes: userId } })
+        updateResult = await Post.updateOne(
+          { _id: documentId },
+          { $pull: { likes: userId } },
+        )
         setToast('success', 'Like removed successfully!')
       } else {
-        updateResult = await Post.updateOne({ _id: documentId }, { $push: { likes: userId } })
+        updateResult = await Post.updateOne(
+          { _id: documentId },
+          { $push: { likes: userId } },
+        )
         setToast('success', 'Like added successfully!')
       }
       return updateResult
@@ -371,14 +406,23 @@ export async function handleDislikeClick(documentId, postId, collection) {
       if (alreadyLiked) {
         updateResult = await Promise.all([
           Comment.updateOne({ _id: documentId }, { $pull: { likes: userId } }),
-          Comment.updateOne({ _id: documentId }, { $push: { dislikes: userId } }),
+          Comment.updateOne(
+            { _id: documentId },
+            { $push: { dislikes: userId } },
+          ),
         ])
         setToast('success', 'Dislike added successfully!')
       } else if (alreadyDisliked) {
-        updateResult = await Comment.updateOne({ _id: documentId }, { $pull: { dislikes: userId } })
+        updateResult = await Comment.updateOne(
+          { _id: documentId },
+          { $pull: { dislikes: userId } },
+        )
         setToast('success', 'Dislike removed successfully!')
       } else {
-        updateResult = await Comment.updateOne({ _id: documentId }, { $push: { dislikes: userId } })
+        updateResult = await Comment.updateOne(
+          { _id: documentId },
+          { $push: { dislikes: userId } },
+        )
         setToast('success', 'Dislike added successfully!')
       }
       return updateResult
@@ -392,10 +436,16 @@ export async function handleDislikeClick(documentId, postId, collection) {
         ])
         setToast('success', 'Dislike added successfully!')
       } else if (alreadyDisliked) {
-        updateResult = await Post.updateOne({ _id: documentId }, { $pull: { dislikes: userId } })
+        updateResult = await Post.updateOne(
+          { _id: documentId },
+          { $pull: { dislikes: userId } },
+        )
         setToast('success', 'Dislike removed successfully!')
       } else {
-        updateResult = await Post.updateOne({ _id: documentId }, { $push: { dislikes: userId } })
+        updateResult = await Post.updateOne(
+          { _id: documentId },
+          { $push: { dislikes: userId } },
+        )
         setToast('success', 'Dislike added successfully!')
       }
       return updateResult
