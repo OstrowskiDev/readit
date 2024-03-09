@@ -139,6 +139,7 @@ export async function createComment(parentId, postId, userInput, newCommentId) {
   revalidatePath(`/posts/post/${postId}`)
   return {
     state: toastStatus,
+    optimisticUI: 'create post',
     message: toastMessage,
     newCommentId: newCommentId,
   }

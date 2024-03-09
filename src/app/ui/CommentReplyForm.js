@@ -9,7 +9,7 @@ import { createComment } from '@/app/lib/actions'
 import { signIn, useSession } from 'next-auth/react'
 import cloneDeep from 'lodash/cloneDeep'
 
-export function CommentReplyForm({ response, setResponse }) {
+export function CommentReplyForm({ setResponse }) {
   const { isVisible, setIsVisible, commentId } = useCommentContext()
   const { comments, setComments, postId } = usePostContext()
   const [input, setInput] = useState('')
@@ -17,17 +17,9 @@ export function CommentReplyForm({ response, setResponse }) {
   const userId = session?.user?.id
   const parentId = commentId
 
-  useEffect(() => {
-    if (response.state === 'error') {
-      handleOptimisticError()
-    }
-  }, [response])
-
   async function onClick() {
     if (!session) signIn()
     const newCommentId = uuidv4().toString()
-    setIsVisible(!isVisible)
-    setInput('')
     optimisticUpdate(newCommentId)
     const serverResponse = await createComment(
       parentId,
@@ -36,6 +28,8 @@ export function CommentReplyForm({ response, setResponse }) {
       newCommentId,
     )
     setResponse(serverResponse)
+    setIsVisible(!isVisible)
+    setInput('')
   }
 
   function optimisticUpdate(newCommentId) {
@@ -58,21 +52,6 @@ export function CommentReplyForm({ response, setResponse }) {
     const index = newComments.findIndex((comment) => comment._id === parentId)
     newComments[index].replies.push(newCommentId)
     setComments(newComments)
-  }
-
-  function handleOptimisticError() {
-    const newCommentId = response.newCommentId
-    const newComments = cloneDeep(comments)
-    const oldComments = newComments.filter(
-      (comment) => comment._id !== newCommentId,
-    )
-    const index = oldComments.findIndex((comment) => comment._id === parentId)
-    const oldReplies = oldComments[index].replies.filter(
-      (id) => id !== newCommentId,
-    )
-    oldComments[index].replies = oldReplies
-
-    setComments(oldComments)
   }
 
   function SubmitButton() {
