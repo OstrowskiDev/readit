@@ -85,11 +85,9 @@ export async function deletePost(postId) {
   redirect('/posts')
 }
 
-export async function createComment(parentId, postId, userInput) {
+export async function createComment(parentId, postId, userInput, newCommentId) {
   const session = await getServerSession(authOptions)
-  const uuid = uuidv4().toString()
   const content = validatePostContent(userInput)
-  const newCommentId = uuid
   const parentIsPost = parentId === postId
   const documentType = parentIsPost ? 'post' : 'comment'
 
