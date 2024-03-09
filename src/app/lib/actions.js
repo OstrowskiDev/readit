@@ -137,7 +137,11 @@ export async function createComment(parentId, postId, userInput, newCommentId) {
   }
 
   revalidatePath(`/posts/post/${postId}`)
-  return returnToast(toastStatus, toastMessage)
+  return {
+    state: toastStatus,
+    message: toastMessage,
+    newCommentId: newCommentId,
+  }
 }
 
 export async function deleteComment(commentId, postId) {

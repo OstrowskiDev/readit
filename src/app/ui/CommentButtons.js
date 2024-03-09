@@ -9,9 +9,24 @@ import { CommentMenuBtn } from './buttons/CommentMenuBtn'
 import { CommentReplyForm } from './CommentReplyForm'
 import { CommentEditForm } from './CommentEditForm'
 import { useCommentContext } from '../lib/context/CommentContextProvider'
+import { useEffect, useState } from 'react'
+import { toast } from 'sonner'
 
 export function CommentButtons() {
   const { isVisible, isEditVisible } = useCommentContext()
+  const [response, setResponse] = useState({
+    state: null,
+    message: null,
+  })
+
+  useEffect(() => {
+    if (response.state === 'success') {
+      toast.success(response.message)
+    }
+    if (response.state === 'error') {
+      toast.error(response.message)
+    }
+  }, [response])
 
   return (
     <>
@@ -31,7 +46,18 @@ export function CommentButtons() {
         <ShareCommentBtn className="comment-btn-share" />
         <CommentMenuBtn className="comment-btn-menu" />
       </div>
-      {isVisible && <CommentReplyForm className="comment-reply-form" />}
+      {/* {isVisible && (
+        <CommentReplyForm
+          className="comment-reply-form"
+          response={response}
+          setResponse={setResponse}
+        />
+      )} */}
+      <CommentReplyForm
+        className="comment-reply-form"
+        response={response}
+        setResponse={setResponse}
+      />
       {isEditVisible && <CommentEditForm className="comment-edit-form" />}
     </>
   )

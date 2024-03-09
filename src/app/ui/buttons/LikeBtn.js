@@ -8,8 +8,6 @@ import { usePostContext } from '@/app/lib/context/PostContextProvider'
 import { toast } from 'sonner'
 import { signIn, useSession } from 'next-auth/react'
 import { useEffect, useState } from 'react'
-import { useFormStatus } from 'react-dom'
-import { LoaderTiny } from '../LoaderTiny'
 
 export function LikeBtn({ styles, collection }) {
   const { commentId, commentLikes } =
@@ -110,8 +108,6 @@ export function LikeBtn({ styles, collection }) {
   }
 
   function SubmitButton() {
-    // const { pending } = useFormStatus()
-
     return (
       <button
         className={styles + ' flex justify-center items-center'}
@@ -119,7 +115,6 @@ export function LikeBtn({ styles, collection }) {
         onClick={onClick}
       >
         {isAlreadyLiked ? <LikeIcoActive /> : <LikeIco />}
-        {/* {pending && <LoaderTiny />} */}
       </button>
     )
   }

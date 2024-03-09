@@ -6,29 +6,20 @@ import { useCommentContext } from '../lib/context/CommentContextProvider'
 import { usePostContext } from '../lib/context/PostContextProvider'
 import { v4 as uuidv4 } from 'uuid'
 import { createComment } from '@/app/lib/actions'
-import { toast } from 'sonner'
 import { signIn, useSession } from 'next-auth/react'
 import cloneDeep from 'lodash/cloneDeep'
 
-export function CommentReplyForm() {
+export function CommentReplyForm({ response, setResponse }) {
   const { isVisible, setIsVisible, commentId } = useCommentContext()
   const { comments, setComments, postId } = usePostContext()
-  const [response, setResponse] = useState({
-    state: null,
-    message: null,
-  })
   const [input, setInput] = useState('')
   const { data: session } = useSession()
   const userId = session?.user?.id
   const parentId = commentId
 
   useEffect(() => {
-    console.log(response)
-    if (response.state === 'success') {
-      toast.success(response.message)
-    }
     if (response.state === 'error') {
-      toast.error(response.message)
+      handleOptimisticError()
     }
   }, [response])
 
@@ -67,6 +58,21 @@ export function CommentReplyForm() {
     const index = newComments.findIndex((comment) => comment._id === parentId)
     newComments[index].replies.push(newCommentId)
     setComments(newComments)
+  }
+
+  function handleOptimisticError() {
+    const newCommentId = response.newCommentId
+    const newComments = cloneDeep(comments)
+    const oldComments = newComments.filter(
+      (comment) => comment._id !== newCommentId,
+    )
+    const index = oldComments.findIndex((comment) => comment._id === parentId)
+    const oldReplies = oldComments[index].replies.filter(
+      (id) => id !== newCommentId,
+    )
+    oldComments[index].replies = oldReplies
+
+    setComments(oldComments)
   }
 
   function SubmitButton() {
