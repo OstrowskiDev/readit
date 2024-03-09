@@ -8,14 +8,49 @@ import { v4 as uuidv4 } from 'uuid'
 import { createComment } from '@/app/lib/actions'
 import { signIn, useSession } from 'next-auth/react'
 import cloneDeep from 'lodash/cloneDeep'
+import { toast } from 'sonner'
 
-export function CommentReplyForm({ setResponse }) {
+export function CommentReplyForm() {
   const { isVisible, setIsVisible, commentId } = useCommentContext()
   const { comments, setComments, postId } = usePostContext()
   const [input, setInput] = useState('')
   const { data: session } = useSession()
   const userId = session?.user?.id
   const parentId = commentId
+
+  const [response, setResponse] = useState({
+    state: null,
+    message: null,
+  })
+
+  useEffect(() => {
+    if (response.state === 'success') {
+      toast.success(response.message)
+    }
+    if (response.state === 'error') {
+      toast.error(response.message)
+      if (response.optimisticUI === 'create post') {
+        onOptimisticCreateCommentError()
+      }
+    }
+  }, [response])
+
+  function onOptimisticCreateCommentError() {
+    const newCommentId = response.newCommentId
+    const newComment = comments.find((comment) => comment._id === newCommentId)
+    const parentId = newComment.parent._id
+    const newComments = cloneDeep(comments)
+    const oldComments = newComments.filter(
+      (comment) => comment._id !== newCommentId,
+    )
+    const index = oldComments.findIndex((comment) => comment._id === parentId)
+    const oldReplies = oldComments[index].replies.filter(
+      (id) => id !== newCommentId,
+    )
+    oldComments[index].replies = oldReplies
+
+    setComments(oldComments)
+  }
 
   async function onClick() {
     if (!session) signIn()
@@ -79,21 +114,25 @@ export function CommentReplyForm({ setResponse }) {
   }
 
   return (
-    <div className="comment-reply-form change-border-on-child-focus p-2 ml-4 mr-1 my-1 bg-white border border-slate-300 rounded-lg">
-      <form>
-        <textarea
-          id="content"
-          name="content"
-          className="comment-reply-input w-full border-none focus:outline-none"
-          placeholder="Add yor comment"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-        />
-        <div className="comment-reply-btns flex justify-end">
-          <CancelButton />
-          <SubmitButton />
+    <>
+      {isVisible && (
+        <div className="comment-reply-form change-border-on-child-focus p-2 ml-4 mr-1 my-1 bg-white border border-slate-300 rounded-lg">
+          <form>
+            <textarea
+              id="content"
+              name="content"
+              className="comment-reply-input w-full border-none focus:outline-none"
+              placeholder="Add yor comment"
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+            />
+            <div className="comment-reply-btns flex justify-end">
+              <CancelButton />
+              <SubmitButton />
+            </div>
+          </form>
         </div>
-      </form>
-    </div>
+      )}
+    </>
   )
 }
