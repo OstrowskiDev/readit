@@ -125,21 +125,20 @@ export async function createComment(parentId, postId, userInput, newCommentId) {
         )
 
     if (result.modifiedCount === 1) {
-      setToast('success', `${documentType} created successfully!`)
+      setToast('success', `Comment created successfully!`)
       console.log(`${documentType} updated successfully`)
     } else {
-      setToast('error', `Failed to create ${documentType}`)
+      setToast('error', `Failed to create comment`)
       console.log(`${documentType} not found or not updated`)
     }
   } catch (error) {
-    setToast('error', `Failed to create ${documentType}`)
+    setToast('error', `Failed to create comment`)
     console.error(`Error updating {documentType}:`, error)
   }
 
   revalidatePath(`/posts/post/${postId}`)
   return {
     state: toastStatus,
-    optimisticUI: 'create post',
     message: toastMessage,
     newCommentId: newCommentId,
   }

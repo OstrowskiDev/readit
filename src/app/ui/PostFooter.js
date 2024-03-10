@@ -9,8 +9,8 @@ import { LikeBtn } from './buttons/LikeBtn'
 import { PostLikeCount } from './PostLikeCount'
 import { DislikeBtn } from './buttons/DislikeBtn'
 
-export function PostFooter({ postId, commentNo, postLikes, postDislikes }) {
-  const [isCommentFormVisible, setIsCommentFormVisible] = useState(false)
+export function PostFooter({ commentNo, postLikes, postDislikes }) {
+  const [isCommFormVisible, setIsCommFormVisible] = useState(false)
 
   return (
     <div className="post-bottom-container">
@@ -29,16 +29,15 @@ export function PostFooter({ postId, commentNo, postLikes, postDislikes }) {
         </div>
         <div className="post-bottom-btns-right comment-btn flex justify-end min-w-36">
           <CommentPostBtn
-            isCommentFormVisible={isCommentFormVisible}
-            setIsCommentFormVisible={setIsCommentFormVisible}
+            isCommFormVisible={isCommFormVisible}
+            setIsCommFormVisible={setIsCommFormVisible}
           />
         </div>
       </div>
       <div className="post-bottom-reply-form">
         <PostReplyForm
-          postId={postId}
-          isCommentFormVisible={isCommentFormVisible}
-          setIsCommentFormVisible={setIsCommentFormVisible}
+          isCommFormVisible={isCommFormVisible}
+          setIsCommFormVisible={setIsCommFormVisible}
         />
       </div>
     </div>
