@@ -226,7 +226,24 @@ export async function deleteComment(commentId, postId) {
 }
 
 export async function updateComment(commentId, postId, userInput) {
+  const session = await getServerSession(authOptions)
+  const comment = await getComment(commentId)
+  const authorId = comment.user_id
+  if (!session) redirect('/login')
+  if (session.user.id !== authorId) {
+    console.log(
+      "Warning! During update comment operation user id doesn't match author id.",
+    )
+    return {
+      state: 'error',
+      message: 'Failed to update comment!',
+      updatedCommentId: commentId,
+    }
+  }
+
   const content = validatePostContent(userInput)
+
+  resetToast()
 
   const updatedData = new Comment({
     _id: commentId,
@@ -242,14 +259,22 @@ export async function updateComment(commentId, postId, userInput) {
 
     if (result.modifiedCount === 1) {
       console.log('Comment updated successfully')
+      setToast('success', 'Comment updated successfully!')
     } else {
       console.log('Comment not found or not updated')
+      setToast('error', 'Failed to update comment!')
     }
   } catch (error) {
     console.error('Error updating comment:', error)
+    setToast('error', 'Failed to update comment!')
   }
 
   revalidatePath(`/posts/post/${postId}`)
+  return {
+    state: toastStatus,
+    message: toastMessage,
+    updatedCommentId: commentId,
+  }
 }
 
 export async function handleLikeClick(documentId, postId, collection) {

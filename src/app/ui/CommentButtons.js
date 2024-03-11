@@ -32,7 +32,7 @@ export function CommentButtons() {
         <CommentMenuBtn className="comment-btn-menu" />
       </div>
       <CommentReplyForm className="comment-reply-form" />
-      {isEditVisible && <CommentEditForm className="comment-edit-form" />}
+      <CommentEditForm className="comment-edit-form" />
     </>
   )
 }
