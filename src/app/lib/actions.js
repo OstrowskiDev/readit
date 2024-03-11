@@ -529,7 +529,7 @@ export async function getCommentsAndAuthors(postId) {
   const post = await Post.findOne({ _id: postId })
   if (!post || !post.comments) {
     console.log("Post not found or doesn't have comments")
-    return comments
+    return [comments, authors]
   }
 
   const postChildrenIds = post.comments

@@ -13,7 +13,8 @@ export function PostReplyForm({ isCommFormVisible, setIsCommFormVisible }) {
   const [input, setInput] = useState('')
   const { data: session } = useSession()
   const userId = session?.user?.id
-  const { comments, setComments, postId, post, setPost } = usePostContext()
+  const { comments, setComments, authors, setAuthors, postId, post, setPost } =
+    usePostContext()
   const parentId = postId
 
   const [response, setResponse] = useState({
@@ -67,7 +68,19 @@ export function PostReplyForm({ isCommFormVisible, setIsCommFormVisible }) {
     const newComments = cloneDeep(comments)
     newComments.push(newComment)
     const newPost = cloneDeep(post)
+    if (!newPost.comments) newPost.comments = []
     newPost.comments.push(newCommentId)
+
+    const authorExists = authors.find((author) => author._id === userId)
+    if (!authorExists) {
+      const newAuthor = {
+        _id: session.user.id,
+        name: session.user.name,
+      }
+      const newAuthors = cloneDeep(authors)
+      newAuthors.push(newAuthor)
+      setAuthors(newAuthors)
+    }
 
     setComments(newComments)
     setPost(newPost)
