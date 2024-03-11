@@ -10,6 +10,7 @@ export function CommentContextProvider({
   commentLikes,
   commentDislikes,
   commentContent,
+  setDeleteOptimistically,
 }) {
   const [isVisible, setIsVisible] = useState(false)
   const [isEditVisible, setIsEditVisible] = useState(false)
@@ -27,6 +28,7 @@ export function CommentContextProvider({
         commentLikes,
         commentDislikes,
         commentContent,
+        setDeleteOptimistically,
       }}
     >
       {children}

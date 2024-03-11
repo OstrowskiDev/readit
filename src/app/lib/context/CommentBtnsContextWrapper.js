@@ -10,6 +10,7 @@ export function CommentBtnsContextWrapper({
   commentLikes,
   commentDislikes,
   commentContent,
+  setDeleteOptimistically,
 }) {
   return (
     <CommentContextProvider
@@ -19,6 +20,7 @@ export function CommentBtnsContextWrapper({
       commentLikes={commentLikes}
       commentDislikes={commentDislikes}
       commentContent={commentContent}
+      setDeleteOptimistically={setDeleteOptimistically}
     >
       <CommentButtons />
     </CommentContextProvider>

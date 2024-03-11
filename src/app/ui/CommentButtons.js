@@ -8,11 +8,8 @@ import { LikeCount } from '@/app/ui/LikeCount'
 import { CommentMenuBtn } from './buttons/CommentMenuBtn'
 import { CommentReplyForm } from './CommentReplyForm'
 import { CommentEditForm } from './CommentEditForm'
-import { useCommentContext } from '../lib/context/CommentContextProvider'
 
 export function CommentButtons() {
-  const { isEditVisible } = useCommentContext()
-
   return (
     <>
       <div className="comment-btns-container flex items-center ml-4">

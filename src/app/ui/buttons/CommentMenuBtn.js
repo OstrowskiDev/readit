@@ -30,9 +30,10 @@ export function CommentMenuBtn() {
           <DotsIco />
         </div>
       </button>
-      {isMenuVisible && (
-        <CommentOptMenu isMenuVisible={isMenuVisible} setIsMenuVisible={setIsMenuVisible} />
-      )}
+      <CommentOptMenu
+        isMenuVisible={isMenuVisible}
+        setIsMenuVisible={setIsMenuVisible}
+      />
     </div>
   )
 }

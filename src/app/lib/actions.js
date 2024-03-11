@@ -150,10 +150,15 @@ export async function deleteComment(commentId, postId) {
     redirect('/login')
   }
 
+  const errorResponse = {
+    state: 'error',
+    message: 'Failed to delete comment',
+  }
+
   const commentData = await getComment(commentId)
   if (!commentData) {
     console.error('deleteComment func: document not found')
-    return returnToast('error', 'Failed to delete comment')
+    return errorResponse
   }
 
   const commentAuthorId = commentData.user_id
@@ -161,7 +166,7 @@ export async function deleteComment(commentId, postId) {
     console.error(
       "Warning! UserId dosen't match authorId inside deleteComment server function.",
     )
-    return returnToast('error', 'Failed to delete comment')
+    return errorResponse
   }
 
   const parentType = commentData.parent.type
@@ -178,12 +183,12 @@ export async function deleteComment(commentId, postId) {
       const deleteComment = await Comment.findByIdAndDelete(commentId)
       if (!deleteComment) {
         console.error('deleteComment func: comment not found')
-        return returnToast('error', 'Failed to delete comment')
+        return errorResponse
       }
       console.log('Comment deleted successfully')
     } catch (error) {
       console.error('Error deleting comment:', error)
-      return returnToast('error', 'Failed to delete comment')
+      return errorResponse
     }
 
     //update parent children list
@@ -221,7 +226,6 @@ export async function deleteComment(commentId, postId) {
     // dont update comment or post children array:
     // comment was not perma deleted so no need
   }
-
   return { state: toastStatus, message: toastMessage }
 }
 

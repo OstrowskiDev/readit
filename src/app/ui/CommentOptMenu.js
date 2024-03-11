@@ -2,15 +2,56 @@
 
 import { useSession } from 'next-auth/react'
 import { useCommentContext } from '../lib/context/CommentContextProvider'
-import EditIco from './icons/EditIco'
+import { EditIco } from './icons/EditIco'
 import { SaveIco } from './icons/SaveIco'
 import { DeleteCommentBtn } from './buttons/DeleteCommentBtn'
+import { useEffect, useState } from 'react'
+import { usePostContext } from '../lib/context/PostContextProvider'
+import { deleteComment } from '../lib/actions'
+import { cloneDeep } from 'lodash'
+import { toast } from 'sonner'
 
-export function CommentOptMenu({ setIsMenuVisible }) {
-  const { isEditVisible, setIsEditVisible, authorId } = useCommentContext()
+export function CommentOptMenu({ isMenuVisible, setIsMenuVisible }) {
+  const {
+    isEditVisible,
+    setIsEditVisible,
+    authorId,
+    commentId,
+    postId,
+    setDeleteOptimistically,
+  } = useCommentContext()
   const { data: session } = useSession()
   const usersId = session?.user.id
   const isUsersComment = usersId === authorId
+
+  const [response, setResponse] = useState({
+    state: null,
+    message: null,
+  })
+
+  useEffect(() => {
+    if (response.state === 'success') {
+      toast.success(response.message)
+    }
+    if (response.state === 'error') {
+      toast.error(response.message)
+      handleOptimisticallyDeleteError()
+    }
+  }, [response])
+
+  async function onDeleteSubmit() {
+    handleDeleteOptimistically()
+    const serverResponse = await deleteComment(commentId, postId)
+    setResponse(serverResponse)
+  }
+
+  function handleDeleteOptimistically() {
+    setDeleteOptimistically(true)
+  }
+
+  function handleOptimisticallyDeleteError() {
+    setDeleteOptimistically(false)
+  }
 
   function EditBtn() {
     function onEditClick() {
@@ -52,12 +93,21 @@ export function CommentOptMenu({ setIsMenuVisible }) {
   }
 
   return (
-    <div
-      className={`menu-container flex flex-col absolute z-10 top-10 right-0  bg-white border border-gray-300 rounded-md`}
-    >
-      {isUsersComment && <EditBtn />}
-      {isUsersComment && <DeleteCommentBtn setIsMenuVisible={setIsMenuVisible} />}
-      <SaveBtn />
-    </div>
+    <>
+      {isMenuVisible && (
+        <div
+          className={`menu-container flex flex-col absolute z-10 top-10 right-0  bg-white border border-gray-300 rounded-md`}
+        >
+          {isUsersComment && <EditBtn />}
+          {isUsersComment && (
+            <DeleteCommentBtn
+              setIsMenuVisible={setIsMenuVisible}
+              onDeleteSubmit={onDeleteSubmit}
+            />
+          )}
+          <SaveBtn />
+        </div>
+      )}
+    </>
   )
 }

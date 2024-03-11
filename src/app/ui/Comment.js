@@ -1,9 +1,11 @@
 'use client'
 
+import { useState } from 'react'
 import { CommentBtnsContextWrapper } from '../lib/context/CommentBtnsContextWrapper'
 
 // Render comment and its replies recursively
 export function Comment({ authors, comments, commentId, depth, postId }) {
+  const [deleteOptimistically, setDeleteOptimistically] = useState(false)
   if (!comments) return null
   const comment = comments.find((comment) => comment._id === commentId)
 
@@ -14,7 +16,13 @@ export function Comment({ authors, comments, commentId, depth, postId }) {
   const commentDislikes = comment.dislikes
 
   return (
-    <div className="comment-container relative flex pt-4 px-2" style={{ marginLeft: depth * 20 }}>
+    <div
+      className="comment-container relative flex pt-4 px-2"
+      style={{
+        marginLeft: depth * 20,
+        display: deleteOptimistically ? 'none' : 'flex',
+      }}
+    >
       <div className="comment-styling-element comment-vertical-line absolute left-[-6px] top-14 w-3"></div>
       <div className="comment-main-content-container w-full">
         <div className="comment-username-container relative right-6 flex items-center">
@@ -33,6 +41,7 @@ export function Comment({ authors, comments, commentId, depth, postId }) {
           commentLikes={commentLikes}
           commentDislikes={commentDislikes}
           commentContent={comment.content}
+          setDeleteOptimistically={setDeleteOptimistically}
         />
         <div className="ml-[20px]">
           {comment.replies.map((replyId) => (
