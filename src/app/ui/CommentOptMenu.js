@@ -6,9 +6,7 @@ import { EditIco } from './icons/EditIco'
 import { SaveIco } from './icons/SaveIco'
 import { DeleteCommentBtn } from './buttons/DeleteCommentBtn'
 import { useEffect, useState } from 'react'
-import { usePostContext } from '../lib/context/PostContextProvider'
 import { deleteComment } from '../lib/actions'
-import { cloneDeep } from 'lodash'
 import { toast } from 'sonner'
 
 export function CommentOptMenu({ isMenuVisible, setIsMenuVisible }) {
