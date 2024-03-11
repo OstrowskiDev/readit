@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { CommentBtnsContextWrapper } from '../lib/context/CommentBtnsContextWrapper'
+import TimeAgo from './TimeAgo'
 
 // Render comment and its replies recursively
 export function Comment({ authors, comments, commentId, depth, postId }) {
@@ -27,7 +28,14 @@ export function Comment({ authors, comments, commentId, depth, postId }) {
       <div className="comment-main-content-container w-full">
         <div className="comment-username-container relative right-6 flex items-center">
           <div className="comment-avatar w-8 h-8 bg-blue-400 rounded-md"></div>
-          <p className="comment-author ml-1 text-blue-900">{author.name}</p>
+          <p className="comment-author ml-1 text-blue-900 text-15">
+            {author.name}
+          </p>
+          <TimeAgo
+            createdAt={comment.createdAt}
+            updatedAt={comment.updatedAt}
+            type="created"
+          />
         </div>
         <div className="comment-body-container ml-4">
           <pre className="comment-body mt-1 text-lg font-sans whitespace-pre-wrap">
