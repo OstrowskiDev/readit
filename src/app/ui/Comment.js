@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { CommentBtnsContextWrapper } from '../lib/context/CommentBtnsContextWrapper'
 import TimeAgo from './TimeAgo'
-import { AvatarCali } from '../lib/avatars/collectionLorelei'
+import Avatar from '../lib/avatars/Avatar'
 
 // Render comment and its replies recursively
 export function Comment({ authors, comments, commentId, depth, postId }) {
@@ -25,13 +25,17 @@ export function Comment({ authors, comments, commentId, depth, postId }) {
         display: deleteOptimistically ? 'none' : 'flex',
       }}
     >
-      <div className="comment-styling-element comment-vertical-line absolute left-[-6px] top-14 w-3"></div>
+      <div className="comment-styling-element comment-vertical-line absolute left-[4px] top-14 w-3"></div>
       <div className="comment-main-content-container w-full">
         <div className="comment-username-container relative right-6 flex items-center">
-          <div className="comment-avatar w-16 h-16 bg-blue-400">
-            <AvatarCali />
+          <div className="comment-avatar w-12 h-12 ">
+            <Avatar
+              seed={author.avatar.seed}
+              bgColor={author.avatar.bgColor}
+              borderColor={author.avatar.borderColor}
+            />
           </div>
-          <p className="comment-author ml-1 text-blue-900 text-15">
+          <p className="comment-author ml-2 text-blue-900 text-15">
             {author.name}
           </p>
           <TimeAgo
