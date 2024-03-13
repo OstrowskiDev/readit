@@ -3,13 +3,13 @@ import { createAvatar, schema } from '@dicebear/core'
 import { loreleiNeutral } from '@dicebear/collection'
 
 export default function Avatar({ seed, bgColor, borderColor }) {
-  // Tailwind utility classes dont work well with this library.
-  // Prop backgroundColor must be set to any value inside options body
-  // for backgroundColor inside <img> tag to work properly.
+  // Consider using Just-in-Time (JIT) mode for this in the future.
 
   const avatar = useMemo(() => {
     return createAvatar(loreleiNeutral, {
       seed: seed,
+      // Prop backgroundColor must be set to any value
+      // for backgroundColor inside <img> tag to work properly.
       backgroundColor: ['#60A5FA'],
     }).toDataUriSync()
   }, [])
@@ -27,8 +27,6 @@ export default function Avatar({ seed, bgColor, borderColor }) {
     />
   )
 }
-
-// bg-${color}-${opacity}  border-${color}-${opacity + 100}
 
 //oragne:
 // backgroundColor: 'rgb(254 215 170)',
