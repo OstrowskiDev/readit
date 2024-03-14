@@ -8,14 +8,35 @@ export default function Avatar({ seed, color }) {
   let borderColor
   let fillColor
 
-  if (color === 'red') {
-    bgColor = 'rgb(254 202 202)'
-    borderColor = 'rgb(252 165 165)'
-  }
-
-  if (color === 'orange') {
-    bgColor = 'rgb(254 215 170)'
-    borderColor = 'rgb(253 186 116)'
+  switch (color) {
+    case 'red':
+      bgColor = 'rgb(254 202 202)'
+      borderColor = 'rgb(252 165 165)'
+      break
+    case 'orange':
+      bgColor = 'rgb(254 215 170)'
+      borderColor = 'rgb(253 186 116)'
+      break
+    case 'yellow':
+      bgColor = 'rgb(254 240 138)'
+      borderColor = 'rgb(253 224 71)'
+      break
+    case 'green':
+      bgColor = 'rgb(187 247 208)'
+      borderColor = 'rgb(134 239 172)'
+      break
+    case 'blue':
+      bgColor = 'rgb(191 219 254)'
+      borderColor = 'rgb(147 197 253)'
+      break
+    case 'pink':
+      bgColor = 'rgb(251 207 232)'
+      borderColor = 'rgb(249 168 212)'
+      break
+    case 'violet':
+      bgColor = 'rgb(221 214 254)'
+      borderColor = 'rgb(196 181 253)'
+      break
   }
 
   const avatar = useMemo(() => {
@@ -29,6 +50,7 @@ export default function Avatar({ seed, color }) {
 
   return (
     <img
+      className="bg-violet-300"
       style={{
         backgroundColor: bgColor,
         borderColor: borderColor,
