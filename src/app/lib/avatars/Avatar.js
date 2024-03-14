@@ -49,24 +49,24 @@ export default function Avatar({ seed, color }) {
   }, [])
 
   return (
-    <img
-      className="bg-violet-300"
-      style={{
-        backgroundColor: bgColor,
-        borderColor: borderColor,
-        borderWidth: '2px',
-        borderRadius: '100px',
-      }}
-      src={avatar}
-      alt="Avatar"
-    />
+    <>
+      <div
+        className="avatar-border absolute w-12 h-12"
+        style={{
+          borderColor: borderColor,
+          borderWidth: '2px',
+          borderRadius: '100px',
+        }}
+      ></div>
+      <img
+        // className="bg-violet-300"
+        style={{
+          backgroundColor: bgColor,
+          borderRadius: '100px',
+        }}
+        src={avatar}
+        alt="Avatar"
+      />
+    </>
   )
 }
-
-//oragne:
-// backgroundColor: 'rgb(254 215 170)',
-// borderColor: 'rgb(253 186 116)',
-
-//red:
-// backgroundColor: 'rgb(254 202 202)',
-// borderColor: 'rgb(252 165 165)',
