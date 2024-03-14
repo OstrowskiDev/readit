@@ -21,11 +21,11 @@ export default function SideNav() {
           <a href="/posts" className="nav-button pl-4">
             Posts
           </a>
-          <a href="/groups" className="nav-button pl-4">
-            My Groups
-          </a>
           <a href="/my-profile" className="nav-button pl-4">
             My Profile
+          </a>
+          <a href="/credits" className="nav-button pl-4">
+            Credits
           </a>
           <div className="bg-white h-auto rounded-md grow shadow-md"></div>
         </div>
