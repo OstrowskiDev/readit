@@ -28,7 +28,7 @@ export function Comment({ authors, comments, commentId, depth, postId }) {
       <div className="comment-styling-element comment-vertical-line absolute left-[4px] top-14 w-3"></div>
       <div className="comment-main-content-container w-full">
         <div className="comment-username-container relative right-6 flex items-center">
-          <div className="comment-avatar w-12 h-12 ">
+          <div className="comment-avatar min-w-12 min-h-12 ">
             <Avatar
               seed={author.avatar.seed}
               color={author.avatar.color}
