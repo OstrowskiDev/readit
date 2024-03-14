@@ -2,8 +2,21 @@ import { useMemo } from 'react'
 import { createAvatar, schema } from '@dicebear/core'
 import { loreleiNeutral } from '@dicebear/collection'
 
-export default function Avatar({ seed, bgColor, borderColor }) {
+export default function Avatar({ seed, color }) {
   // Consider using Just-in-Time (JIT) mode for this in the future.
+  let bgColor
+  let borderColor
+  let fillColor
+
+  if (color === 'red') {
+    bgColor = 'rgb(254 202 202)'
+    borderColor = 'rgb(252 165 165)'
+  }
+
+  if (color === 'orange') {
+    bgColor = 'rgb(254 215 170)'
+    borderColor = 'rgb(253 186 116)'
+  }
 
   const avatar = useMemo(() => {
     return createAvatar(loreleiNeutral, {

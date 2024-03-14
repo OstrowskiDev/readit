@@ -31,6 +31,7 @@ export function Comment({ authors, comments, commentId, depth, postId }) {
           <div className="comment-avatar w-12 h-12 ">
             <Avatar
               seed={author.avatar.seed}
+              color={author.avatar.color}
               bgColor={author.avatar.bgColor}
               borderColor={author.avatar.borderColor}
             />
