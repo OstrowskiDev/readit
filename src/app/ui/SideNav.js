@@ -24,6 +24,9 @@ export default function SideNav() {
           <a href="/my-profile" className="nav-button pl-4">
             My Profile
           </a>
+          <a href="/my-posts" className="nav-button pl-4">
+            My Posts
+          </a>
           <a href="/credits" className="nav-button pl-4">
             Credits
           </a>

@@ -1,4 +1,4 @@
-export function Credits() {
+export default function Credits() {
   // add credits for:
   // 1. fonts (if any that need credition used)
   // 2. icons
