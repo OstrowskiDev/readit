@@ -1,12 +1,11 @@
 import { useMemo } from 'react'
-import { createAvatar, schema } from '@dicebear/core'
+import { createAvatar } from '@dicebear/core'
 import { loreleiNeutral } from '@dicebear/collection'
 
 export default function Avatar({ seed, color }) {
-  // Consider using Just-in-Time (JIT) mode for this in the future.
+  // Consider using Just-in-Time mode for this in the future.
   let bgColor
   let borderColor
-  let fillColor
 
   switch (color) {
     case 'red':
@@ -59,7 +58,6 @@ export default function Avatar({ seed, color }) {
         }}
       ></div>
       <img
-        // className="bg-violet-300"
         style={{
           backgroundColor: bgColor,
           borderRadius: '100px',
