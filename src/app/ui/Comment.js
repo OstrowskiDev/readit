@@ -8,7 +8,10 @@ import Avatar from '../lib/avatars/Avatar'
 // Render comment and its replies recursively
 export function Comment({ authors, comments, commentId, depth, postId }) {
   const [deleteOptimistically, setDeleteOptimistically] = useState(false)
-  const [isHovered, setIsHovered] = useState(false)
+  const [isUserHOvered, setIsUserHovered] = useState(false)
+  // let hoverTimeoutId
+  let onHoverTimeout
+  let onHoverOutTimeout
   if (!comments) return null
   const comment = comments.find((comment) => comment._id === commentId)
 
@@ -19,17 +22,23 @@ export function Comment({ authors, comments, commentId, depth, postId }) {
   const commentDislikes = comment.dislikes
 
   function handleMouseEnter() {
-    setIsHovered(true)
+    onHoverOutTimeout = setTimeout(() => {
+      setIsUserHovered(true)
+    }, 400)
+    clearTimeout(onHoverTimeout)
   }
 
   function handleMouseLeave() {
-    setIsHovered(false)
+    clearTimeout(onHoverOutTimeout)
+    onHoverTimeout = setTimeout(() => {
+      setIsUserHovered(false)
+    }, 400)
   }
 
   function UserInfobox() {
     return (
-      <div className="absolute top-[52px] left-2 w-80 h-64 z-40 bg-blue-200 rounded-xl">
-        <p>User Infobox</p>
+      <div className="absolute top-16 left-3 w-80 h-64 z-40 bg-white rounded-xl drop-shadow-2xl hover:cursor-default">
+        <p className="p-4 text-center">User Infobox</p>
       </div>
     )
   }
@@ -44,21 +53,25 @@ export function Comment({ authors, comments, commentId, depth, postId }) {
     >
       <div className="comment-styling-element comment-vertical-line absolute left-[4px] top-14 w-3"></div>
       <div className="comment-main-content-container w-full">
-        <div
-          className="comment-username-container relative right-6 pb-1 flex items-center hover:cursor-pointer"
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
-        >
-          {isHovered && <UserInfobox />}
-          <div className="comment-avatar min-w-12 min-h-12 ">
+        <div className="comment-username-container relative right-6 flex items-center">
+          <div
+            className="comment-avatar min-w-12 min-h-12 hover:cursor-pointer"
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+          >
             <Avatar
               seed={author?.avatar.seed}
               color={author?.avatar.color}
               bgColor={author?.avatar.bgColor}
               borderColor={author?.avatar.borderColor}
             />
+            {isUserHOvered && <UserInfobox />}
           </div>
-          <p className="comment-author ml-2 text-blue-900 text-15">
+          <p
+            className="comment-author ml-2 text-blue-900 text-15 hover:cursor-pointer"
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+          >
             {author.name}
           </p>
           <TimeAgo
