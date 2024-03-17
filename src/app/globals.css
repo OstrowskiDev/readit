@@ -44,6 +44,22 @@
   font-size: 15px;
 }
 
+.text-18 {
+  font-size: 18px;
+}
+
+.text-20 {
+  font-size: 20px;
+}
+
+.border-1 {
+  border-width: 1px;
+}
+
+.border-t-1 {
+  border-top-width: 1px;
+}
+
 
 /* Spinner styles below: */
 .lds-roller {

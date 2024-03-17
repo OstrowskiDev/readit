@@ -2,7 +2,7 @@ import { useMemo } from 'react'
 import { createAvatar } from '@dicebear/core'
 import { loreleiNeutral } from '@dicebear/collection'
 
-export default function Avatar({ seed, color }) {
+export default function Avatar({ seed, color, size, border }) {
   // Consider using Just-in-Time mode for this in the future.
   let bgColor
   let borderColor
@@ -50,10 +50,12 @@ export default function Avatar({ seed, color }) {
   return (
     <>
       <div
-        className="avatar-border absolute w-12 h-12"
+        className="avatar-border absolute"
         style={{
+          height: `${size}px`,
+          width: `${size}px`,
           borderColor: borderColor,
-          borderWidth: '2px',
+          borderWidth: `${border}px`,
           borderRadius: '100px',
         }}
       ></div>
