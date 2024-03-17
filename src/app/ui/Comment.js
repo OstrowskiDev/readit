@@ -5,6 +5,7 @@ import { CommentBtnsContextWrapper } from '../lib/context/CommentBtnsContextWrap
 import TimeAgo from './TimeAgo'
 import Avatar from '../lib/avatars/Avatar'
 import { PlusIco } from './icons/PlusIco'
+import { MessageIco } from './icons/MessageIco'
 
 // Render comment and its replies recursively
 export function Comment({ authors, comments, commentId, depth, postId }) {
@@ -67,15 +68,23 @@ export function Comment({ authors, comments, commentId, depth, postId }) {
           </div>
           <div className="comments-number ml-4">
             <p className="text-gray-950 text-18 font-semibold">34</p>
-            <p className=" text-gray-600 text-15">Comment Karma</p>
+            <p className="text-gray-600 text-15">Comment Karma</p>
           </div>
         </div>
-        <div className="buttons-container mt-4">
-          <button className="btn-body flex justify-center items-center h-10 px-4 rounded-full bg-blue-600 hover:bg-blue-700">
+        <div className="buttons-container mt-4 flex">
+          <button className="follow-btn-container flex justify-center items-center h-10 px-4 rounded-full bg-blue-600 hover:bg-blue-700">
             <div className="btn-icon-container w-[21px]">
               <PlusIco color={'white'} size={21} />
             </div>
             <p className="btn-text ml-[6px] font-semibold text-white">Follow</p>
+          </button>
+          <button className="message-btn-container flex justify-center items-center h-10 ml-2 px-4 rounded-full bg-gray-300 hover:bg-gray-400">
+            <div className="btn-icon-container w-[21px]">
+              <MessageIco color={'gray'} />
+            </div>
+            <p className="btn-text ml-[6px] font-semibold text-gray-500">
+              Message
+            </p>
           </button>
         </div>
       </div>
