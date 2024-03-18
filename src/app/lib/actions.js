@@ -584,12 +584,23 @@ function returnToast(status, message) {
 }
 
 export async function countUserPosts(userId) {
-  console.log('Counting users posts...')
+  console.log('Counting user posts...')
   try {
     const count = await Post.countDocuments({ user_id: userId })
     return count
   } catch (error) {
     console.error('Error occured while counting user posts:', error)
-    return '-'
+    return null
+  }
+}
+
+export async function countUserComments(userId) {
+  console.log('Counting user comments...')
+  try {
+    const count = await Comment.countDocuments({ user_id: userId })
+    return count
+  } catch (error) {
+    console.error('Error occured while counting user comments:', error)
+    return null
   }
 }

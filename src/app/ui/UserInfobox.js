@@ -1,14 +1,16 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { countUserPosts } from '../lib/actions'
+import { countUserComments, countUserPosts } from '../lib/actions'
 import Avatar from '../lib/avatars/Avatar'
 import { MessageIco } from './icons/MessageIco'
 import { PlusIco } from './icons/PlusIco'
+import { usePostContext } from '../lib/context/PostContextProvider'
+import { cloneDeep } from 'lodash'
 
 export default function UserInfobox({ author }) {
-  const [postNum, setPostNum] = useState('-')
   const [isLoading, setIsLoading] = useState(true)
+  const { authors, setAuthors } = usePostContext()
 
   useEffect(() => {
     async function getPostsSum() {
@@ -16,12 +18,24 @@ export default function UserInfobox({ author }) {
       return postsSum
     }
 
-    console.log('inside UserInfobox useEffect')
-    const postsSum = getPostsSum()
-    console.log(`number of users posts: ${postsSum}`)
-    console.log(postsSum)
-    setPostNum(postsSum)
+    async function getCommentsSum() {
+      const commentsSum = await countUserComments(author._id)
+      return commentsSum
+    }
 
+    if (author.postsSum === undefined) {
+      console.log('setting number of posts created by user')
+      const postsSum = getPostsSum()
+      const commentsSum = getCommentsSum()
+      const authorId = author._id
+      const newAuthor = cloneDeep(author)
+      newAuthor.postsSum = postsSum
+      newAuthor.commentsSum = commentsSum
+      const index = authors.findIndex((auth) => auth._id === authorId)
+      const newAuthors = cloneDeep(authors)
+      newAuthors[index] = newAuthor
+      setAuthors(newAuthors)
+    }
     setIsLoading(false)
   }, [])
 
@@ -51,11 +65,15 @@ export default function UserInfobox({ author }) {
         </div>
         <div className="posts-comments-numbers-container mt-4 flex">
           <div className="posts-number">
-            <p className="text-gray-950 text-18 font-semibold ">{postNum}</p>
+            <p className="text-gray-950 text-18 font-semibold ">
+              {author.postsSum}
+            </p>
             <p className=" text-gray-600 text-15">Posts Created</p>
           </div>
           <div className="comments-number ml-4">
-            <p className="text-gray-950 text-18 font-semibold">34</p>
+            <p className="text-gray-950 text-18 font-semibold">
+              {author.commentsSum}
+            </p>
             <p className="text-gray-600 text-15">Comment Created</p>
           </div>
         </div>

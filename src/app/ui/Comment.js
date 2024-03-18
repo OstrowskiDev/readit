@@ -10,6 +10,8 @@ const LazyUserInfobox = lazy(() => import('./UserInfobox.js'))
 export function Comment({ authors, comments, commentId, depth, postId }) {
   const [deleteOptimistically, setDeleteOptimistically] = useState(false)
   const [isUserHovered, setIsUserHovered] = useState(false)
+  const [postNum, setPostNum] = useState('-')
+
   let onHoverTimeout
   let onHoverOutTimeout
   if (!comments) return null
@@ -79,7 +81,13 @@ export function Comment({ authors, comments, commentId, depth, postId }) {
 
           {/* user infobox on hover */}
           <Suspense fallback={<UserInfoboxLoader />}>
-            {isUserHovered && <LazyUserInfobox author={author} />}
+            {isUserHovered && (
+              <LazyUserInfobox
+                author={author}
+                postNum={postNum}
+                setPostNum={setPostNum}
+              />
+            )}
           </Suspense>
         </div>
 
