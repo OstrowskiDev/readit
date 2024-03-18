@@ -3,5 +3,6 @@ export default function Credits() {
   // 1. fonts (if any that need credition used)
   // 2. icons
   // 3. avatar collection
+  // 4. spinner
   return <div>Credits below:</div>
 }

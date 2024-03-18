@@ -4,15 +4,12 @@ import { useState, Suspense, lazy } from 'react'
 import { CommentBtnsContextWrapper } from '../lib/context/CommentBtnsContextWrapper'
 import TimeAgo from './TimeAgo'
 import Avatar from '../lib/avatars/Avatar'
-import { SpinnerGray } from './loaders/SpinnerGray'
-
+import { UserInfoboxLoader } from './loaders/UserInfoboxLoader'
 const LazyUserInfobox = lazy(() => import('./UserInfobox.js'))
 
-// Render comment and its replies recursively
 export function Comment({ authors, comments, commentId, depth, postId }) {
   const [deleteOptimistically, setDeleteOptimistically] = useState(false)
   const [isUserHovered, setIsUserHovered] = useState(false)
-  // let hoverTimeoutId
   let onHoverTimeout
   let onHoverOutTimeout
   if (!comments) return null
@@ -38,15 +35,6 @@ export function Comment({ authors, comments, commentId, depth, postId }) {
     }, 400)
   }
 
-  function InfoboxLoader() {
-    return (
-      <div className="infobox-container absolute top-16 left-3 w-[350px] h-[260px] z-40 p-8 flex flex-col justify-center items-center bg-white rounded-3xl drop-shadow-2xl hover:cursor-default">
-        <SpinnerGray />
-        <h2 className="text-gray-600">Loading...</h2>
-      </div>
-    )
-  }
-
   return (
     <div
       className="comment-container relative flex pt-4 px-2"
@@ -57,9 +45,11 @@ export function Comment({ authors, comments, commentId, depth, postId }) {
     >
       <div className="comment-styling-element comment-vertical-line absolute left-[4px] top-14 w-3"></div>
       <div className="comment-main-content-container w-full">
+        {/* authors avatar, user name, comment time, edit time */}
         <div className="comment-username-container relative right-6 flex items-center">
+          {/* authors avatar */}
           <div
-            className="comment-avatar min-w-12 min-h-12 hover:cursor-pointer"
+            className="comment-avatar-container min-w-12 min-h-12 hover:cursor-pointer"
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
           >
@@ -69,10 +59,9 @@ export function Comment({ authors, comments, commentId, depth, postId }) {
               size={48}
               border={2}
             />
-            <Suspense fallback={<InfoboxLoader />}>
-              {isUserHovered && <LazyUserInfobox author={author} />}
-            </Suspense>
           </div>
+
+          {/* authors name */}
           <p
             className="comment-author ml-2 text-blue-900 text-15 hover:cursor-pointer"
             onMouseEnter={handleMouseEnter}
@@ -80,18 +69,28 @@ export function Comment({ authors, comments, commentId, depth, postId }) {
           >
             {author.name}
           </p>
+
+          {/* comment time, edit time */}
           <TimeAgo
             createdAt={comment.createdAt}
             updatedAt={comment.updatedAt}
             type="created"
           />
+
+          {/* user infobox on hover */}
+          <Suspense fallback={<UserInfoboxLoader />}>
+            {isUserHovered && <LazyUserInfobox author={author} />}
+          </Suspense>
         </div>
 
+        {/* comment content */}
         <div className="comment-body-container ml-4">
           <pre className="comment-body mt-1 text-lg font-sans whitespace-pre-wrap">
             {comment.content}
           </pre>
         </div>
+
+        {/* comment buttons */}
         <CommentBtnsContextWrapper
           commentId={commentId}
           postId={postId}
