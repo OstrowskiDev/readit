@@ -582,3 +582,14 @@ function resetToast() {
 function returnToast(status, message) {
   return { state: status, message: message }
 }
+
+export async function countUserPosts(userId) {
+  console.log('Counting users posts...')
+  try {
+    const count = await Post.countDocuments({ user_id: userId })
+    return count
+  } catch (error) {
+    console.error('Error occured while counting user posts:', error)
+    return '-'
+  }
+}

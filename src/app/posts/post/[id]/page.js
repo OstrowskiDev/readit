@@ -12,7 +12,7 @@ import { Toaster } from 'sonner'
 import { postToastOption } from '@/app/lib/toastOptions'
 import { useSession } from 'next-auth/react'
 import { useEffect, useState } from 'react'
-import { Loader } from '@/app/ui/Loader'
+import { Loader } from '@/app/ui/loaders/Loader'
 import { PostContextProvider } from '@/app/lib/context/PostContextProvider'
 
 export default function PostPage({ params }) {

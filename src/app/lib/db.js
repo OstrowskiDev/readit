@@ -13,29 +13,39 @@ async function connectToDatabase() {
 
 async function getPost(postId) {
   console.log(`fetching post ${postId} from database...`)
-  const res = await fetch(`http://localhost:3000/api/posts/post/${postId}`, { cache: 'no-store' })
+  const res = await fetch(`http://localhost:3000/api/posts/post/${postId}`, {
+    cache: 'no-store',
+  })
   if (!res.ok) return null
   return res.json()
 }
 
 async function getUser(userId) {
-  const res = await fetch(`http://localhost:3000/api/users/user/${userId}`, { cache: 'no-store' })
+  const res = await fetch(`http://localhost:3000/api/users/user/${userId}`, {
+    cache: 'no-store',
+  })
   if (!res.ok) return null
   return res.json()
 }
 
 async function getComment(commentId) {
-  const res = await fetch(`http://localhost:3000/api/comments/comment/${commentId}`, {
-    cache: 'no-store',
-  })
+  const res = await fetch(
+    `http://localhost:3000/api/comments/comment/${commentId}`,
+    {
+      cache: 'no-store',
+    },
+  )
   if (!res.ok) return null
   return res.json()
 }
 
 async function getUserByEmail(email) {
-  const res = await fetch(`http://localhost:3000/api/users/user/email/${email}`, {
-    cache: 'no-store',
-  })
+  const res = await fetch(
+    `http://localhost:3000/api/users/user/email/${email}`,
+    {
+      cache: 'no-store',
+    },
+  )
   if (!res.ok) return null
   return res.json()
 }
@@ -51,13 +61,17 @@ async function getData() {
 }
 
 async function getPosts() {
-  const res = await fetch('http://localhost:3000/api/posts', { cache: 'no-store' })
+  const res = await fetch('http://localhost:3000/api/posts', {
+    cache: 'no-store',
+  })
   if (!res.ok) return null
   return res.json()
 }
 
 async function getUsers() {
-  const res = await fetch('http://localhost:3000/api/users', { cache: 'no-store' })
+  const res = await fetch('http://localhost:3000/api/users', {
+    cache: 'no-store',
+  })
   if (!res.ok) return null
   return res.json()
 }

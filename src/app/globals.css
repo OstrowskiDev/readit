@@ -79,9 +79,16 @@
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: #fff;
   margin: -4px 0 0 -4px;
 }
+.lds-roller-white div:after {
+  background: #fff;
+}
+
+.lds-roller-gray div:after {
+  background: rgb(156 163 175);
+}
+
 .lds-roller div:nth-child(1) {
   animation-delay: -0.036s;
 }

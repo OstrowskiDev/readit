@@ -4,13 +4,14 @@ import { useState, Suspense, lazy } from 'react'
 import { CommentBtnsContextWrapper } from '../lib/context/CommentBtnsContextWrapper'
 import TimeAgo from './TimeAgo'
 import Avatar from '../lib/avatars/Avatar'
-import { LoaderTiny } from './LoaderTiny'
+import { SpinnerGray } from './loaders/SpinnerGray'
+
+const LazyUserInfobox = lazy(() => import('./UserInfobox.js'))
 
 // Render comment and its replies recursively
 export function Comment({ authors, comments, commentId, depth, postId }) {
   const [deleteOptimistically, setDeleteOptimistically] = useState(false)
   const [isUserHovered, setIsUserHovered] = useState(false)
-  const LazyUserInfobox = lazy(() => import('./UserInfobox.js'))
   // let hoverTimeoutId
   let onHoverTimeout
   let onHoverOutTimeout
@@ -37,6 +38,15 @@ export function Comment({ authors, comments, commentId, depth, postId }) {
     }, 400)
   }
 
+  function InfoboxLoader() {
+    return (
+      <div className="infobox-container absolute top-16 left-3 w-[350px] h-[260px] z-40 p-8 flex flex-col justify-center items-center bg-white rounded-3xl drop-shadow-2xl hover:cursor-default">
+        <SpinnerGray />
+        <h2 className="text-gray-600">Loading...</h2>
+      </div>
+    )
+  }
+
   return (
     <div
       className="comment-container relative flex pt-4 px-2"
@@ -59,7 +69,7 @@ export function Comment({ authors, comments, commentId, depth, postId }) {
               size={48}
               border={2}
             />
-            <Suspense fallback={LoaderTiny}>
+            <Suspense fallback={<InfoboxLoader />}>
               {isUserHovered && <LazyUserInfobox author={author} />}
             </Suspense>
           </div>

@@ -9,7 +9,7 @@ import { toast } from 'sonner'
 import { useSession } from 'next-auth/react'
 import { useEffect, useState } from 'react'
 import { useFormStatus } from 'react-dom'
-import { LoaderTiny } from '../LoaderTiny'
+import { LoaderTiny } from '../loaders/LoaderTiny'
 
 export function DislikeBtn({ styles, collection }) {
   const { commentId, commentDislikes } =
