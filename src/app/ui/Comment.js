@@ -10,7 +10,6 @@ const LazyUserInfobox = lazy(() => import('./UserInfobox.js'))
 export function Comment({ authors, comments, commentId, depth, postId }) {
   const [deleteOptimistically, setDeleteOptimistically] = useState(false)
   const [isUserHovered, setIsUserHovered] = useState(false)
-  const [postNum, setPostNum] = useState('-')
 
   let onHoverTimeout
   let onHoverOutTimeout
@@ -41,7 +40,7 @@ export function Comment({ authors, comments, commentId, depth, postId }) {
     <div
       className="comment-container relative flex pt-4 px-2"
       style={{
-        marginLeft: depth * 20,
+        marginLeft: depth === 0 ? 0 : 25,
         display: deleteOptimistically ? 'none' : 'flex',
       }}
     >
@@ -81,13 +80,7 @@ export function Comment({ authors, comments, commentId, depth, postId }) {
 
           {/* user infobox on hover */}
           <Suspense fallback={<UserInfoboxLoader />}>
-            {isUserHovered && (
-              <LazyUserInfobox
-                author={author}
-                postNum={postNum}
-                setPostNum={setPostNum}
-              />
-            )}
+            {isUserHovered && <LazyUserInfobox author={author} />}
           </Suspense>
         </div>
 

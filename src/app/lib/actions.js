@@ -604,3 +604,29 @@ export async function countUserComments(userId) {
     return null
   }
 }
+
+export async function countPostComments(postId) {
+  console.log('Counting post comments...')
+  try {
+    const count = await Comment.countDocuments({
+      'parent.type': 'post',
+      'parent._id': postId,
+    })
+    return count
+  } catch (error) {
+    console.error('Error occured while counting post comments:', error)
+    return null
+  }
+}
+
+export async function getUserPostsIds(userId) {
+  console.log(`fetching users posts id's`)
+  try {
+    const postsIds = await Post.find({ user_id: userId }).select('_id').lean()
+    const postIdsArray = postsIds.map((post) => post._id)
+    return postIdsArray
+  } catch {
+    console.error(`Error occured while fetching posts id's`)
+    return null
+  }
+}

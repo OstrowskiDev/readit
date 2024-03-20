@@ -23,6 +23,7 @@ export default function PostPage({ params }) {
   const [user, setUser] = useState(null)
   const [comments, setComments] = useState(null)
   const [authors, setAuthors] = useState(null)
+  const [authorsData, setAuthorsData] = useState([])
 
   useEffect(() => {
     async function fetchData() {
@@ -56,6 +57,8 @@ export default function PostPage({ params }) {
       setComments={setComments}
       authors={authors}
       setAuthors={setAuthors}
+      authorsData={authorsData}
+      setAuthorsData={setAuthorsData}
       post={post}
       setPost={setPost}
       postId={postId}
