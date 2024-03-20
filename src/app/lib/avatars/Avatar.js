@@ -1,4 +1,3 @@
-import { useMemo } from 'react'
 import { createAvatar } from '@dicebear/core'
 import { loreleiNeutral } from '@dicebear/collection'
 
@@ -38,14 +37,10 @@ export default function Avatar({ seed, color, size, border }) {
       break
   }
 
-  const avatar = useMemo(() => {
-    return createAvatar(loreleiNeutral, {
-      seed: seed,
-      // Prop backgroundColor must be set to any value
-      // for backgroundColor inside <img> tag to work properly.
-      backgroundColor: ['#60A5FA'],
-    }).toDataUriSync()
-  }, [])
+  const avatar = createAvatar(loreleiNeutral, {
+    seed: seed,
+    backgroundColor: ['#fff'], // must be set to any value for backgroundColor inside <img> tag to work properly.
+  }).toDataUriSync()
 
   return (
     <>

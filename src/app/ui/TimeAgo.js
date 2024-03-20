@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react'
 
 export default function TimeAgo({ createdAt, updatedAt }) {
-  if (!createdAt) return null
-
   const [createdAgo, setCreatedAgo] = useState('')
   const [editedAgo, setEditedAgo] = useState('')
   const created = new Date(createdAt)
@@ -58,7 +56,9 @@ export default function TimeAgo({ createdAt, updatedAt }) {
 
   return (
     <>
-      <span className="ml-2 text-gray-600 text-15">• {createdAgo}</span>
+      {createdAt && (
+        <span className="ml-2 text-gray-600 text-15">• {createdAgo}</span>
+      )}
       {wasEdited && (
         <span className="ml-2 text-gray-600 text-15">• Edited {editedAgo}</span>
       )}
