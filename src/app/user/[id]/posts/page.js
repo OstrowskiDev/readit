@@ -2,6 +2,7 @@
 
 import { getUserPostsIds } from '@/app/lib/actions'
 import { Post } from '@/app/ui/Post'
+// need to implement lazy loading or other susspense / loading strat
 // import { UserInfoboxLoader } from '@/app/ui/loaders/UserInfoboxLoader'
 import { Suspense, lazy, useEffect, useState } from 'react'
 // const LazyPost = lazy(() => import('@/app/ui/Post'))
