@@ -60,6 +60,11 @@ export function Comment({ authors, comments, commentId, depth, postId }) {
               size={48}
               border={2}
             />
+
+            {/* user infobox on hover */}
+            <Suspense fallback={<UserInfoboxLoader />}>
+              {isUserHovered && <LazyUserInfobox author={author} />}
+            </Suspense>
           </div>
 
           {/* authors name */}
@@ -77,11 +82,6 @@ export function Comment({ authors, comments, commentId, depth, postId }) {
             updatedAt={comment.updatedAt}
             type="created"
           />
-
-          {/* user infobox on hover */}
-          <Suspense fallback={<UserInfoboxLoader />}>
-            {isUserHovered && <LazyUserInfobox author={author} />}
-          </Suspense>
         </div>
 
         {/* comment content */}

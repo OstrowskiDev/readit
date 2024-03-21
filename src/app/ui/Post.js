@@ -86,6 +86,11 @@ export function Post({ postId, authorsData, setAuthorsData }) {
               size={32}
               border={1}
             />
+
+            {/* user infobox on hover */}
+            <Suspense fallback={<UserInfoboxLoader />}>
+              {isUserHovered && <LazyUserInfobox author={author} />}
+            </Suspense>
           </div>
 
           {/* authors name */}
@@ -110,11 +115,6 @@ export function Post({ postId, authorsData, setAuthorsData }) {
             {isPostAuthor && <DeletePostBtn postId={postId} />}
             <PostOptionsBtn postId={postId} />
           </div>
-
-          {/* user infobox on hover */}
-          <Suspense fallback={<UserInfoboxLoader />}>
-            {isUserHovered && <LazyUserInfobox author={author} />}
-          </Suspense>
         </div>
 
         {/* Post title */}
