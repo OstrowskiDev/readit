@@ -61,10 +61,14 @@ export default function UserInfobox({ author }) {
               border={3}
             />
           </div>
+
           <div className="name-date-container flex flex-col ml-4">
-            <p className="name text-gray-950 text-20 font-semibold hover:cursor-pointer">
+            <a
+              href={`/user/${author._id}/posts`}
+              className="name text-gray-950 text-20 font-semibold hover:cursor-pointer hover:underline"
+            >
               {author.name}
-            </p>
+            </a>
             <p className="date text-gray-500 leading-tight font-medium">
               Joined: Aug 2, 2020
             </p>
