@@ -117,13 +117,6 @@ export default function PostPage({ params }) {
               </div>
             </div>
           )}
-
-          {/* Post toaster */}
-          <Toaster
-            richColors
-            position="bottom-center"
-            toastOptions={postToastOption}
-          />
         </div>
       </div>
     </PostContextProvider>
