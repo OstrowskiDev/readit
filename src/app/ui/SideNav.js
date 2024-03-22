@@ -15,17 +15,28 @@ export default function SideNav() {
       {/* Navigation Buttons */}
       <nav className="flex items-center w-full md:h-full md:flex-col mt-2">
         <div className="flex md:flex-col w-full md:h-full md:space-y-2">
+          <div className="flex flex-col p-2 rounded-md bg-white shadow-md">
+            <p className="pl-2 pb-2">Posts:</p>
+            <div className="flex flex-col">
+              <a href="/posts" className="nav-sub-button pl-4 rounded-t-lg">
+                Recent
+              </a>
+              <div className="separator h-[2px] bg-gray-100"></div>
+              <a href="/posts" className="nav-sub-button pl-4">
+                Followed
+              </a>
+              <div className="separator h-[2px] bg-gray-100"></div>
+              <a href="/my-posts" className="nav-sub-button pl-4 rounded-b-lg">
+                My posts
+              </a>
+            </div>
+          </div>
+
+          <a href="/profile" className="nav-button pl-4">
+            My profile
+          </a>
           <a href="/" className="nav-button pl-4">
-            Home
-          </a>
-          <a href="/posts" className="nav-button pl-4">
-            Posts
-          </a>
-          <a href="/my-profile" className="nav-button pl-4">
-            My Profile
-          </a>
-          <a href="/my-posts" className="nav-button pl-4">
-            My Posts
+            About
           </a>
           <a href="/credits" className="nav-button pl-4">
             Credits
