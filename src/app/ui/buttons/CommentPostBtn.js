@@ -13,7 +13,7 @@ export function CommentPostBtn({ isCommFormVisible, setIsCommFormVisible }) {
         onClick={handleClick}
         className="btn-body flex justify-center items-center p-2 "
       >
-        <p className="btn-text block mr-2">Write comment</p>
+        <p className="btn-text block px-2">Comment</p>
       </button>
     </div>
   )

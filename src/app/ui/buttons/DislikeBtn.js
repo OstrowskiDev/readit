@@ -125,7 +125,12 @@ export function DislikeBtn({ styles, collection }) {
   }
 
   return (
-    <form className="ml-[1px] rounded-md hover:bg-gray-200">
+    <form
+      className={
+        'ml-[1px] rounded-md ' +
+        (collection === 'comments' ? 'hover:bg-gray-200' : 'hover:bg-gray-300')
+      }
+    >
       <SubmitButton />
     </form>
   )

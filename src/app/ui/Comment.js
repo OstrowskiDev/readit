@@ -39,6 +39,7 @@ export function Comment({ authors, comments, commentId, depth, postId }) {
   return (
     <div
       className="comment-container relative flex pt-4 px-2"
+      id={commentId}
       style={{
         marginLeft: depth === 0 ? 0 : 25,
         display: deleteOptimistically ? 'none' : 'flex',

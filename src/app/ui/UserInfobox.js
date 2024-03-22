@@ -27,7 +27,6 @@ export default function UserInfobox({ author }) {
     const dataExists = authorsData?.find((author) => author._id === authorId)
 
     if (!dataExists) {
-      console.log('setting number of posts created by user')
       const postsSum = getPostsSum()
       const commentsSum = getCommentsSum()
       const newAuthor = {
@@ -36,7 +35,6 @@ export default function UserInfobox({ author }) {
         commentsSum: commentsSum,
       }
       const newData = cloneDeep(authorsData)
-      console.log(authorsData)
       newData.push(newAuthor)
 
       setAuthorsData(newData)

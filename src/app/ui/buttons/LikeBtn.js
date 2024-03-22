@@ -120,7 +120,12 @@ export function LikeBtn({ styles, collection }) {
   }
 
   return (
-    <form className="rounded-md  hover:bg-gray-200">
+    <form
+      className={
+        'rounded-md ' +
+        (collection === 'comments' ? 'hover:bg-gray-200' : 'hover:bg-gray-300')
+      }
+    >
       <SubmitButton />
     </form>
   )
