@@ -1,6 +1,21 @@
-import { Post } from '@/app/ui/Post'
+import { useEffect, useState } from 'react'
 import { addDateToOne } from './actionsTemp'
 
-export function UpdateManyBtn(postId) {
-  return <button onClick={() => addDateToOne(postId)}>Add Date</button>
+export function UpdateManyBtn({ postId }) {
+  const [wasClicked, setWasClicked] = useState(false)
+  useEffect(() => {
+    async function UpdatePostData() {
+      if (wasClicked) {
+        addDateToOne(postId)
+      }
+    }
+
+    UpdatePostData()
+  }, [wasClicked])
+
+  function onClick() {
+    setWasClicked(true)
+  }
+
+  return <button onClick={onClick}>Add Date</button>
 }

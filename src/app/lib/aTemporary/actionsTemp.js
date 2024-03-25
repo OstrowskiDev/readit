@@ -1,4 +1,6 @@
-import { Post } from '@/app/ui/Post'
+'use server'
+
+import Post from '../models/Post'
 
 export async function addDate() {
   try {
@@ -22,6 +24,8 @@ export async function addDate() {
 }
 
 export async function addDateToOne(postId) {
+  console.log('logging post id:')
+  console.log(postId)
   try {
     await Post.updateOne(
       { _id: postId, createdAt: { $exists: false } },
