@@ -34,8 +34,11 @@ const postSchema = new mongoose.Schema(
       type: [String],
       default: undefined,
     },
+    createdAt: {
+      type: Date,
+    },
   },
-  { timestamps: true }
+  { timestamps: true },
 )
 
 export default mongoose.models.Post || mongoose.model('Post', postSchema)
