@@ -1,5 +1,6 @@
 'use server'
 
+import { connectToDatabase } from '../db'
 import Post from '../models/Post'
 
 export async function addDate() {
@@ -26,22 +27,31 @@ export async function addDate() {
 export async function addDateToOne(postId) {
   console.log('logging post id:')
   console.log(postId)
+
   try {
-    await Post.updateOne(
-      { _id: postId, createdAt: { $exists: false } },
-      {
-        $set: {
-          createdAt: {
-            $subtract: [
-              new Date(),
-              { $multiply: [Math.random(), 30 * 24 * 60 * 60 * 1000] },
-            ],
-          },
-        },
-      },
+    const updatedData = new Post({
+      test: 'this is new value',
+    })
+
+    const result = await Post.updateOne(
+      { _id: postId },
+      { $set: { updatedData } },
     )
-    console.log('Successfully added createdAt field to the post.')
+
+    if (result.modifiedCount === 1) {
+      console.log('Successfully added createdAt field to the post.')
+      console.log(result)
+    } else {
+      console.log('Post not found or not updated')
+    }
   } catch (error) {
     console.error('Error adding createdAt field to the post:', error)
   }
 }
+
+// createdAt: {
+//   $subtract: [
+//     new Date(),
+//     { $multiply: [Math.random(), 30 * 24 * 60 * 60 * 1000] },
+//   ],
+// },
