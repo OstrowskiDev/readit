@@ -1,20 +1,15 @@
 'use client'
 
 import { getPost, getUser } from '@/app/lib/db'
-import PostAuthor from '@/app/ui/PostAuthor'
-import { EditPostBtn } from '@/app/ui/buttons/EditPostBtn'
-import { DeletePostBtn } from '@/app/ui/buttons/DeletePostBtn'
 import { Comment } from '@/app/ui/Comment'
 import { PostFooter } from '@/app/ui/PostFooter'
 import { getCommentsAndAuthors } from '@/app/lib/actions'
-import { PostOptionsBtn } from '@/app/ui/buttons/PostOptionsBtn'
-import { useSession } from 'next-auth/react'
 import { useEffect, useState } from 'react'
 import { Loader } from '@/app/ui/loaders/Loader'
 import { PostContextProvider } from '@/app/lib/context/PostContextProvider'
+import { PostHeader } from '@/app/ui/PostHeader'
 
 export default function PostPage({ params }) {
-  const { data: session } = useSession()
   const postId = params.id
 
   const [post, setPost] = useState(null)
@@ -45,9 +40,6 @@ export default function PostPage({ params }) {
 
   const postLikes = post.likes
   const postDislikes = post.dislikes
-  const userId = post.user_id
-  const sessionUserId = session?.user.id
-  const isPostAuthor = userId === sessionUserId
 
   return (
     <PostContextProvider
@@ -66,23 +58,14 @@ export default function PostPage({ params }) {
       <div className="w-full flex justify-center my-8 px-4">
         <div className="post-card-container flex flex-col justify-between max-w-[800px] w-full p-4 mx-2 rounded-md shadow-center-sm">
           {/* Post header */}
+          <PostHeader />
           <div className="post-header flex justify-between mb-4">
-            <h2 className="post-title text-xl pt-1 font-semibold">
+            <h2 className="post-title text-2xl pt-4 font-semibold">
               {post.title}
             </h2>
-            <div className="post-top-btns flex gap-2">
-              {isPostAuthor && <EditPostBtn postId={postId} />}
-              {isPostAuthor && <DeletePostBtn postId={postId} />}
-              <PostOptionsBtn postId={postId} />
-            </div>
           </div>
 
           {/* Post body */}
-          <PostAuthor
-            className="post-body-author"
-            userId={post.user_id}
-            userName={user.name}
-          />
           <pre className="post-body-text font-sans whitespace-pre-wrap">
             {post.content}
           </pre>

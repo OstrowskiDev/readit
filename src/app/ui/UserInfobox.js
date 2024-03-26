@@ -41,7 +41,7 @@ export default function UserInfobox({ author }) {
     }
 
     setIsLoading(false)
-  }, [])
+  }, [author])
 
   const userData = authorsData?.find((author) => author._id === authorId)
   const postsSum = userData?.postsSum
