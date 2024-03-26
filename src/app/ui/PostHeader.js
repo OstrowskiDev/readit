@@ -23,11 +23,7 @@ export function PostHeader() {
 
   useEffect(() => {
     async function fetchData() {
-      // const postData = await getPost(postId)
-      // setPost(postData)
-
-      //fetch userName instead of whole user?
-      // const userData = await getUser(postData.user_id)
+      // change below getUser fucntion so it will only fetch user props that are needed
       if (post) {
         const userData = await getUser(post.user_id)
         setAuthor(userData)

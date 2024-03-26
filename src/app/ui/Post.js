@@ -37,11 +37,11 @@ export function Post({ postId, authorsData, setAuthorsData }) {
       setAuthorsData={setAuthorsData}
     >
       <div className="post-container flex flex-col justify-between max-w-[800px] py-1 px-4 mx-4 my-2 rounded-md shadow-center-sm">
-        {/* authors avatar, user name, comment and edit time, top buttons */}
+        {/* Post header */}
         <PostHeader />
 
         {/* Post title */}
-        <div className="post-header flex justify-between py-2">
+        <div className="post-title-container flex justify-between py-2">
           <h2 className="post-title text-xl font-semibold">{post?.title}</h2>
         </div>
 

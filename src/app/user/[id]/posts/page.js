@@ -18,15 +18,17 @@ export default function UserPosts({ params }) {
   }, [])
 
   return (
-    <div className="w-full flex flex-col justify-center my-8 px-4">
-      {userPosts?.map((postId) => (
-        <Post
-          key={postId}
-          postId={postId}
-          authorsData={authorsData}
-          setAuthorsData={setAuthorsData}
-        />
-      ))}
+    <div className="w-full flex justify-center my-8 px-4">
+      <div className="flex flex-col">
+        {userPosts?.map((postId) => (
+          <Post
+            key={postId}
+            postId={postId}
+            authorsData={authorsData}
+            setAuthorsData={setAuthorsData}
+          />
+        ))}
+      </div>
     </div>
   )
 }
