@@ -34,9 +34,6 @@ const postSchema = new mongoose.Schema(
       type: [String],
       default: undefined,
     },
-    createdAt: {
-      type: Date,
-    },
   },
   { timestamps: true },
 )

@@ -12,7 +12,6 @@ import { useSession } from 'next-auth/react'
 import { useEffect, useState } from 'react'
 import { Loader } from '@/app/ui/loaders/Loader'
 import { PostContextProvider } from '@/app/lib/context/PostContextProvider'
-import { UpdateManyBtn } from '@/app/lib/aTemporary/UpdateManyBtn'
 
 export default function PostPage({ params }) {
   const { data: session } = useSession()
@@ -72,7 +71,6 @@ export default function PostPage({ params }) {
               {post.title}
             </h2>
             <div className="post-top-btns flex gap-2">
-              <UpdateManyBtn postId={postId} />
               {isPostAuthor && <EditPostBtn postId={postId} />}
               {isPostAuthor && <DeletePostBtn postId={postId} />}
               <PostOptionsBtn postId={postId} />
