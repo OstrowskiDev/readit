@@ -4,19 +4,22 @@ import { getPost, getUser } from '@/app/lib/db'
 import { Comment } from '@/app/ui/Comment'
 import { PostFooter } from '@/app/ui/PostFooter'
 import { getCommentsAndAuthors } from '@/app/lib/actions'
-import { useEffect, useState } from 'react'
+import { Suspense, lazy, useEffect, useState } from 'react'
 import { Loader } from '@/app/ui/loaders/Loader'
 import { PostContextProvider } from '@/app/lib/context/PostContextProvider'
 import { PostHeader } from '@/app/ui/PostHeader'
+import useMouseHover from '@/app/lib/hooks/useMouseHover'
+import { UserInfoboxLoader } from '@/app/ui/loaders/UserInfoboxLoader'
+const LazyUserInfobox = lazy(() => import('@/app/ui/UserInfobox.js'))
 
 export default function PostPage({ params }) {
   const postId = params.id
-
   const [post, setPost] = useState(null)
   const [user, setUser] = useState(null)
   const [comments, setComments] = useState(null)
   const [authors, setAuthors] = useState(null)
   const [authorsData, setAuthorsData] = useState([])
+  const { isUserHovered, handleMouseEnter, handleMouseLeave } = useMouseHover()
 
   useEffect(() => {
     async function fetchData() {
@@ -54,9 +57,11 @@ export default function PostPage({ params }) {
       postId={postId}
       postLikes={postLikes}
       postDislikes={postDislikes}
+      handleMouseEnter={handleMouseEnter}
+      handleMouseLeave={handleMouseLeave}
     >
       <div className="w-full flex justify-center my-8 px-4">
-        <div className="post-card-container flex flex-col justify-between max-w-[800px] w-full p-4 mx-2 rounded-md shadow-center-sm">
+        <div className="post-card-container relative flex flex-col justify-between max-w-[800px] w-full p-4 mx-2 rounded-md shadow-center-sm">
           {/* Post header */}
           <PostHeader author={user} />
           <div className="post-header flex justify-between mb-4">
@@ -99,6 +104,11 @@ export default function PostPage({ params }) {
               </div>
             </div>
           )}
+
+          {/* User Infobox on hover */}
+          <Suspense fallback={<UserInfoboxLoader />}>
+            {isUserHovered && <LazyUserInfobox author={user} />}
+          </Suspense>
         </div>
       </div>
     </PostContextProvider>

@@ -7,6 +7,7 @@ import { PostHeader } from './PostHeader'
 import { getPost, getUser } from '../lib/db'
 import { countPostComments } from '../lib/actions'
 import { UserInfoboxLoader } from './loaders/UserInfoboxLoader'
+import useMouseHover from '../lib/hooks/useMouseHover'
 const LazyUserInfobox = lazy(() => import('./UserInfobox.js'))
 
 export function Post({
@@ -18,10 +19,7 @@ export function Post({
   const [post, setPost] = useState(null)
   const [author, setAuthor] = useState(null)
   const [commentsNum, setCommentsNum] = useState(null)
-  const [isUserHovered, setIsUserHovered] = useState(false)
-
-  let onHoverTimeout
-  let onHoverOutTimeout
+  const { isUserHovered, handleMouseEnter, handleMouseLeave } = useMouseHover()
 
   useEffect(() => {
     async function fetchData() {
@@ -40,20 +38,6 @@ export function Post({
 
   const postLikes = post?.likes
   const postDislikes = post?.dislikes
-
-  function handleMouseEnter() {
-    onHoverOutTimeout = setTimeout(() => {
-      setIsUserHovered(true)
-    }, 400)
-    clearTimeout(onHoverTimeout)
-  }
-
-  function handleMouseLeave() {
-    clearTimeout(onHoverOutTimeout)
-    onHoverTimeout = setTimeout(() => {
-      setIsUserHovered(false)
-    }, 400)
-  }
 
   return (
     <PostContextProvider

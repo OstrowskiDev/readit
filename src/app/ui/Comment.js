@@ -5,13 +5,12 @@ import { CommentBtnsContextWrapper } from '../lib/context/CommentBtnsContextWrap
 import TimeAgo from './TimeAgo'
 import Avatar from '../lib/avatars/Avatar'
 import { UserInfoboxLoader } from './loaders/UserInfoboxLoader'
+import useMouseHover from '../lib/hooks/useMouseHover'
 const LazyUserInfobox = lazy(() => import('./UserInfobox.js'))
 
 export function Comment({ authors, comments, commentId, depth, postId }) {
   const [deleteOptimistically, setDeleteOptimistically] = useState(false)
-  const [isUserHovered, setIsUserHovered] = useState(false)
-  let onHoverTimeout
-  let onHoverOutTimeout
+  const { isUserHovered, handleMouseEnter, handleMouseLeave } = useMouseHover()
 
   if (!comments) return null
   const comment = comments.find((comment) => comment._id === commentId)
@@ -21,20 +20,6 @@ export function Comment({ authors, comments, commentId, depth, postId }) {
   const author = authors.find((author) => author._id === authorId)
   const commentLikes = comment.likes
   const commentDislikes = comment.dislikes
-
-  function handleMouseEnter() {
-    onHoverOutTimeout = setTimeout(() => {
-      setIsUserHovered(true)
-    }, 400)
-    clearTimeout(onHoverTimeout)
-  }
-
-  function handleMouseLeave() {
-    clearTimeout(onHoverOutTimeout)
-    onHoverTimeout = setTimeout(() => {
-      setIsUserHovered(false)
-    }, 400)
-  }
 
   return (
     <div
