@@ -51,9 +51,9 @@ export function PostHeader({ author }) {
           />
 
           {/* top right buttons */}
-          <div className="post-top-btns ml-auto flex gap-2">
-            {isPostAuthor && <EditPostBtn postId={postId} />}
+          <div className="post-top-btns ml-auto flex">
             {isPostAuthor && <DeletePostBtn postId={postId} />}
+            {isPostAuthor && <EditPostBtn postId={postId} />}
             <PostOptionsBtn postId={postId} />
           </div>
         </div>

@@ -3,10 +3,10 @@
 import { useEffect, useState } from 'react'
 import { countUserComments, countUserPosts } from '../lib/actions'
 import Avatar from '../lib/avatars/Avatar'
-import { MessageIco } from './icons/MessageIco'
 import { usePostContext } from '../lib/context/PostContextProvider'
 import { cloneDeep } from 'lodash'
 import { FollowBtn } from './buttons/FollowBtn'
+import { MessageBtn } from './buttons/MessageBtn'
 
 export default function UserInfobox({ author }) {
   const [isLoading, setIsLoading] = useState(true)
@@ -15,16 +15,6 @@ export default function UserInfobox({ author }) {
   const authorId = author._id
 
   useEffect(() => {
-    async function getPostsSum() {
-      const postsSum = await countUserPosts(author._id)
-      return postsSum
-    }
-
-    async function getCommentsSum() {
-      const commentsSum = await countUserComments(author._id)
-      return commentsSum
-    }
-
     const dataExists = authorsData?.find((author) => author._id === authorId)
     if (!dataExists) {
       const postsSum = getPostsSum()
@@ -38,17 +28,22 @@ export default function UserInfobox({ author }) {
       newData.push(newAuthor)
       setAuthorsData(newData)
     }
-
     setIsLoading(false)
+
+    async function getPostsSum() {
+      const postsSum = await countUserPosts(author._id)
+      return postsSum
+    }
+
+    async function getCommentsSum() {
+      const commentsSum = await countUserComments(author._id)
+      return commentsSum
+    }
   }, [author])
 
   const userData = authorsData?.find((author) => author._id === authorId)
   const postsSum = userData?.postsSum
   const commentsSum = userData?.commentsSum
-
-  function onMessageClick() {
-    //this functionality will not be implemented
-  }
 
   function InfoboxBody() {
     return (
@@ -84,6 +79,7 @@ export default function UserInfobox({ author }) {
                 </p>
               </div>
             </div>
+
             <div className="posts-comments-numbers-container mt-4 flex">
               <div className="posts-number">
                 <p className="posts-number text-gray-950 text-18 font-semibold ">
@@ -98,19 +94,10 @@ export default function UserInfobox({ author }) {
                 <p className="text-gray-600 text-15">Comment Created</p>
               </div>
             </div>
+
             <div className="buttons-container mt-4 flex">
               <FollowBtn />
-              <div
-                onClick={onMessageClick}
-                className="message-btn-container flex justify-center items-center h-10 ml-2 px-4 rounded-full bg-gray-300 hover:bg-gray-400"
-              >
-                <div className="btn-icon-container w-[21px]">
-                  <MessageIco color={'gray'} />
-                </div>
-                <p className="btn-text ml-[6px] font-semibold text-gray-500">
-                  Message
-                </p>
-              </div>
+              <MessageBtn />
             </div>
           </div>
         )}

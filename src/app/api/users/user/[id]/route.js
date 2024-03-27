@@ -6,7 +6,7 @@ export async function GET(request, { params }) {
   const userId = params.id
   try {
     await connectToDatabase()
-    const post = await User.findOne({ _id: userId })
+    const post = await User.findOne({ _id: userId }).select('_id name avatar')
     return new NextResponse(JSON.stringify(post), { status: 200 })
   } catch (error) {
     return new NextResponse('Error in fetching post' + error, { status: 500 })
