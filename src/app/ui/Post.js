@@ -4,7 +4,7 @@ import { Suspense, lazy, useEffect, useState } from 'react'
 import { PostFooter } from './PostFooter'
 import { PostContextProvider } from '../lib/context/PostContextProvider'
 import { PostHeader } from './PostHeader'
-import { getPost } from '../lib/db'
+import { getPost, getUser } from '../lib/db'
 import { countPostComments } from '../lib/actions'
 import { UserInfoboxLoader } from './loaders/UserInfoboxLoader'
 const LazyUserInfobox = lazy(() => import('./UserInfobox.js'))
@@ -28,6 +28,9 @@ export function Post({
       const postData = await getPost(postId)
       setPost(postData)
 
+      const userData = await getUser(postData.user_id)
+      setAuthor(userData)
+
       const commentsNumber = await countPostComments(postId)
       setCommentsNum(commentsNumber)
     }
@@ -37,7 +40,6 @@ export function Post({
 
   const postLikes = post?.likes
   const postDislikes = post?.dislikes
-  const postAuthor = { _id: post?.user_id }
 
   function handleMouseEnter() {
     onHoverOutTimeout = setTimeout(() => {
@@ -62,6 +64,8 @@ export function Post({
       postDislikes={postDislikes}
       authorsData={authorsData}
       setAuthorsData={setAuthorsData}
+      handleMouseEnter={handleMouseEnter}
+      handleMouseLeave={handleMouseLeave}
     >
       {post && (
         <div className="relative">
@@ -73,12 +77,7 @@ export function Post({
             hover:shadow-center-lg hover:cursor-pointer hover:outline-red-50"
           >
             {/* Post header */}
-            <PostHeader
-              handleMouseEnter={handleMouseEnter}
-              handleMouseLeave={handleMouseLeave}
-              author={author}
-              setAuthor={setAuthor}
-            />
+            <PostHeader author={author} />
 
             {/* Post title */}
             <div className="post-title-container flex justify-between py-2">
@@ -101,13 +100,7 @@ export function Post({
           </a>
           {/* user infobox on hover */}
           <Suspense fallback={<UserInfoboxLoader />}>
-            {isUserHovered && (
-              <LazyUserInfobox
-                author={postAuthor}
-                handleMouseEnter={handleMouseEnter}
-                handleMouseLeave={handleMouseLeave}
-              />
-            )}
+            {isUserHovered && <LazyUserInfobox author={author} />}
           </Suspense>
         </div>
       )}

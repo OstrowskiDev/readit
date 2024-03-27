@@ -1,7 +1,5 @@
 'use client'
 
-import { useEffect } from 'react'
-import { getUser } from '../lib/db'
 import { useSession } from 'next-auth/react'
 import Avatar from '../lib/avatars/Avatar'
 import TimeAgo from './TimeAgo'
@@ -10,26 +8,9 @@ import { DeletePostBtn } from './buttons/DeletePostBtn'
 import { PostOptionsBtn } from './buttons/PostOptionsBtn'
 import { usePostContext } from '../lib/context/PostContextProvider'
 
-export function PostHeader({
-  handleMouseEnter,
-  handleMouseLeave,
-  author,
-  setAuthor,
-}) {
+export function PostHeader({ author }) {
   const { data: session } = useSession()
-  const { postId, post } = usePostContext()
-
-  useEffect(() => {
-    async function fetchData() {
-      // change below getUser fucntion so it will only fetch user props that are needed
-      if (post) {
-        const userData = await getUser(post.user_id)
-        setAuthor(userData)
-      }
-    }
-
-    fetchData()
-  }, [post])
+  const { postId, post, handleMouseEnter, handleMouseLeave } = usePostContext()
 
   const userId = post?.user_id
   const sessionUserId = session?.user.id
@@ -37,7 +18,7 @@ export function PostHeader({
 
   return (
     <>
-      {post && (
+      {post && author && (
         <div className="comment-header-container relative right-0 flex items-center">
           {/* authors avatar */}
           <div
@@ -46,8 +27,8 @@ export function PostHeader({
             onMouseLeave={handleMouseLeave}
           >
             <Avatar
-              seed={author?.avatar.seed}
-              color={author?.avatar.color}
+              seed={author.avatar.seed}
+              color={author.avatar.color}
               size={32}
               border={1}
             />
@@ -59,13 +40,13 @@ export function PostHeader({
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
           >
-            {author?.name}
+            {author.name}
           </p>
 
           {/* post time, edit time */}
           <TimeAgo
-            createdAt={post?.createdAt}
-            updatedAt={post?.updatedAt}
+            createdAt={post.createdAt}
+            updatedAt={post.updatedAt}
             type="created"
           />
 

@@ -15,6 +15,8 @@ export function PostContextProvider({
   postId,
   postLikes,
   postDislikes,
+  handleMouseEnter,
+  handleMouseLeave,
 }) {
   return (
     <PostContext.Provider
@@ -30,6 +32,8 @@ export function PostContextProvider({
         postId,
         postLikes,
         postDislikes,
+        handleMouseEnter,
+        handleMouseLeave,
       }}
     >
       {children}

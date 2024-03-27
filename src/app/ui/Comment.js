@@ -10,9 +10,9 @@ const LazyUserInfobox = lazy(() => import('./UserInfobox.js'))
 export function Comment({ authors, comments, commentId, depth, postId }) {
   const [deleteOptimistically, setDeleteOptimistically] = useState(false)
   const [isUserHovered, setIsUserHovered] = useState(false)
-
   let onHoverTimeout
   let onHoverOutTimeout
+
   if (!comments) return null
   const comment = comments.find((comment) => comment._id === commentId)
 
