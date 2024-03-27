@@ -195,10 +195,6 @@
   @apply block text-sm font-medium text-gray-700
 }
 
-.shadow-center-md {
-  box-shadow: 3px 3px 10px 1px rgba(0,0,0,0.3)
-}
-
 .shadow-center-sm,
 .hover\:shadow-center-sm:hover {
   @apply shadow-[3px_3px_10px_1px_rgba(0,0,0,0.2)]
@@ -211,5 +207,5 @@
 
 .shadow-center-lg,
 .hover\:shadow-center-lg:hover {
-  @apply shadow-[4px_4px_15px_1px_rgba(0,0,0,0.3)]
+  @apply shadow-[4px_4px_10px_2px_rgba(0,0,0,0.4)]
 }

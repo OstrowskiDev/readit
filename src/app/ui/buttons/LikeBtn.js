@@ -36,7 +36,8 @@ export function LikeBtn({ styles, collection }) {
     }
   }, [response])
 
-  async function onClick() {
+  async function onClick(event) {
+    event.preventDefault()
     if (!session) return signIn()
 
     collection === 'posts'

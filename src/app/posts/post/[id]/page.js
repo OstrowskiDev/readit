@@ -9,11 +9,16 @@ import { Loader } from '@/app/ui/loaders/Loader'
 import { PostContextProvider } from '@/app/lib/context/PostContextProvider'
 import { PostHeader } from '@/app/ui/PostHeader'
 
+//need to refactor this page so it uses Post.js component
+
 export default function PostPage({ params }) {
   const postId = params.id
 
   const [post, setPost] = useState(null)
   const [user, setUser] = useState(null)
+  // author and setAuthor temporary used to pass those props to post header, shouldnt be needed after refactoring to Post.js component
+  //for hover option to work copy paste functions: handleMouseEnter handleMouseLeave, and let declrations, though should not be necessary with Post.js
+  const [author, setAuthor] = useState(null) //to be deleted
   const [comments, setComments] = useState(null)
   const [authors, setAuthors] = useState(null)
   const [authorsData, setAuthorsData] = useState([])
@@ -58,7 +63,7 @@ export default function PostPage({ params }) {
       <div className="w-full flex justify-center my-8 px-4">
         <div className="post-card-container flex flex-col justify-between max-w-[800px] w-full p-4 mx-2 rounded-md shadow-center-sm">
           {/* Post header */}
-          <PostHeader />
+          <PostHeader author={author} setAuthor={setAuthor} />
           <div className="post-header flex justify-between mb-4">
             <h2 className="post-title text-2xl pt-4 font-semibold">
               {post.title}
@@ -76,6 +81,7 @@ export default function PostPage({ params }) {
             commentNo={comments.length}
             postLikes={postLikes}
             postDislikes={postDislikes}
+            enableCommentBtn={true}
           />
 
           {/* Comments section */}

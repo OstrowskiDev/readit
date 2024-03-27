@@ -1,6 +1,6 @@
 'use client'
 
-import { Suspense, lazy, useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { getUser } from '../lib/db'
 import { useSession } from 'next-auth/react'
 import Avatar from '../lib/avatars/Avatar'
@@ -9,17 +9,15 @@ import { EditPostBtn } from './buttons/EditPostBtn'
 import { DeletePostBtn } from './buttons/DeletePostBtn'
 import { PostOptionsBtn } from './buttons/PostOptionsBtn'
 import { usePostContext } from '../lib/context/PostContextProvider'
-import { UserInfoboxLoader } from './loaders/UserInfoboxLoader'
-const LazyUserInfobox = lazy(() => import('./UserInfobox.js'))
 
-export function PostHeader() {
+export function PostHeader({
+  handleMouseEnter,
+  handleMouseLeave,
+  author,
+  setAuthor,
+}) {
   const { data: session } = useSession()
-  const [author, setAuthor] = useState(null)
-  const [isUserHovered, setIsUserHovered] = useState(false)
   const { postId, post } = usePostContext()
-
-  let onHoverTimeout
-  let onHoverOutTimeout
 
   useEffect(() => {
     async function fetchData() {
@@ -37,20 +35,6 @@ export function PostHeader() {
   const sessionUserId = session?.user.id
   const isPostAuthor = userId === sessionUserId
 
-  function handleMouseEnter() {
-    onHoverOutTimeout = setTimeout(() => {
-      setIsUserHovered(true)
-    }, 400)
-    clearTimeout(onHoverTimeout)
-  }
-
-  function handleMouseLeave() {
-    clearTimeout(onHoverOutTimeout)
-    onHoverTimeout = setTimeout(() => {
-      setIsUserHovered(false)
-    }, 400)
-  }
-
   return (
     <>
       {post && (
@@ -67,11 +51,6 @@ export function PostHeader() {
               size={32}
               border={1}
             />
-
-            {/* user infobox on hover */}
-            <Suspense fallback={<UserInfoboxLoader />}>
-              {isUserHovered && <LazyUserInfobox author={author} />}
-            </Suspense>
           </div>
 
           {/* authors name */}

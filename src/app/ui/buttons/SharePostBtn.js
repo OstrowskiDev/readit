@@ -21,7 +21,8 @@ export function SharePostBtn() {
     }
   }, [response])
 
-  function copyToClipboard() {
+  function copyToClipboard(event) {
+    event.preventDefault()
     navigator.clipboard
       .writeText(postUrl)
       .then(() => {

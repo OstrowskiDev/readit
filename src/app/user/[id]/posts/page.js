@@ -26,6 +26,7 @@ export default function UserPosts({ params }) {
             postId={postId}
             authorsData={authorsData}
             setAuthorsData={setAuthorsData}
+            enableCommentBtn={false}
           />
         ))}
       </div>

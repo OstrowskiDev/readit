@@ -9,7 +9,12 @@ import { LikeBtn } from './buttons/LikeBtn'
 import { PostLikeCount } from './PostLikeCount'
 import { DislikeBtn } from './buttons/DislikeBtn'
 
-export function PostFooter({ commentNo, postLikes, postDislikes }) {
+export function PostFooter({
+  commentNo,
+  postLikes,
+  postDislikes,
+  enableCommentBtn,
+}) {
   const [isCommFormVisible, setIsCommFormVisible] = useState(false)
 
   return (
@@ -27,12 +32,14 @@ export function PostFooter({ commentNo, postLikes, postDislikes }) {
           </div>
           <SharePostBtn />
         </div>
-        <div className="post-bottom-btns-right comment-btn flex justify-end min-w-36">
-          <CommentPostBtn
-            isCommFormVisible={isCommFormVisible}
-            setIsCommFormVisible={setIsCommFormVisible}
-          />
-        </div>
+        {enableCommentBtn && (
+          <div className="post-bottom-btns-right comment-btn flex justify-end min-w-36">
+            <CommentPostBtn
+              isCommFormVisible={isCommFormVisible}
+              setIsCommFormVisible={setIsCommFormVisible}
+            />
+          </div>
+        )}
       </div>
       <div className="post-bottom-reply-form">
         <PostReplyForm

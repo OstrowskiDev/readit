@@ -8,8 +8,6 @@ import { usePostContext } from '@/app/lib/context/PostContextProvider'
 import { toast } from 'sonner'
 import { useSession } from 'next-auth/react'
 import { useEffect, useState } from 'react'
-import { useFormStatus } from 'react-dom'
-import { LoaderTiny } from '../loaders/LoaderTiny'
 
 export function DislikeBtn({ styles, collection }) {
   const { commentId, commentDislikes } =
@@ -38,7 +36,9 @@ export function DislikeBtn({ styles, collection }) {
     }
   }, [response])
 
-  async function onClick() {
+  async function onClick(event) {
+    event.preventDefault()
+
     collection === 'posts'
       ? handlePostOptimistically()
       : handleCommentOptimistically()
@@ -110,8 +110,6 @@ export function DislikeBtn({ styles, collection }) {
   }
 
   function SubmitButton() {
-    // const { pending } = useFormStatus()
-
     return (
       <button
         className={styles + ' flex justify-center items-center'}
@@ -119,7 +117,6 @@ export function DislikeBtn({ styles, collection }) {
         onClick={onClick}
       >
         {isAlreadyDisliked ? <DislikeIcoActive /> : <DislikeIco />}
-        {/* {pending && <LoaderTiny />} */}
       </button>
     )
   }

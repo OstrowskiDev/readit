@@ -3,7 +3,8 @@ import { signIn, useSession } from 'next-auth/react'
 export function CommentPostBtn({ isCommFormVisible, setIsCommFormVisible }) {
   const { data: session } = useSession()
 
-  function handleClick() {
+  function handleClick(event) {
+    event.preventDefault()
     session ? setIsCommFormVisible(!isCommFormVisible) : signIn()
   }
 
