@@ -18,8 +18,8 @@ export default function UserPosts({ params }) {
   }, [])
 
   return (
-    <div className="w-full flex justify-center my-8 px-4">
-      <div className="flex flex-col">
+    <div className="flex justify-center w-full my-8 px-8">
+      <div className="flex flex-col max-w-[800px]">
         {userPosts?.map((postId) => (
           <Post
             key={postId}

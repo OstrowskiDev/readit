@@ -52,10 +52,10 @@ export function Post({
       handleMouseLeave={handleMouseLeave}
     >
       {post && (
-        <div className="relative">
+        <div className="relative w-full">
           <a
             href={`/posts/post/${postId}`}
-            className="post-container flex flex-col justify-between max-w-[800px] 
+            className="post-container flex flex-col justify-between
             py-1 px-4 my-2 rounded-md shadow-center-sm 
             border-white border-2 hover:border-blue-300
             hover:shadow-center-lg hover:cursor-pointer hover:outline-red-50"
