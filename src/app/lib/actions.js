@@ -14,13 +14,11 @@ import { authOptions } from '@/app/api/auth/[...nextauth]/authOptions'
 let toastStatus
 let toastMessage
 
-export async function createPost(formData) {
+export async function createPost(inputTitle, inputContent) {
   const session = await getServerSession(authOptions)
   const userId = session.user.id
   const uuid = uuidv4().toString()
-  const inputTitle = formData.get('title')
   const title = validatePostTitle(inputTitle)
-  const inputContent = formData.get('content')
   const content = validatePostContent(inputContent)
 
   const newPost = new Post({

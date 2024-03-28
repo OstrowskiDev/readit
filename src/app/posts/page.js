@@ -6,11 +6,14 @@ import sanitizeHtml from 'sanitize-html'
 import { getPosts, getUsers } from '../lib/db'
 import { Post } from '../ui/Post'
 import { useEffect, useState } from 'react'
+import { CreatePostForm } from '../ui/CreatePostForm'
 
 export default function Page({ searchParams }) {
   const [posts, setPosts] = useState(null)
   const [users, setUsers] = useState(null)
   const [authorsData, setAuthorsData] = useState([])
+  const [isCreateFormVis, setIsCreateFormVis] = useState(false)
+  const [isFilterFormVis, setIsFilterFormVis] = useState(false)
 
   useEffect(() => {
     async function fetchData() {
@@ -38,8 +41,17 @@ export default function Page({ searchParams }) {
               Posts
             </h1>
             <PostsSearch />
-            <CreateBtn />
+            <CreateBtn
+              isCreateFormVis={isCreateFormVis}
+              setIsCreateFormVis={setIsCreateFormVis}
+            />
           </div>
+          {isCreateFormVis && (
+            <CreatePostForm
+              isCreateFormVis={isCreateFormVis}
+              setIsCreateFormVis={setIsCreateFormVis}
+            />
+          )}
           <div className="flex flex-col items-center">
             {matchingPosts.map((post) => (
               <Post

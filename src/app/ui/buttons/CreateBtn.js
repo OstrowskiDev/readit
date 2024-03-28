@@ -1,9 +1,10 @@
-import Link from 'next/link'
-
-export default function CreateBtn() {
+export default function CreateBtn({ isCreateFormVis, setIsCreateFormVis }) {
+  function onClick() {
+    setIsCreateFormVis(!isCreateFormVis)
+  }
   return (
-    <Link className="btn-blue h-10 px-4 py-2 md:ml-2" href={'/posts/create'}>
+    <button className="btn-blue h-10 px-4 py-2 md:ml-2" onClick={onClick}>
       Create +
-    </Link>
+    </button>
   )
 }
