@@ -2,7 +2,7 @@
 import { useSearchParams, usePathname, useRouter } from 'next/navigation'
 import { useDebouncedCallback } from 'use-debounce'
 
-export default function PostsSearch() {
+export default function PostsSearch({ isFilterFormVis, setIsFilterFormVis }) {
   const searchParams = useSearchParams()
   const pathname = usePathname()
   const { replace } = useRouter()
@@ -16,6 +16,11 @@ export default function PostsSearch() {
     }
     replace(`${pathname}?${params.toString()}`)
   }, 700)
+
+  function onFilterClick() {
+    setIsFilterFormVis(!isFilterFormVis)
+  }
+
   return (
     <div className="flex grow-2 below-md:mb-2">
       <input
@@ -27,7 +32,9 @@ export default function PostsSearch() {
         }}
         defaultValue={searchParams.get('query')?.toString()}
       />
-      <button className="btn-blue h-10 px-4 ml-2">Filter</button>
+      <button onClick={onFilterClick} className="btn-blue h-10 px-4 ml-2">
+        Filter
+      </button>
     </div>
   )
 }

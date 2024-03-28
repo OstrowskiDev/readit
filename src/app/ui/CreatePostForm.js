@@ -29,21 +29,54 @@ export function CreatePostForm({ isCreateFormVis, setIsCreateFormVis }) {
     }
   }, [response])
 
-  // export async function createPost(formData) {
-  //   const session = await getServerSession(authOptions)
-  //   const userId = session.user.id
-  //   const uuid = uuidv4().toString()
-  //   const inputTitle = formData.get('title')
-  //   const title = validatePostTitle(inputTitle)
-  //   const inputContent = formData.get('content')
-  //   const content = validatePostContent(inputContent)
-
-  //   const newPost = new Post({
-  //     _id: uuid,
-  //     title: title,
+  // function optimisticUpdate(newCommentId) {
+  //   const newComment = {
+  //     _id: newCommentId,
   //     user_id: userId,
-  //     content: content,
-  //   })
+  //     parent: {
+  //       type: 'post',
+  //       _id: parentId,
+  //     },
+  //     content: input,
+  //     replies: [],
+  //     likes: [],
+  //     dislikes: [],
+  //   }
+
+  //   const newComments = cloneDeep(comments)
+  //   newComments.push(newComment)
+  //   const newPost = cloneDeep(post)
+  //   if (!newPost.comments) newPost.comments = []
+  //   newPost.comments.push(newCommentId)
+
+  //   const authorExists = authors.find((author) => author._id === userId)
+  //   if (!authorExists) {
+  //     const newAuthor = {
+  //       _id: session.user.id,
+  //       name: session.user.name,
+  //     }
+  //     const newAuthors = cloneDeep(authors)
+  //     newAuthors.push(newAuthor)
+  //     setAuthors(newAuthors)
+  //   }
+
+  //   setComments(newComments)
+  //   setPost(newPost)
+  // }
+
+  // function onOptimisticCreateCommentError() {
+  //   const newCommentId = response.newCommentId
+  //   const newComments = cloneDeep(comments)
+  //   const oldComments = newComments.filter(
+  //     (comment) => comment._id !== newCommentId,
+  //   )
+  //   setComments(oldComments)
+
+  //   const oldReplies = post.comments.filter((id) => id !== newCommentId)
+  //   const oldPost = cloneDeep(post)
+  //   oldPost.comments = oldReplies
+  //   setPost(oldPost)
+  // }
 
   async function onSubmit() {
     if (!session) signIn()
@@ -95,52 +128,3 @@ export function CreatePostForm({ isCreateFormVis, setIsCreateFormVis }) {
     </>
   )
 }
-
-// function optimisticUpdate(newCommentId) {
-//   const newComment = {
-//     _id: newCommentId,
-//     user_id: userId,
-//     parent: {
-//       type: 'post',
-//       _id: parentId,
-//     },
-//     content: input,
-//     replies: [],
-//     likes: [],
-//     dislikes: [],
-//   }
-
-//   const newComments = cloneDeep(comments)
-//   newComments.push(newComment)
-//   const newPost = cloneDeep(post)
-//   if (!newPost.comments) newPost.comments = []
-//   newPost.comments.push(newCommentId)
-
-//   const authorExists = authors.find((author) => author._id === userId)
-//   if (!authorExists) {
-//     const newAuthor = {
-//       _id: session.user.id,
-//       name: session.user.name,
-//     }
-//     const newAuthors = cloneDeep(authors)
-//     newAuthors.push(newAuthor)
-//     setAuthors(newAuthors)
-//   }
-
-//   setComments(newComments)
-//   setPost(newPost)
-// }
-
-// function onOptimisticCreateCommentError() {
-//   const newCommentId = response.newCommentId
-//   const newComments = cloneDeep(comments)
-//   const oldComments = newComments.filter(
-//     (comment) => comment._id !== newCommentId,
-//   )
-//   setComments(oldComments)
-
-//   const oldReplies = post.comments.filter((id) => id !== newCommentId)
-//   const oldPost = cloneDeep(post)
-//   oldPost.comments = oldReplies
-//   setPost(oldPost)
-// }

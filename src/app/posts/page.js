@@ -7,6 +7,7 @@ import { getPosts, getUsers } from '../lib/db'
 import { Post } from '../ui/Post'
 import { useEffect, useState } from 'react'
 import { CreatePostForm } from '../ui/CreatePostForm'
+import { FilterPostsForm } from '../ui/FilterPostsForm'
 
 export default function Page({ searchParams }) {
   const [posts, setPosts] = useState(null)
@@ -40,7 +41,10 @@ export default function Page({ searchParams }) {
             <h1 className="grow below-md:hidden text-2xl font-semibold mr-4">
               Posts
             </h1>
-            <PostsSearch />
+            <PostsSearch
+              isFilterFormVis={isFilterFormVis}
+              setIsFilterFormVis={setIsFilterFormVis}
+            />
             <CreateBtn
               isCreateFormVis={isCreateFormVis}
               setIsCreateFormVis={setIsCreateFormVis}
@@ -50,6 +54,12 @@ export default function Page({ searchParams }) {
             <CreatePostForm
               isCreateFormVis={isCreateFormVis}
               setIsCreateFormVis={setIsCreateFormVis}
+            />
+          )}
+          {isFilterFormVis && (
+            <FilterPostsForm
+              isFilterFormVis={isFilterFormVis}
+              setIsFilterFormVis={setIsFilterFormVis}
             />
           )}
           <div className="flex flex-col items-center">
