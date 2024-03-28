@@ -1,38 +1,59 @@
-import PostCard from '../ui/PostCard'
+'use client'
+
 import PostsSearch from '../ui/PostsSearch'
 import CreateBtn from '../ui/buttons/CreateBtn'
 import sanitizeHtml from 'sanitize-html'
 import { getPosts, getUsers } from '../lib/db'
+import { Post } from '../ui/Post'
+import { useEffect, useState } from 'react'
 
-export default async function Page({ searchParams }) {
-  const posts = await getPosts()
-  const users = await getUsers()
+export default function Page({ searchParams }) {
+  const [posts, setPosts] = useState(null)
+  const [users, setUsers] = useState(null)
+  const [authorsData, setAuthorsData] = useState([])
+
+  useEffect(() => {
+    async function fetchData() {
+      const postsData = await getPosts()
+      const usersData = await getUsers()
+      setPosts(postsData)
+      setUsers(usersData)
+    }
+    fetchData()
+  }, [])
+
   const dirtyQuery = searchParams?.query || ''
   const query = sanitizeHtml(dirtyQuery, { allowedTags: null })
-  const matchingPosts = posts.filter(
+  const matchingPosts = posts?.filter(
     (post) =>
       post.title.toLowerCase().includes(query.toLowerCase()) ||
-      post.content.toLowerCase().includes(query.toLowerCase())
+      post.content.toLowerCase().includes(query.toLowerCase()),
   )
   return (
-    <div className="container mx-auto mt-8 px-4">
-      <div className="flex md:items-center flex-col md:flex-row md:h-10 mb-4">
-        <h1 className="grow below-md:hidden text-2xl font-semibold mr-4">Posts</h1>
-        <PostsSearch />
-        <CreateBtn />
-      </div>
-      <div className="grid grid-cols-1 2col:grid-cols-2 xl:grid-cols-3 3xl:grid-cols-4 gap-6">
-        {matchingPosts.map((post) => (
-          <PostCard
-            key={post._id}
-            _id={post._id}
-            title={post.title}
-            user_id={post.user_id}
-            user_name={users.find((user) => user._id === post.user_id)?.name || 'Unknown User'}
-            content={post.content}
-          />
-        ))}
-      </div>
-    </div>
+    <>
+      {posts && (
+        <div className="container mx-auto mt-8 px-4 max-w-[800px]">
+          <div className="flex md:items-center flex-col md:flex-row md:h-10 mb-4">
+            <h1 className="grow below-md:hidden text-2xl font-semibold mr-4">
+              Posts
+            </h1>
+            <PostsSearch />
+            <CreateBtn />
+          </div>
+          <div className="flex flex-col items-center">
+            {matchingPosts.map((post) => (
+              <Post
+                key={post._id}
+                _id={post._id}
+                postId={post._id}
+                authorsData={authorsData}
+                setAuthorsData={setAuthorsData}
+                enableCommentBtn={false}
+              />
+            ))}
+          </div>
+        </div>
+      )}
+    </>
   )
 }

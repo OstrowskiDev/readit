@@ -56,7 +56,7 @@ export function Post({
           <a
             href={`/posts/post/${postId}`}
             className="post-container flex flex-col justify-between max-w-[800px] 
-            py-1 px-4 mx-4 my-2 rounded-md shadow-center-sm 
+            py-1 px-4 my-2 rounded-md shadow-center-sm 
             border-white border-2 hover:border-blue-300
             hover:shadow-center-lg hover:cursor-pointer hover:outline-red-50"
           >
