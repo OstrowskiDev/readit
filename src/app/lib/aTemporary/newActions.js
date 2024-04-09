@@ -567,42 +567,6 @@ export async function getCommentsAndAuthors(postId) {
   return [comments, authors]
 }
 
-function setToast(status, message) {
-  toastStatus = status
-  toastMessage = message
-}
-
-function resetToast() {
-  toastStatus = ''
-  toastMessage = ''
-}
-
-function returnToast(status, message) {
-  return { state: status, message: message }
-}
-
-export async function countUserPosts(userId) {
-  console.log('Counting user posts...')
-  try {
-    const count = await Post.countDocuments({ user_id: userId })
-    return count
-  } catch (error) {
-    console.error('Error occured while counting user posts:', error)
-    return null
-  }
-}
-
-export async function countUserComments(userId) {
-  console.log('Counting user comments...')
-  try {
-    const count = await Comment.countDocuments({ user_id: userId })
-    return count
-  } catch (error) {
-    console.error('Error occured while counting user comments:', error)
-    return null
-  }
-}
-
 export async function countPostComments(postId) {
   console.log('Counting post comments...')
   try {
