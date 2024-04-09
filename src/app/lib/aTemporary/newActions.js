@@ -567,20 +567,6 @@ export async function getCommentsAndAuthors(postId) {
   return [comments, authors]
 }
 
-export async function countPostComments(postId) {
-  console.log('Counting post comments...')
-  try {
-    const count = await Comment.countDocuments({
-      'parent.type': 'post',
-      'parent._id': postId,
-    })
-    return count
-  } catch (error) {
-    console.error('Error occured while counting post comments:', error)
-    return null
-  }
-}
-
 export async function getUserPostsIds(userId) {
   console.log(`fetching users posts id's`)
   try {
