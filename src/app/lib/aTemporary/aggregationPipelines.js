@@ -14,6 +14,7 @@ Users.aggregate([
 // find what is the average age of all users:
 // $avg gives average value of specified property
 // group passed with _id null groups all documents to one document
+// than operations can be done on that document
 // in this exampe im getting document with prop averageAge and its value
 Users.aggregate([
   {
@@ -23,5 +24,28 @@ Users.aggregate([
         $avg: '$age',
       },
     },
+  },
+])
+
+// list the top 5 most common users favorite fruits
+Users.aggregate([
+  {
+    $group: {
+      _id: '$favoriteFruit',
+      //create count prop:
+      count: {
+        //and add one if you find match:
+        $sum: 1,
+      },
+    },
+  },
+  {
+    $sort: {
+      //sort in descending order (-1) the count prop:
+      count: -1,
+    },
+  },
+  {
+    $limit: 5,
   },
 ])
