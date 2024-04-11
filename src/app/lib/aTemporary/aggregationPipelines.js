@@ -10,3 +10,18 @@ Users.aggregate([
     $count: 'activeUsers',
   },
 ])
+
+// find what is the average age of all users:
+// $avg gives average value of specified property
+// group passed with _id null groups all documents to one document
+// in this exampe im getting document with prop averageAge and its value
+Users.aggregate([
+  {
+    $group: {
+      _id: null,
+      averageAge: {
+        $avg: '$age',
+      },
+    },
+  },
+])
