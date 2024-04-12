@@ -49,3 +49,15 @@ Users.aggregate([
     $limit: 5,
   },
 ])
+
+// Find the total number of males and females
+Users.aggregate([
+  {
+    $group: {
+      _id: '$gender',
+      count: {
+        $sum: 1,
+      },
+    },
+  },
+])
