@@ -67,9 +67,14 @@ Users.aggregate([
   {
     $group: {
       _id: '$company.location.country',
-      countUsers: {
+      userCount: {
         $sum: 1,
       },
+    },
+  },
+  {
+    $sort: {
+      userCount: -1,
     },
   },
 ])
