@@ -78,3 +78,12 @@ Users.aggregate([
     },
   },
 ])
+
+// list all unique eye colors present in the users collection
+Users.aggregate([
+  {
+    $group: {
+      _id: '$eyeColor',
+    },
+  },
+])
