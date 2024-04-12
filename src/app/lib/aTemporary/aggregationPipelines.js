@@ -50,12 +50,24 @@ Users.aggregate([
   },
 ])
 
-// Find the total number of males and females
+// find the total number of males and females
 Users.aggregate([
   {
     $group: {
       _id: '$gender',
-      count: {
+      genderCount: {
+        $sum: 1,
+      },
+    },
+  },
+])
+
+// find which country has the highest number of registered users
+Users.aggregate([
+  {
+    $group: {
+      _id: '$company.location.country',
+      countUsers: {
         $sum: 1,
       },
     },
