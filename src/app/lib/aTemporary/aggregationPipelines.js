@@ -185,3 +185,16 @@ Users.aggregate([
     },
   },
 ])
+
+// categorize users by their favorite fruit:
+Users.aggregate([
+  {
+    $group: {
+      // group by favoriteFruit
+      // returns eg: _id: "apple" etc
+      _id: '$favoriteFruit',
+      // create users prop that is array with usernames
+      users: { $push: '$name' },
+    },
+  },
+])
