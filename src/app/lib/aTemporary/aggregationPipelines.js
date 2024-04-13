@@ -154,3 +154,34 @@ Users.aggregate([
     },
   },
 ])
+
+// find users whos phone number starts with '+1 (940)'
+Users.aggregate([
+  {
+    $match: {
+      'company.phone': /^\+1 \(940\)/,
+    },
+  },
+  {
+    $count: 'usersWithSpecialPhoneNumber',
+  },
+])
+
+// who has registered most recently?
+Users.aggregate([
+  {
+    $sort: {
+      // what field you sort by and what order:
+      registered: -1,
+    },
+  },
+  {
+    $limit: 1,
+  },
+  {
+    $project: {
+      name: 1,
+      registered: 1,
+    },
+  },
+])
