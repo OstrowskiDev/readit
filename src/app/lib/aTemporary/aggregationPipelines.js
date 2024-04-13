@@ -124,3 +124,33 @@ Users.aggregate([
     },
   },
 ])
+
+// how many users have 'enim' as one of their tags:
+Users.aggregate([
+  {
+    $match: {
+      tags: 'enim',
+    },
+  },
+  //now count all documents, and give this prop a name:
+  {
+    $count: 'usersWithEnimTag',
+  },
+])
+
+// find the names and age of users who are inactive and have 'velit' as tag:
+Users.aggregate([
+  {
+    $match: {
+      isActive: false,
+      tags: 'velit',
+    },
+  },
+  {
+    // display only specified props of document, 1 stands for current value, you can also create new props with new values
+    project: {
+      name: 1,
+      age: 1,
+    },
+  },
+])
