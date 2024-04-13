@@ -106,3 +106,21 @@ Users.aggregate([
     },
   },
 ])
+
+// the same as above but using $addFields:
+Users.aggregate([
+  {
+    $addFields: {
+      numberOfTags: {
+        //handle scenario here therre is no tags prop, or its empty
+        $size: { $ifNull: ['$tags', []] },
+      },
+    },
+  },
+  {
+    $group: {
+      _id: null,
+      averageNumberOfTags: { $avg: '$numberOfTags' },
+    },
+  },
+])
