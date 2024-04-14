@@ -5,7 +5,11 @@ import { ReplyFormBtns } from './buttons/ReplyFromBtns'
 import { signIn, useSession } from 'next-auth/react'
 import cloneDeep from 'lodash/cloneDeep'
 
-export function FilterPostsForm({ isFilterFormVis, setIsFilterFormVis }) {
+export function FilterPostsForm({
+  setPosts,
+  isFilterFormVis,
+  setIsFilterFormVis,
+}) {
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
   const [author, setAuthor] = useState('')
@@ -22,9 +26,7 @@ export function FilterPostsForm({ isFilterFormVis, setIsFilterFormVis }) {
   })
 
   async function onSubmit() {
-    // if (!session) signIn()
-    // const serverResponse = await createPost(title, content)
-    setIsFilterFormVis(!isFilterFormVis)
+    // setIsFilterFormVis(!isFilterFormVis)
   }
 
   function onCancelClick() {

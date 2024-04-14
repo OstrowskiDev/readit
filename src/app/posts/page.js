@@ -9,7 +9,7 @@ import { useEffect, useState } from 'react'
 import { CreatePostForm } from '../ui/CreatePostForm'
 import { FilterPostsForm } from '../ui/FilterPostsForm'
 
-export default function Page({ searchParams }) {
+export default function PostsPage({ searchParams }) {
   const [posts, setPosts] = useState(null)
   const [users, setUsers] = useState(null)
   const [authorsData, setAuthorsData] = useState([])
@@ -58,6 +58,7 @@ export default function Page({ searchParams }) {
           )}
           {isFilterFormVis && (
             <FilterPostsForm
+              setPosts={setPosts}
               isFilterFormVis={isFilterFormVis}
               setIsFilterFormVis={setIsFilterFormVis}
             />
