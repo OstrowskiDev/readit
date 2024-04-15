@@ -26,6 +26,7 @@ export function FilterPostsForm({
   })
 
   async function onSubmit() {
+    console.log('async onSubmit called')
     // setIsFilterFormVis(!isFilterFormVis)
   }
 
