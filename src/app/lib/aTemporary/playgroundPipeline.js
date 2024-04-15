@@ -30,10 +30,10 @@ db.posts.aggregate([
   //     "totalComments": { "$sum": 1 }
   //   }
   // },
-  // {
-  //   "$sort": { "totalComments": -1 }
-  // },
-  // {
-  //   "$limit": 20
-  // }
+  {
+    $sort: { totalComments: -1 },
+  },
+  {
+    $limit: 20,
+  },
 ])
