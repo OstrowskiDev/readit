@@ -69,6 +69,14 @@ async function getPosts() {
   return res.json()
 }
 
+async function filterPosts() {
+  const res = await fetch('/api/posts/filter', {
+    cache: 'no-store',
+  })
+  if (!res.ok) return null
+  return res.json()
+}
+
 async function getUsers() {
   const res = await fetch('http://localhost:3000/api/users', {
     cache: 'no-store',
@@ -80,6 +88,7 @@ async function getUsers() {
 export {
   connectToDatabase,
   getPost,
+  filterPosts,
   getUser,
   getComment,
   getPosts,

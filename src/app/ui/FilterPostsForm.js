@@ -4,8 +4,7 @@ import { useEffect, useState } from 'react'
 import { ReplyFormBtns } from './buttons/ReplyFromBtns'
 import { signIn, useSession } from 'next-auth/react'
 import cloneDeep from 'lodash/cloneDeep'
-import { connectToDatabase } from '../lib/db'
-import { Post } from './Post'
+import { filterPosts } from '../lib/db'
 
 export function FilterPostsForm({
   setPosts,
@@ -28,10 +27,7 @@ export function FilterPostsForm({
   })
 
   async function onSubmit() {
-    const res = await fetch('/api/posts/filter')
-    const postsData = await res.json()
-    console.log(postsData)
-
+    const postsData = await filterPosts()
     setPosts(postsData)
   }
 
