@@ -3,9 +3,6 @@ import { connectToDatabase } from '@/app/lib/db'
 import Post from '@/app/lib/models/Post'
 
 export async function GET(req, res) {
-  console.log('req.nextUrl:', req.nextUrl)
-  console.log('req.nextUrl.searchParams:', req.nextUrl.searchParams)
-
   const query = req.nextUrl.searchParams
 
   if (!query || !query.toString()) {
@@ -21,12 +18,6 @@ export async function GET(req, res) {
   const sortBy = req.nextUrl.searchParams.get('sortBy')
   const sortOrder = req.nextUrl.searchParams.get('sortOrder')
 
-  console.log('title:', title)
-  console.log('content:', content)
-  console.log('author:', author)
-  console.log('sortBy:', sortBy)
-  console.log('sortOrder:', sortOrder)
-
   let pipeline = []
 
   if (title) {
@@ -35,8 +26,35 @@ export async function GET(req, res) {
   if (content) {
     pipeline.push({ $match: { content: { $regex: content, $options: 'i' } } })
   }
+
+  // create temporary fields for authors name and avatar:
+  pipeline.push({
+    $lookup: {
+      from: 'users',
+      localField: 'user_id',
+      foreignField: '_id',
+      as: 'authorData',
+    },
+  })
+
+  pipeline.push({
+    $unwind: '$authorData',
+  })
+
+  pipeline.push({
+    $project: {
+      'authorData._id': 0,
+      'authorData.password': 0,
+      'authorData.address': 0,
+      'authorData.email': 0,
+      'authorData.phone': 0,
+    },
+  })
+
   if (author) {
-    pipeline.push({ $match: { author: { $regex: author, $options: 'i' } } })
+    pipeline.push({
+      $match: { 'authorData.name': { $regex: author, $options: 'i' } },
+    })
   }
 
   // create additional fields for sorting
@@ -63,6 +81,13 @@ export async function GET(req, res) {
     },
   })
 
+  // delete allReplies field after is done its job:
+  pipeline.push({
+    $project: {
+      allReplies: 0,
+    },
+  })
+
   // calc total number of likes for each post:
   pipeline.push({
     $addFields: {
@@ -70,7 +95,7 @@ export async function GET(req, res) {
     },
   })
 
-  // sorting logic
+  // sorting logic:
   let sortField
   switch (sortBy) {
     case 'time':
@@ -88,34 +113,6 @@ export async function GET(req, res) {
 
   try {
     await connectToDatabase()
-    // const filteredPosts = await Post.aggregate([
-    // {
-    //   $graphLookup: {
-    //     from: 'comments',
-    //     startWith: '$comments',
-    //     connectFromField: '_id',
-    //     connectToField: 'parent._id',
-    //     as: 'allReplies',
-    //   },
-    // },
-    // {
-    //   $addFields: {
-    //     totalComments: {
-    //       $add: [
-    //         { $size: { $ifNull: ['$allReplies', []] } },
-    //         { $size: { $ifNull: ['$comments', []] } },
-    //       ],
-    //     },
-    //   },
-    // },
-    //   {
-    //     $sort: { totalComments: -1 },
-    //   },
-    //   {
-    //     $limit: 20,
-    //   },
-    // ])
-
     const filteredPosts = await Post.aggregate(pipeline)
     return new NextResponse(JSON.stringify(filteredPosts), { status: 200 })
   } catch (error) {

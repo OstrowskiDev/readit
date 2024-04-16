@@ -36,8 +36,10 @@ export const authOptions = {
       async authorize(credentials) {
         const user = await getUserByEmail(credentials?.email)
 
-        if (credentials?.email === user.email && credentials?.password === user.password) {
-          console.log(user)
+        if (
+          credentials?.email === user.email &&
+          credentials?.password === user.password
+        ) {
           return user
         } else {
           return null

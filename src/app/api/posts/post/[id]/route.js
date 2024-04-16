@@ -4,7 +4,6 @@ import Post from '@/app/lib/models/Post'
 import validator from 'validator'
 
 export async function GET(request, { params }) {
-  console.log('sending HTTPS request to MongoDB...')
   const postId = params.id
   try {
     if (validator.isUUID(postId)) {
