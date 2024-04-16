@@ -1,10 +1,11 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { ReplyFormBtns } from './buttons/ReplyFromBtns'
 import { signIn, useSession } from 'next-auth/react'
 import cloneDeep from 'lodash/cloneDeep'
 import { filterPosts } from '../lib/db'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 
 export function FilterPostsForm({
   setPosts,
@@ -14,10 +15,13 @@ export function FilterPostsForm({
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
   const [author, setAuthor] = useState('')
-  // time, popularity, activity
   const [sortBy, setSortBy] = useState('time')
-  //descending or ascending
   const [sortOrder, setSortOrder] = useState('descending')
+
+  const searchParams = useSearchParams()
+  const pathname = usePathname()
+  const { replace } = useRouter()
+  // const router = useRouter()
   const { data: session } = useSession()
   const userId = session?.user?.id
 
@@ -26,9 +30,52 @@ export function FilterPostsForm({
     message: null,
   })
 
+  // const createQueryString = useCallback(
+  //   (name, value) => {
+  //     const params = new URLSearchParams(searchParams)
+  //     params.set(name, value)
+
+  //     return params.toString()
+  //   },
+  //   [searchParams]
+  // )
+
+  // const handleSearch = (term) => {
+  //   const params = new URLSearchParams(searchParams)
+  //   if (term) {
+  //     params.set('query', term)
+  //   } else {
+  //     params.delete('query')
+  //   }
+  //   const properQueryString = params.toString()
+  //   replace(`${pathname}?${properQueryString}`)
+  // }
+
+  // router.push(pathname + '?' + createQueryString('sort', 'asc'))
+
   async function onSubmit() {
-    const postsData = await filterPosts()
+    const filterData = {
+      title,
+      content,
+      author,
+      sortBy,
+      sortOrder,
+    }
+
+    const params = new URLSearchParams()
+    for (const key in filterData) {
+      if (filterData[key]) {
+        params.set(key, filterData[key])
+      }
+    }
+    replace(`${pathname}?${params.toString()}`)
+
+    console.log('filterData:', filterData)
+    const postsData = await filterPosts(filterData)
     setPosts(postsData)
+
+    // const params = new URLSearchParams(filterData)
+    // router.replace(`${router.pathname}?${params.toString()}`)
   }
 
   function onCancelClick() {

@@ -3,35 +3,120 @@ import { connectToDatabase } from '@/app/lib/db'
 import Post from '@/app/lib/models/Post'
 
 export async function GET(req, res) {
+  console.log('req.nextUrl:', req.nextUrl)
+  console.log('req.nextUrl.searchParams:', req.nextUrl.searchParams)
+
+  const query = req.nextUrl.searchParams
+
+  if (!query || !query.toString()) {
+    return new NextResponse(
+      'Bad Request: No search params found in the URL' + error,
+      { status: 400 },
+    )
+  }
+
+  const title = req.nextUrl.searchParams.get('title')
+  const content = req.nextUrl.searchParams.get('content')
+  const author = req.nextUrl.searchParams.get('author')
+  const sortBy = req.nextUrl.searchParams.get('sortBy')
+  const sortOrder = req.nextUrl.searchParams.get('sortOrder')
+
+  console.log('title:', title)
+  console.log('content:', content)
+  console.log('author:', author)
+  console.log('sortBy:', sortBy)
+  console.log('sortOrder:', sortOrder)
+
+  let pipeline = []
+
+  if (title) {
+    pipeline.push({ $match: { title: { $regex: title, $options: 'i' } } })
+  }
+  if (content) {
+    pipeline.push({ $match: { content: { $regex: content, $options: 'i' } } })
+  }
+  if (author) {
+    pipeline.push({ $match: { author: { $regex: author, $options: 'i' } } })
+  }
+
+  // create additional fields for sorting
+  // get total number of replies for each post:
+  pipeline.push({
+    $graphLookup: {
+      from: 'comments',
+      startWith: '$comments',
+      connectFromField: '_id',
+      connectToField: 'parent._id',
+      as: 'allReplies',
+    },
+  })
+
+  // calc total number of comments for each post:
+  pipeline.push({
+    $addFields: {
+      commentsCount: {
+        $add: [
+          { $size: { $ifNull: ['$allReplies', []] } },
+          { $size: { $ifNull: ['$comments', []] } },
+        ],
+      },
+    },
+  })
+
+  // calc total number of likes for each post:
+  pipeline.push({
+    $addFields: {
+      likesCount: { $size: { $ifNull: ['$likes', []] } },
+    },
+  })
+
+  // sorting logic
+  let sortField
+  switch (sortBy) {
+    case 'time':
+      sortField = 'createdAt'
+      break
+    case 'popularity':
+      sortField = 'likesCount'
+      break
+    case 'activity':
+      sortField = 'commentsCount'
+      break
+  }
+  let sortDirection = sortOrder === 'ascending' ? 1 : -1
+  pipeline.push({ $sort: { [sortField]: sortDirection } })
+
   try {
     await connectToDatabase()
-    const filteredPosts = await Post.aggregate([
-      {
-        $graphLookup: {
-          from: 'comments',
-          startWith: '$comments',
-          connectFromField: '_id',
-          connectToField: 'parent._id',
-          as: 'allReplies',
-        },
-      },
-      {
-        $addFields: {
-          totalComments: {
-            $add: [
-              { $size: { $ifNull: ['$allReplies', []] } },
-              { $size: { $ifNull: ['$comments', []] } },
-            ],
-          },
-        },
-      },
-      {
-        $sort: { totalComments: -1 },
-      },
-      {
-        $limit: 20,
-      },
-    ])
+    // const filteredPosts = await Post.aggregate([
+    // {
+    //   $graphLookup: {
+    //     from: 'comments',
+    //     startWith: '$comments',
+    //     connectFromField: '_id',
+    //     connectToField: 'parent._id',
+    //     as: 'allReplies',
+    //   },
+    // },
+    // {
+    //   $addFields: {
+    //     totalComments: {
+    //       $add: [
+    //         { $size: { $ifNull: ['$allReplies', []] } },
+    //         { $size: { $ifNull: ['$comments', []] } },
+    //       ],
+    //     },
+    //   },
+    // },
+    //   {
+    //     $sort: { totalComments: -1 },
+    //   },
+    //   {
+    //     $limit: 20,
+    //   },
+    // ])
+
+    const filteredPosts = await Post.aggregate(pipeline)
     return new NextResponse(JSON.stringify(filteredPosts), { status: 200 })
   } catch (error) {
     return new NextResponse('Error in fetching posts' + error, { status: 500 })

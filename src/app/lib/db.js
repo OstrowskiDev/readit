@@ -69,8 +69,11 @@ async function getPosts() {
   return res.json()
 }
 
-async function filterPosts() {
-  const res = await fetch('/api/posts/filter', {
+async function filterPosts(params) {
+  const queryString = new URLSearchParams(params).toString()
+
+  const res = await fetch(`/api/posts/filter?${queryString}`, {
+    method: 'GET',
     cache: 'no-store',
   })
   if (!res.ok) return null
