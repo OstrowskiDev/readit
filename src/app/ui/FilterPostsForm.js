@@ -1,9 +1,7 @@
 'use client'
 
-import { useCallback, useEffect, useState } from 'react'
+import { useState } from 'react'
 import { ReplyFormBtns } from './buttons/ReplyFromBtns'
-import { signIn, useSession } from 'next-auth/react'
-import cloneDeep from 'lodash/cloneDeep'
 import { filterPosts } from '../lib/db'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 
@@ -21,37 +19,6 @@ export function FilterPostsForm({
   const searchParams = useSearchParams()
   const pathname = usePathname()
   const { replace } = useRouter()
-  // const router = useRouter()
-  const { data: session } = useSession()
-  const userId = session?.user?.id
-
-  const [response, setResponse] = useState({
-    state: null,
-    message: null,
-  })
-
-  // const createQueryString = useCallback(
-  //   (name, value) => {
-  //     const params = new URLSearchParams(searchParams)
-  //     params.set(name, value)
-
-  //     return params.toString()
-  //   },
-  //   [searchParams]
-  // )
-
-  // const handleSearch = (term) => {
-  //   const params = new URLSearchParams(searchParams)
-  //   if (term) {
-  //     params.set('query', term)
-  //   } else {
-  //     params.delete('query')
-  //   }
-  //   const properQueryString = params.toString()
-  //   replace(`${pathname}?${properQueryString}`)
-  // }
-
-  // router.push(pathname + '?' + createQueryString('sort', 'asc'))
 
   async function onSubmit() {
     const filterData = {
@@ -73,9 +40,6 @@ export function FilterPostsForm({
     console.log('filterData:', filterData)
     const postsData = await filterPosts(filterData)
     setPosts(postsData)
-
-    // const params = new URLSearchParams(filterData)
-    // router.replace(`${router.pathname}?${params.toString()}`)
   }
 
   function onCancelClick() {
