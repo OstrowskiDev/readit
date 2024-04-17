@@ -4,6 +4,7 @@ import Post from '@/app/lib/models/Post'
 
 export async function GET(req, res) {
   const query = req.nextUrl.searchParams
+  console.log(query)
 
   if (!query || !query.toString()) {
     return new NextResponse('Bad Request: No search params found in the URL', {
@@ -94,6 +95,20 @@ export async function GET(req, res) {
     },
   })
 
+  // calc total number of dislikes for each post:
+  pipeline.push({
+    $addFields: {
+      dislikesCount: { $size: { $ifNull: ['$dislikes', []] } },
+    },
+  })
+
+  // subtract dislikes from likes to calculate popularity:
+  pipeline.push({
+    $addFields: {
+      popularity: { $subtract: ['$likesCount', '$dislikesCount'] },
+    },
+  })
+
   // sorting logic:
   if (sortBy === 'time' || sortBy === 'popularity' || sortBy === 'activity') {
     let sortField
@@ -102,7 +117,7 @@ export async function GET(req, res) {
         sortField = 'createdAt'
         break
       case 'popularity':
-        sortField = 'likesCount'
+        sortField = 'popularity'
         break
       case 'activity':
         sortField = 'commentsCount'

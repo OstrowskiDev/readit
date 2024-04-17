@@ -23,7 +23,7 @@ export function Post({
     )
   // const [post, setPost] = useState(null)
   const [author, setAuthor] = useState(null)
-  const [commentsNum, setCommentsNum] = useState(null)
+  // const [commentsNum, setCommentsNum] = useState(null)
   const { isUserHovered, handleMouseEnter, handleMouseLeave } = useMouseHover()
 
   useEffect(() => {
