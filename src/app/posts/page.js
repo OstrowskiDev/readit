@@ -7,6 +7,7 @@ import { Post } from '../ui/Post'
 import { useEffect, useState } from 'react'
 import { CreatePostForm } from '../ui/CreatePostForm'
 import { FilterPostsForm } from '../ui/FilterPostsForm'
+import { FilterBtn } from '../ui/buttons/FilterBtn'
 
 export default function PostsPage({ searchParams }) {
   const [posts, setPosts] = useState(null)
@@ -58,6 +59,10 @@ export default function PostsPage({ searchParams }) {
               isFilterFormVis={isFilterFormVis}
               setIsFilterFormVis={setIsFilterFormVis}
             />
+            <FilterBtn
+              isFilterFormVis={isFilterFormVis}
+              setIsFilterFormVis={setIsFilterFormVis}
+            />
             <CreateBtn
               isCreateFormVis={isCreateFormVis}
               setIsCreateFormVis={setIsCreateFormVis}
@@ -83,6 +88,7 @@ export default function PostsPage({ searchParams }) {
                 key={post._id}
                 _id={post._id}
                 postId={post._id}
+                post={post}
                 authorsData={authorsData}
                 setAuthorsData={setAuthorsData}
                 enableCommentBtn={false}

@@ -4,42 +4,33 @@ import { Suspense, lazy, useEffect, useState } from 'react'
 import { PostFooter } from './PostFooter'
 import { PostContextProvider } from '../lib/context/PostContextProvider'
 import { PostHeader } from './PostHeader'
-import { getUser } from '../lib/db'
+import { getPost, getUser } from '../lib/db'
+import { countPostComments } from '../lib/actions'
 import { UserInfoboxLoader } from './loaders/UserInfoboxLoader'
 import useMouseHover from '../lib/hooks/useMouseHover'
 const LazyUserInfobox = lazy(() => import('./UserInfobox.js'))
 
-export function Post({
-  post,
+export function PostNew({
   postId,
   authorsData,
   setAuthorsData,
   enableCommentBtn,
 }) {
-  //below monstrosity is only for refactoring purposes, it will be removed in the next step
-  const setPost = () =>
-    console.log(
-      'setPost no longer needed, post object data is passed as a prop, and setPost functionality in optimistic UI will be moved to setPosts array',
-    )
-  // const [post, setPost] = useState(null)
+  const [post, setPost] = useState(null)
   const [author, setAuthor] = useState(null)
   const [commentsNum, setCommentsNum] = useState(null)
   const { isUserHovered, handleMouseEnter, handleMouseLeave } = useMouseHover()
 
   useEffect(() => {
     async function fetchData() {
-      // this fetch is no longer needed as the post data is passed as a prop:
+      const postData = await getPost(postId)
+      setPost(postData)
 
-      // const postData = await getPost(postId)
-      // setPost(postData)
-
-      const userData = await getUser(post.user_id)
+      const userData = await getUser(postData.user_id)
       setAuthor(userData)
 
-      // no longer needed, its calculated in pipeline:
-
-      // const commentsNumber = await countPostComments(postId)
-      // setCommentsNum(commentsNumber)
+      const commentsNumber = await countPostComments(postId)
+      setCommentsNum(commentsNumber)
     }
 
     fetchData()
@@ -70,7 +61,7 @@ export function Post({
             hover:shadow-center-lg hover:cursor-pointer hover:outline-red-50"
           >
             {/* Post header */}
-            <PostHeader author={post.authorData} />
+            <PostHeader author={author} />
 
             {/* Post title */}
             <div className="post-title-container flex justify-between py-2">
@@ -85,7 +76,7 @@ export function Post({
             {/* Post footer */}
             <PostFooter
               postId={postId}
-              commentNo={post.commentsCount}
+              commentNo={commentsNum}
               postLikes={postLikes}
               postDislikes={postDislikes}
               enableCommentBtn={enableCommentBtn}

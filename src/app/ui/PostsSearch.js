@@ -7,8 +7,6 @@ export default function PostsSearch({
   triggerReset,
   setTriggerReset,
   setFastQuery,
-  isFilterFormVis,
-  setIsFilterFormVis,
 }) {
   const searchParams = useSearchParams() // reads current URL's query string
   const pathname = usePathname() // reads current URL's pathname
@@ -34,10 +32,6 @@ export default function PostsSearch({
     setFastQuery(term)
   }, 700)
 
-  function onFilterClick() {
-    setIsFilterFormVis(!isFilterFormVis)
-  }
-
   return (
     <div className="flex grow-2 below-md:mb-2">
       <input
@@ -50,9 +44,6 @@ export default function PostsSearch({
         }}
         defaultValue={searchParams.get('fastQuery')?.toString()}
       />
-      <button onClick={onFilterClick} className="btn-blue h-10 px-4 ml-2">
-        Filter
-      </button>
     </div>
   )
 }
