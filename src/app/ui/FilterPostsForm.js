@@ -3,10 +3,10 @@
 import { useState } from 'react'
 import { filterPosts } from '../lib/db'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
-import { FilterFormBtns } from './buttons/FiletrFormBtns'
+import { FilterFormBtns } from './buttons/FilterFormBtns'
 
 export function FilterPostsForm({
-  setFastQuery,
+  setTriggerReset,
   setPosts,
   isFilterFormVis,
   setIsFilterFormVis,
@@ -42,7 +42,7 @@ export function FilterPostsForm({
 
     const postsData = await filterPosts(filterData)
     setPosts(postsData)
-    setFastQuery('')
+    setTriggerReset((prevState) => !prevState)
   }
 
   return (

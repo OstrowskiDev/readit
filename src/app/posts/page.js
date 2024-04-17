@@ -14,6 +14,7 @@ export default function PostsPage({ searchParams }) {
   const [authorsData, setAuthorsData] = useState([])
   const [isCreateFormVis, setIsCreateFormVis] = useState(false)
   const [isFilterFormVis, setIsFilterFormVis] = useState(false)
+  const [triggerReset, setTriggerReset] = useState(false)
   const [fastQuery, setFastQuery] = useState(searchParams.fastQuery || '')
 
   useEffect(() => {
@@ -28,6 +29,13 @@ export default function PostsPage({ searchParams }) {
     }
     fetchData()
   }, [])
+
+  useEffect(() => {
+    if (triggerReset) {
+      setFastQuery('')
+      setTriggerReset(false)
+    }
+  }, [triggerReset])
 
   const matchingPosts = posts?.filter(
     (post) =>
@@ -44,7 +52,8 @@ export default function PostsPage({ searchParams }) {
               Posts
             </h1>
             <PostsSearch
-              fastQuery={fastQuery}
+              triggerReset={triggerReset}
+              setTriggerReset={setTriggerReset}
               setFastQuery={setFastQuery}
               isFilterFormVis={isFilterFormVis}
               setIsFilterFormVis={setIsFilterFormVis}
@@ -62,7 +71,7 @@ export default function PostsPage({ searchParams }) {
           )}
           {isFilterFormVis && (
             <FilterPostsForm
-              setFastQuery={setFastQuery}
+              setTriggerReset={setTriggerReset}
               setPosts={setPosts}
               isFilterFormVis={isFilterFormVis}
               setIsFilterFormVis={setIsFilterFormVis}
