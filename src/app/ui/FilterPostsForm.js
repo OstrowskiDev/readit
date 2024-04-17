@@ -103,7 +103,7 @@ export function FilterPostsForm({
               </select>
             </div>
             <div className="filter-sortOrder-container flex px-4">
-              <p className="filter-sortOrder-label w-[90px]">sort by:</p>
+              <p className="filter-sortOrder-label w-[90px]">order:</p>
               <select
                 className="filter-sortOrder-input w-full h-7 px-2 bg-gray-50 border border-slate-300 rounded-md
                 focus:border-slate-500 focus:outline-none"
