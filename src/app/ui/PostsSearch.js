@@ -2,19 +2,25 @@
 import { useSearchParams, usePathname, useRouter } from 'next/navigation'
 import { useDebouncedCallback } from 'use-debounce'
 
-export default function PostsSearch({ isFilterFormVis, setIsFilterFormVis }) {
-  const searchParams = useSearchParams()
-  const pathname = usePathname()
+export default function PostsSearch({
+  setFastQuery,
+  isFilterFormVis,
+  setIsFilterFormVis,
+}) {
+  const searchParams = useSearchParams() // reads current URL's query string
+  const pathname = usePathname() // reads current URL's pathname
   const { replace } = useRouter()
 
   const handleSearch = useDebouncedCallback((term) => {
+    // create variable that stores the current query string
     const params = new URLSearchParams(searchParams)
     if (term) {
-      params.set('query', term)
+      params.set('fastQuery', term)
     } else {
-      params.delete('query')
+      params.delete('fastQuery')
     }
     replace(`${pathname}?${params.toString()}`)
+    setFastQuery(term)
   }, 700)
 
   function onFilterClick() {
@@ -30,7 +36,7 @@ export default function PostsSearch({ isFilterFormVis, setIsFilterFormVis }) {
         onChange={(e) => {
           handleSearch(e.target.value)
         }}
-        defaultValue={searchParams.get('query')?.toString()}
+        defaultValue={searchParams.get('fastQuery')?.toString()}
       />
       <button onClick={onFilterClick} className="btn-blue h-10 px-4 ml-2">
         Filter

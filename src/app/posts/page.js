@@ -2,8 +2,7 @@
 
 import PostsSearch from '../ui/PostsSearch'
 import CreateBtn from '../ui/buttons/CreateBtn'
-import sanitizeHtml from 'sanitize-html'
-import { getPosts, getUsers } from '../lib/db'
+import { filterPosts, getUsers } from '../lib/db'
 import { Post } from '../ui/Post'
 import { useEffect, useState } from 'react'
 import { CreatePostForm } from '../ui/CreatePostForm'
@@ -15,10 +14,14 @@ export default function PostsPage({ searchParams }) {
   const [authorsData, setAuthorsData] = useState([])
   const [isCreateFormVis, setIsCreateFormVis] = useState(false)
   const [isFilterFormVis, setIsFilterFormVis] = useState(false)
+  const [fastQuery, setFastQuery] = useState(searchParams.fastQuery || '')
 
   useEffect(() => {
     async function fetchData() {
-      const postsData = await getPosts()
+      const filterData = Object.keys(searchParams).length
+        ? searchParams
+        : { sortBy: 'time', sortOrder: 'descending' }
+      const postsData = await filterPosts(filterData)
       const usersData = await getUsers()
       setPosts(postsData)
       setUsers(usersData)
@@ -26,12 +29,11 @@ export default function PostsPage({ searchParams }) {
     fetchData()
   }, [])
 
-  const dirtyQuery = searchParams?.query || ''
-  const query = sanitizeHtml(dirtyQuery, { allowedTags: null })
   const matchingPosts = posts?.filter(
     (post) =>
-      post.title.toLowerCase().includes(query.toLowerCase()) ||
-      post.content.toLowerCase().includes(query.toLowerCase()),
+      post.title.toLowerCase().includes(fastQuery.toLowerCase()) ||
+      post.authorData.name.toLowerCase().includes(fastQuery.toLowerCase()) ||
+      post.content.toLowerCase().includes(fastQuery.toLowerCase()),
   )
   return (
     <>
@@ -42,6 +44,8 @@ export default function PostsPage({ searchParams }) {
               Posts
             </h1>
             <PostsSearch
+              fastQuery={fastQuery}
+              setFastQuery={setFastQuery}
               isFilterFormVis={isFilterFormVis}
               setIsFilterFormVis={setIsFilterFormVis}
             />
@@ -58,6 +62,7 @@ export default function PostsPage({ searchParams }) {
           )}
           {isFilterFormVis && (
             <FilterPostsForm
+              setFastQuery={setFastQuery}
               setPosts={setPosts}
               isFilterFormVis={isFilterFormVis}
               setIsFilterFormVis={setIsFilterFormVis}

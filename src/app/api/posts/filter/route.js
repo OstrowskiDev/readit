@@ -6,10 +6,9 @@ export async function GET(req, res) {
   const query = req.nextUrl.searchParams
 
   if (!query || !query.toString()) {
-    return new NextResponse(
-      'Bad Request: No search params found in the URL' + error,
-      { status: 400 },
-    )
+    return new NextResponse('Bad Request: No search params found in the URL', {
+      status: 400,
+    })
   }
 
   const title = req.nextUrl.searchParams.get('title')
@@ -96,21 +95,24 @@ export async function GET(req, res) {
   })
 
   // sorting logic:
-  let sortField
-  switch (sortBy) {
-    case 'time':
-      sortField = 'createdAt'
-      break
-    case 'popularity':
-      sortField = 'likesCount'
-      break
-    case 'activity':
-      sortField = 'commentsCount'
-      break
+  if (sortBy === 'time' || sortBy === 'popularity' || sortBy === 'activity') {
+    let sortField
+    switch (sortBy) {
+      case 'time':
+        sortField = 'createdAt'
+        break
+      case 'popularity':
+        sortField = 'likesCount'
+        break
+      case 'activity':
+        sortField = 'commentsCount'
+        break
+    }
+    let sortDirection = sortOrder === 'ascending' ? 1 : -1
+    pipeline.push({ $sort: { [sortField]: sortDirection } })
   }
-  let sortDirection = sortOrder === 'ascending' ? 1 : -1
-  pipeline.push({ $sort: { [sortField]: sortDirection } })
 
+  // execute aggregation pipeline:
   try {
     await connectToDatabase()
     const filteredPosts = await Post.aggregate(pipeline)

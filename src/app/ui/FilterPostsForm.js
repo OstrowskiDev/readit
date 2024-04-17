@@ -1,11 +1,12 @@
 'use client'
 
 import { useState } from 'react'
-import { ReplyFormBtns } from './buttons/ReplyFromBtns'
 import { filterPosts } from '../lib/db'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import { FilterFormBtns } from './buttons/FiletrFormBtns'
 
 export function FilterPostsForm({
+  setFastQuery,
   setPosts,
   isFilterFormVis,
   setIsFilterFormVis,
@@ -28,22 +29,20 @@ export function FilterPostsForm({
       sortBy,
       sortOrder,
     }
-
-    const params = new URLSearchParams()
+    const params = new URLSearchParams(searchParams)
     for (const key in filterData) {
       if (filterData[key]) {
         params.set(key, filterData[key])
       }
     }
+    if (params.get('fastQuery')) {
+      params.delete('fastQuery')
+    }
     replace(`${pathname}?${params.toString()}`)
 
-    console.log('filterData:', filterData)
     const postsData = await filterPosts(filterData)
     setPosts(postsData)
-  }
-
-  function onCancelClick() {
-    setIsFilterFormVis(!isFilterFormVis)
+    setFastQuery('')
   }
 
   return (
@@ -119,8 +118,9 @@ export function FilterPostsForm({
               </select>
             </div>
             <div className="px-2">
-              <ReplyFormBtns
-                onCancelClick={onCancelClick}
+              <FilterFormBtns
+                isFilterFormVis={isFilterFormVis}
+                setIsFilterFormVis={setIsFilterFormVis}
                 onSubmit={onSubmit}
               />
             </div>
