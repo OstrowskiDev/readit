@@ -587,7 +587,7 @@ export async function countUserPosts(userId) {
     const count = await Post.countDocuments({ user_id: userId })
     return count
   } catch (error) {
-    console.error('Error occured while counting user posts:', error)
+    console.error('Error occurred while counting user posts:', error)
     return null
   }
 }
@@ -598,7 +598,7 @@ export async function countUserComments(userId) {
     const count = await Comment.countDocuments({ user_id: userId })
     return count
   } catch (error) {
-    console.error('Error occured while counting user comments:', error)
+    console.error('Error occurred while counting user comments:', error)
     return null
   }
 }
