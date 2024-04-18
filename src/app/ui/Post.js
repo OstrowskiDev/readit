@@ -21,25 +21,14 @@ export function Post({
     console.log(
       'setPost no longer needed, post object data is passed as a prop, and setPost functionality in optimistic UI will be moved to setPosts array',
     )
-  // const [post, setPost] = useState(null)
   const [author, setAuthor] = useState(null)
-  // const [commentsNum, setCommentsNum] = useState(null)
   const { isUserHovered, handleMouseEnter, handleMouseLeave } = useMouseHover()
 
   useEffect(() => {
     async function fetchData() {
       // this fetch is no longer needed as the post data is passed as a prop:
-
-      // const postData = await getPost(postId)
-      // setPost(postData)
-
       const userData = await getUser(post.user_id)
       setAuthor(userData)
-
-      // no longer needed, its calculated in pipeline:
-
-      // const commentsNumber = await countPostComments(postId)
-      // setCommentsNum(commentsNumber)
     }
 
     fetchData()
@@ -93,7 +82,7 @@ export function Post({
           </a>
           {/* user infobox on hover */}
           <Suspense fallback={<UserInfoboxLoader />}>
-            {isUserHovered && <LazyUserInfobox author={author} />}
+            {isUserHovered && <LazyUserInfobox author={post.authorData} />}
           </Suspense>
         </div>
       )}

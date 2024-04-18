@@ -4,7 +4,6 @@ import Post from '@/app/lib/models/Post'
 
 export async function GET(req, res) {
   const query = req.nextUrl.searchParams
-  console.log(query)
 
   if (!query || !query.toString()) {
     return new NextResponse('Bad Request: No search params found in the URL', {
@@ -43,7 +42,6 @@ export async function GET(req, res) {
 
   pipeline.push({
     $project: {
-      'authorData._id': 0,
       'authorData.password': 0,
       'authorData.address': 0,
       'authorData.email': 0,
