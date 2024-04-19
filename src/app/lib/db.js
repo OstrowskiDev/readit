@@ -18,6 +18,28 @@ async function getPost(postId) {
     cache: 'no-store',
   })
   if (!res.ok) return null
+  const json = await res.json()
+  return json[0]
+}
+
+async function getPostData(postId) {
+  console.log(`fetching post ${postId} from database...`)
+  const res = await fetch(`http://localhost:3000/api/posts/post/${postId}`, {
+    cache: 'no-store',
+  })
+  if (!res.ok) return null
+  const json = await res.json()
+  return json[0]
+}
+
+async function getPostCommentsData(postId) {
+  const res = await fetch(
+    `http://localhost:3000/api/posts/${postId}/comments`,
+    {
+      cache: 'no-store',
+    },
+  )
+  if (!res.ok) return null
   return res.json()
 }
 
@@ -91,6 +113,8 @@ async function getUsers() {
 export {
   connectToDatabase,
   getPost,
+  getPostData,
+  getPostCommentsData,
   filterPosts,
   getUser,
   getComment,

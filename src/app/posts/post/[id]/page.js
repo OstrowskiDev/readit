@@ -1,6 +1,11 @@
 'use client'
 
-import { getPost, getUser } from '@/app/lib/db'
+import {
+  getPost,
+  getPostCommentsData,
+  getPostData,
+  getUser,
+} from '@/app/lib/db'
 import { Comment } from '@/app/ui/Comment'
 import { PostFooter } from '@/app/ui/PostFooter'
 import { getCommentsAndAuthors } from '@/app/lib/actions'
@@ -15,7 +20,6 @@ const LazyUserInfobox = lazy(() => import('@/app/ui/UserInfobox.js'))
 export default function PostPage({ params }) {
   const postId = params.id
   const [post, setPost] = useState(null)
-  const [user, setUser] = useState(null)
   const [comments, setComments] = useState(null)
   const [authors, setAuthors] = useState(null)
   const [authorsData, setAuthorsData] = useState([])
@@ -23,21 +27,22 @@ export default function PostPage({ params }) {
 
   useEffect(() => {
     async function fetchData() {
-      const postData = await getPost(postId)
+      const postData = await getPostData(postId)
       setPost(postData)
 
-      const userData = await getUser(postData.user_id)
-      setUser(userData)
+      const commentsData = await getPostCommentsData(postId)
 
+      // !IMPORTANT this needs to be changed: user data should be only fetched as name, avatar and id!
       const [commentsArr, authorsArr] = await getCommentsAndAuthors(postId)
-      setComments(commentsArr)
+      console.log(commentsData)
+      setComments(commentsData)
       setAuthors(authorsArr)
     }
 
     fetchData()
   }, [])
 
-  if (!post || !user || !comments) {
+  if (!post || !comments) {
     return <Loader />
   }
 
@@ -63,7 +68,7 @@ export default function PostPage({ params }) {
       <div className="w-full flex justify-center my-8 px-4">
         <div className="post-card-container relative flex flex-col justify-between max-w-[800px] w-full p-4 mx-2 rounded-md shadow-center-sm">
           {/* Post header */}
-          <PostHeader author={user} />
+          <PostHeader author={post.authorData} />
           <div className="post-header flex justify-between mb-4">
             <h2 className="post-title text-2xl pt-4 font-semibold">
               {post.title}
@@ -107,7 +112,7 @@ export default function PostPage({ params }) {
 
           {/* User Infobox on hover */}
           <Suspense fallback={<UserInfoboxLoader />}>
-            {isUserHovered && <LazyUserInfobox author={user} />}
+            {isUserHovered && <LazyUserInfobox author={post.authorData} />}
           </Suspense>
         </div>
       </div>

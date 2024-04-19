@@ -1,10 +1,9 @@
 'use client'
 
-import { Suspense, lazy, useEffect, useState } from 'react'
+import { Suspense, lazy } from 'react'
 import { PostFooter } from './PostFooter'
 import { PostContextProvider } from '../lib/context/PostContextProvider'
 import { PostHeader } from './PostHeader'
-import { getUser } from '../lib/db'
 import { UserInfoboxLoader } from './loaders/UserInfoboxLoader'
 import useMouseHover from '../lib/hooks/useMouseHover'
 const LazyUserInfobox = lazy(() => import('./UserInfobox.js'))
@@ -16,23 +15,12 @@ export function Post({
   setAuthorsData,
   enableCommentBtn,
 }) {
-  //below monstrosity is only for refactoring purposes, it will be removed in the next step
+  //below monstrosity is only for refactoring purposes, it will be removed in after refactoring is done
   const setPost = () =>
     console.log(
       'setPost no longer needed, post object data is passed as a prop, and setPost functionality in optimistic UI will be moved to setPosts array',
     )
-  const [author, setAuthor] = useState(null)
   const { isUserHovered, handleMouseEnter, handleMouseLeave } = useMouseHover()
-
-  useEffect(() => {
-    async function fetchData() {
-      // this fetch is no longer needed as the post data is passed as a prop:
-      const userData = await getUser(post.user_id)
-      setAuthor(userData)
-    }
-
-    fetchData()
-  }, [])
 
   const postLikes = post?.likes
   const postDislikes = post?.dislikes
