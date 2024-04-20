@@ -4,6 +4,7 @@ import { CommentButtons } from '@/app/ui/CommentButtons'
 import { CommentContextProvider } from './CommentContextProvider'
 
 export function CommentBtnsContextWrapper({
+  comment,
   commentId,
   postId,
   authorId,
@@ -14,6 +15,7 @@ export function CommentBtnsContextWrapper({
 }) {
   return (
     <CommentContextProvider
+      comment={comment}
       commentId={commentId}
       postId={postId}
       authorId={authorId}

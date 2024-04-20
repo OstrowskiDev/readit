@@ -8,16 +8,15 @@ import { UserInfoboxLoader } from './loaders/UserInfoboxLoader'
 import useMouseHover from '../lib/hooks/useMouseHover'
 const LazyUserInfobox = lazy(() => import('./UserInfobox.js'))
 
-export function Comment({ authors, comments, commentId, depth, postId }) {
+export function Comment({ comment, commentId, depth, postId }) {
   const [deleteOptimistically, setDeleteOptimistically] = useState(false)
   const { isUserHovered, handleMouseEnter, handleMouseLeave } = useMouseHover()
 
-  if (!comments) return null
-  const comment = comments.find((comment) => comment._id === commentId)
+  if (!comment) return null
 
-  if (!comment || !authors) return null
   const authorId = comment.user_id
-  const author = authors.find((author) => author._id === authorId)
+
+  const author = comment.authorData
   const commentLikes = comment.likes
   const commentDislikes = comment.dislikes
 
@@ -79,6 +78,7 @@ export function Comment({ authors, comments, commentId, depth, postId }) {
 
         {/* comment buttons */}
         <CommentBtnsContextWrapper
+          comment={comment}
           commentId={commentId}
           postId={postId}
           authorId={authorId}
@@ -88,16 +88,18 @@ export function Comment({ authors, comments, commentId, depth, postId }) {
           setDeleteOptimistically={setDeleteOptimistically}
         />
         <div className="comment-replies ml-[20px]">
-          {comment.replies.map((replyId) => (
-            <Comment
-              key={replyId}
-              authors={authors}
-              comments={comments}
-              commentId={replyId}
-              depth={depth + 1}
-              postId={postId}
-            />
-          ))}
+          {comment.replies.map((replyId) => {
+            const reply = comment.replies.find((r) => r._id === replyId)
+            return (
+              <Comment
+                key={replyId}
+                comment={reply}
+                commentId={replyId}
+                depth={depth + 1}
+                postId={postId}
+              />
+            )
+          })}
         </div>
       </div>
     </div>

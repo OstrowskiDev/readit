@@ -27,15 +27,15 @@ export default function PostPage({ params }) {
 
   useEffect(() => {
     async function fetchData() {
-      const postData = await getPostData(postId)
+      const [postData, commentsData] = await Promise.all([
+        getPostData(postId),
+        getPostCommentsData(postId),
+      ])
       setPost(postData)
-
-      const commentsData = await getPostCommentsData(postId)
+      setComments(commentsData)
 
       // !IMPORTANT this needs to be changed: user data should be only fetched as name, avatar and id!
       const [commentsArr, authorsArr] = await getCommentsAndAuthors(postId)
-      console.log(commentsData)
-      setComments(commentsData)
       setAuthors(authorsArr)
     }
 
@@ -96,16 +96,22 @@ export default function PostPage({ params }) {
                 Comments:
               </h3>
               <div className="comments-list bg-gray-100 pl-8 pr-3 pb-6 mt-1 rounded-md">
-                {post.comments?.map((commentId) => (
-                  <Comment
-                    key={commentId}
-                    comments={comments}
-                    authors={authors}
-                    commentId={commentId}
-                    depth={0}
-                    postId={postId}
-                  />
-                ))}
+                {post.comments?.map((commentId) => {
+                  const comment = comments.find((c) => c._id === commentId)
+                  let commentDescendants = []
+
+                  return (
+                    <Comment
+                      key={commentId}
+                      comment={comment}
+                      comments={comments}
+                      authors={authors}
+                      commentId={commentId}
+                      depth={0}
+                      postId={postId}
+                    />
+                  )
+                })}
               </div>
             </div>
           )}
