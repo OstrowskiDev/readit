@@ -15,6 +15,7 @@ import { PostContextProvider } from '@/app/lib/context/PostContextProvider'
 import { PostHeader } from '@/app/ui/PostHeader'
 import useMouseHover from '@/app/lib/hooks/useMouseHover'
 import { UserInfoboxLoader } from '@/app/ui/loaders/UserInfoboxLoader'
+import { getDescendants } from '@/app/lib/clientFunctions'
 const LazyUserInfobox = lazy(() => import('@/app/ui/UserInfobox.js'))
 
 export default function PostPage({ params }) {
@@ -98,13 +99,12 @@ export default function PostPage({ params }) {
               <div className="comments-list bg-gray-100 pl-8 pr-3 pb-6 mt-1 rounded-md">
                 {post.comments?.map((commentId) => {
                   const comment = comments.find((c) => c._id === commentId)
-                  let commentDescendants = []
-
+                  const commentDescendants = getDescendants(comment, comments)
                   return (
                     <Comment
                       key={commentId}
                       comment={comment}
-                      comments={comments}
+                      comments={commentDescendants}
                       authors={authors}
                       commentId={commentId}
                       depth={0}

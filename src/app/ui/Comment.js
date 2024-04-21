@@ -6,9 +6,10 @@ import TimeAgo from './TimeAgo'
 import Avatar from '../lib/avatars/Avatar'
 import { UserInfoboxLoader } from './loaders/UserInfoboxLoader'
 import useMouseHover from '../lib/hooks/useMouseHover'
+import { getDescendants } from '../lib/clientFunctions'
 const LazyUserInfobox = lazy(() => import('./UserInfobox.js'))
 
-export function Comment({ comment, commentId, depth, postId }) {
+export function Comment({ comment, comments, commentId, depth, postId }) {
   const [deleteOptimistically, setDeleteOptimistically] = useState(false)
   const { isUserHovered, handleMouseEnter, handleMouseLeave } = useMouseHover()
 
@@ -89,11 +90,14 @@ export function Comment({ comment, commentId, depth, postId }) {
         />
         <div className="comment-replies ml-[20px]">
           {comment.replies.map((replyId) => {
-            const reply = comment.replies.find((r) => r._id === replyId)
+            // const reply = comment.replies.find((r) => r._id === replyId)
+            // const comment = comments.find((c) => c._id === replyId)
+            const commentDescendants = getDescendants(comment, comments)
             return (
               <Comment
                 key={replyId}
-                comment={reply}
+                comment={comment}
+                comments={commentDescendants}
                 commentId={replyId}
                 depth={depth + 1}
                 postId={postId}
