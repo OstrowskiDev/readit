@@ -4,12 +4,9 @@ const CommentContext = createContext()
 
 export function CommentContextProvider({
   children,
+  comment,
   commentId,
   postId,
-  authorId,
-  commentLikes,
-  commentDislikes,
-  commentContent,
   setDeleteOptimistically,
 }) {
   const [isVisible, setIsVisible] = useState(false)
@@ -22,12 +19,9 @@ export function CommentContextProvider({
         setIsVisible,
         isEditVisible,
         setIsEditVisible,
+        comment,
         commentId,
         postId,
-        authorId,
-        commentLikes,
-        commentDislikes,
-        commentContent,
         setDeleteOptimistically,
       }}
     >

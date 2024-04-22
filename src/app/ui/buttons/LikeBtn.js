@@ -10,7 +10,7 @@ import { signIn, useSession } from 'next-auth/react'
 import { useEffect, useState } from 'react'
 
 export function LikeBtn({ styles, collection }) {
-  const { commentId, commentLikes } =
+  const { commentId, comment } =
     collection === 'comments' ? useCommentContext() : { undefined, undefined }
   const { comments, setComments, post, setPost, postId, postLikes } =
     usePostContext()
@@ -24,7 +24,7 @@ export function LikeBtn({ styles, collection }) {
   const isAlreadyLiked =
     collection === 'posts'
       ? postLikes?.includes(userId)
-      : commentLikes?.includes(userId)
+      : comment.likes?.includes(userId)
 
   useEffect(() => {
     if (response?.state === 'success') {

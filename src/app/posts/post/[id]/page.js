@@ -1,28 +1,20 @@
 'use client'
 
-import {
-  getPost,
-  getPostCommentsData,
-  getPostData,
-  getUser,
-} from '@/app/lib/db'
+import { getPostCommentsData, getPostData } from '@/app/lib/db'
 import { Comment } from '@/app/ui/Comment'
 import { PostFooter } from '@/app/ui/PostFooter'
-import { getCommentsAndAuthors } from '@/app/lib/actions'
 import { Suspense, lazy, useEffect, useState } from 'react'
 import { Loader } from '@/app/ui/loaders/Loader'
 import { PostContextProvider } from '@/app/lib/context/PostContextProvider'
 import { PostHeader } from '@/app/ui/PostHeader'
 import useMouseHover from '@/app/lib/hooks/useMouseHover'
 import { UserInfoboxLoader } from '@/app/ui/loaders/UserInfoboxLoader'
-import { getDescendants } from '@/app/lib/clientFunctions'
 const LazyUserInfobox = lazy(() => import('@/app/ui/UserInfobox.js'))
 
 export default function PostPage({ params }) {
   const postId = params.id
   const [post, setPost] = useState(null)
   const [comments, setComments] = useState(null)
-  const [authors, setAuthors] = useState(null)
   const [authorsData, setAuthorsData] = useState([])
   const { isUserHovered, handleMouseEnter, handleMouseLeave } = useMouseHover()
 
@@ -34,10 +26,6 @@ export default function PostPage({ params }) {
       ])
       setPost(postData)
       setComments(commentsData)
-
-      // !IMPORTANT this needs to be changed: user data should be only fetched as name, avatar and id!
-      const [commentsArr, authorsArr] = await getCommentsAndAuthors(postId)
-      setAuthors(authorsArr)
     }
 
     fetchData()
@@ -54,8 +42,6 @@ export default function PostPage({ params }) {
     <PostContextProvider
       comments={comments}
       setComments={setComments}
-      authors={authors}
-      setAuthors={setAuthors}
       authorsData={authorsData}
       setAuthorsData={setAuthorsData}
       post={post}
@@ -99,13 +85,11 @@ export default function PostPage({ params }) {
               <div className="comments-list bg-gray-100 pl-8 pr-3 pb-6 mt-1 rounded-md">
                 {post.comments?.map((commentId) => {
                   const comment = comments.find((c) => c._id === commentId)
-                  const commentDescendants = getDescendants(comment, comments)
                   return (
                     <Comment
                       key={commentId}
                       comment={comment}
-                      comments={commentDescendants}
-                      authors={authors}
+                      comments={comments}
                       commentId={commentId}
                       depth={0}
                       postId={postId}

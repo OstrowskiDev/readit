@@ -75,7 +75,6 @@ export async function GET(request, { params }) {
       ])
 
       if (post) {
-        console.log('Post found:', post)
         return new NextResponse(JSON.stringify(post), { status: 200 })
       } else {
         console.error('Post with provided UUID not found')

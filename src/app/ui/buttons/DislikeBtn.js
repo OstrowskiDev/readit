@@ -10,7 +10,7 @@ import { useSession } from 'next-auth/react'
 import { useEffect, useState } from 'react'
 
 export function DislikeBtn({ styles, collection }) {
-  const { commentId, commentDislikes } =
+  const { comment, commentId } =
     collection === 'comments' ? useCommentContext() : { undefined, undefined }
   const { comments, setComments, post, setPost, postId, postDislikes } =
     usePostContext()
@@ -24,7 +24,7 @@ export function DislikeBtn({ styles, collection }) {
   const isAlreadyDisliked =
     collection === 'posts'
       ? postDislikes?.includes(userId)
-      : commentDislikes?.includes(userId)
+      : comment.dislikes?.includes(userId)
 
   useEffect(() => {
     if (response.state === 'success') {

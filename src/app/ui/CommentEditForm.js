@@ -8,10 +8,10 @@ import { toast } from 'sonner'
 import { cloneDeep } from 'lodash'
 
 export function CommentEditForm() {
-  const { isEditVisible, setIsEditVisible, commentId, commentContent } =
+  const { isEditVisible, setIsEditVisible, commentId, comment } =
     useCommentContext()
   const { comments, setComments, postId } = usePostContext()
-  const [input, setInput] = useState(commentContent)
+  const [input, setInput] = useState(comment.content)
   const [oldContent, setOldContent] = useState(null)
   const [response, setResponse] = useState({
     state: null,

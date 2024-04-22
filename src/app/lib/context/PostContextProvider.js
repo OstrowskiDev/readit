@@ -6,8 +6,6 @@ export function PostContextProvider({
   children,
   comments,
   setComments,
-  authors,
-  setAuthors,
   authorsData,
   setAuthorsData,
   post,
@@ -23,8 +21,6 @@ export function PostContextProvider({
       value={{
         comments,
         setComments,
-        authors,
-        setAuthors,
         authorsData,
         setAuthorsData,
         post,

@@ -6,7 +6,6 @@ import TimeAgo from './TimeAgo'
 import Avatar from '../lib/avatars/Avatar'
 import { UserInfoboxLoader } from './loaders/UserInfoboxLoader'
 import useMouseHover from '../lib/hooks/useMouseHover'
-import { getDescendants } from '../lib/clientFunctions'
 const LazyUserInfobox = lazy(() => import('./UserInfobox.js'))
 
 export function Comment({ comment, comments, commentId, depth, postId }) {
@@ -14,12 +13,7 @@ export function Comment({ comment, comments, commentId, depth, postId }) {
   const { isUserHovered, handleMouseEnter, handleMouseLeave } = useMouseHover()
 
   if (!comment) return null
-
-  const authorId = comment.user_id
-
   const author = comment.authorData
-  const commentLikes = comment.likes
-  const commentDislikes = comment.dislikes
 
   return (
     <div
@@ -82,22 +76,16 @@ export function Comment({ comment, comments, commentId, depth, postId }) {
           comment={comment}
           commentId={commentId}
           postId={postId}
-          authorId={authorId}
-          commentLikes={commentLikes}
-          commentDislikes={commentDislikes}
-          commentContent={comment.content}
           setDeleteOptimistically={setDeleteOptimistically}
         />
         <div className="comment-replies ml-[20px]">
           {comment.replies.map((replyId) => {
-            // const reply = comment.replies.find((r) => r._id === replyId)
-            // const comment = comments.find((c) => c._id === replyId)
-            const commentDescendants = getDescendants(comment, comments)
+            const reply = comments.find((c) => c._id === replyId)
             return (
               <Comment
                 key={replyId}
-                comment={comment}
-                comments={commentDescendants}
+                comment={reply}
+                comments={comments}
                 commentId={replyId}
                 depth={depth + 1}
                 postId={postId}

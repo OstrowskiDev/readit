@@ -4,9 +4,7 @@ import Comment from '@/app/lib/models/Comment'
 import validator from 'validator'
 
 export const GET = async (request, { params }) => {
-  console.log('params:', params)
   const postId = params.id
-  console.log('postId:', postId)
 
   if (validator.isUUID(postId)) {
     console.log('postId is valid')
@@ -92,7 +90,6 @@ export const GET = async (request, { params }) => {
           },
         },
       ])
-      console.log('posts:', posts)
       return new NextResponse(JSON.stringify(posts), { status: 200 })
     } catch (error) {
       return new NextResponse('Error in fetching posts' + error, {
