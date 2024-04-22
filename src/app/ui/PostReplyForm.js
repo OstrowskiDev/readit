@@ -1,13 +1,13 @@
 'use client'
 
 import { createComment } from '@/app/lib/actions'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { ReplyFormBtns } from './buttons/ReplyFromBtns'
 import { signIn, useSession } from 'next-auth/react'
 import { v4 as uuidv4 } from 'uuid'
-import { toast } from 'sonner'
 import { usePostContext } from '../lib/context/PostContextProvider'
 import cloneDeep from 'lodash/cloneDeep'
+import { ToastContext } from '../lib/toasts/ToastContext'
 
 export function PostReplyForm({ isCommFormVisible, setIsCommFormVisible }) {
   const [input, setInput] = useState('')
@@ -15,6 +15,7 @@ export function PostReplyForm({ isCommFormVisible, setIsCommFormVisible }) {
   const userId = session?.user?.id
   const { comments, setComments, authors, setAuthors, postId, post, setPost } =
     usePostContext()
+  const toast = useContext(ToastContext)
   const parentId = postId
 
   const [response, setResponse] = useState({

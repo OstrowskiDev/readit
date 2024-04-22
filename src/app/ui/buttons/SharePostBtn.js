@@ -1,7 +1,7 @@
 import { usePostContext } from '@/app/lib/context/PostContextProvider'
 import { ShareIco2 } from '../icons/ShareIco2'
-import { useEffect, useState } from 'react'
-import { toast } from 'sonner'
+import { useContext, useEffect, useState } from 'react'
+import { ToastContext } from '@/app/lib/toasts/ToastContext'
 
 export function SharePostBtn() {
   const [response, setResponse] = useState({
@@ -9,6 +9,7 @@ export function SharePostBtn() {
     message: null,
   })
   const { postId } = usePostContext()
+  const toast = useContext(ToastContext)
   const appUrl = process.env.NEXT_PUBLIC_APP_URL
   const postUrl = appUrl + '/posts/post/' + postId
 

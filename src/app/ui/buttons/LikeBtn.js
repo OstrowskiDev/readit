@@ -5,9 +5,9 @@ import { LikeIco } from '../icons/LikeIco'
 import { LikeIcoActive } from '../icons/LikeIcoActive'
 import { useCommentContext } from '@/app/lib/context/CommentContextProvider'
 import { usePostContext } from '@/app/lib/context/PostContextProvider'
-import { toast } from 'sonner'
 import { signIn, useSession } from 'next-auth/react'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
+import { ToastContext } from '@/app/lib/toasts/ToastContext'
 
 export function LikeBtn({ styles, collection }) {
   const { commentId, comment } =
@@ -19,6 +19,7 @@ export function LikeBtn({ styles, collection }) {
     message: null,
     wasDisliked: false,
   })
+  const toast = useContext(ToastContext)
   const { data: session } = useSession()
   const userId = session?.user?.id
   const isAlreadyLiked =

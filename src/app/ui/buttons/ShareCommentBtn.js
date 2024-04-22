@@ -1,6 +1,6 @@
 import { useCommentContext } from '@/app/lib/context/CommentContextProvider'
-import { useEffect, useState } from 'react'
-import { toast } from 'sonner'
+import { ToastContext } from '@/app/lib/toasts/ToastContext'
+import { useContext, useEffect, useState } from 'react'
 
 export function ShareCommentBtn() {
   const [response, setResponse] = useState({
@@ -8,6 +8,8 @@ export function ShareCommentBtn() {
     message: null,
   })
   const { postId, commentId } = useCommentContext()
+  const toast = useContext(ToastContext)
+
   const appUrl = process.env.NEXT_PUBLIC_APP_URL
   const commentUrl = appUrl + '/posts/post/' + postId + '#' + commentId
 

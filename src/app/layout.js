@@ -3,8 +3,6 @@ import './globals.css'
 import SideNav from './ui/SideNav'
 import { getServerSession } from 'next-auth'
 import SessionProvider from '@/app/lib/SessionProvider'
-import { postToastOption } from './lib/toastOptions'
-import { Toaster } from 'sonner'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -24,11 +22,6 @@ export default async function RootLayout({ children }) {
               <SideNav />
             </div>
             {children}
-            <Toaster
-              richColors
-              position="bottom-center"
-              toastOptions={postToastOption}
-            />
           </div>
         </SessionProvider>
       </body>

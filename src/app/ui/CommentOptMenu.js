@@ -5,9 +5,9 @@ import { useCommentContext } from '../lib/context/CommentContextProvider'
 import { EditIco } from './icons/EditIco'
 import { SaveIco } from './icons/SaveIco'
 import { DeleteCommentBtn } from './buttons/DeleteCommentBtn'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { deleteComment } from '../lib/actions'
-import { toast } from 'sonner'
+import { ToastContext } from '../lib/toasts/ToastContext'
 
 export function CommentOptMenu({ isMenuVisible, setIsMenuVisible }) {
   const {
@@ -19,6 +19,7 @@ export function CommentOptMenu({ isMenuVisible, setIsMenuVisible }) {
     setDeleteOptimistically,
   } = useCommentContext()
   const { data: session } = useSession()
+  const toast = useContext(ToastContext)
   const usersId = session?.user.id
   const isUsersComment = usersId === comment.user_id
 
