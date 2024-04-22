@@ -13,14 +13,14 @@ export function CommentOptMenu({ isMenuVisible, setIsMenuVisible }) {
   const {
     isEditVisible,
     setIsEditVisible,
-    authorId,
+    comment,
     commentId,
     postId,
     setDeleteOptimistically,
   } = useCommentContext()
   const { data: session } = useSession()
   const usersId = session?.user.id
-  const isUsersComment = usersId === authorId
+  const isUsersComment = usersId === comment.user_id
 
   const [response, setResponse] = useState({
     state: null,

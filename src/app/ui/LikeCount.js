@@ -4,7 +4,9 @@ import { useCommentContext } from '../lib/context/CommentContextProvider'
 
 export function LikeCount() {
   const { comment } = useCommentContext()
-  const popularity = comment.popularity
+  const numOfLikes = comment.likes ? comment.likes.length : 0
+  const numOfDislikes = comment.dislikes ? comment.dislikes.length : 0
+  const popularity = numOfLikes - numOfDislikes
 
   return (
     <>

@@ -13,14 +13,14 @@ export function CommentMenuBtn() {
   }
 
   function handleDocumentClick(e) {
-    if (!e.target.closest('.menu-btn-conatainer')) {
+    if (!e.target.closest('.menu-btn-container')) {
       setIsMenuVisible(false)
       document.removeEventListener('click', handleDocumentClick)
     }
   }
 
   return (
-    <div className="menu-btn-conatainer relative">
+    <div className="menu-btn-container relative">
       <button
         className=" h-11 py-[7px] px-3 mt-[1px] rounded-md hover:bg-gray-200"
         type="button"
