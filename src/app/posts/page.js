@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react'
 import { CreatePostForm } from '../ui/CreatePostForm'
 import { FilterPostsForm } from '../ui/FilterPostsForm'
 import { FilterBtn } from '../ui/buttons/FilterBtn'
+import { ToastProvider } from '../lib/toasts/ToastProvider'
 
 export default function PostsPage({ searchParams }) {
   const [posts, setPosts] = useState(null)
@@ -47,55 +48,57 @@ export default function PostsPage({ searchParams }) {
   return (
     <>
       {posts && (
-        <div className="container mx-auto mt-8 px-4 max-w-[800px]">
-          <div className="flex md:items-center flex-col md:flex-row md:h-10 mb-4">
-            <h1 className="grow below-md:hidden text-2xl font-semibold mr-4">
-              Posts
-            </h1>
-            <PostsSearch
-              triggerReset={triggerReset}
-              setTriggerReset={setTriggerReset}
-              setFastQuery={setFastQuery}
-              isFilterFormVis={isFilterFormVis}
-              setIsFilterFormVis={setIsFilterFormVis}
-            />
-            <FilterBtn
-              isFilterFormVis={isFilterFormVis}
-              setIsFilterFormVis={setIsFilterFormVis}
-            />
-            <CreateBtn
-              isCreateFormVis={isCreateFormVis}
-              setIsCreateFormVis={setIsCreateFormVis}
-            />
-          </div>
-          {isCreateFormVis && (
-            <CreatePostForm
-              isCreateFormVis={isCreateFormVis}
-              setIsCreateFormVis={setIsCreateFormVis}
-            />
-          )}
-          {isFilterFormVis && (
-            <FilterPostsForm
-              setTriggerReset={setTriggerReset}
-              setPosts={setPosts}
-              isFilterFormVis={isFilterFormVis}
-              setIsFilterFormVis={setIsFilterFormVis}
-            />
-          )}
-          <div className="flex flex-col items-center">
-            {matchingPosts.map((post) => (
-              <Post
-                key={post._id}
-                _id={post._id}
-                postId={post._id}
-                post={post}
-                authorsData={authorsData}
-                setAuthorsData={setAuthorsData}
-                enableCommentBtn={false}
+        <ToastProvider>
+          <div className="container mx-auto mt-8 px-4 max-w-[800px]">
+            <div className="flex md:items-center flex-col md:flex-row md:h-10 mb-4">
+              <h1 className="grow below-md:hidden text-2xl font-semibold mr-4">
+                Posts
+              </h1>
+              <PostsSearch
+                triggerReset={triggerReset}
+                setTriggerReset={setTriggerReset}
+                setFastQuery={setFastQuery}
+                isFilterFormVis={isFilterFormVis}
+                setIsFilterFormVis={setIsFilterFormVis}
               />
-            ))}
+              <FilterBtn
+                isFilterFormVis={isFilterFormVis}
+                setIsFilterFormVis={setIsFilterFormVis}
+              />
+              <CreateBtn
+                isCreateFormVis={isCreateFormVis}
+                setIsCreateFormVis={setIsCreateFormVis}
+              />
+            </div>
+            {isCreateFormVis && (
+              <CreatePostForm
+                isCreateFormVis={isCreateFormVis}
+                setIsCreateFormVis={setIsCreateFormVis}
+              />
+            )}
+            {isFilterFormVis && (
+              <FilterPostsForm
+                setTriggerReset={setTriggerReset}
+                setPosts={setPosts}
+                isFilterFormVis={isFilterFormVis}
+                setIsFilterFormVis={setIsFilterFormVis}
+              />
+            )}
+            <div className="flex flex-col items-center">
+              {matchingPosts.map((post) => (
+                <Post
+                  key={post._id}
+                  _id={post._id}
+                  postId={post._id}
+                  post={post}
+                  authorsData={authorsData}
+                  setAuthorsData={setAuthorsData}
+                  enableCommentBtn={false}
+                />
+              ))}
+            </div>
           </div>
-        </div>
+        </ToastProvider>
       )}
     </>
   )
