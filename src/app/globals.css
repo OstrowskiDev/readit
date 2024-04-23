@@ -59,7 +59,19 @@
 .border-t-1 {
   border-top-width: 1px;
 }
+/* Toast styles below: */
+.toast {
+  transition: transform 0.5s;
+  transform: translateY(160px);
+}
 
+.toast.start {
+  transform: translateY(-5px);
+}
+
+.toast.show {
+  transform: translateY(0);
+}
 
 /* Spinner styles below: */
 .lds-roller {

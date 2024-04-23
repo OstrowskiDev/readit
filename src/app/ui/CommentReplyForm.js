@@ -76,6 +76,14 @@ export function CommentReplyForm() {
         type: 'comment',
         _id: parentId,
       },
+      // !!!! this is just temporary, need to be refactored later to get proper user avatar color and seed, and user name
+      authorData: {
+        name: 'OptimisticUI In Progress',
+        avatar: {
+          color: 'pink',
+          seed: 'Abby',
+        },
+      },
       content: input,
       replies: [],
       likes: [],

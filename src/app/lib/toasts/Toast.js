@@ -1,7 +1,24 @@
 import SuccessIco from '@/app/ui/icons/SuccessIco'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
-export function Toast({ message, state }) {
+export function Toast({ message, state, forceUpdate }) {
+  const [moveToastClass, setMoveToastClass] = useState('hide')
+
+  useEffect(() => {
+    setMoveToastClass('start')
+    const timerArrived = setTimeout(() => {
+      setMoveToastClass('show')
+    }, 500)
+    const timer = setTimeout(() => {
+      setMoveToastClass('hide')
+    }, 3000)
+
+    return () => {
+      clearTimeout(timerArrived)
+      clearTimeout(timer)
+    }
+  }, [message, state, forceUpdate])
+
   const containerStateClasses = () => {
     switch (state) {
       case 'success':
@@ -22,8 +39,8 @@ export function Toast({ message, state }) {
 
   return (
     <div
-      className={`toast flex items-center fixed w-80 h-16 p-4 m-8 font-semibold border-2 rounded-xl 
-      bottom-0 left-1/2 transform -translate-x-1/2 ${containerStateClasses()}`}
+      className={`toast flex items-center fixed w-80 h-16 p-4 mb-16 font-semibold border-2 rounded-xl 
+      bottom-0 left-1/2 transform -translate-x-1/2 ${containerStateClasses()} ${moveToastClass}`}
     >
       <div className="toast-icon w-10">
         <SuccessIco />
