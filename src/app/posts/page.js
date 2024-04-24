@@ -2,7 +2,7 @@
 
 import PostsSearch from '../ui/PostsSearch'
 import CreateBtn from '../ui/buttons/CreateBtn'
-import { filterPosts, getUsers } from '../lib/db'
+import { filterPosts } from '../lib/db'
 import { Post } from '../ui/Post'
 import { useEffect, useState } from 'react'
 import { CreatePostForm } from '../ui/CreatePostForm'
@@ -12,7 +12,6 @@ import { ToastProvider } from '../lib/toasts/ToastProvider'
 
 export default function PostsPage({ searchParams }) {
   const [posts, setPosts] = useState(null)
-  const [users, setUsers] = useState(null)
   const [authorsData, setAuthorsData] = useState([])
   const [isCreateFormVis, setIsCreateFormVis] = useState(false)
   const [isFilterFormVis, setIsFilterFormVis] = useState(false)
@@ -25,9 +24,7 @@ export default function PostsPage({ searchParams }) {
         ? searchParams
         : { sortBy: 'time', sortOrder: 'descending' }
       const postsData = await filterPosts(filterData)
-      const usersData = await getUsers()
       setPosts(postsData)
-      setUsers(usersData)
     }
     fetchData()
   }, [])
@@ -91,6 +88,7 @@ export default function PostsPage({ searchParams }) {
                   _id={post._id}
                   postId={post._id}
                   post={post}
+                  setPosts={setPosts}
                   authorsData={authorsData}
                   setAuthorsData={setAuthorsData}
                   enableCommentBtn={false}

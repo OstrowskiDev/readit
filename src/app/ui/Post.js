@@ -9,8 +9,9 @@ import useMouseHover from '../lib/hooks/useMouseHover'
 const LazyUserInfobox = lazy(() => import('./UserInfobox.js'))
 
 export function Post({
-  post,
   postId,
+  post,
+  setPosts,
   authorsData,
   setAuthorsData,
   enableCommentBtn,
@@ -28,7 +29,8 @@ export function Post({
   return (
     <PostContextProvider
       post={post}
-      setPost={setPost}
+      setPost={setPost} // !!@ for deletion
+      setPosts={setPosts}
       postId={postId}
       postLikes={postLikes}
       postDislikes={postDislikes}

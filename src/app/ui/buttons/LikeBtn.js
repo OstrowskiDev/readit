@@ -8,17 +8,19 @@ import { usePostContext } from '@/app/lib/context/PostContextProvider'
 import { signIn, useSession } from 'next-auth/react'
 import { useContext, useEffect, useState } from 'react'
 import { ToastContext } from '@/app/lib/toasts/ToastContext'
+import { usePathname } from 'next/navigation'
 
 export function LikeBtn({ styles, collection }) {
   const { commentId, comment } =
     collection === 'comments' ? useCommentContext() : { undefined, undefined }
-  const { comments, setComments, post, setPost, postId, postLikes } =
+  const { comments, setComments, post, setPost, setPosts, postId, postLikes } =
     usePostContext()
   const [response, setResponse] = useState({
     state: null,
     message: null,
     wasDisliked: false,
   })
+  const pathname = usePathname()
   const toast = useContext(ToastContext)
   const { data: session } = useSession()
   const userId = session?.user?.id
@@ -72,7 +74,13 @@ export function LikeBtn({ styles, collection }) {
       newPost.dislikes = [...newPost.dislikes, userId]
     }
 
-    setPost(newPost)
+    if (pathname.startsWith('/posts/post')) {
+      setPost(newPost)
+    } else {
+      setPosts((prevPosts) =>
+        prevPosts.map((p) => (p._id === newPost._id ? newPost : p)),
+      )
+    }
   }
 
   function handleCommentOptimistically() {
