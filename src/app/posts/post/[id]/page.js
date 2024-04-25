@@ -10,6 +10,7 @@ import { PostHeader } from '@/app/ui/PostHeader'
 import useMouseHover from '@/app/lib/hooks/useMouseHover'
 import { UserInfoboxLoader } from '@/app/ui/loaders/UserInfoboxLoader'
 import { ToastProvider } from '@/app/lib/toasts/ToastProvider'
+import { PostCommentShimmer } from '@/app/ui/loaders/PostCommentShimmer'
 const LazyUserInfobox = lazy(() => import('@/app/ui/UserInfobox.js'))
 
 export default function PostPage({ params }) {
@@ -33,7 +34,14 @@ export default function PostPage({ params }) {
   }, [])
 
   if (!post || !comments) {
-    return <Loader />
+    return (
+      <>
+        <div className="container mx-auto mt-8 px-4 max-w-[800px]">
+          <Loader />
+          <PostCommentShimmer />
+        </div>
+      </>
+    )
   }
 
   const postLikes = post.likes
