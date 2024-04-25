@@ -100,6 +100,7 @@ export default function PostsPage({ searchParams }) {
             </div>
           ) : (
             <>
+              <Loader />
               <PostShimmer />
               <PostShimmer />
               <PostShimmer />

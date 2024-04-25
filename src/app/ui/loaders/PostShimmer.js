@@ -3,7 +3,7 @@ export function PostShimmer() {
     <div className="relative w-full">
       <div
         className="post-shimmer shimmer-border relative flex flex-col justify-between
-        py-1 px-4 my-2 bg-white rounded-md "
+        py-1 px-4 my-4 bg-white rounded-md "
       >
         {/* Post shimmer border */}
         <div className="shimmer-border-line horizontal-top"></div>

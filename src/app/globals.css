@@ -201,12 +201,12 @@
   margin: -4px 0 0 -4px;
 }
 .lds-roller-white div:after {
-  background: #fff;
+  background: rgb(59 130 246);
 }
 
-.lds-roller-gray div:after {
+/* .lds-roller-gray div:after {
   background: rgb(156 163 175);
-}
+} */
 
 .lds-roller div:nth-child(1) {
   animation-delay: -0.036s;
