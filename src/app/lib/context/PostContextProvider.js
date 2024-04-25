@@ -9,7 +9,7 @@ export function PostContextProvider({
   authorsData,
   setAuthorsData,
   post,
-  setPost, // !!@ for deletion
+  setPost,
   setPosts,
   postId,
   postLikes,
@@ -25,7 +25,7 @@ export function PostContextProvider({
         authorsData,
         setAuthorsData,
         post,
-        setPost, // !!@ for deletion
+        setPost,
         setPosts,
         postId,
         postLikes,
