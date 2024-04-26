@@ -1,3 +1,4 @@
+import './shimmerStyles.css'
 import { CommentShimmer } from './CommentShimmer'
 
 export function PostCommentShimmer() {

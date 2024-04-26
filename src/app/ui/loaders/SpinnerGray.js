@@ -1,3 +1,5 @@
+import './spinnerStyles.css'
+
 export function SpinnerGray() {
   return (
     <div className="lds-roller lds-roller-gray">

@@ -1,3 +1,5 @@
+import './shimmerStyles.css'
+
 export function PostShimmer() {
   return (
     <div className="relative w-full">

@@ -1,3 +1,5 @@
+import './shimmerStyles.css'
+
 export function CommentShimmer() {
   return (
     <div className="comment-shimmer shimmer-border relative flex flex-col justify-between w-full py-1 px-4 my-4 bg-white rounded-md ">
