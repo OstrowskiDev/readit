@@ -25,6 +25,7 @@ export function Comment({ comment, comments, commentId, depth, postId }) {
         display: deleteOptimistically ? 'none' : 'flex',
       }}
     >
+      {/* comment accordion element */}
       <div
         className="comment-collapse-element comment-vertical-line absolute left-[4px] top-14 w-3"
         onClick={() => setToggleCollapse((prevValue) => !prevValue)}
