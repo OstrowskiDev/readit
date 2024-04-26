@@ -8,7 +8,7 @@ export function NavbarPosts() {
   return (
     <div className="flex flex-col rounded-md bg-white shadow-md">
       <p
-        className="p-3 hover:cursor-pointer hover:bg-blue-100 rounded-t-md"
+        className="p-3 hover:cursor-pointer hover:bg-blue-100 rounded-t-md select-none"
         onClick={() => setToggleCollapse((prevVal) => !prevVal)}
       >
         Posts

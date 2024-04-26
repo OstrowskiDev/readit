@@ -76,12 +76,11 @@ export function CommentReplyForm() {
         type: 'comment',
         _id: parentId,
       },
-      // !!!! this is just temporary, need to be refactored later to get proper user avatar color and seed, and user name
       authorData: {
-        name: 'OptimisticUI In Progress',
+        name: session.user.name,
         avatar: {
-          color: 'pink',
-          seed: 'Abby',
+          color: session.user.avatar.color,
+          seed: session.user.avatar.seed,
         },
       },
       content: input,

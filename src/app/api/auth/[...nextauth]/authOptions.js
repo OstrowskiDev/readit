@@ -8,11 +8,17 @@ export const authOptions = {
   },
   callbacks: {
     jwt({ token, user }) {
-      if (user) token.userId = user._id
+      if (user) {
+        token.userId = user._id
+        token.name = user.name
+        token.avatar = user.avatar
+      }
       return token
     },
     session({ session, token }) {
       session.user.id = token.userId
+      session.user.name = token.name
+      session.user.avatar = token.avatar
       return session
     },
   },
