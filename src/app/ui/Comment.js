@@ -11,6 +11,7 @@ const LazyUserInfobox = lazy(() => import('./UserInfobox.js'))
 export function Comment({ comment, comments, commentId, depth, postId }) {
   const [deleteOptimistically, setDeleteOptimistically] = useState(false)
   const { isUserHovered, handleMouseEnter, handleMouseLeave } = useMouseHover()
+  const [toggleCollapse, setToggleCollapse] = useState(false)
 
   if (!comment) return null
   const author = comment.authorData
@@ -24,7 +25,17 @@ export function Comment({ comment, comments, commentId, depth, postId }) {
         display: deleteOptimistically ? 'none' : 'flex',
       }}
     >
-      <div className="comment-styling-element comment-vertical-line absolute left-[4px] top-14 w-3"></div>
+      <div
+        className="comment-collapse-element comment-vertical-line absolute left-[4px] top-14 w-3"
+        onClick={() => setToggleCollapse((prevValue) => !prevValue)}
+      >
+        {toggleCollapse && (
+          <div className="comment-collapse-icon absolute flex justify-center items-center w-5 h-5 top-8 left-[-4px] bg-gray-100 border border-gray-400 rounded-full text-gray-400">
+            <p className="pb-[2px]">+</p>
+          </div>
+        )}
+      </div>
+
       <div className="comment-main-content-container w-full">
         {/* authors avatar, user name, comment time, edit time */}
         <div className="comment-username-container relative right-6 flex items-center">
@@ -78,21 +89,23 @@ export function Comment({ comment, comments, commentId, depth, postId }) {
           postId={postId}
           setDeleteOptimistically={setDeleteOptimistically}
         />
-        <div className="comment-replies ml-[20px]">
-          {comment.replies.map((replyId) => {
-            const reply = comments.find((c) => c._id === replyId)
-            return (
-              <Comment
-                key={replyId}
-                comment={reply}
-                comments={comments}
-                commentId={replyId}
-                depth={depth + 1}
-                postId={postId}
-              />
-            )
-          })}
-        </div>
+        {!toggleCollapse && (
+          <div className="comment-replies ml-[20px]">
+            {comment.replies.map((replyId) => {
+              const reply = comments.find((c) => c._id === replyId)
+              return (
+                <Comment
+                  key={replyId}
+                  comment={reply}
+                  comments={comments}
+                  commentId={replyId}
+                  depth={depth + 1}
+                  postId={postId}
+                />
+              )
+            })}
+          </div>
+        )}
       </div>
     </div>
   )

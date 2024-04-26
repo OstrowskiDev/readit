@@ -36,6 +36,12 @@
   background-color: blue;
 }
 
+.comment-vertical-line:hover .comment-collapse-icon {
+  cursor: pointer;
+  color: blue;
+  border-color: blue;
+}
+
 .change-border-on-child-focus:focus-within {
   border-color: rgb(74, 85, 104);
 }
