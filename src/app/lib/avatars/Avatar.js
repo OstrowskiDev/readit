@@ -45,7 +45,7 @@ export default function Avatar({ seed, color, size, border }) {
   return (
     <>
       <div
-        className="avatar-border absolute"
+        className="avatar-container"
         style={{
           height: `${size}px`,
           width: `${size}px`,
@@ -53,15 +53,16 @@ export default function Avatar({ seed, color, size, border }) {
           borderWidth: `${border}px`,
           borderRadius: '100px',
         }}
-      ></div>
-      <img
-        style={{
-          backgroundColor: bgColor,
-          borderRadius: '100px',
-        }}
-        src={avatar}
-        alt="Avatar"
-      />
+      >
+        <img
+          style={{
+            backgroundColor: bgColor,
+            borderRadius: '100px',
+          }}
+          src={avatar}
+          alt="Avatar"
+        />
+      </div>
     </>
   )
 }

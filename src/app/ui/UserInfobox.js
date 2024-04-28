@@ -17,8 +17,8 @@ export default function UserInfobox({ author }) {
   useEffect(() => {
     const dataExists = authorsData?.find((author) => author._id === authorId)
     if (!dataExists) {
-      const postsSum = getPostsSum()
-      const commentsSum = getCommentsSum()
+      const postsSum = countUserPosts(author._id)
+      const commentsSum = countUserComments(author._id)
       const newAuthor = {
         _id: authorId,
         postsSum: postsSum,
@@ -29,16 +29,6 @@ export default function UserInfobox({ author }) {
       setAuthorsData(newData)
     }
     setIsLoading(false)
-
-    async function getPostsSum() {
-      const postsSum = await countUserPosts(author._id)
-      return postsSum
-    }
-
-    async function getCommentsSum() {
-      const commentsSum = await countUserComments(author._id)
-      return commentsSum
-    }
   }, [author])
 
   const userData = authorsData?.find((author) => author._id === authorId)

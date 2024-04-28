@@ -17,7 +17,7 @@ export default function SideNav() {
       <nav className="flex items-center w-full md:h-full md:flex-col mt-2">
         <div className="flex md:flex-col w-full md:h-full md:space-y-2">
           <NavbarPosts />
-          <a href="/profile" className="nav-button pl-4">
+          <a href="/my-profile" className="nav-button pl-4">
             My profile
           </a>
           <a href="/" className="nav-button pl-4">

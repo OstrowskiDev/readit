@@ -16,7 +16,6 @@ export function CommentReplyForm() {
   const [input, setInput] = useState('')
   const { data: session } = useSession()
   const toast = useContext(ToastContext)
-  const userId = session?.user?.id
   const parentId = commentId
 
   const [response, setResponse] = useState({
@@ -71,7 +70,7 @@ export function CommentReplyForm() {
   function optimisticUpdate(newCommentId) {
     const newComment = {
       _id: newCommentId,
-      user_id: userId,
+      user_id: session.user.id,
       parent: {
         type: 'comment',
         _id: parentId,
