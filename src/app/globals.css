@@ -66,6 +66,10 @@
   border-top-width: 1px;
 }
 
+.transition-height {
+  transition: height 0.5s ease-in-out;
+}
+
 
 /* Toast styles below: */
 .toast {
