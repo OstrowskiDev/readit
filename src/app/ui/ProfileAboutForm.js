@@ -20,6 +20,7 @@ export function ProfileAboutForm({
       ...formState,
       [event.target.name]: event.target.value,
     })
+    autoGrow(event.target)
   }
 
   const handleSubmit = (event) => {
@@ -47,7 +48,6 @@ export function ProfileAboutForm({
           value={formState.about}
           onChange={handleChange}
           ref={textareaRef}
-          onInput={(e) => autoGrow(e.target)}
         />
       </div>
       <div className="btns-position-correction transition-height relative left-[5px]">
