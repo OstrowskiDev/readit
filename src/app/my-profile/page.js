@@ -36,7 +36,7 @@ export default function MyProfile() {
     <>
       {userData && (
         <div className="main-container flex justify-center items-center mx-auto mt-8 px-4 w-[800px]">
-          <div className="profile-container bg-white p-8 rounded-lg shadow-center-sm grow">
+          <div className="profile-container bg-white px-6 pt-3 pb-6 rounded-lg shadow-center-sm grow">
             <ProfileHeader userData={userData} setUserData={setUserData} />
             <ProfileAbout userData={userData} setUserData={setUserData} />
             <ProfileMyData userData={userData} setUserData={setUserData} />

@@ -3,6 +3,39 @@ import { loreleiNeutral } from '@dicebear/collection'
 
 export default function Avatar({ seed, color, size, border }) {
   // Consider using Just-in-Time mode for this in the future.
+  const { bgColor, borderColor } = getAvatarColors(color)
+
+  const avatar = createAvatar(loreleiNeutral, {
+    seed: seed,
+    backgroundColor: ['#fff'], // must be set to any value for backgroundColor inside <img> tag to work properly.
+  }).toDataUriSync()
+
+  return (
+    <>
+      <div
+        className="avatar-container"
+        style={{
+          height: `${size}px`,
+          width: `${size}px`,
+          borderColor: borderColor,
+          borderWidth: `${border}px`,
+          borderRadius: '100px',
+        }}
+      >
+        <img
+          style={{
+            backgroundColor: bgColor,
+            borderRadius: '100px',
+          }}
+          src={avatar}
+          alt="Avatar"
+        />
+      </div>
+    </>
+  )
+}
+
+export function getAvatarColors(color) {
   let bgColor
   let borderColor
 
@@ -35,34 +68,10 @@ export default function Avatar({ seed, color, size, border }) {
       bgColor = 'rgb(221 214 254)'
       borderColor = 'rgb(196 181 253)'
       break
+    default:
+      bgColor = 'transparent'
+      borderColor = 'transparent'
   }
 
-  const avatar = createAvatar(loreleiNeutral, {
-    seed: seed,
-    backgroundColor: ['#fff'], // must be set to any value for backgroundColor inside <img> tag to work properly.
-  }).toDataUriSync()
-
-  return (
-    <>
-      <div
-        className="avatar-container"
-        style={{
-          height: `${size}px`,
-          width: `${size}px`,
-          borderColor: borderColor,
-          borderWidth: `${border}px`,
-          borderRadius: '100px',
-        }}
-      >
-        <img
-          style={{
-            backgroundColor: bgColor,
-            borderRadius: '100px',
-          }}
-          src={avatar}
-          alt="Avatar"
-        />
-      </div>
-    </>
-  )
+  return { bgColor, borderColor }
 }

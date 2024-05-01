@@ -1,39 +1,34 @@
-import Avatar from '../lib/avatars/Avatar'
+import { useState } from 'react'
 import { EditIco } from './icons/EditIco'
+import { ProfilePreview } from './ProfilePreview'
+import { ProfileAvatarSelection } from './ProfileAvatarSelection'
 
-export function ProfileHeader({ userData }) {
+export function ProfileHeader({ userData, setUserData }) {
+  const [editAvatar, setEditAvatar] = useState(false)
+
+  function handleAvatarEdit() {
+    setEditAvatar((prevValue) => !prevValue)
+  }
   return (
     <>
       <div className="profile-header relative">
-        <div className="profile-avatar-name flex items-center mb-4">
-          <Avatar
-            seed={userData.avatar.seed}
-            color={userData.avatar.color}
-            size={80}
-            border={2}
-          />
-          <p className="profile-name ml-2 text-lg font-semibold text-gray-800">
-            {userData.name}
-          </p>
-        </div>
-        <div className="avatar-edit-btn absolute top-1 right-1 p-2 w-10 h-10 hover:bg-gray-200 hover:cursor-pointer rounded-md">
+        <div
+          className="avatar-edit-btn absolute top-[-10px] right-1 p-2 w-10 h-10 hover:bg-gray-200 hover:cursor-pointer rounded-md"
+          onClick={handleAvatarEdit}
+        >
           <EditIco />
         </div>
-      </div>
-
-      <div className="posts-comments-numbers-container mt-4 flex">
-        <div className="posts-number">
-          <p className="posts-number text-gray-950 text-18 font-semibold ">
-            {userData.postsSum}
-          </p>
-          <p className=" text-gray-600 text-15">Posts Created</p>
-        </div>
-        <div className="comments-number ml-4">
-          <p className="text-gray-950 text-18 font-semibold">
-            {userData.commentsSum}
-          </p>
-          <p className="text-gray-600 text-15">Comment Created</p>
-        </div>
+        <h3 className="profile-label-about text-lg font-semibold text-gray-800 mb-1">
+          {!editAvatar ? 'Profile preview:' : 'Create your new avatar:'}
+        </h3>
+        {editAvatar ? (
+          <ProfileAvatarSelection
+            userData={userData}
+            setUserData={setUserData}
+          />
+        ) : (
+          <ProfilePreview userData={userData} />
+        )}
       </div>
     </>
   )
