@@ -18,7 +18,7 @@ export function ProfileHeader({ userData, setUserData }) {
     <>
       <div
         className={
-          'profile-header relative transition-all duration-1000  overflow-hidden ' +
+          'profile-header relative transition-all duration-1000  overflow-hidden will-change-max-height ' +
           `${isCollapsed ? 'max-h-10' : 'max-h-[1000px]'}`
         }
       >

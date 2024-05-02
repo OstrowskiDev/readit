@@ -79,7 +79,7 @@ export function ProfileAvatarSelection({
           <div className="avatar-select-seed flex flex-wrap mx-l mb-4 mr-4">
             {avatarSeeds.map((seed) => (
               <div
-                className="avatar-seed m-2 hover:cursor-pointer  rounded-full "
+                className="avatar-seed m-2 hover:cursor-pointer rounded-full "
                 key={seed}
                 onClick={() => handleSelection('seed', seed)}
               >

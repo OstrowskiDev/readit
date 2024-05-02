@@ -70,6 +70,10 @@
   transition: height 0.5s ease-in-out;
 }
 
+.will-change-max-height {
+  will-change: max-height;
+}
+
 
 /* Toast styles below: */
 .toast {
