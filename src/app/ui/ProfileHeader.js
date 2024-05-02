@@ -40,6 +40,7 @@ export function ProfileHeader({ userData, setUserData }) {
           <ProfileAvatarSelection
             userData={userData}
             setUserData={setUserData}
+            handleAvatarEdit={handleAvatarEdit}
           />
         ) : (
           <ProfilePreview userData={userData} />

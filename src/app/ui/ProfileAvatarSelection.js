@@ -4,7 +4,11 @@ import { useState } from 'react'
 import Avatar, { getAvatarColors } from '../lib/avatars/Avatar'
 import { ProfileFormButtons } from './ProfileFormButtons'
 
-export function ProfileAvatarSelection({ userData, setUserData }) {
+export function ProfileAvatarSelection({
+  userData,
+  setUserData,
+  handleAvatarEdit,
+}) {
   const [selectedAvatar, setSelectedAvatar] = useState(userData.avatar)
 
   const avatarSeeds = [
@@ -46,8 +50,11 @@ export function ProfileAvatarSelection({ userData, setUserData }) {
 
   function handleSubmit(event) {
     event.preventDefault()
-    setUserData(selectedAvatar)
-    handleAvatarSelectionVisibility()
+    setUserData({
+      ...userData,
+      avatar: selectedAvatar,
+    })
+    handleAvatarEdit()
     // !!!! add function to update user data in db
   }
 
@@ -59,7 +66,7 @@ export function ProfileAvatarSelection({ userData, setUserData }) {
   }
 
   const handleCancel = () => {
-    handleAvatarSelectionVisibility()
+    handleAvatarEdit()
   }
 
   return (
