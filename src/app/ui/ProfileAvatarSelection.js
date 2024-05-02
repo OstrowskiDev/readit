@@ -76,28 +76,21 @@ export function ProfileAvatarSelection({ userData, setUserData }) {
                 key={seed}
                 onClick={() => handleSelection('seed', seed)}
               >
-                {selectedAvatar.seed === seed ? (
-                  <div
-                    className="avatar-transform-wrapper border rounded-full transform transition-all duration-200 overflow-hidden"
-                    style={{ transform: 'scale(1.1)' }}
-                  >
-                    <Avatar
-                      seed={seed}
-                      color={selectedAvatar.color}
-                      size={80}
-                      border={2}
-                    />
-                  </div>
-                ) : (
-                  <div className="avatar-opacity-wrapper opacity-50 border rounded-full transform transition-all duration-200 hover:scale-110 overflow-hidden hover:shadow-xl">
-                    <Avatar
-                      seed={seed}
-                      color={selectedAvatar.color}
-                      size={80}
-                      border={2}
-                    />
-                  </div>
-                )}
+                <div
+                  className={
+                    'avatar-transform-wrapper border rounded-full transform transition-all duration-200 overflow-hidden scale-110 ' +
+                    (selectedAvatar.seed === seed
+                      ? 'scale-110'
+                      : 'hover:scale-110 opacity-50 hover:shadow-xl')
+                  }
+                >
+                  <Avatar
+                    seed={seed}
+                    color={selectedAvatar.color}
+                    size={80}
+                    border={2}
+                  />
+                </div>
               </div>
             ))}
           </div>
@@ -108,12 +101,17 @@ export function ProfileAvatarSelection({ userData, setUserData }) {
             {avatarColors.map((color) => {
               const { bgColor, borderColor } = getAvatarColors(color)
               return (
-                <div
-                  className="avatar-color w-12 h-12 m-[6px] border rounded-full hover:cursor-pointer transform transition-all duration-200 hover:scale-110 overflow-hidden"
-                  style={{ background: bgColor, borderColor: borderColor }}
-                  key={color}
-                  onClick={() => handleSelection('color', color)}
-                ></div>
+                <>
+                  <div
+                    className={
+                      'avatar-color w-12 h-12 m-[6px] border rounded-full hover:cursor-pointer transform transition-all duration-200 hover:scale-110 overflow-hidden ' +
+                      (selectedAvatar.color === color ? 'scale-110' : '')
+                    }
+                    style={{ background: bgColor, borderColor: borderColor }}
+                    key={color}
+                    onClick={() => handleSelection('color', color)}
+                  ></div>
+                </>
               )
             })}
           </div>
