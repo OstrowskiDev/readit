@@ -12,9 +12,9 @@ import { ToastContext } from '../lib/toasts/ToastContext'
 export function PostReplyForm({ isCommFormVisible, setIsCommFormVisible }) {
   const [input, setInput] = useState('')
   const { data: session } = useSession()
+  console.log('session', session)
   const userId = session?.user?.id
-  const { comments, setComments, authors, setAuthors, postId, post, setPost } =
-    usePostContext()
+  const { comments, setComments, postId, post, setPost } = usePostContext()
   const toast = useContext(ToastContext)
   const parentId = postId
 
@@ -64,6 +64,14 @@ export function PostReplyForm({ isCommFormVisible, setIsCommFormVisible }) {
       replies: [],
       likes: [],
       dislikes: [],
+      authorData: {
+        _id: session.user.id,
+        name: session.user.name,
+        avatar: {
+          seed: session.user.avatar.seed,
+          color: session.user.avatar.color,
+        },
+      },
     }
 
     const newComments = cloneDeep(comments)
@@ -72,16 +80,17 @@ export function PostReplyForm({ isCommFormVisible, setIsCommFormVisible }) {
     if (!newPost.comments) newPost.comments = []
     newPost.comments.push(newCommentId)
 
-    const authorExists = authors.find((author) => author._id === userId)
-    if (!authorExists) {
-      const newAuthor = {
-        _id: session.user.id,
-        name: session.user.name,
-      }
-      const newAuthors = cloneDeep(authors)
-      newAuthors.push(newAuthor)
-      setAuthors(newAuthors)
-    }
+    // authors data is not longer passed by authors variable, it is now passed inside comment.authorData
+    // const authorExists = authors.find((author) => author._id === userId)
+    // if (!authorExists) {
+    //   const newAuthor = {
+    //     _id: session.user.id,
+    //     name: session.user.name,
+    //   }
+    //   const newAuthors = cloneDeep(authors)
+    //   newAuthors.push(newAuthor)
+    //   setAuthors(newAuthors)
+    // }
 
     setComments(newComments)
     setPost(newPost)

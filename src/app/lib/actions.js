@@ -69,6 +69,12 @@ export async function updatePost(postId, formData) {
 }
 
 export async function deletePost(postId) {
+  if (!isUUID(postId))
+    return {
+      state: 'error',
+      message: 'Invalid postId',
+    }
+
   try {
     await connectToDatabase()
     const deletedPost = await Post.findByIdAndDelete(postId)
@@ -82,6 +88,7 @@ export async function deletePost(postId) {
 
   revalidatePath('/posts')
   redirect('/posts')
+  // !!!! return toast message
 }
 
 export async function createComment(parentId, postId, userInput, newCommentId) {
@@ -144,6 +151,9 @@ export async function createComment(parentId, postId, userInput, newCommentId) {
 }
 
 export async function deleteComment(commentId, postId) {
+  if (!isUUID(commentId))
+    return { state: 'error', message: 'Invalid commentId' }
+
   const session = await getServerSession(authOptions)
   if (!session) {
     redirect('/login')
@@ -163,7 +173,7 @@ export async function deleteComment(commentId, postId) {
   const commentAuthorId = commentData.user_id
   if (session.user.id !== commentAuthorId) {
     console.error(
-      "Warning! UserId dosen't match authorId inside deleteComment server function.",
+      "Warning! UserId doesn't match authorId inside deleteComment server function.",
     )
     return errorResponse
   }
@@ -216,13 +226,13 @@ export async function deleteComment(commentId, postId) {
       setToast('error', 'Failed to delete comment')
     }
 
-    // soft delete when comment has replies
+    // !!!! soft delete when comment has replies
   } else {
     console.log("comment can't be deleted when it has replies")
     setToast('error', "Comment can't be deleted when it has replies")
 
-    // chenge deleted flag to true
-    // dont update comment or post children array:
+    // !!!! change deleted flag to true
+    // don't update comment or post children array:
     // comment was not perma deleted so no need
   }
   return { state: toastStatus, message: toastMessage }
@@ -285,6 +295,11 @@ export async function handleLikeClick(documentId, postId, collection) {
   if (!session) redirect('/login')
 
   resetToast()
+
+  if (!isUUID(documentId) || !isUUID(postId)) {
+    console.error('Invalid documentId or postId in handleLikeClick func')
+    return returnToast('error', 'Failed updating like')
+  }
 
   const document = await getDocument()
   if (!document) {
@@ -409,6 +424,11 @@ export async function handleDislikeClick(documentId, postId, collection) {
 
   resetToast()
 
+  if (!isUUID(documentId) || !isUUID(postId)) {
+    console.error('Invalid documentId or postId in handleDislikeClick func')
+    return returnToast('error', 'Failed updating like')
+  }
+
   const document = await getDocument()
   if (!document) {
     console.error('handleDislikeClick func: document not found')
@@ -526,6 +546,11 @@ export async function handleDislikeClick(documentId, postId, collection) {
 }
 
 export async function getCommentsAndAuthors(postId) {
+  if (!isUUID(postId)) {
+    console.error('Invalid postId in getCommentsAndAuthors func')
+    return [[], []]
+  }
+
   const comments = []
   const authors = []
 
@@ -619,13 +644,16 @@ export async function countPostComments(postId) {
 }
 
 export async function getUserPostsIds(userId) {
-  console.log(`fetching users posts id's`)
+  if (!isUUID(userId)) {
+    console.error('Invalid userId in getUserPostsIds func')
+    return null
+  }
   try {
     const postsIds = await Post.find({ user_id: userId }).select('_id').lean()
     const postIdsArray = postsIds.map((post) => post._id)
     return postIdsArray
   } catch {
-    console.error(`Error occured while fetching posts id's`)
+    console.error(`Error occurred while fetching posts id's`)
     return null
   }
 }

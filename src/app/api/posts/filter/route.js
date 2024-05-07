@@ -13,7 +13,7 @@ export async function GET(req, res) {
   }
 
   const title = sanitize(req.nextUrl.searchParams.get('title'))
-  if (typeof title !== 'string' || title.length > 20) {
+  if (title != null && (typeof title !== 'string' || title.length > 20)) {
     return new NextResponse(
       'Invalid input: Title must be a string of maximum 20 characters',
       { status: 400 },
@@ -21,7 +21,7 @@ export async function GET(req, res) {
   }
 
   const content = sanitize(req.nextUrl.searchParams.get('content'))
-  if (typeof content !== 'string' || content.length > 50) {
+  if (content != null && (typeof content !== 'string' || content.length > 50)) {
     return new NextResponse(
       'Invalid input: Content must be a string of maximum 50 characters',
       { status: 400 },
@@ -29,7 +29,7 @@ export async function GET(req, res) {
   }
 
   const author = sanitize(req.nextUrl.searchParams.get('author'))
-  if (typeof author !== 'string' || author.length > 30) {
+  if (author != null && (typeof author !== 'string' || author.length > 30)) {
     return new NextResponse(
       'Invalid input: Author must be a string of maximum 30 characters',
       { status: 400 },
