@@ -12,7 +12,6 @@ import { ToastContext } from '../lib/toasts/ToastContext'
 export function PostReplyForm({ isCommFormVisible, setIsCommFormVisible }) {
   const [input, setInput] = useState('')
   const { data: session } = useSession()
-  console.log('session', session)
   const userId = session?.user?.id
   const { comments, setComments, postId, post, setPost } = usePostContext()
   const toast = useContext(ToastContext)
