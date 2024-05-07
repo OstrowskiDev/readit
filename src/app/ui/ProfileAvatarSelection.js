@@ -3,6 +3,8 @@
 import { useState } from 'react'
 import Avatar, { getAvatarColors } from '../lib/avatars/Avatar'
 import { ProfileFormButtons } from './ProfileFormButtons'
+import { avatarSeeds, avatarColors } from '../lib/avatars/avatarProps'
+import { updateUserData } from '../lib/actions'
 
 export function ProfileAvatarSelection({
   userData,
@@ -11,51 +13,17 @@ export function ProfileAvatarSelection({
 }) {
   const [selectedAvatar, setSelectedAvatar] = useState(userData.avatar)
 
-  const avatarSeeds = [
-    'Lola',
-    'Jack',
-    'Abby',
-    'Angel',
-    'Annie',
-    'Bella',
-    'Bear',
-    'Gracie',
-    'Jasper',
-    'Bailey',
-    'Jasmine',
-    'Bob',
-    'Boo',
-    'Lucky',
-    'Lilly',
-    'Felix',
-    'Ginger',
-    'Casper',
-    'Botts',
-    'Charlie',
-    'Cleo',
-    'Bubba',
-    'Whiskers',
-    'Willow',
-    'Pepper',
-  ]
-  const avatarColors = [
-    'violet',
-    'blue',
-    'green',
-    'yellow',
-    'orange',
-    'red',
-    'pink',
-  ]
-
   function handleSubmit(event) {
     event.preventDefault()
     setUserData({
       ...userData,
       avatar: selectedAvatar,
     })
+    updateUserData({
+      ...userData,
+      avatar: selectedAvatar,
+    })
     handleAvatarEdit()
-    // !!!! add function to update user data in db
   }
 
   function handleSelection(key, value) {
@@ -85,7 +53,7 @@ export function ProfileAvatarSelection({
               >
                 <div
                   className={
-                    'avatar-transform-wrapper border rounded-full transform transition-all duration-200 overflow-hidden scale-110 ' +
+                    'avatar-transform-wrapper border rounded-full transform transition-all duration-200 overflow-hidden ' +
                     (selectedAvatar.seed === seed
                       ? 'scale-110'
                       : 'hover:scale-110 opacity-50 hover:shadow-xl')
@@ -108,17 +76,16 @@ export function ProfileAvatarSelection({
             {avatarColors.map((color) => {
               const { bgColor, borderColor } = getAvatarColors(color)
               return (
-                <>
+                <div key={color}>
                   <div
                     className={
                       'avatar-color w-12 h-12 m-[6px] border rounded-full hover:cursor-pointer transform transition-all duration-200 hover:scale-110 overflow-hidden ' +
                       (selectedAvatar.color === color ? 'scale-110' : '')
                     }
                     style={{ background: bgColor, borderColor: borderColor }}
-                    key={color}
                     onClick={() => handleSelection('color', color)}
                   ></div>
-                </>
+                </div>
               )
             })}
           </div>

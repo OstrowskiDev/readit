@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { ProfileFormButtons } from './ProfileFormButtons'
+import { updateUserData } from '../lib/actions'
 
 export function ProfileAboutForm({
   userData,
@@ -25,9 +26,16 @@ export function ProfileAboutForm({
 
   const handleSubmit = (event) => {
     event.preventDefault()
+
+    // !!!! add some feedback to user if the about field is too long
+    if (formState.about.length > 600) {
+      console.error('About field can be max 600 characters long.')
+      return
+    }
+
     setUserData(formState)
+    updateUserData(formState)
     handleAboutFormVisibility()
-    // !!!! add function to update user data in db
   }
 
   const handleCancel = () => {

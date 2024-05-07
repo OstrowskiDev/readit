@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { ProfileFormButtons } from './ProfileFormButtons'
+import { updateUserData } from '../lib/actions'
 
 export function UserDataForm({
   userData,
@@ -18,8 +19,8 @@ export function UserDataForm({
   const handleSubmit = (event) => {
     event.preventDefault()
     setUserData(formState)
+    updateUserData(formState)
     handleUserDataFormVisibility()
-    // !!!! add function to update user data in db
   }
 
   const handleCancel = () => {

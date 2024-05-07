@@ -5,6 +5,8 @@
     "fontawesome",
     "Fonticons",
     "infobox",
+    "maxlength",
+    "nextauth",
     "uuidv4"
   ]
 }

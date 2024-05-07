@@ -10,6 +10,7 @@ import { connectToDatabase, getComment } from './db'
 import { validatePostContent, validatePostTitle } from './validation'
 import { getServerSession } from 'next-auth/next'
 import { authOptions } from '@/app/api/auth/[...nextauth]/authOptions'
+import { isUUID } from 'validator'
 
 let toastStatus
 let toastMessage
@@ -612,7 +613,7 @@ export async function countPostComments(postId) {
     })
     return count
   } catch (error) {
-    console.error('Error occured while counting post comments:', error)
+    console.error('Error occurred while counting post comments:', error)
     return null
   }
 }
@@ -626,5 +627,53 @@ export async function getUserPostsIds(userId) {
   } catch {
     console.error(`Error occured while fetching posts id's`)
     return null
+  }
+}
+
+export async function updateUserData(userObj) {
+  if (!isUUID(userObj._id)) throw new Error('Invalid user id')
+
+  try {
+    const { _id, name, email, address, phone, about, avatar } = userObj
+
+    await connectToDatabase()
+    const user = await User.findById(_id)
+
+    resetToast()
+
+    if (!user) {
+      console.error('User with given _id not found')
+      return {
+        state: 'error',
+        message: 'Failed to update user data',
+      }
+    }
+
+    user.name = name || user.name
+    user.email = email || user.email
+    user.address = address || user.address
+    user.phone = phone || user.phone
+    user.about = about || user.about
+    user.avatar = avatar || user.avatar
+
+    const updatedUser = await user.save()
+
+    if (updatedUser) {
+      console.log('User updated successfully')
+      setToast('success', 'User data updated successfully!')
+    } else {
+      console.log(
+        'Unexpected error: User.save() did not return a saved document or throw an error',
+      )
+      setToast('error', 'Failed to update user data!')
+    }
+  } catch (error) {
+    console.error('Error updating user:', error)
+    setToast('error', 'Failed to update user data!')
+  }
+
+  return {
+    state: toastStatus,
+    message: toastMessage,
   }
 }

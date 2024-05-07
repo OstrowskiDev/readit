@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { connectToDatabase } from '@/app/lib/db'
 import Post from '@/app/lib/models/Post'
+import sanitize from 'mongo-sanitize'
 
 export async function GET(req, res) {
   const query = req.nextUrl.searchParams
@@ -11,11 +12,45 @@ export async function GET(req, res) {
     })
   }
 
-  const title = req.nextUrl.searchParams.get('title')
-  const content = req.nextUrl.searchParams.get('content')
-  const author = req.nextUrl.searchParams.get('author')
-  const sortBy = req.nextUrl.searchParams.get('sortBy')
-  const sortOrder = req.nextUrl.searchParams.get('sortOrder')
+  const title = sanitize(req.nextUrl.searchParams.get('title'))
+  if (typeof title !== 'string' || title.length > 20) {
+    return new NextResponse(
+      'Invalid input: Title must be a string of maximum 20 characters',
+      { status: 400 },
+    )
+  }
+
+  const content = sanitize(req.nextUrl.searchParams.get('content'))
+  if (typeof content !== 'string' || content.length > 50) {
+    return new NextResponse(
+      'Invalid input: Content must be a string of maximum 50 characters',
+      { status: 400 },
+    )
+  }
+
+  const author = sanitize(req.nextUrl.searchParams.get('author'))
+  if (typeof author !== 'string' || author.length > 30) {
+    return new NextResponse(
+      'Invalid input: Author must be a string of maximum 30 characters',
+      { status: 400 },
+    )
+  }
+
+  const sortBy = sanitize(req.nextUrl.searchParams.get('sortBy'))
+  if (!['time', 'popularity', 'activity'].includes(sortBy)) {
+    return new NextResponse(
+      'Invalid input: sortBy must be one of "time", "popularity", "activity"',
+      { status: 400 },
+    )
+  }
+
+  const sortOrder = sanitize(req.nextUrl.searchParams.get('sortOrder'))
+  if (!['ascending', 'descending'].includes(sortOrder)) {
+    return new NextResponse(
+      'Invalid input: sortOrder must be either "ascending" or "descending"',
+      { status: 400 },
+    )
+  }
 
   let pipeline = []
 
