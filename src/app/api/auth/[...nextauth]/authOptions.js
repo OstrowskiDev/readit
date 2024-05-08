@@ -7,11 +7,14 @@ export const authOptions = {
     signIn: '/login',
   },
   callbacks: {
-    jwt({ token, user }) {
+    jwt({ token, user, trigger, session }) {
       if (user) {
         token.userId = user._id
         token.name = user.name
         token.avatar = user.avatar
+      }
+      if (trigger === 'update' && session.avatar) {
+        token.avatar = session.avatar
       }
       return token
     },

@@ -5,6 +5,7 @@ import Avatar, { getAvatarColors } from '../lib/avatars/Avatar'
 import { ProfileFormButtons } from './ProfileFormButtons'
 import { avatarSeeds, avatarColors } from '../lib/avatars/avatarProps'
 import { updateUserData } from '../lib/actions'
+import { useSession } from 'next-auth/react'
 
 export function ProfileAvatarSelection({
   userData,
@@ -12,18 +13,28 @@ export function ProfileAvatarSelection({
   handleAvatarEdit,
 }) {
   const [selectedAvatar, setSelectedAvatar] = useState(userData.avatar)
+  const { data: status, update } = useSession()
 
   function handleSubmit(event) {
     event.preventDefault()
-    setUserData({
-      ...userData,
-      avatar: selectedAvatar,
-    })
-    updateUserData({
-      ...userData,
-      avatar: selectedAvatar,
-    })
-    handleAvatarEdit()
+
+    if (status === 'authenticated') {
+      setUserData({
+        ...userData,
+        avatar: selectedAvatar,
+      })
+      updateUserData({
+        ...userData,
+        avatar: selectedAvatar,
+      })
+      update({
+        avatar: {
+          seed: selectedAvatar.seed,
+          color: selectedAvatar.color,
+        },
+      })
+      handleAvatarEdit()
+    }
   }
 
   function handleSelection(key, value) {
