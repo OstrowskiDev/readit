@@ -16,6 +16,9 @@ export const authOptions = {
       if (trigger === 'update' && session.avatar) {
         token.avatar = session.avatar
       }
+      if (trigger === 'update' && session.name) {
+        token.name = session.name
+      }
       return token
     },
     session({ session, token }) {

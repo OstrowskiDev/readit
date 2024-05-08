@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { ProfileFormButtons } from './ProfileFormButtons'
 import { updateUserData } from '../lib/actions'
+import { useSession } from 'next-auth/react'
 
 export function UserDataForm({
   userData,
@@ -8,6 +9,7 @@ export function UserDataForm({
   handleUserDataFormVisibility,
 }) {
   const [formState, setFormState] = useState(userData)
+  const { status, update } = useSession()
 
   const handleChange = (event) => {
     setFormState({
@@ -18,9 +20,15 @@ export function UserDataForm({
 
   const handleSubmit = (event) => {
     event.preventDefault()
-    setUserData(formState)
-    updateUserData(formState)
-    handleUserDataFormVisibility()
+
+    if (status === 'authenticated') {
+      setUserData(formState)
+      updateUserData(formState)
+      update({
+        name: formState.name,
+      })
+      handleUserDataFormVisibility()
+    }
   }
 
   const handleCancel = () => {

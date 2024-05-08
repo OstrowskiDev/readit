@@ -13,7 +13,7 @@ export function ProfileAvatarSelection({
   handleAvatarEdit,
 }) {
   const [selectedAvatar, setSelectedAvatar] = useState(userData.avatar)
-  const { data: status, update } = useSession()
+  const { status, update } = useSession()
 
   function handleSubmit(event) {
     event.preventDefault()
