@@ -9,6 +9,7 @@ import { ProfileHeader } from '../ui/ProfileHeader'
 import { ProfileMyData } from '../ui/ProfileMyData'
 import { ProfileAbout } from '../ui/ProfileAbout'
 import { MyProfileShimmer } from '../ui/loaders/MyProfileShimmer'
+import { Loader } from '../ui/loaders/Loader'
 
 export default function MyProfile() {
   const [userData, setUserData] = useState(null)
@@ -35,8 +36,7 @@ export default function MyProfile() {
 
   return (
     <>
-      <MyProfileShimmer />
-      {userData && (
+      {userData ? (
         <div className="main-container flex justify-center items-center mx-auto mt-8 px-4 w-[800px]">
           <div className="profile-container bg-white px-6 pt-3 pb-6 rounded-lg shadow-center-sm grow">
             <ProfileHeader userData={userData} setUserData={setUserData} />
@@ -45,6 +45,11 @@ export default function MyProfile() {
             <ProfileSettings />
           </div>
         </div>
+      ) : (
+        <>
+          <Loader />
+          <MyProfileShimmer />
+        </>
       )}
     </>
   )

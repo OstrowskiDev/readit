@@ -1,5 +1,3 @@
-import { ProfileMyData } from '../ProfileMyData'
-import { ProfileSettings } from '../ProfileSettings'
 import './shimmerStyles.css'
 
 export function MyProfileShimmer() {
@@ -37,10 +35,40 @@ export function MyProfileShimmer() {
         </div>
 
         {/* My data: */}
-        {/* <ProfileMyData userData={userData} setUserData={setUserData} /> */}
+        <div className="shimmer-my-data-container relative transition-height  border-t border-gray-200 mt-4 pt-4">
+          <div className="shimmer text-my-data-label h-6 w-24 mt-2 mb-4"></div>
+
+          <div className="shimmer-user-data-container">
+            <div className="shimmer-value-key-pair-container flex items-center">
+              <div className="shimmer text-key h-4 w-14 mr-8 my-2 "></div>
+              <div className="shimmer text-value h-4 w-[180px] mx-[9px] my-[10px]"></div>
+            </div>
+          </div>
+          <div className="shimmer-user-data-container">
+            <div className="shimmer-value-key-pair-container flex items-center">
+              <div className="shimmer text-key h-4 w-14 mr-8 my-2 "></div>
+              <div className="shimmer text-value h-4 w-[240px] mx-[9px] my-[10px]"></div>
+            </div>
+          </div>
+          <div className="shimmer-user-data-container">
+            <div className="shimmer-value-key-pair-container flex items-center">
+              <div className="shimmer text-key h-4 w-16 mr-6 my-2 "></div>
+              <div className="shimmer text-value h-4 w-[360px] mx-[9px] my-[10px]"></div>
+            </div>
+          </div>
+          <div className="shimmer-user-data-container">
+            <div className="shimmer-value-key-pair-container flex items-center">
+              <div className="shimmer text-key h-4 w-14 mr-8 my-2 "></div>
+              <div className="shimmer text-value h-4 w-[180px] mx-[9px] my-[10px]"></div>
+            </div>
+          </div>
+        </div>
 
         {/* Settings: */}
-        {/* <ProfileSettings /> */}
+        <div className="shimmer-settings-container border-t border-gray-200 mt-4 pt-4">
+          <div className="shimmer text-label h-6 w-24 mt-2 mb-5"></div>
+          <div className="shimmer text-pass-change h-4 w-48 my-2"></div>
+        </div>
       </div>
     </div>
   )
