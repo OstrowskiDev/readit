@@ -19,10 +19,9 @@ function generatePassword() {
   return password
 }
 
-let passwords = ['ThisIsASecurePassword@123']
-// let passwords = []
-// for (let i = 0; i < 6; i++) {
-//   passwords.push(generatePassword())
-// }
+let passwords = []
+for (let i = 0; i < 6; i++) {
+  passwords.push(generatePassword())
+}
 
 hashPasswords(passwords)
