@@ -11,6 +11,7 @@
   "dependencies": {
     "@dicebear/collection": "^7.1.1",
     "@dicebear/core": "^7.1.1",
+    "bcrypt": "^5.1.1",
     "dotenv": "^16.4.1",
     "isomorphic-dompurify": "^2.3.0",
     "lodash": "^4.17.21",

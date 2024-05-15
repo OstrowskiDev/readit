@@ -1,6 +1,7 @@
 import GitHubProvider from 'next-auth/providers/github'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import { getUserByEmail } from '@/app/lib/db'
+import bcrypt from 'bcrypt'
 
 export const authOptions = {
   pages: {
@@ -46,16 +47,13 @@ export const authOptions = {
         },
       },
       async authorize(credentials) {
-        const user = await getUserByEmail(credentials?.email)
+        if (!credentials.email || !credentials.password) return null
 
-        if (
-          credentials?.email === user.email &&
-          credentials?.password === user.password
-        ) {
-          return user
-        } else {
-          return null
-        }
+        const user = await getUserByEmail(credentials.email)
+        if (!user) return null
+
+        const match = await bcrypt.compare(credentials.password, user.password)
+        return match ? user : null
       },
     }),
   ],
