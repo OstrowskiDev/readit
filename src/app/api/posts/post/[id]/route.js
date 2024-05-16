@@ -6,7 +6,11 @@ import validator from 'validator'
 export async function GET(request, { params }) {
   const postId = params.id
   try {
-    if (validator.isUUID(postId)) {
+    if (
+      validator.isUUID(postId) ||
+      postId === 'about' ||
+      postId === 'credits'
+    ) {
       await connectToDatabase()
       const post = await Post.aggregate([
         { $match: { _id: postId } },

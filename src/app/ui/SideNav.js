@@ -20,7 +20,7 @@ export default function SideNav() {
           <a href="/my-profile" className="nav-button pl-4">
             My profile
           </a>
-          <a href="/" className="nav-button pl-4">
+          <a href="/posts/post/about" className="nav-button pl-4">
             About
           </a>
           <a href="/credits" className="nav-button pl-4">

@@ -6,7 +6,7 @@ import validator from 'validator'
 export const GET = async (request, { params }) => {
   const postId = params.id
 
-  if (validator.isUUID(postId)) {
+  if (validator.isUUID(postId) || postId === 'about' || postId === 'credits') {
     console.log('postId is valid')
     try {
       await connectToDatabase()

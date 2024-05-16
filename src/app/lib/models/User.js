@@ -16,13 +16,11 @@ const usersSchema = new mongoose.Schema(
       maxlength: 30,
       match: /^[a-zA-Z0-9 ]+$/,
     },
+    // password is hashed, its main validation is done before hashing
     password: {
       type: String,
       required: true,
-      minlength: 8,
       maxlength: 128,
-      match:
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#^])[A-Za-z\d@$!%*?&#^]{8,128}$/,
     },
     email: {
       type: String,

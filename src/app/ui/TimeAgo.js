@@ -44,9 +44,9 @@ export default function TimeAgo({ createdAt, updatedAt }) {
       } else if (hours > 0) {
         timeString = `${hours}h ago`
       } else if (minutes > 0) {
-        timeString = `${minutes}m ago`
+        timeString = `${minutes}min ago`
       } else {
-        timeString = `${seconds}s ago`
+        timeString = `${seconds}sek ago`
       }
       return timeString
     }
