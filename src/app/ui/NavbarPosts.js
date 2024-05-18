@@ -24,7 +24,10 @@ export function NavbarPosts() {
             Followed
           </a>
           <div className="separator h-[2px] bg-gray-100"></div>
-          <a href="/my-posts" className="nav-sub-button pl-4 rounded-b-lg">
+          <a
+            href="/posts/my-posts"
+            className="nav-sub-button pl-4 rounded-b-lg"
+          >
             My posts
           </a>
         </div>

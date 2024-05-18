@@ -296,7 +296,11 @@ export async function handleLikeClick(documentId, postId, collection) {
 
   resetToast()
 
-  if (!isUUID(documentId) || !isUUID(postId)) {
+  if (
+    postId !== 'credits' &&
+    postId !== 'about' &&
+    (!isUUID(documentId) || !isUUID(postId))
+  ) {
     console.error('Invalid documentId or postId in handleLikeClick func')
     return returnToast('error', 'Failed updating like')
   }
@@ -424,7 +428,11 @@ export async function handleDislikeClick(documentId, postId, collection) {
 
   resetToast()
 
-  if (!isUUID(documentId) || !isUUID(postId)) {
+  if (
+    postId !== 'credits' &&
+    postId !== 'about' &&
+    (!isUUID(documentId) || !isUUID(postId))
+  ) {
     console.error('Invalid documentId or postId in handleDislikeClick func')
     return returnToast('error', 'Failed updating like')
   }
