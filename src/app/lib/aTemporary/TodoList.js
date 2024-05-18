@@ -1,4 +1,6 @@
 // - add my posts route and page
+// - !!!! add edit post functionality similar to edit comment (atm it still navigates to edit post page)
+// - add spinner from credits comment to its post
 // - add favorites route and page
 // - add password client side validation:
 //     - it will work for both creating account and changing password

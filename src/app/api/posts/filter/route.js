@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server'
 import { connectToDatabase } from '@/app/lib/db'
 import Post from '@/app/lib/models/Post'
 import sanitize from 'mongo-sanitize'
+import { getServerSession } from 'next-auth'
+import { authOptions } from '../../auth/[...nextauth]/authOptions'
 
 export async function GET(req, res) {
   const query = req.nextUrl.searchParams
@@ -52,7 +54,23 @@ export async function GET(req, res) {
     )
   }
 
+  let onlyCurrentUserPosts = req.nextUrl.searchParams.get(
+    'onlyCurrentUserPosts',
+  )
+  onlyCurrentUserPosts = onlyCurrentUserPosts === 'true' ? true : false
+
   let pipeline = []
+
+  if (onlyCurrentUserPosts) {
+    const session = await getServerSession(authOptions)
+    if (session) {
+      pipeline.push({ $match: { user_id: session.user.id } })
+    } else {
+      return new NextResponse('You must be logged in to view your posts', {
+        status: 401,
+      })
+    }
+  }
 
   if (title) {
     pipeline.push({ $match: { title: { $regex: title, $options: 'i' } } })

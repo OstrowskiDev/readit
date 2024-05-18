@@ -12,7 +12,7 @@ import { ToastProvider } from '../lib/toasts/ToastProvider'
 import { Loader } from '../ui/loaders/Loader'
 import { PostShimmer } from '../ui/loaders/PostShimmer'
 
-export default function PostsPage({ searchParams }) {
+export default function PostsPage({ searchParams, onlyCurrentUserPosts }) {
   const [posts, setPosts] = useState(null)
   const [authorsData, setAuthorsData] = useState([])
   const [isCreateFormVis, setIsCreateFormVis] = useState(false)
@@ -22,9 +22,13 @@ export default function PostsPage({ searchParams }) {
 
   useEffect(() => {
     async function fetchData() {
-      const filterData = Object.keys(searchParams).length
+      let filterData = Object.keys(searchParams).length
         ? searchParams
         : { sortBy: 'time', sortOrder: 'descending' }
+
+      if (onlyCurrentUserPosts) {
+        filterData = { ...filterData, onlyCurrentUserPosts }
+      }
       const postsData = await filterPosts(filterData)
       setPosts(postsData)
     }
