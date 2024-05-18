@@ -23,7 +23,7 @@ export default function SideNav() {
           <a href="/posts/post/about" className="nav-button pl-4">
             About
           </a>
-          <a href="/credits" className="nav-button pl-4">
+          <a href="/posts/post/credits" className="nav-button pl-4">
             Credits
           </a>
           <div className="bg-white h-auto rounded-md grow shadow-md"></div>

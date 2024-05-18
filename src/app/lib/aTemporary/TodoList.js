@@ -1,10 +1,14 @@
-// - add credits post and route for it
 // - add my posts route and page
 // - add favorites route and page
 // - add password client side validation:
 //     - it will work for both creating account and changing password
 //     - add account creation
 //     - chapta for account creation?
+//     - add email confirmation for account creation
+//     - add password reset
+// - add toast notification and optimistic UI for creating post in posts page
+// - dark mode could be nice
+// - maybe using html and emotes in posts?
 
 // - link to github repo
 //
