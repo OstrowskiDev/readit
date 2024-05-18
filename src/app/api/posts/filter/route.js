@@ -6,14 +6,6 @@ import { getServerSession } from 'next-auth'
 import { authOptions } from '../../auth/[...nextauth]/authOptions'
 
 export async function GET(req, res) {
-  const query = req.nextUrl.searchParams
-
-  if (!query || !query.toString()) {
-    return new NextResponse('Bad Request: No search params found in the URL', {
-      status: 400,
-    })
-  }
-
   const title = sanitize(req.nextUrl.searchParams.get('title'))
   if (title != null && (typeof title !== 'string' || title.length > 20)) {
     return new NextResponse(
@@ -38,20 +30,14 @@ export async function GET(req, res) {
     )
   }
 
-  const sortBy = sanitize(req.nextUrl.searchParams.get('sortBy'))
+  let sortBy = sanitize(req.nextUrl.searchParams.get('sortBy'))
   if (!['time', 'popularity', 'activity'].includes(sortBy)) {
-    return new NextResponse(
-      'Invalid input: sortBy must be one of "time", "popularity", "activity"',
-      { status: 400 },
-    )
+    sortBy = 'time'
   }
 
-  const sortOrder = sanitize(req.nextUrl.searchParams.get('sortOrder'))
+  let sortOrder = sanitize(req.nextUrl.searchParams.get('sortOrder'))
   if (!['ascending', 'descending'].includes(sortOrder)) {
-    return new NextResponse(
-      'Invalid input: sortOrder must be either "ascending" or "descending"',
-      { status: 400 },
-    )
+    sortOrder = 'descending'
   }
 
   let onlyCurrentUserPosts = req.nextUrl.searchParams.get(

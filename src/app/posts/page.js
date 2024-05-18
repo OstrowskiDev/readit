@@ -22,9 +22,7 @@ export default function PostsPage({ searchParams, onlyCurrentUserPosts }) {
 
   useEffect(() => {
     async function fetchData() {
-      let filterData = Object.keys(searchParams).length
-        ? searchParams
-        : { sortBy: 'time', sortOrder: 'descending' }
+      let filterData = searchParams
 
       if (onlyCurrentUserPosts) {
         filterData = { ...filterData, onlyCurrentUserPosts }
@@ -84,6 +82,7 @@ export default function PostsPage({ searchParams, onlyCurrentUserPosts }) {
               setPosts={setPosts}
               isFilterFormVis={isFilterFormVis}
               setIsFilterFormVis={setIsFilterFormVis}
+              onlyCurrentUserPosts={onlyCurrentUserPosts}
             />
           )}
 

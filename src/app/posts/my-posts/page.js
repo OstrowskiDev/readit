@@ -1,5 +1,5 @@
 import PostsPage from '../page'
 
-export default function MyPostsPage() {
-  return <PostsPage searchParams={{}} onlyCurrentUserPosts={true} />
+export default function MyPostsPage({ searchParams }) {
+  return <PostsPage searchParams={searchParams} onlyCurrentUserPosts={'true'} />
 }

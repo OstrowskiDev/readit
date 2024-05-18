@@ -10,6 +10,7 @@ export function FilterPostsForm({
   setPosts,
   isFilterFormVis,
   setIsFilterFormVis,
+  onlyCurrentUserPosts,
 }) {
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
@@ -22,7 +23,7 @@ export function FilterPostsForm({
   const { replace } = useRouter()
 
   async function onSubmit() {
-    const filterData = {
+    let filterData = {
       title,
       content,
       author,
@@ -39,6 +40,10 @@ export function FilterPostsForm({
       params.delete('fastQuery')
     }
     replace(`${pathname}?${params.toString()}`)
+
+    if (onlyCurrentUserPosts) {
+      filterData = { ...filterData, onlyCurrentUserPosts }
+    }
 
     const postsData = await filterPosts(filterData)
     setPosts(postsData)
@@ -63,6 +68,28 @@ export function FilterPostsForm({
               />
             </div>
             <div className="filter-author-container flex px-4">
+              <p
+                className={`filter-author-label w-[90px] ${
+                  onlyCurrentUserPosts && 'text-gray-400'
+                }`}
+              >
+                author:
+              </p>
+              <textarea
+                className={`filter-author-input w-full h-7 px-2 resize-none border rounded-md focus:outline-none ${
+                  onlyCurrentUserPosts
+                    ? 'bg-gray-100 border-gray-200 cursor-not-allowed'
+                    : 'bg-gray-50 border-slate-300 focus:border-slate-500'
+                }`}
+                id="author"
+                name="author"
+                placeholder=""
+                value={author}
+                onChange={(e) => setAuthor(e.target.value)}
+                disabled={onlyCurrentUserPosts ? true : false}
+              />
+            </div>
+            {/* <div className="filter-author-container flex px-4">
               <p className="filter-author-label w-[90px]">author:</p>
               <textarea
                 className="filter-author-input w-full h-7 px-2 bg-gray-50 resize-none border border-slate-300 rounded-md
@@ -72,8 +99,9 @@ export function FilterPostsForm({
                 placeholder=""
                 value={author}
                 onChange={(e) => setAuthor(e.target.value)}
+                disabled={onlyCurrentUserPosts ? true : false}
               />
-            </div>
+            </div> */}
             <div className="filter-content-container flex px-4">
               <p className="filter-content-label w-[90px]">content:</p>
               <textarea
