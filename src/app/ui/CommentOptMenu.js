@@ -3,11 +3,11 @@
 import { useSession } from 'next-auth/react'
 import { useCommentContext } from '../lib/context/CommentContextProvider'
 import { EditIco } from './icons/EditIco'
-import { SaveIco } from './icons/SaveIco'
 import { DeleteCommentBtn } from './buttons/DeleteCommentBtn'
 import { useContext, useEffect, useState } from 'react'
 import { deleteComment } from '../lib/actions'
 import { ToastContext } from '../lib/toasts/ToastContext'
+import { FavoritesBtn } from './buttons/FavoritesBtn'
 
 export function CommentOptMenu({ isMenuVisible, setIsMenuVisible }) {
   const {
@@ -72,39 +72,27 @@ export function CommentOptMenu({ isMenuVisible, setIsMenuVisible }) {
     )
   }
 
-  function SaveBtn() {
-    function onSaveClick() {
-      console.log('this needs to be implemented!')
-      setIsMenuVisible(false)
-    }
-    return (
-      <button
-        className="menu-opt-save-btn flex items-center px-8 py-2 hover:bg-gray-200"
-        type="button"
-        onClick={onSaveClick}
-      >
-        <div className="menu-opt-save-ico w-5 m-1 flex justify-center items-center">
-          <SaveIco />
-        </div>
-        <p className="menu-opt-save-text ml-2 text-lg">Save</p>
-      </button>
-    )
-  }
-
   return (
     <>
       {isMenuVisible && (
         <div
           className={`menu-container flex flex-col absolute z-10 top-10 right-0  bg-white border border-gray-300 rounded-md`}
         >
-          {isUsersComment && <EditBtn />}
           {isUsersComment && (
-            <DeleteCommentBtn
+            <>
+              <EditBtn />
+              <DeleteCommentBtn
+                setIsMenuVisible={setIsMenuVisible}
+                onDeleteSubmit={onDeleteSubmit}
+              />
+            </>
+          )}
+          {session && (
+            <FavoritesBtn
+              type={'comment'}
               setIsMenuVisible={setIsMenuVisible}
-              onDeleteSubmit={onDeleteSubmit}
             />
           )}
-          <SaveBtn />
         </div>
       )}
     </>

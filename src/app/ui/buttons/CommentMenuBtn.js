@@ -3,11 +3,14 @@
 import { useState } from 'react'
 import { DotsIco } from '../icons/DotsIco'
 import { CommentOptMenu } from '../CommentOptMenu'
+import { signIn, useSession } from 'next-auth/react'
 
 export function CommentMenuBtn() {
   const [isMenuVisible, setIsMenuVisible] = useState(false)
+  const { data: session } = useSession()
 
   function handleClick() {
+    if (!session) signIn()
     setIsMenuVisible(true)
     document.addEventListener('click', handleDocumentClick)
   }

@@ -55,6 +55,17 @@ const usersSchema = new mongoose.Schema(
         enum: avatarColors,
       },
     },
+    favorites: {
+      type: [
+        {
+          _id: String,
+          type: {
+            type: String,
+            enum: ['post', 'comment'],
+          },
+        },
+      ],
+    },
   },
   { timestamps: true },
 )
