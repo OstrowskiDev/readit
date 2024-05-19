@@ -5,6 +5,7 @@ export function FavoritesBtn({
   type,
   documentId,
   setIsMenuVisible,
+  setIsPostMenuVis,
   setResponse,
 }) {
   function handleFavOptimistically() {
@@ -18,7 +19,7 @@ export function FavoritesBtn({
         ? await handlePostFavorites(documentId)
         : await handleCommentFavorites(documentId)
     setResponse(serverResponse)
-    setIsMenuVisible(false)
+    type === 'post' ? setIsPostMenuVis(false) : setIsMenuVisible(false)
   }
   return (
     <button

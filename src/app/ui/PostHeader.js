@@ -7,10 +7,14 @@ import { EditPostBtn } from './buttons/EditPostBtn'
 import { DeletePostBtn } from './buttons/DeletePostBtn'
 import { PostOptionsBtn } from './buttons/PostOptionsBtn'
 import { usePostContext } from '../lib/context/PostContextProvider'
+import { useState } from 'react'
+import { Post } from './Post'
+import { PostOptMenu } from './PostOptMenu'
 
 export function PostHeader({ author }) {
   const { data: session } = useSession()
   const { postId, post, handleMouseEnter, handleMouseLeave } = usePostContext()
+  const [isPostMenuVis, setIsPostMenuVis] = useState(false)
 
   const userId = post?.user_id
   const sessionUserId = session?.user.id
@@ -54,7 +58,15 @@ export function PostHeader({ author }) {
           <div className="post-top-btns ml-auto flex">
             {isPostAuthor && <DeletePostBtn postId={postId} />}
             {isPostAuthor && <EditPostBtn postId={postId} />}
-            <PostOptionsBtn postId={postId} />
+            <PostOptionsBtn
+              postId={postId}
+              isPostMenuVis={isPostMenuVis}
+              setIsPostMenuVis={setIsPostMenuVis}
+            />
+            <PostOptMenu
+              isPostMenuVis={isPostMenuVis}
+              setIsPostMenuVis={setIsPostMenuVis}
+            />
           </div>
         </div>
       )}

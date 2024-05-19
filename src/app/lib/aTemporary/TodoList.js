@@ -1,4 +1,5 @@
-// - add favorites route and page
+// - add favorites page
+// - add functionality to posts page for handling favorite clicks, atm it redirects to post
 // - change favorites icon to star
 // - !!!! test user experience for non logged users
 // - !!!! add edit post functionality similar to edit comment (atm it still navigates to edit post page)

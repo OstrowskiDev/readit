@@ -1,10 +1,9 @@
 import { DotsIco } from '../icons/DotsIco'
 
-export function PostOptionsBtn({ postId }) {
-  //no additional functionality planned for this component atm
-  //in future save and/or favorite may be added
+export function PostOptionsBtn({ postId, setIsPostMenuVis }) {
   function onClick(event) {
     event.preventDefault()
+    setIsPostMenuVis((prevValue) => !prevValue)
   }
 
   return (
