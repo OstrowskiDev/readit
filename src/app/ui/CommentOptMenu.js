@@ -2,12 +2,12 @@
 
 import { useSession } from 'next-auth/react'
 import { useCommentContext } from '../lib/context/CommentContextProvider'
-import { EditIco } from './icons/EditIco'
 import { DeleteCommentBtn } from './buttons/DeleteCommentBtn'
 import { useContext, useEffect, useState } from 'react'
 import { deleteComment } from '../lib/actions'
 import { ToastContext } from '../lib/toasts/ToastContext'
 import { FavoritesBtn } from './buttons/FavoritesBtn'
+import { EditCommentBtn } from './buttons/EditCommentBtn'
 
 export function CommentOptMenu({ isMenuVisible, setIsMenuVisible }) {
   const {
@@ -22,6 +22,7 @@ export function CommentOptMenu({ isMenuVisible, setIsMenuVisible }) {
   const toast = useContext(ToastContext)
   const usersId = session?.user.id
   const isUsersComment = usersId === comment.user_id
+  const documentId = commentId
 
   const [response, setResponse] = useState({
     state: null,
@@ -52,26 +53,6 @@ export function CommentOptMenu({ isMenuVisible, setIsMenuVisible }) {
     setDeleteOptimistically(false)
   }
 
-  function EditBtn() {
-    function onEditClick() {
-      setIsEditVisible(!isEditVisible)
-      setIsMenuVisible(false)
-    }
-
-    return (
-      <button
-        className="menu-opt-edit-btn flex items-center px-8 py-2  hover:bg-gray-200"
-        type="button"
-        onClick={onEditClick}
-      >
-        <div className="menu-opt-edit-ico w-6 m-1 flex justify-center items-center">
-          <EditIco />
-        </div>
-        <p className="menu-opt-edit-text ml-2 text-lg">Edit</p>
-      </button>
-    )
-  }
-
   return (
     <>
       {isMenuVisible && (
@@ -80,7 +61,11 @@ export function CommentOptMenu({ isMenuVisible, setIsMenuVisible }) {
         >
           {isUsersComment && (
             <>
-              <EditBtn />
+              <EditCommentBtn
+                setIsEditVisible={setIsEditVisible}
+                isEditVisible={isEditVisible}
+                setIsMenuVisible={setIsMenuVisible}
+              />
               <DeleteCommentBtn
                 setIsMenuVisible={setIsMenuVisible}
                 onDeleteSubmit={onDeleteSubmit}
@@ -91,6 +76,8 @@ export function CommentOptMenu({ isMenuVisible, setIsMenuVisible }) {
             <FavoritesBtn
               type={'comment'}
               setIsMenuVisible={setIsMenuVisible}
+              setResponse={setResponse}
+              documentId={documentId}
             />
           )}
         </div>

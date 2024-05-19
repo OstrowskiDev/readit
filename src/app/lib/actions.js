@@ -6,7 +6,7 @@ import User from './models/User'
 import { v4 as uuidv4 } from 'uuid'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
-import { connectToDatabase, getComment } from './db'
+import { connectToDatabase, getComment, getUser } from './db'
 import { validatePostContent, validatePostTitle } from './validation'
 import { getServerSession } from 'next-auth/next'
 import { authOptions } from '@/app/api/auth/[...nextauth]/authOptions'
@@ -706,6 +706,113 @@ export async function updateUserData(userObj) {
   } catch (error) {
     console.error('Error updating user:', error)
     setToast('error', 'Failed to update user data!')
+  }
+
+  return {
+    state: toastStatus,
+    message: toastMessage,
+  }
+}
+
+export async function handlePostFavorites(postId) {
+  resetToast()
+
+  if (!isUUID(postId)) {
+    console.error('Invalid postId in handleFavoritesClick func')
+    return returnToast('error', 'Failed updating favorites')
+  }
+
+  const session = await getServerSession(authOptions)
+  const userId = session.user.id
+  const userDocument = await getUser(userId)
+  console.log('userDocument:', userDocument)
+  const alreadyInFavorites = userDocument.favorites?.some(
+    (favorite) => favorite._id === postId,
+  )
+
+  let updateResults
+
+  try {
+    if (!alreadyInFavorites) {
+      const newFavorite = {
+        _id: postId,
+        type: 'post',
+      }
+      updateResults = await User.updateOne(
+        { _id: userId },
+        { $push: { favorites: newFavorite } },
+      )
+      setToast('success', 'post added to favorites')
+    } else {
+      updateResults = await User.updateOne(
+        { _id: userId },
+        { $pull: { favorites: { _id: postId, type: 'post' } } },
+      )
+      setToast('success', 'Post removed from favorites')
+    }
+  } catch (error) {
+    console.error(error)
+    setToast('error', 'Failed to update favorites')
+  }
+
+  if (updateResults.modifiedCount === 1) {
+    console.log('One param of document updated successfully')
+  } else {
+    console.log('Document not found or not updated')
+    setToast('error', 'Failed to update favorites')
+  }
+
+  return {
+    state: toastStatus,
+    message: toastMessage,
+  }
+}
+
+export async function handleCommentFavorites(commentId) {
+  resetToast()
+
+  if (!isUUID(commentId)) {
+    console.error('Invalid commentId in handleFavoritesClick func')
+    return returnToast('error', 'Failed updating favorites')
+  }
+
+  const session = await getServerSession(authOptions)
+  const userId = session.user.id
+  const userDocument = await getUser(userId)
+  const alreadyInFavorites = userDocument.favorites?.some(
+    (favorite) => favorite._id === commentId,
+  )
+
+  let updateResults
+
+  try {
+    if (!alreadyInFavorites) {
+      const newFavorite = {
+        _id: commentId,
+        type: 'comment',
+      }
+      updateResults = await User.updateOne(
+        { _id: userId },
+        { $push: { favorites: newFavorite } },
+      )
+      setToast('success', 'Comment added to favorites')
+    } else {
+      updateResults = await User.updateOne(
+        { _id: userId },
+        { $pull: { favorites: { _id: commentId, type: 'comment' } } },
+      )
+      setToast('success', 'Comment removed from favorites')
+    }
+  } catch (error) {
+    console.error(error)
+    setToast('error', 'Failed to update favorites')
+  }
+
+  if (updateResults.modifiedCount === 1) {
+    console.log('One param of document updated successfully')
+  } else {
+    console.log('Document not found or not updated')
+    setToast('error', 'Failed to update favorites')
   }
 
   return {

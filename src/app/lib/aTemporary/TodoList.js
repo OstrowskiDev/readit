@@ -1,4 +1,5 @@
 // - add favorites route and page
+// - change favorites icon to star
 // - !!!! test user experience for non logged users
 // - !!!! add edit post functionality similar to edit comment (atm it still navigates to edit post page)
 // - add spinner from credits comment to its post
