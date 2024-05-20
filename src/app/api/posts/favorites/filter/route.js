@@ -1,9 +1,9 @@
 import { NextResponse } from 'next/server'
 import { connectToDatabase } from '@/app/lib/db'
-import Post from '@/app/lib/models/Post'
 import sanitize from 'mongo-sanitize'
 import { getServerSession } from 'next-auth'
-import { authOptions } from '../../auth/[...nextauth]/authOptions'
+import { authOptions } from '@/app/api/auth/[...nextauth]/authOptions'
+import User from '@/app/lib/models/User'
 
 export async function GET(req, res) {
   // sanitize search parameters:
@@ -48,8 +48,11 @@ export async function GET(req, res) {
 
   // get posts and comments based on favorites:
   // get userId and user document:
+
   const { data: session } = await getServerSession(authOptions)
-  const userId = session.user.id
+  // const userId = session.user.id
+  // adding a hardcoded userId for testing purposes:
+  const userId = '9e75c601-4ef2-4e85-b7de-3eb3a88299b9'
   pipeline.push({ $match: { _id: userId } })
 
   // get posts:
@@ -219,8 +222,8 @@ export async function GET(req, res) {
   // execute aggregation pipeline:
   try {
     await connectToDatabase()
-    const filteredPosts = await Post.aggregate(pipeline)
-    return new NextResponse(JSON.stringify(filteredPosts), { status: 200 })
+    const filteredDocuments = await User.aggregate(pipeline)
+    return new NextResponse(JSON.stringify(filteredDocuments), { status: 200 })
   } catch (error) {
     return new NextResponse('Error in fetching posts' + error, { status: 500 })
   }
