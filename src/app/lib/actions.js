@@ -717,7 +717,7 @@ export async function updateUserData(userObj) {
 export async function handlePostFavorites(postId) {
   resetToast()
 
-  if (!isUUID(postId)) {
+  if (postId !== 'about' && postId !== 'credits' && !isUUID(postId)) {
     console.error('Invalid postId in handleFavoritesClick func')
     return returnToast('error', 'Failed updating favorites')
   }
@@ -725,7 +725,6 @@ export async function handlePostFavorites(postId) {
   const session = await getServerSession(authOptions)
   const userId = session.user.id
   const userDocument = await getUser(userId)
-  console.log('userDocument:', userDocument)
   const alreadyInFavorites = userDocument.favorites?.some(
     (favorite) => favorite._id === postId,
   )

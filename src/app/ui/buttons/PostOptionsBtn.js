@@ -1,6 +1,6 @@
 import { DotsIco } from '../icons/DotsIco'
 
-export function PostOptionsBtn({ postId, setIsPostMenuVis }) {
+export function PostOptionsBtn({ setIsPostMenuVis }) {
   function onClick(event) {
     event.preventDefault()
     setIsPostMenuVis((prevValue) => !prevValue)

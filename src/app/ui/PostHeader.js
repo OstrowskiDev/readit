@@ -8,7 +8,6 @@ import { DeletePostBtn } from './buttons/DeletePostBtn'
 import { PostOptionsBtn } from './buttons/PostOptionsBtn'
 import { usePostContext } from '../lib/context/PostContextProvider'
 import { useState } from 'react'
-import { Post } from './Post'
 import { PostOptMenu } from './PostOptMenu'
 
 export function PostHeader({ author }) {
