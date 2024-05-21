@@ -102,6 +102,17 @@ async function filterPosts(params) {
   return res.json()
 }
 
+async function filterFavorites(params) {
+  const queryString = new URLSearchParams(params).toString()
+
+  const res = await fetch(`/api/posts/favorites/filter?${queryString}`, {
+    method: 'GET',
+    cache: 'no-store',
+  })
+  if (!res.ok) return null
+  return res.json()
+}
+
 async function getUsers() {
   const res = await fetch('http://localhost:3000/api/users', {
     cache: 'no-store',
@@ -116,6 +127,7 @@ export {
   getPostData,
   getPostCommentsData,
   filterPosts,
+  filterFavorites,
   getUser,
   getComment,
   getPosts,

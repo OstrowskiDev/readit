@@ -92,12 +92,14 @@ export function Comment({
         </div>
 
         {/* comment buttons */}
-        <CommentBtnsContextWrapper
-          comment={comment}
-          commentId={commentId}
-          postId={rootPostId}
-          setDeleteOptimistically={setDeleteOptimistically}
-        />
+        {renderChildren && (
+          <CommentBtnsContextWrapper
+            comment={comment}
+            commentId={commentId}
+            postId={rootPostId}
+            setDeleteOptimistically={setDeleteOptimistically}
+          />
+        )}
 
         {/* comment replies */}
         {!toggleCollapse && renderChildren && (

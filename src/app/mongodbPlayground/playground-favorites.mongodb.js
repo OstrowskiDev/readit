@@ -81,27 +81,51 @@ pipeline.push({
     connectFromField: 'parent._id',
     connectToField: '_id',
     as: 'favoriteComments.parentPost',
-    restrictSearchWithMatch: { 'parent.type': 'post' },
   },
 })
 
-pipeline.push({
-  $unwind: {
-    path: '$favoriteComments.parentPost',
-    preserveNullAndEmptyArrays: true,
-  },
-})
-
+// iterate over the parentPost array to find the root post and pass its _id to rootPostId:
 pipeline.push({
   $addFields: {
-    'favoriteComments.rootPostId': '$favoriteComments.parentPost._id',
+    'favoriteComments.rootPostId': {
+      $map: {
+        input: {
+          $filter: {
+            input: '$favoriteComments.parentPost',
+            as: 'comment',
+            cond: { $eq: ['$$comment.parent.type', 'post'] },
+          },
+        },
+        as: 'comment',
+        in: '$$comment.parent._id',
+      },
+    },
   },
 })
 
+// make sure that rootPostId is a string, not an array of strings:
 pipeline.push({
-  $unset: 'favoriteComments.parentPost',
+  $addFields: {
+    'favoriteComments.rootPostId': {
+      $arrayElemAt: ['$favoriteComments.rootPostId', 0],
+    },
+  },
 })
 
+// include rootPostId of comments that are direct children of posts:
+pipeline.push({
+  $addFields: {
+    'favoriteComments.rootPostId': {
+      $cond: [
+        { $eq: ['$favoriteComments.parent.type', 'post'] },
+        '$favoriteComments.parent._id',
+        '$favoriteComments.rootPostId',
+      ],
+    },
+  },
+})
+
+// remove unnecessary data from documents:
 pipeline.push({
   $group: {
     _id: '$_id',
@@ -110,6 +134,7 @@ pipeline.push({
   },
 })
 
+// add type field for comments:
 pipeline.push({
   $addFields: {
     'favoriteComments.type': 'comment',

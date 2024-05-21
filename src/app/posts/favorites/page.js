@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { filterPosts } from '@/app/lib/db'
+import { filterFavorites } from '@/app/lib/db'
 import { ToastProvider } from '@/app/lib/toasts/ToastProvider'
 import PostsSearch from '@/app/ui/PostsSearch'
 import { FilterBtn } from '@/app/ui/buttons/FilterBtn'
@@ -24,8 +24,9 @@ export default function FavoritesPage({ searchParams }) {
   useEffect(() => {
     async function fetchData() {
       let filterData = searchParams
-      const postsData = await filterPosts(filterData)
+      const postsData = await filterFavorites(filterData)
       setPosts(postsData)
+      console.log('postsData', postsData)
     }
     fetchData()
   }, [])
@@ -38,10 +39,13 @@ export default function FavoritesPage({ searchParams }) {
   }, [triggerReset])
 
   const matchingDocuments = posts?.filter(
-    (post) =>
-      post.title.toLowerCase().includes(fastQuery.toLowerCase()) ||
-      post.authorData.name.toLowerCase().includes(fastQuery.toLowerCase()) ||
-      post.content.toLowerCase().includes(fastQuery.toLowerCase()),
+    (document) =>
+      (document.type === 'post' &&
+        document.title.toLowerCase().includes(fastQuery.toLowerCase())) ||
+      document.authorData.name
+        .toLowerCase()
+        .includes(fastQuery.toLowerCase()) ||
+      document.content.toLowerCase().includes(fastQuery.toLowerCase()),
   )
   return (
     <>
@@ -98,14 +102,22 @@ export default function FavoritesPage({ searchParams }) {
                     enableCommentBtn={false}
                   />
                 ) : (
-                  <Comment
+                  <a
+                    href={`/posts/post/${document.rootPostId}`}
                     key={document._id}
                     _id={document._id}
-                    comment={document}
-                    commentId={document._id}
-                    depth={1}
-                    renderChildren={false}
-                  />
+                    className="comment-container flex flex-col justify-between
+                  pb-6 px-4 my-2 rounded-md shadow-center-sm 
+                  border-white border-2 hover:border-blue-300
+                  hover:shadow-center-lg hover:cursor-pointer hover:outline-red-50"
+                  >
+                    <Comment
+                      comment={document}
+                      commentId={document._id}
+                      depth={1}
+                      renderChildren={false}
+                    />
+                  </a>
                 ),
               )}
             </div>

@@ -50,9 +50,9 @@ export async function GET(req, res) {
   // get userId and user document:
 
   const { data: session } = await getServerSession(authOptions)
-  const userId = session.user.id
+  // const userId = session.user.id
   // !!!! adding a hardcoded userId for testing purposes:
-  // const userId = '9e75c601-4ef2-4e85-b7de-3eb3a88299b9'
+  const userId = '9e75c601-4ef2-4e85-b7de-3eb3a88299b9'
   pipeline.push({ $match: { _id: userId } })
 
   // create field to store post IDs:
@@ -103,7 +103,7 @@ export async function GET(req, res) {
     },
   })
 
-  // Recursive lookup to find parent post for each comment:
+  // Recursive lookup to find root post for each comment:
   pipeline.push({
     $unwind: '$favoriteComments',
   })
@@ -128,7 +128,7 @@ export async function GET(req, res) {
 
   pipeline.push({
     $addFields: {
-      'favoriteComments.rootPostId': '$favoriteComments.parentPost._id',
+      'favoriteComments.rootPostId': '$favoriteComments.parentPost.parent._id',
     },
   })
 
