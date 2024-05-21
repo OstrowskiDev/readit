@@ -55,7 +55,7 @@ export async function GET(req, res) {
   const userId = '9e75c601-4ef2-4e85-b7de-3eb3a88299b9'
   pipeline.push({ $match: { _id: userId } })
 
-  // create field to store post IDs:
+  // Create field to store post IDs:
   pipeline.push({
     $addFields: {
       postIds: {
@@ -74,7 +74,7 @@ export async function GET(req, res) {
     },
   })
 
-  // create field to store comment IDs:
+  // Create field to store comment IDs:
   pipeline.push({
     $addFields: {
       commentIds: {
@@ -103,7 +103,7 @@ export async function GET(req, res) {
     },
   })
 
-  // Recursive lookup to find root post for each comment:
+  // Recursive lookup to find parent post for each comment:
   pipeline.push({
     $unwind: '$favoriteComments',
   })
@@ -115,27 +115,51 @@ export async function GET(req, res) {
       connectFromField: 'parent._id',
       connectToField: '_id',
       as: 'favoriteComments.parentPost',
-      restrictSearchWithMatch: { 'parent.type': 'post' },
     },
   })
 
-  pipeline.push({
-    $unwind: {
-      path: '$favoriteComments.parentPost',
-      preserveNullAndEmptyArrays: true,
-    },
-  })
-
+  // iterate over the parentPost array to find the root post and pass its _id to rootPostId:
   pipeline.push({
     $addFields: {
-      'favoriteComments.rootPostId': '$favoriteComments.parentPost.parent._id',
+      'favoriteComments.rootPostId': {
+        $map: {
+          input: {
+            $filter: {
+              input: '$favoriteComments.parentPost',
+              as: 'comment',
+              cond: { $eq: ['$$comment.parent.type', 'post'] },
+            },
+          },
+          as: 'comment',
+          in: '$$comment.parent._id',
+        },
+      },
     },
   })
 
+  // make sure that rootPostId is a string, not an array of strings:
   pipeline.push({
-    $unset: 'favoriteComments.parentPost',
+    $addFields: {
+      'favoriteComments.rootPostId': {
+        $arrayElemAt: ['$favoriteComments.rootPostId', 0],
+      },
+    },
   })
 
+  // include rootPostId of comments that are direct children of posts:
+  pipeline.push({
+    $addFields: {
+      'favoriteComments.rootPostId': {
+        $cond: [
+          { $eq: ['$favoriteComments.parent.type', 'post'] },
+          '$favoriteComments.parent._id',
+          '$favoriteComments.rootPostId',
+        ],
+      },
+    },
+  })
+
+  // remove unnecessary data from documents:
   pipeline.push({
     $group: {
       _id: '$_id',
@@ -144,6 +168,7 @@ export async function GET(req, res) {
     },
   })
 
+  // add type field for comments:
   pipeline.push({
     $addFields: {
       'favoriteComments.type': 'comment',
