@@ -150,7 +150,7 @@ export async function createComment(parentId, postId, userInput, newCommentId) {
   }
 }
 
-export async function deleteComment(commentId, postId) {
+export async function deleteComment(commentId) {
   if (!isUUID(commentId))
     return { state: 'error', message: 'Invalid commentId' }
 

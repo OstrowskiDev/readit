@@ -59,16 +59,6 @@ pipeline.push({
   },
 })
 
-// Get posts:
-pipeline.push({
-  $lookup: {
-    from: 'posts',
-    localField: 'postIds',
-    foreignField: '_id',
-    as: 'favoritePosts',
-  },
-})
-
 // Get comments:
 pipeline.push({
   $lookup: {
@@ -79,7 +69,70 @@ pipeline.push({
   },
 })
 
-// // merge posts and comments into one array:
+// Recursive lookup to find parent post for each comment:
+pipeline.push({
+  $unwind: '$favoriteComments',
+})
+
+pipeline.push({
+  $graphLookup: {
+    from: 'comments',
+    startWith: '$favoriteComments.parent._id',
+    connectFromField: 'parent._id',
+    connectToField: '_id',
+    as: 'favoriteComments.parentPost',
+    restrictSearchWithMatch: { 'parent.type': 'post' },
+  },
+})
+
+pipeline.push({
+  $unwind: {
+    path: '$favoriteComments.parentPost',
+    preserveNullAndEmptyArrays: true,
+  },
+})
+
+pipeline.push({
+  $addFields: {
+    'favoriteComments.rootPostId': '$favoriteComments.parentPost._id',
+  },
+})
+
+pipeline.push({
+  $unset: 'favoriteComments.parentPost',
+})
+
+pipeline.push({
+  $group: {
+    _id: '$_id',
+    postIds: { $first: '$postIds' },
+    favoriteComments: { $push: '$favoriteComments' },
+  },
+})
+
+pipeline.push({
+  $addFields: {
+    'favoriteComments.type': 'comment',
+  },
+})
+
+// Get posts:
+pipeline.push({
+  $lookup: {
+    from: 'posts',
+    localField: 'postIds',
+    foreignField: '_id',
+    as: 'favoritePosts',
+  },
+})
+
+pipeline.push({
+  $addFields: {
+    'favoritePosts.type': 'post',
+  },
+})
+
+// merge posts and comments into one array:
 pipeline.push({
   $project: {
     _id: 0,
@@ -87,9 +140,9 @@ pipeline.push({
   },
 })
 
-// // comments and posts needs to be on root level so later stages will work, also user data is not longer needed, so it should be deleted.
+// comments and posts needs to be on root level so later stages will work, also user data is not longer needed, so it should be deleted.
 
-// //Unwind the favorites array to put posts and comments at the root level:
+// Unwind the favorites array to put posts and comments at the root level:
 pipeline.push({
   $unwind: '$favorites',
 })
@@ -106,7 +159,7 @@ if (content) {
   pipeline.push({ $match: { content: { $regex: content, $options: 'i' } } })
 }
 
-// // create temporary fields for authors name and avatar:
+// create temporary fields for authors name and avatar:
 pipeline.push({
   $lookup: {
     from: 'users',
@@ -127,6 +180,7 @@ pipeline.push({
     'authorData.email': 0,
     'authorData.phone': 0,
     'authorData.about': 0,
+    'authorData.favorites': 0,
   },
 })
 
@@ -136,29 +190,29 @@ if (author) {
   })
 }
 
-// // create additional fields for sorting
-// // calc total number of likes for each document:
+// create additional fields for sorting
+// calc total number of likes for each document:
 pipeline.push({
   $addFields: {
     likesCount: { $size: { $ifNull: ['$likes', []] } },
   },
 })
 
-// // calc total number of dislikes for each post:
+// calc total number of dislikes for each post:
 pipeline.push({
   $addFields: {
     dislikesCount: { $size: { $ifNull: ['$dislikes', []] } },
   },
 })
 
-// // subtract dislikes from likes to calculate popularity:
+// subtract dislikes from likes to calculate popularity:
 pipeline.push({
   $addFields: {
     popularity: { $subtract: ['$likesCount', '$dislikesCount'] },
   },
 })
 
-// // sorting logic:
+// sorting logic:
 if (sortBy === 'time' || sortBy === 'popularity') {
   let sortField
   switch (sortBy) {

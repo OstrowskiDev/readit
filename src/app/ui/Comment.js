@@ -8,10 +8,18 @@ import { UserInfoboxLoader } from './loaders/UserInfoboxLoader'
 import useMouseHover from '../lib/hooks/useMouseHover'
 const LazyUserInfobox = lazy(() => import('./UserInfobox.js'))
 
-export function Comment({ comment, comments, commentId, depth, postId }) {
+export function Comment({
+  comment,
+  comments,
+  commentId,
+  depth,
+  postId,
+  renderChildren,
+}) {
   const [deleteOptimistically, setDeleteOptimistically] = useState(false)
   const { isUserHovered, handleMouseEnter, handleMouseLeave } = useMouseHover()
   const [toggleCollapse, setToggleCollapse] = useState(false)
+  const rootPostId = postId ? postId : comment.rootPostId
 
   if (!comment) return null
   const author = comment.authorData
@@ -87,10 +95,12 @@ export function Comment({ comment, comments, commentId, depth, postId }) {
         <CommentBtnsContextWrapper
           comment={comment}
           commentId={commentId}
-          postId={postId}
+          postId={rootPostId}
           setDeleteOptimistically={setDeleteOptimistically}
         />
-        {!toggleCollapse && (
+
+        {/* comment replies */}
+        {!toggleCollapse && renderChildren && (
           <div className="comment-replies ml-[20px]">
             {comment.replies.map((replyId) => {
               const reply = comments.find((c) => c._id === replyId)
@@ -102,6 +112,7 @@ export function Comment({ comment, comments, commentId, depth, postId }) {
                   commentId={replyId}
                   depth={depth + 1}
                   postId={postId}
+                  renderChildren={renderChildren}
                 />
               )
             })}

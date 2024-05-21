@@ -103,6 +103,7 @@ export default function PostPage({ params }) {
                         commentId={commentId}
                         depth={0}
                         postId={postId}
+                        renderChildren={true}
                       />
                     )
                   })}

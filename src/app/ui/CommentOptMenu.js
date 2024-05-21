@@ -15,7 +15,6 @@ export function CommentOptMenu({ isMenuVisible, setIsMenuVisible }) {
     setIsEditVisible,
     comment,
     commentId,
-    postId,
     setDeleteOptimistically,
   } = useCommentContext()
   const { data: session } = useSession()
@@ -41,7 +40,7 @@ export function CommentOptMenu({ isMenuVisible, setIsMenuVisible }) {
 
   async function onDeleteSubmit() {
     handleDeleteOptimistically()
-    const serverResponse = await deleteComment(commentId, postId)
+    const serverResponse = await deleteComment(commentId)
     setResponse(serverResponse)
   }
 

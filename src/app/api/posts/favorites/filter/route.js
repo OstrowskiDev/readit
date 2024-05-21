@@ -50,56 +50,126 @@ export async function GET(req, res) {
   // get userId and user document:
 
   const { data: session } = await getServerSession(authOptions)
-  // const userId = session.user.id
-  // adding a hardcoded userId for testing purposes:
-  const userId = '9e75c601-4ef2-4e85-b7de-3eb3a88299b9'
+  const userId = session.user.id
+  // !!!! adding a hardcoded userId for testing purposes:
+  // const userId = '9e75c601-4ef2-4e85-b7de-3eb3a88299b9'
   pipeline.push({ $match: { _id: userId } })
 
-  // get posts:
+  // create field to store post IDs:
+  pipeline.push({
+    $addFields: {
+      postIds: {
+        $map: {
+          input: {
+            $filter: {
+              input: '$favorites',
+              as: 'favorite',
+              cond: { $eq: ['$$favorite.type', 'post'] },
+            },
+          },
+          as: 'post',
+          in: '$$post._id',
+        },
+      },
+    },
+  })
+
+  // create field to store comment IDs:
+  pipeline.push({
+    $addFields: {
+      commentIds: {
+        $map: {
+          input: {
+            $filter: {
+              input: '$favorites',
+              as: 'favorite',
+              cond: { $eq: ['$$favorite.type', 'comment'] },
+            },
+          },
+          as: 'comment',
+          in: '$$comment._id',
+        },
+      },
+    },
+  })
+
+  // Get comments:
+  pipeline.push({
+    $lookup: {
+      from: 'comments',
+      localField: 'commentIds',
+      foreignField: '_id',
+      as: 'favoriteComments',
+    },
+  })
+
+  // Recursive lookup to find parent post for each comment:
+  pipeline.push({
+    $unwind: '$favoriteComments',
+  })
+
+  pipeline.push({
+    $graphLookup: {
+      from: 'comments',
+      startWith: '$favoriteComments.parent._id',
+      connectFromField: 'parent._id',
+      connectToField: '_id',
+      as: 'favoriteComments.parentPost',
+      restrictSearchWithMatch: { 'parent.type': 'post' },
+    },
+  })
+
+  pipeline.push({
+    $unwind: {
+      path: '$favoriteComments.parentPost',
+      preserveNullAndEmptyArrays: true,
+    },
+  })
+
+  pipeline.push({
+    $addFields: {
+      'favoriteComments.rootPostId': '$favoriteComments.parentPost._id',
+    },
+  })
+
+  pipeline.push({
+    $unset: 'favoriteComments.parentPost',
+  })
+
+  pipeline.push({
+    $group: {
+      _id: '$_id',
+      postIds: { $first: '$postIds' },
+      favoriteComments: { $push: '$favoriteComments' },
+    },
+  })
+
+  pipeline.push({
+    $addFields: {
+      'favoriteComments.type': 'comment',
+    },
+  })
+
+  // Get posts:
   pipeline.push({
     $lookup: {
       from: 'posts',
-      let: { favorites: '$favorites' },
-      pipeline: [
-        {
-          $match: {
-            $expr: {
-              $and: [
-                { $eq: ['$type', 'post'] },
-                { $in: ['$_id', '$$favorites._id'] },
-              ],
-            },
-          },
-        },
-      ],
+      localField: 'postIds',
+      foreignField: '_id',
       as: 'favoritePosts',
     },
   })
 
-  // get comments:
   pipeline.push({
-    $lookup: {
-      from: 'comments',
-      let: { favorites: '$favorites' },
-      pipeline: [
-        {
-          $match: {
-            $expr: {
-              $and: [
-                { $eq: ['$type', 'comment'] },
-                { $in: ['$_id', '$$favorites._id'] },
-              ],
-            },
-          },
-        },
-      ],
-      as: 'favoriteComments',
+    $addFields: {
+      'favoritePosts.type': 'post',
     },
   })
 
   // merge posts and comments into one array:
   pipeline.push({
     $project: {
+      _id: 0,
       favorites: { $concatArrays: ['$favoritePosts', '$favoriteComments'] },
     },
   })
@@ -111,7 +181,7 @@ export async function GET(req, res) {
     $unwind: '$favorites',
   })
 
-  // Replace the root of each document with the document in the favorites field:
+  // make favorites the root of the document:
   pipeline.push({
     $replaceRoot: { newRoot: '$favorites' },
   })
@@ -143,6 +213,8 @@ export async function GET(req, res) {
       'authorData.address': 0,
       'authorData.email': 0,
       'authorData.phone': 0,
+      'authorData.about': 0,
+      'authorData.favorites': 0,
     },
   })
 
@@ -153,37 +225,7 @@ export async function GET(req, res) {
   }
 
   // create additional fields for sorting
-  // get total number of replies for each post:
-  pipeline.push({
-    $graphLookup: {
-      from: 'comments',
-      startWith: '$comments',
-      connectFromField: '_id',
-      connectToField: 'parent._id',
-      as: 'allReplies',
-    },
-  })
-
-  // calc total number of comments for each post:
-  pipeline.push({
-    $addFields: {
-      commentsCount: {
-        $add: [
-          { $size: { $ifNull: ['$allReplies', []] } },
-          { $size: { $ifNull: ['$comments', []] } },
-        ],
-      },
-    },
-  })
-
-  // delete allReplies field after is done its job:
-  pipeline.push({
-    $project: {
-      allReplies: 0,
-    },
-  })
-
-  // calc total number of likes for each post:
+  // calc total number of likes for each document:
   pipeline.push({
     $addFields: {
       likesCount: { $size: { $ifNull: ['$likes', []] } },
