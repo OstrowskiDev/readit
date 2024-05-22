@@ -65,7 +65,13 @@ export function Comment({
 
             {/* user infobox on hover */}
             <Suspense fallback={<UserInfoboxLoader />}>
-              {isUserHovered && <LazyUserInfobox author={author} />}
+              {isUserHovered && (
+                <LazyUserInfobox
+                  author={author}
+                  handleMouseEnter={handleMouseEnter}
+                  handleMouseLeave={handleMouseLeave}
+                />
+              )}
             </Suspense>
           </div>
 

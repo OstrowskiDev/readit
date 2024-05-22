@@ -72,7 +72,13 @@ export default function PostPage({ params }) {
 
             {/* user infobox on hover */}
             <Suspense fallback={<UserInfoboxLoader />}>
-              {isUserHovered && <LazyUserInfobox author={post.authorData} />}
+              {isUserHovered && (
+                <LazyUserInfobox
+                  author={post.authorData}
+                  handleMouseEnter={handleMouseEnter}
+                  handleMouseLeave={handleMouseLeave}
+                />
+              )}
             </Suspense>
 
             {/* Post body */}

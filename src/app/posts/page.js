@@ -48,7 +48,7 @@ export default function PostsPage({ searchParams, onlyCurrentUserPosts }) {
   )
   return (
     <>
-      <ToastProvider>
+      <ToastProvider authorsData={authorsData} setAuthorsData={setAuthorsData}>
         <div className="container mx-auto mt-8 px-4 max-w-[800px]">
           <div className="flex md:items-center flex-col md:flex-row md:h-10 mb-4">
             <h1 className="grow below-md:hidden text-2xl font-semibold mr-4">

@@ -7,12 +7,14 @@ import { cloneDeep } from 'lodash'
 import { FollowBtn } from './buttons/FollowBtn'
 import { MessageBtn } from './buttons/MessageBtn'
 import { useToastContext } from '../lib/toasts/ToastProvider'
-import { usePostContext } from '../lib/context/PostContextProvider'
 
-export default function UserInfobox({ author }) {
+export default function UserInfobox({
+  author,
+  handleMouseEnter,
+  handleMouseLeave,
+}) {
   const [isLoading, setIsLoading] = useState(true)
   const { authorsData, setAuthorsData } = useToastContext()
-  const { handleMouseEnter, handleMouseLeave } = usePostContext()
   const authorId = author._id
 
   useEffect(() => {

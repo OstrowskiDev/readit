@@ -6,7 +6,6 @@ export default function useMouseHover() {
   let onHoverOutTimeout
 
   function handleMouseEnter() {
-    console.log('mouse enter')
     onHoverOutTimeout = setTimeout(() => {
       setIsUserHovered(true)
     }, 400)
@@ -14,7 +13,6 @@ export default function useMouseHover() {
   }
 
   function handleMouseLeave() {
-    console.log('mouse leave')
     clearTimeout(onHoverOutTimeout)
     onHoverTimeout = setTimeout(() => {
       setIsUserHovered(false)
