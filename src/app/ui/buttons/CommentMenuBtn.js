@@ -9,14 +9,16 @@ export function CommentMenuBtn() {
   const [isMenuVisible, setIsMenuVisible] = useState(false)
   const { data: session } = useSession()
 
-  function handleClick() {
+  function handleClick(event) {
+    event.preventDefault()
     if (!session) signIn()
     setIsMenuVisible(true)
     document.addEventListener('click', handleDocumentClick)
   }
 
-  function handleDocumentClick(e) {
-    if (!e.target.closest('.menu-btn-container')) {
+  function handleDocumentClick(event) {
+    event.preventDefault()
+    if (!event.target.closest('.menu-btn-container')) {
       setIsMenuVisible(false)
       document.removeEventListener('click', handleDocumentClick)
     }

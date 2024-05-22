@@ -3,16 +3,16 @@
 import { useContext, useState } from 'react'
 import { useEffect } from 'react'
 import { useCommentContext } from '../lib/context/CommentContextProvider'
-import { usePostContext } from '../lib/context/PostContextProvider'
 import { v4 as uuidv4 } from 'uuid'
 import { createComment } from '@/app/lib/actions'
 import { signIn, useSession } from 'next-auth/react'
 import cloneDeep from 'lodash/cloneDeep'
 import { ToastContext } from '../lib/toasts/ToastContext'
 
-export function CommentReplyForm() {
-  const { isVisible, setIsVisible, commentId } = useCommentContext()
-  const { comments, setComments, postId } = usePostContext()
+export function CommentReplyForm({ parentType }) {
+  const { isVisible, setIsVisible, commentId, comments, setComments } =
+    useCommentContext()
+
   const [input, setInput] = useState('')
   const { data: session } = useSession()
   const toast = useContext(ToastContext)
@@ -58,7 +58,7 @@ export function CommentReplyForm() {
     optimisticUpdate(newCommentId)
     const serverResponse = await createComment(
       parentId,
-      postId,
+      parentType,
       input,
       newCommentId,
     )

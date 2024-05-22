@@ -15,6 +15,7 @@ import { Comment } from '@/app/ui/Comment'
 
 export default function FavoritesPage({ searchParams }) {
   const [posts, setPosts] = useState(null)
+  const [comments, setComments] = useState(null)
   const [authorsData, setAuthorsData] = useState([])
   const [isCreateFormVis, setIsCreateFormVis] = useState(false)
   const [isFilterFormVis, setIsFilterFormVis] = useState(false)
@@ -24,9 +25,11 @@ export default function FavoritesPage({ searchParams }) {
   useEffect(() => {
     async function fetchData() {
       let filterData = searchParams
-      const postsData = await filterFavorites(filterData)
-      setPosts(postsData)
-      console.log('postsData', postsData)
+      const fetchedData = await filterFavorites(filterData)
+      // !!!! I don't like this part of code. Posts and Comments need to be in same array for sorting purposes of favoritesPage. [posts, setPosts] is old naming convention used in PostPage.js. Here it stores also Comments. It doesn't make sense here. But all other components use it, and for rest of app it is logical since post-comment structure is build from top to bottom. So I will keep it for now.
+      //// !!!! [comments, setComments] is also naming convention used in rest of app. Here it is used for optimistic update for comment buttons. Since Posts have similar structure to Comments I can pass Posts+Comments array to Comment Component. It is good idea, since it will work nicely with sorting but naming convention is confusing. I want to find better solution for this.
+      setPosts(fetchedData)
+      setComments(fetchedData)
     }
     fetchData()
   }, [])
@@ -116,6 +119,8 @@ export default function FavoritesPage({ searchParams }) {
                       commentId={document._id}
                       depth={1}
                       renderChildren={false}
+                      comments={comments}
+                      setComments={setComments}
                     />
                   </a>
                 ),

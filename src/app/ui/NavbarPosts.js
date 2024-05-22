@@ -20,8 +20,8 @@ export function NavbarPosts() {
             Recent
           </a>
           <div className="separator h-[2px] bg-gray-100"></div>
-          <a href="/posts" className="nav-sub-button pl-4">
-            Followed
+          <a href="/posts/favorites" className="nav-sub-button pl-4">
+            Favorites
           </a>
           <div className="separator h-[2px] bg-gray-100"></div>
           <a

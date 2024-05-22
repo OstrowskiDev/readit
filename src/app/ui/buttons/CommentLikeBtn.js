@@ -4,30 +4,22 @@ import { handleLikeClick } from '@/app/lib/actions'
 import { LikeIco } from '../icons/LikeIco'
 import { LikeIcoActive } from '../icons/LikeIcoActive'
 import { useCommentContext } from '@/app/lib/context/CommentContextProvider'
-import { usePostContext } from '@/app/lib/context/PostContextProvider'
 import { signIn, useSession } from 'next-auth/react'
 import { useContext, useEffect, useState } from 'react'
 import { ToastContext } from '@/app/lib/toasts/ToastContext'
-import { usePathname } from 'next/navigation'
 
-export function LikeBtn({ styles, collection }) {
-  const { commentId, comment } =
-    collection === 'comments' ? useCommentContext() : { undefined, undefined }
-  const { comments, setComments, post, setPost, setPosts, postId, postLikes } =
-    usePostContext()
+export function CommentLikeBtn({ styles }) {
+  const { commentId, comment, comments, setComments } = useCommentContext()
   const [response, setResponse] = useState({
     state: null,
     message: null,
     wasDisliked: false,
   })
-  const pathname = usePathname()
   const toast = useContext(ToastContext)
   const { data: session } = useSession()
   const userId = session?.user?.id
-  const isAlreadyLiked =
-    collection === 'posts'
-      ? postLikes?.includes(userId)
-      : comment.likes?.includes(userId)
+  const isAlreadyLiked = comment.likes?.includes(userId)
+  const collection = 'comments'
 
   useEffect(() => {
     if (response?.state === 'success') {
@@ -35,52 +27,16 @@ export function LikeBtn({ styles, collection }) {
     }
     if (response?.state === 'error') {
       toast.error(response.message)
-      handleOptimisticError()
+      handleCommentOptimistically()
     }
   }, [response])
 
   async function onClick(event) {
     event.preventDefault()
     if (!session) return signIn()
-
-    collection === 'posts'
-      ? handlePostOptimistically()
-      : handleCommentOptimistically()
-
-    const serverResponse =
-      collection === 'posts'
-        ? await handleLikeClick(postId, collection)
-        : await handleLikeClick(commentId, collection)
-
+    handleCommentOptimistically()
+    const serverResponse = await handleLikeClick(commentId, collection)
     setResponse(serverResponse)
-  }
-
-  function handlePostOptimistically() {
-    const newPost = { ...post }
-
-    if (!post.likes) {
-      newPost.likes = [userId]
-    } else if (!post.likes.includes(userId)) {
-      newPost.likes = [...post.likes, userId]
-    } else {
-      newPost.likes = post.likes.filter((id) => id !== userId)
-    }
-
-    if (post.dislikes?.includes(userId)) {
-      newPost.dislikes = post.dislikes.filter((id) => id !== userId)
-    }
-
-    if (response?.state === 'error' && response?.wasDisliked === true) {
-      newPost.dislikes = [...newPost.dislikes, userId]
-    }
-
-    if (pathname.startsWith('/posts/post')) {
-      setPost(newPost)
-    } else {
-      setPosts((prevPosts) =>
-        prevPosts.map((p) => (p._id === newPost._id ? newPost : p)),
-      )
-    }
   }
 
   function handleCommentOptimistically() {
@@ -111,12 +67,6 @@ export function LikeBtn({ styles, collection }) {
     setComments(newComments)
   }
 
-  function handleOptimisticError() {
-    collection === 'posts'
-      ? handlePostOptimistically()
-      : handleCommentOptimistically()
-  }
-
   function SubmitButton() {
     return (
       <button
@@ -130,12 +80,7 @@ export function LikeBtn({ styles, collection }) {
   }
 
   return (
-    <form
-      className={
-        'rounded-md ' +
-        (collection === 'comments' ? 'hover:bg-gray-200' : 'hover:bg-gray-300')
-      }
-    >
+    <form className="rounded-md hover:bg-gray-200">
       <SubmitButton />
     </form>
   )

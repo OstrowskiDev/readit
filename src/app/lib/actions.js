@@ -4,13 +4,15 @@ import Post from './models/Post'
 import Comment from './models/Comment'
 import User from './models/User'
 import { v4 as uuidv4 } from 'uuid'
-import { revalidatePath } from 'next/cache'
+// import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { connectToDatabase, getComment, getUser } from './db'
 import { validatePostContent, validatePostTitle } from './validation'
 import { getServerSession } from 'next-auth/next'
 import { authOptions } from '@/app/api/auth/[...nextauth]/authOptions'
 import { isUUID } from 'validator'
+
+// !!!! delete all revalidatePath calls, app no longer uses ISR
 
 let toastStatus
 let toastMessage
@@ -35,7 +37,7 @@ export async function createPost(inputTitle, inputContent) {
   } catch (error) {
     console.error('Error saving post:', error)
   }
-  revalidatePath('/posts')
+  // revalidatePath('/posts')
   redirect('/posts')
 }
 
@@ -64,7 +66,7 @@ export async function updatePost(postId, formData) {
     console.error('Error updating post:', error)
   }
 
-  revalidatePath('/posts')
+  // revalidatePath('/posts')
   redirect('/posts')
 }
 
@@ -86,16 +88,19 @@ export async function deletePost(postId) {
     console.error('Error deleting post:', error)
   }
 
-  revalidatePath('/posts')
+  // revalidatePath('/posts')
   redirect('/posts')
   // !!!! return toast message
 }
 
-export async function createComment(parentId, postId, userInput, newCommentId) {
+export async function createComment(
+  parentId,
+  parentType,
+  userInput,
+  newCommentId,
+) {
   const session = await getServerSession(authOptions)
   const content = validatePostContent(userInput)
-  const parentIsPost = parentId === postId
-  const documentType = parentIsPost ? 'post' : 'comment'
 
   resetToast()
 
@@ -103,7 +108,7 @@ export async function createComment(parentId, postId, userInput, newCommentId) {
     _id: newCommentId,
     user_id: session.user.id,
     parent: {
-      type: documentType,
+      type: parentType,
       _id: parentId,
     },
     content: content,
@@ -120,29 +125,29 @@ export async function createComment(parentId, postId, userInput, newCommentId) {
   //update parent replies prop
   try {
     await connectToDatabase()
-    const result = parentIsPost
-      ? await Post.updateOne(
-          { _id: parentId },
-          { $push: { comments: newCommentId } },
-        )
-      : await Comment.updateOne(
-          { _id: parentId },
-          { $push: { replies: newCommentId } },
-        )
+    const result =
+      parentType === 'post'
+        ? await Post.updateOne(
+            { _id: parentId },
+            { $push: { comments: newCommentId } },
+          )
+        : await Comment.updateOne(
+            { _id: parentId },
+            { $push: { replies: newCommentId } },
+          )
 
     if (result.modifiedCount === 1) {
       setToast('success', `Comment created successfully!`)
-      console.log(`${documentType} updated successfully`)
+      console.log(`${parentType} updated successfully`)
     } else {
       setToast('error', `Failed to create comment`)
-      console.log(`${documentType} not found or not updated`)
+      console.log(`${parentType} not found or not updated`)
     }
   } catch (error) {
     setToast('error', `Failed to create comment`)
-    console.error(`Error updating {documentType}:`, error)
+    console.error(`Error updating {parentType}:`, error)
   }
 
-  revalidatePath(`/posts/post/${postId}`)
   return {
     state: toastStatus,
     message: toastMessage,
@@ -238,7 +243,7 @@ export async function deleteComment(commentId) {
   return { state: toastStatus, message: toastMessage }
 }
 
-export async function updateComment(commentId, postId, userInput) {
+export async function updateComment(commentId, userInput) {
   const session = await getServerSession(authOptions)
   const comment = await getComment(commentId)
   const authorId = comment.user_id
@@ -282,7 +287,6 @@ export async function updateComment(commentId, postId, userInput) {
     setToast('error', 'Failed to update comment!')
   }
 
-  revalidatePath(`/posts/post/${postId}`)
   return {
     state: toastStatus,
     message: toastMessage,
@@ -290,20 +294,11 @@ export async function updateComment(commentId, postId, userInput) {
   }
 }
 
-export async function handleLikeClick(documentId, postId, collection) {
+export async function handleLikeClick(documentId, collection) {
   const session = await getServerSession(authOptions)
   if (!session) redirect('/login')
 
   resetToast()
-
-  if (
-    postId !== 'credits' &&
-    postId !== 'about' &&
-    (!isUUID(documentId) || !isUUID(postId))
-  ) {
-    console.error('Invalid documentId or postId in handleLikeClick func')
-    return returnToast('error', 'Failed updating like')
-  }
 
   const document = await getDocument()
   if (!document) {
@@ -323,7 +318,6 @@ export async function handleLikeClick(documentId, postId, collection) {
     console.error('Error updating document:', error)
   }
 
-  revalidatePath(`/posts/post/${postId}`)
   return {
     state: toastStatus,
     message: toastMessage,
@@ -406,6 +400,7 @@ export async function handleLikeClick(documentId, postId, collection) {
   }
 
   async function getDocument() {
+    console.log('documentId:', documentId)
     let doc
     try {
       if (collection === 'posts') {
@@ -422,20 +417,11 @@ export async function handleLikeClick(documentId, postId, collection) {
   }
 }
 
-export async function handleDislikeClick(documentId, postId, collection) {
+export async function handleDislikeClick(documentId, collection) {
   const session = await getServerSession(authOptions)
   if (!session) signIn()
 
   resetToast()
-
-  if (
-    postId !== 'credits' &&
-    postId !== 'about' &&
-    (!isUUID(documentId) || !isUUID(postId))
-  ) {
-    console.error('Invalid documentId or postId in handleDislikeClick func')
-    return returnToast('error', 'Failed updating like')
-  }
 
   const document = await getDocument()
   if (!document) {
@@ -456,7 +442,6 @@ export async function handleDislikeClick(documentId, postId, collection) {
     console.error('Error updating comment:', error)
   }
 
-  revalidatePath(`/posts/post/${postId}`)
   return {
     state: toastStatus,
     message: toastMessage,

@@ -1,4 +1,6 @@
-// - add favorites page
+// - add favorites page, lol this will take some srs effort:
+//     - figure out how to change comment components to be able to handle buttons, optimistic ui changes and toasts. Currently structure of comments is totally different than posts and doesn't allow to use them separately without parent post.
+//     - add functionality to filter button so it can handle favorites page
 // - add functionality to posts page for handling favorite clicks, atm it redirects to post
 // - add functionality to PostMenu that handles situation where user clicks outside of the menu
 // - change favorites icon to star
@@ -18,7 +20,6 @@
 // - link to github repo
 //
 // - Adding karma could be fun.
-// - Add favorites functionality: adding and removing posts to favorites.
 // - Fix responsive design for mobile devices!
 // - add validation for "about" post ID, so only user with admin role can perform CUD operations on it.
 // - add validation for passwords before they are hashed. Previous schema below:

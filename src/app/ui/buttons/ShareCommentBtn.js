@@ -22,7 +22,8 @@ export function ShareCommentBtn() {
     }
   }, [response])
 
-  function copyToClipboard() {
+  function copyToClipboard(event) {
+    event.preventDefault()
     navigator.clipboard
       .writeText(commentUrl)
       .then(() => {

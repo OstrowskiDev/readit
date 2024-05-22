@@ -1,16 +1,18 @@
 'use client'
 
 import { useState, Suspense, lazy } from 'react'
-import { CommentBtnsContextWrapper } from '../lib/context/CommentBtnsContextWrapper'
 import TimeAgo from './TimeAgo'
 import Avatar from '../lib/avatars/Avatar'
 import { UserInfoboxLoader } from './loaders/UserInfoboxLoader'
 import useMouseHover from '../lib/hooks/useMouseHover'
+import { CommentButtons } from './CommentButtons'
+import { CommentContextProvider } from '../lib/context/CommentContextProvider'
 const LazyUserInfobox = lazy(() => import('./UserInfobox.js'))
 
 export function Comment({
   comment,
   comments,
+  setComments,
   commentId,
   depth,
   postId,
@@ -92,14 +94,16 @@ export function Comment({
         </div>
 
         {/* comment buttons */}
-        {renderChildren && (
-          <CommentBtnsContextWrapper
-            comment={comment}
-            commentId={commentId}
-            postId={rootPostId}
-            setDeleteOptimistically={setDeleteOptimistically}
-          />
-        )}
+        <CommentContextProvider
+          comment={comment}
+          commentId={commentId}
+          postId={rootPostId}
+          setDeleteOptimistically={setDeleteOptimistically}
+          comments={comments}
+          setComments={setComments}
+        >
+          <CommentButtons />
+        </CommentContextProvider>
 
         {/* comment replies */}
         {!toggleCollapse && renderChildren && (
@@ -111,6 +115,7 @@ export function Comment({
                   key={replyId}
                   comment={reply}
                   comments={comments}
+                  setComments={setComments}
                   commentId={replyId}
                   depth={depth + 1}
                   postId={postId}

@@ -48,11 +48,8 @@ export async function GET(req, res) {
 
   // get posts and comments based on favorites:
   // get userId and user document:
-
-  const { data: session } = await getServerSession(authOptions)
-  // const userId = session.user.id
-  // !!!! adding a hardcoded userId for testing purposes:
-  const userId = '9e75c601-4ef2-4e85-b7de-3eb3a88299b9'
+  const session = await getServerSession(authOptions)
+  const userId = session.user.id
   pipeline.push({ $match: { _id: userId } })
 
   // Create field to store post IDs:

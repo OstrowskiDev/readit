@@ -3,14 +3,18 @@
 import { updateComment } from '@/app/lib/actions'
 import { useContext, useEffect, useState } from 'react'
 import { useCommentContext } from '../lib/context/CommentContextProvider'
-import { usePostContext } from '../lib/context/PostContextProvider'
 import { cloneDeep } from 'lodash'
 import { ToastContext } from '../lib/toasts/ToastContext'
 
 export function CommentEditForm() {
-  const { isEditVisible, setIsEditVisible, commentId, comment } =
-    useCommentContext()
-  const { comments, setComments, postId } = usePostContext()
+  const {
+    isEditVisible,
+    setIsEditVisible,
+    commentId,
+    comment,
+    comments,
+    setComments,
+  } = useCommentContext()
   const [input, setInput] = useState(comment.content)
   const [oldContent, setOldContent] = useState(null)
   const [response, setResponse] = useState({
@@ -30,10 +34,11 @@ export function CommentEditForm() {
     }
   }, [response])
 
-  async function onSubmit() {
+  async function onSubmit(event) {
+    event.preventDefault()
     setIsEditVisible(!isEditVisible)
     handleOptimistically()
-    const serverResponse = await updateComment(commentId, postId, input)
+    const serverResponse = await updateComment(commentId, input)
     setResponse(serverResponse)
   }
 
@@ -85,7 +90,8 @@ export function CommentEditForm() {
     )
   }
 
-  function onCancelClick() {
+  function onCancelClick(event) {
+    event.preventDefault()
     setIsEditVisible(!isEditVisible)
   }
 

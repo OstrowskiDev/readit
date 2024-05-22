@@ -1,13 +1,15 @@
 'use client'
 
-import { CommentButtons } from '@/app/ui/CommentButtons'
 import { CommentContextProvider } from './CommentContextProvider'
 
 export function CommentBtnsContextWrapper({
+  children,
   comment,
   commentId,
   postId,
   setDeleteOptimistically,
+  comments,
+  setComments,
 }) {
   return (
     <CommentContextProvider
@@ -15,8 +17,10 @@ export function CommentBtnsContextWrapper({
       commentId={commentId}
       postId={postId}
       setDeleteOptimistically={setDeleteOptimistically}
+      comments={comments}
+      setComments={setComments}
     >
-      <CommentButtons />
+      {children}
     </CommentContextProvider>
   )
 }

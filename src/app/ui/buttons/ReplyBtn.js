@@ -9,6 +9,7 @@ export function ReplyBtn() {
   const { isVisible, setIsVisible } = useCommentContext()
 
   function handleClick() {
+    event.preventDefault()
     session ? setIsVisible(!isVisible) : signIn()
   }
   return (

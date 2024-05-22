@@ -1,3 +1,5 @@
+'use client'
+
 import { createContext, useContext, useState } from 'react'
 
 const CommentContext = createContext()
@@ -8,6 +10,8 @@ export function CommentContextProvider({
   commentId,
   postId,
   setDeleteOptimistically,
+  comments,
+  setComments,
 }) {
   const [isVisible, setIsVisible] = useState(false)
   const [isEditVisible, setIsEditVisible] = useState(false)
@@ -21,6 +25,8 @@ export function CommentContextProvider({
         setIsEditVisible,
         comment,
         commentId,
+        comments,
+        setComments,
         postId,
         setDeleteOptimistically,
       }}

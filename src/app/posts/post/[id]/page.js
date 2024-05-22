@@ -100,6 +100,7 @@ export default function PostPage({ params }) {
                         key={commentId}
                         comment={comment}
                         comments={comments}
+                        setComments={setComments}
                         commentId={commentId}
                         depth={0}
                         postId={postId}
