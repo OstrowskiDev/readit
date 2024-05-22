@@ -6,9 +6,9 @@ import { LikeIcoActive } from '../icons/LikeIcoActive'
 import { useCommentContext } from '@/app/lib/context/CommentContextProvider'
 import { usePostContext } from '@/app/lib/context/PostContextProvider'
 import { signIn, useSession } from 'next-auth/react'
-import { useContext, useEffect, useState } from 'react'
-import { ToastContext } from '@/app/lib/toasts/ToastContext'
+import { useEffect, useState } from 'react'
 import { usePathname } from 'next/navigation'
+import { useToastContext } from '@/app/lib/toasts/ToastProvider'
 
 export function LikeBtn({ styles, collection }) {
   const { commentId, comment } =
@@ -21,7 +21,7 @@ export function LikeBtn({ styles, collection }) {
     wasDisliked: false,
   })
   const pathname = usePathname()
-  const toast = useContext(ToastContext)
+  const { toastFunctions: toast } = useToastContext()
   const { data: session } = useSession()
   const userId = session?.user?.id
   const isAlreadyLiked =

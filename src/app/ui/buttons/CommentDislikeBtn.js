@@ -5,8 +5,8 @@ import { DislikeIco } from '../icons/DislikeIco'
 import { DislikeIcoActive } from '../icons/DislikeIcoActive'
 import { useCommentContext } from '@/app/lib/context/CommentContextProvider'
 import { useSession } from 'next-auth/react'
-import { useContext, useEffect, useState } from 'react'
-import { ToastContext } from '@/app/lib/toasts/ToastContext'
+import { useEffect, useState } from 'react'
+import { useToastContext } from '@/app/lib/toasts/ToastProvider'
 
 export function CommentDislikeBtn({ styles }) {
   const { comment, commentId, comments, setComments } = useCommentContext()
@@ -16,7 +16,7 @@ export function CommentDislikeBtn({ styles }) {
     wasLiked: false,
   })
   const { data: session } = useSession()
-  const toast = useContext(ToastContext)
+  const { toastFunctions: toast } = useToastContext()
   const userId = session?.user?.id
   const isAlreadyDisliked = comment.dislikes?.includes(userId)
   const collection = 'comments'

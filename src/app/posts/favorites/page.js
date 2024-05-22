@@ -52,7 +52,7 @@ export default function FavoritesPage({ searchParams }) {
   )
   return (
     <>
-      <ToastProvider>
+      <ToastProvider authorsData={authorsData} setAuthorsData={setAuthorsData}>
         <div className="container mx-auto mt-8 px-4 max-w-[800px]">
           <div className="flex md:items-center flex-col md:flex-row md:h-10 mb-4">
             <h1 className="grow below-md:hidden text-2xl font-semibold mr-4">
@@ -100,8 +100,8 @@ export default function FavoritesPage({ searchParams }) {
                     postId={document._id}
                     post={document}
                     setPosts={setPosts}
-                    authorsData={authorsData}
-                    setAuthorsData={setAuthorsData}
+                    // authorsData={authorsData}
+                    // setAuthorsData={setAuthorsData}
                     enableCommentBtn={false}
                   />
                 ) : (
@@ -110,7 +110,7 @@ export default function FavoritesPage({ searchParams }) {
                     key={document._id}
                     _id={document._id}
                     className="comment-container flex flex-col justify-between
-                  pb-6 px-4 my-2 rounded-md shadow-center-sm 
+                  pb-4 px-4 my-2 rounded-md shadow-center-sm 
                   border-white border-2 hover:border-blue-300
                   hover:shadow-center-lg hover:cursor-pointer hover:outline-red-50"
                   >

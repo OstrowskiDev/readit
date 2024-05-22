@@ -1,18 +1,19 @@
 'use client'
 
 import { createPost } from '@/app/lib/actions'
-import { useContext, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { ReplyFormBtns } from './buttons/ReplyFromBtns'
 import { signIn, useSession } from 'next-auth/react'
 import { v4 as uuidv4 } from 'uuid'
 import cloneDeep from 'lodash/cloneDeep'
-import { ToastContext } from '../lib/toasts/ToastContext'
+import { useToastContext } from '../lib/toasts/ToastProvider'
 
 export function CreatePostForm({ isCreateFormVis, setIsCreateFormVis }) {
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
   const { data: session } = useSession()
-  const toast = useContext(ToastContext)
+  const { toastFunctions: toast } = useToastContext()
+
   const userId = session?.user?.id
 
   const [response, setResponse] = useState({

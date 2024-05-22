@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
-import { ToastContext } from './ToastContext'
+import { useState, useContext } from 'react'
 import { Toast } from './Toast'
+import { ToastContext } from './ToastContext'
 
-export function ToastProvider({ children }) {
+export function ToastProvider({ children, authorsData, setAuthorsData }) {
   const [toast, setToast] = useState(null)
 
   const toastFunctions = {
@@ -15,7 +15,13 @@ export function ToastProvider({ children }) {
   }
 
   return (
-    <ToastContext.Provider value={toastFunctions}>
+    <ToastContext.Provider
+      value={{
+        toastFunctions,
+        authorsData,
+        setAuthorsData,
+      }}
+    >
       {children}
       {toast && (
         <Toast
@@ -26,4 +32,8 @@ export function ToastProvider({ children }) {
       )}
     </ToastContext.Provider>
   )
+}
+
+export function useToastContext() {
+  return useContext(ToastContext)
 }

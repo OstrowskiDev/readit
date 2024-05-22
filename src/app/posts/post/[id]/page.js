@@ -7,10 +7,10 @@ import { Suspense, lazy, useEffect, useState } from 'react'
 import { Loader } from '@/app/ui/loaders/Loader'
 import { PostContextProvider } from '@/app/lib/context/PostContextProvider'
 import { PostHeader } from '@/app/ui/PostHeader'
-import useMouseHover from '@/app/lib/hooks/useMouseHover'
-import { UserInfoboxLoader } from '@/app/ui/loaders/UserInfoboxLoader'
 import { ToastProvider } from '@/app/lib/toasts/ToastProvider'
 import { PostCommentShimmer } from '@/app/ui/loaders/PostCommentShimmer'
+import useMouseHover from '@/app/lib/hooks/useMouseHover'
+import { UserInfoboxLoader } from '@/app/ui/loaders/UserInfoboxLoader'
 const LazyUserInfobox = lazy(() => import('@/app/ui/UserInfobox.js'))
 
 export default function PostPage({ params }) {
@@ -48,12 +48,10 @@ export default function PostPage({ params }) {
   const postDislikes = post.dislikes
 
   return (
-    <ToastProvider>
+    <ToastProvider authorsData={authorsData} setAuthorsData={setAuthorsData}>
       <PostContextProvider
         comments={comments}
         setComments={setComments}
-        authorsData={authorsData}
-        setAuthorsData={setAuthorsData}
         post={post}
         setPost={setPost}
         postId={postId}
@@ -71,6 +69,11 @@ export default function PostPage({ params }) {
                 {post.title}
               </h2>
             </div>
+
+            {/* user infobox on hover */}
+            <Suspense fallback={<UserInfoboxLoader />}>
+              {isUserHovered && <LazyUserInfobox author={post.authorData} />}
+            </Suspense>
 
             {/* Post body */}
             <pre className="post-body-text font-sans whitespace-pre-wrap">
@@ -111,11 +114,6 @@ export default function PostPage({ params }) {
                 </div>
               </div>
             )}
-
-            {/* User Infobox on hover */}
-            <Suspense fallback={<UserInfoboxLoader />}>
-              {isUserHovered && <LazyUserInfobox author={post.authorData} />}
-            </Suspense>
           </div>
         </div>
       </PostContextProvider>

@@ -1,10 +1,10 @@
 'use client'
 
 import { updateComment } from '@/app/lib/actions'
-import { useContext, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useCommentContext } from '../lib/context/CommentContextProvider'
 import { cloneDeep } from 'lodash'
-import { ToastContext } from '../lib/toasts/ToastContext'
+import { useToastContext } from '../lib/toasts/ToastProvider'
 
 export function CommentEditForm() {
   const {
@@ -22,7 +22,7 @@ export function CommentEditForm() {
     message: null,
     updatedCommentId: null,
   })
-  const toast = useContext(ToastContext)
+  const { toastFunctions: toast } = useToastContext()
 
   useEffect(() => {
     if (response?.state === 'success') {

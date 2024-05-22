@@ -3,11 +3,11 @@
 import { useSession } from 'next-auth/react'
 import { useCommentContext } from '../lib/context/CommentContextProvider'
 import { DeleteCommentBtn } from './buttons/DeleteCommentBtn'
-import { useContext, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { deleteComment } from '../lib/actions'
-import { ToastContext } from '../lib/toasts/ToastContext'
 import { FavoritesBtn } from './buttons/FavoritesBtn'
 import { EditCommentBtn } from './buttons/EditCommentBtn'
+import { useToastContext } from '../lib/toasts/ToastProvider'
 
 export function CommentOptMenu({ isMenuVisible, setIsMenuVisible }) {
   const {
@@ -18,7 +18,7 @@ export function CommentOptMenu({ isMenuVisible, setIsMenuVisible }) {
     setDeleteOptimistically,
   } = useCommentContext()
   const { data: session } = useSession()
-  const toast = useContext(ToastContext)
+  const { toastFunctions: toast } = useToastContext()
   const usersId = session?.user.id
   const isUsersComment = usersId === comment.user_id
   const documentId = commentId

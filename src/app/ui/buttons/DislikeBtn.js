@@ -6,9 +6,9 @@ import { DislikeIcoActive } from '../icons/DislikeIcoActive'
 import { useCommentContext } from '@/app/lib/context/CommentContextProvider'
 import { usePostContext } from '@/app/lib/context/PostContextProvider'
 import { useSession } from 'next-auth/react'
-import { useContext, useEffect, useState } from 'react'
-import { ToastContext } from '@/app/lib/toasts/ToastContext'
+import { useEffect, useState } from 'react'
 import { usePathname } from 'next/navigation'
+import { useToastContext } from '@/app/lib/toasts/ToastProvider'
 
 export function DislikeBtn({ styles, collection }) {
   const { comment, commentId } =
@@ -29,7 +29,7 @@ export function DislikeBtn({ styles, collection }) {
   })
   const pathname = usePathname()
   const { data: session } = useSession()
-  const toast = useContext(ToastContext)
+  const { toastFunctions: toast } = useToastContext()
   const userId = session?.user?.id
   const isAlreadyDisliked =
     collection === 'posts'

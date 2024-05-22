@@ -1,15 +1,15 @@
 'use client'
 
 import { useSession } from 'next-auth/react'
-import { useContext, useEffect, useState } from 'react'
-import { ToastContext } from '../lib/toasts/ToastContext'
+import { useEffect, useState } from 'react'
 import { FavoritesBtn } from './buttons/FavoritesBtn'
 import { usePostContext } from '../lib/context/PostContextProvider'
+import { useToastContext } from '../lib/toasts/ToastProvider'
 
 export function PostOptMenu({ isPostMenuVis, setIsPostMenuVis }) {
   const { data: session } = useSession()
   const { postId } = usePostContext()
-  const toast = useContext(ToastContext)
+  const { toastFunctions: toast } = useToastContext()
 
   const [response, setResponse] = useState({
     state: null,
