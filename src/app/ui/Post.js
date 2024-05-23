@@ -17,7 +17,6 @@ export function Post({
   enableCommentBtn,
 }) {
   const { isUserHovered, handleMouseEnter, handleMouseLeave } = useMouseHover()
-  console.log('Post component is being rendered!')
 
   return (
     <>

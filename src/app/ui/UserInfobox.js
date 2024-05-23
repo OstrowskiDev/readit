@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { countUserComments, countUserPosts } from '../lib/actions'
 import Avatar from '../lib/avatars/Avatar'
 import { cloneDeep } from 'lodash'
@@ -13,13 +13,10 @@ export default function UserInfobox({
   handleMouseEnter,
   handleMouseLeave,
 }) {
-  console.log('UserInfobox component is being rendered!')
-  const [isLoading, setIsLoading] = useState(true)
   const { authorsData, setAuthorsData } = useToastContext()
   const authorId = author._id
 
   useEffect(() => {
-    console.log('UserInfobox effect triggered!')
     const dataExists = authorsData?.find((author) => author._id === authorId)
     if (!dataExists) {
       const postsSum = countUserPosts(author._id)
@@ -33,7 +30,6 @@ export default function UserInfobox({
       newData.push(newAuthor)
       setAuthorsData(newData)
     }
-    setIsLoading(false)
   }, [author])
 
   const userData = authorsData?.find((author) => author._id === authorId)
@@ -102,7 +98,7 @@ export default function UserInfobox({
 
   return (
     <div className="infobox-container absolute top-16 left-3 w-[350px] h-[260px] z-40 p-8 bg-white rounded-3xl drop-shadow-2xl hover:cursor-default">
-      {isLoading ? 'Loading...' : <InfoboxBody />}
+      <InfoboxBody />
     </div>
   )
 }

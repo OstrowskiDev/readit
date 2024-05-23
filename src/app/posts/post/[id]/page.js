@@ -11,7 +11,6 @@ import { ToastProvider } from '@/app/lib/toasts/ToastProvider'
 import { PostCommentShimmer } from '@/app/ui/loaders/PostCommentShimmer'
 import useMouseHover from '@/app/lib/hooks/useMouseHover'
 import { UserInfoboxLoader } from '@/app/ui/loaders/UserInfoboxLoader'
-import { CommentOld } from '@/app/ui/CommentOld'
 const LazyUserInfobox = lazy(() => import('@/app/ui/UserInfobox.js'))
 
 export default function PostPage({ params }) {

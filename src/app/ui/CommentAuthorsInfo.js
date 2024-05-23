@@ -5,9 +5,12 @@ import TimeAgo from './TimeAgo'
 import { UserInfoboxLoader } from './loaders/UserInfoboxLoader'
 const LazyUserInfobox = lazy(() => import('./UserInfobox.js'))
 
-export function CommentAuthorsInfo({ comment, anchorComment }) {
-  console.log('CommentAuthorsInfo component is being rendered!')
-
+export function CommentAuthorsInfo({
+  comment,
+  anchorComment,
+  anchorHandleMouseEnter,
+  anchorHandleMouseLeave,
+}) {
   const { isUserHovered, handleMouseEnter, handleMouseLeave } = useMouseHover()
   const author = comment.authorData
 
@@ -16,8 +19,8 @@ export function CommentAuthorsInfo({ comment, anchorComment }) {
       {/* authors avatar */}
       <div
         className="comment-avatar-container min-w-12 min-h-12 hover:cursor-pointer"
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
+        onMouseEnter={anchorComment ? anchorHandleMouseEnter : handleMouseEnter}
+        onMouseLeave={anchorComment ? anchorHandleMouseLeave : handleMouseLeave}
       >
         <Avatar
           seed={author?.avatar.seed}
@@ -41,8 +44,8 @@ export function CommentAuthorsInfo({ comment, anchorComment }) {
       {/* authors name */}
       <p
         className="comment-author ml-2 text-blue-900 text-15 hover:cursor-pointer"
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
+        onMouseEnter={anchorComment ? anchorHandleMouseEnter : handleMouseEnter}
+        onMouseLeave={anchorComment ? anchorHandleMouseLeave : handleMouseLeave}
       >
         {author.name}
       </p>
