@@ -36,6 +36,8 @@ export function Comment({
     rootPostId,
     setToggleCollapse,
     toggleCollapse,
+    handleMouseEnter,
+    handleMouseLeave,
   }
 
   return (
@@ -48,11 +50,7 @@ export function Comment({
         border-white border-2 hover:border-blue-300
         hover:shadow-center-lg hover:cursor-pointer hover:outline-red-50"
         >
-          <CommentBody
-            {...commentBodyProps}
-            anchorHandleMouseEnter={handleMouseEnter}
-            anchorHandleMouseLeave={handleMouseLeave}
-          />
+          <CommentBody {...commentBodyProps} />
         </a>
       ) : (
         <CommentBody {...commentBodyProps} />
@@ -60,7 +58,7 @@ export function Comment({
 
       {/* user infobox on hover */}
       <Suspense fallback={<UserInfoboxLoader />}>
-        {anchorComment && isUserHovered && (
+        {isUserHovered && (
           <LazyUserInfobox
             author={comment.authorData}
             handleMouseEnter={handleMouseEnter}

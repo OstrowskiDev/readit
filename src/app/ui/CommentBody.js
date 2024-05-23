@@ -17,8 +17,8 @@ export function CommentBody({
   setToggleCollapse,
   toggleCollapse,
   anchorComment,
-  anchorHandleMouseEnter,
-  anchorHandleMouseLeave,
+  handleMouseEnter,
+  handleMouseLeave,
 }) {
   return (
     <div
@@ -46,8 +46,8 @@ export function CommentBody({
         <CommentAuthorsInfo
           comment={comment}
           anchorComment={anchorComment}
-          anchorHandleMouseEnter={anchorHandleMouseEnter}
-          anchorHandleMouseLeave={anchorHandleMouseLeave}
+          handleMouseEnter={handleMouseEnter}
+          handleMouseLeave={handleMouseLeave}
         />
 
         {/* comment content */}

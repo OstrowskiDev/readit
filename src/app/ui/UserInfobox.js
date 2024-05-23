@@ -30,7 +30,7 @@ export default function UserInfobox({
       newData.push(newAuthor)
       setAuthorsData(newData)
     }
-  }, [author])
+  }, [])
 
   const userData = authorsData?.find((author) => author._id === authorId)
   const postsSum = userData?.postsSum
