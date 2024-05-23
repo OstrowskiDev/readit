@@ -1,12 +1,11 @@
 'use client'
 
 import { useState, Suspense, lazy } from 'react'
-import TimeAgo from './TimeAgo'
-import Avatar from '../lib/avatars/Avatar'
 import { UserInfoboxLoader } from './loaders/UserInfoboxLoader'
-import useMouseHover from '../lib/hooks/useMouseHover'
 import { CommentButtons } from './CommentButtons'
 import { CommentContextProvider } from '../lib/context/CommentContextProvider'
+import useMouseHover from '../lib/hooks/useMouseHover'
+import { CommentAuthorsInfo } from './CommentAuthorsInfo'
 const LazyUserInfobox = lazy(() => import('./UserInfobox.js'))
 
 export function Comment({
@@ -17,121 +16,139 @@ export function Comment({
   depth,
   postId,
   renderChildren,
+  anchorComment,
 }) {
   const [deleteOptimistically, setDeleteOptimistically] = useState(false)
-  const { isUserHovered, handleMouseEnter, handleMouseLeave } = useMouseHover()
+  // const { isUserHovered, handleMouseEnter, handleMouseLeave } = useMouseHover()
   const [toggleCollapse, setToggleCollapse] = useState(false)
   const rootPostId = postId ? postId : comment.rootPostId
 
+  console.log('Comment component is being rendered!')
+
   if (!comment) return null
-  const author = comment.authorData
+
+  function CommentBody({
+    comment,
+    comments,
+    setComments,
+    commentId,
+    depth,
+    postId,
+    renderChildren,
+  }) {
+    return (
+      <div
+        className="comment-container relative flex pt-4 px-2"
+        id={commentId}
+        style={{
+          marginLeft: depth === 0 ? 0 : 25,
+          display: deleteOptimistically ? 'none' : 'flex',
+        }}
+      >
+        {/* comment accordion element */}
+        <div
+          className="comment-collapse-element comment-vertical-line absolute left-[4px] top-14 w-3"
+          onClick={() => setToggleCollapse((prevValue) => !prevValue)}
+        >
+          {toggleCollapse && (
+            <div className="comment-collapse-icon absolute flex justify-center items-center w-5 h-5 top-8 left-[-4px] bg-gray-100 border border-gray-400 rounded-full text-gray-400">
+              <p className="pb-[2px]">+</p>
+            </div>
+          )}
+        </div>
+
+        <div className="comment-main-content-container w-full">
+          {/* authors avatar, user name, comment time, edit time */}
+          <CommentAuthorsInfo comment={comment} anchorComment={anchorComment} />
+
+          {/* comment content */}
+          <div className="comment-body-container ml-4">
+            <pre className="comment-body mt-1 text-lg font-sans whitespace-pre-wrap">
+              {comment.content}
+            </pre>
+          </div>
+
+          {/* comment buttons */}
+          <CommentContextProvider
+            comment={comment}
+            commentId={commentId}
+            postId={rootPostId}
+            setDeleteOptimistically={setDeleteOptimistically}
+            comments={comments}
+            setComments={setComments}
+          >
+            <CommentButtons />
+          </CommentContextProvider>
+
+          {/* comment replies */}
+          {!toggleCollapse && renderChildren && (
+            <div className="comment-replies ml-[20px]">
+              {comment.replies.map((replyId) => {
+                const reply = comments.find((c) => c._id === replyId)
+                return (
+                  <Comment
+                    key={replyId}
+                    comment={reply}
+                    comments={comments}
+                    setComments={setComments}
+                    commentId={replyId}
+                    depth={depth + 1}
+                    postId={postId}
+                    renderChildren={renderChildren}
+                  />
+                )
+              })}
+            </div>
+          )}
+        </div>
+      </div>
+    )
+  }
 
   return (
-    <div
-      className="comment-container relative flex pt-4 px-2"
-      id={commentId}
-      style={{
-        marginLeft: depth === 0 ? 0 : 25,
-        display: deleteOptimistically ? 'none' : 'flex',
-      }}
-    >
-      {/* comment accordion element */}
-      <div
-        className="comment-collapse-element comment-vertical-line absolute left-[4px] top-14 w-3"
-        onClick={() => setToggleCollapse((prevValue) => !prevValue)}
-      >
-        {toggleCollapse && (
-          <div className="comment-collapse-icon absolute flex justify-center items-center w-5 h-5 top-8 left-[-4px] bg-gray-100 border border-gray-400 rounded-full text-gray-400">
-            <p className="pb-[2px]">+</p>
-          </div>
-        )}
-      </div>
-
-      <div className="comment-main-content-container w-full">
-        {/* authors avatar, user name, comment time, edit time */}
-        <div className="comment-username-container relative right-6 flex items-center">
-          {/* authors avatar */}
-          <div
-            className="comment-avatar-container min-w-12 min-h-12 hover:cursor-pointer"
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-          >
-            <Avatar
-              seed={author?.avatar.seed}
-              color={author?.avatar.color}
-              size={48}
-              border={2}
-            />
-
-            {/* user infobox on hover */}
-            <Suspense fallback={<UserInfoboxLoader />}>
-              {isUserHovered && (
-                <LazyUserInfobox
-                  author={author}
-                  handleMouseEnter={handleMouseEnter}
-                  handleMouseLeave={handleMouseLeave}
-                />
-              )}
-            </Suspense>
-          </div>
-
-          {/* authors name */}
-          <p
-            className="comment-author ml-2 text-blue-900 text-15 hover:cursor-pointer"
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-          >
-            {author.name}
-          </p>
-
-          {/* comment time, edit time */}
-          <TimeAgo
-            createdAt={comment.createdAt}
-            updatedAt={comment.updatedAt}
-            type="created"
+    <div className="comment-infobox-wrapper relative w-full">
+      {anchorComment ? (
+        <a
+          href={`/posts/post/${comment.rootPostId}`}
+          className="comment-anchor-container flex flex-col justify-between
+        pb-4 px-4 my-2 rounded-md shadow-center-sm 
+        border-white border-2 hover:border-blue-300
+        hover:shadow-center-lg hover:cursor-pointer hover:outline-red-50"
+        >
+          <CommentBody
+            comment={comment}
+            comments={comments}
+            setComments={setComments}
+            commentId={commentId}
+            depth={depth}
+            postId={postId}
+            renderChildren={renderChildren}
           />
-        </div>
-
-        {/* comment content */}
-        <div className="comment-body-container ml-4">
-          <pre className="comment-body mt-1 text-lg font-sans whitespace-pre-wrap">
-            {comment.content}
-          </pre>
-        </div>
-
-        {/* comment buttons */}
-        <CommentContextProvider
+        </a>
+      ) : (
+        <CommentBody
           comment={comment}
-          commentId={commentId}
-          postId={rootPostId}
-          setDeleteOptimistically={setDeleteOptimistically}
           comments={comments}
           setComments={setComments}
-        >
-          <CommentButtons />
-        </CommentContextProvider>
+          commentId={commentId}
+          depth={depth}
+          postId={postId}
+          renderChildren={renderChildren}
+        />
+      )}
 
-        {/* comment replies */}
-        {!toggleCollapse && renderChildren && (
-          <div className="comment-replies ml-[20px]">
-            {comment.replies.map((replyId) => {
-              const reply = comments.find((c) => c._id === replyId)
-              return (
-                <Comment
-                  key={replyId}
-                  comment={reply}
-                  comments={comments}
-                  setComments={setComments}
-                  commentId={replyId}
-                  depth={depth + 1}
-                  postId={postId}
-                  renderChildren={renderChildren}
-                />
-              )
-            })}
-          </div>
-        )}
-      </div>
+      {/* user infobox on hover */}
+      {/* {anchorComment && (
+        <Suspense fallback={<UserInfoboxLoader />}>
+          {isUserHovered && (
+            <LazyUserInfobox
+              author={comment.authorData}
+              handleMouseEnter={handleMouseEnter}
+              handleMouseLeave={handleMouseLeave}
+            />
+          )}
+        </Suspense>
+      )} */}
     </div>
   )
 }

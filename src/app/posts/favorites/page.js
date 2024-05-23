@@ -100,29 +100,20 @@ export default function FavoritesPage({ searchParams }) {
                     postId={document._id}
                     post={document}
                     setPosts={setPosts}
-                    // authorsData={authorsData}
-                    // setAuthorsData={setAuthorsData}
                     enableCommentBtn={false}
                   />
                 ) : (
-                  <a
-                    href={`/posts/post/${document.rootPostId}`}
+                  <Comment
                     key={document._id}
                     _id={document._id}
-                    className="comment-container flex flex-col justify-between
-                  pb-4 px-4 my-2 rounded-md shadow-center-sm 
-                  border-white border-2 hover:border-blue-300
-                  hover:shadow-center-lg hover:cursor-pointer hover:outline-red-50"
-                  >
-                    <Comment
-                      comment={document}
-                      commentId={document._id}
-                      depth={1}
-                      renderChildren={false}
-                      comments={comments}
-                      setComments={setComments}
-                    />
-                  </a>
+                    comment={document}
+                    commentId={document._id}
+                    depth={1}
+                    comments={comments}
+                    setComments={setComments}
+                    renderChildren={false}
+                    anchorComment={true}
+                  />
                 ),
               )}
             </div>

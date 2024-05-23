@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { countUserComments, countUserPosts } from '../lib/actions'
 import Avatar from '../lib/avatars/Avatar'
 import { cloneDeep } from 'lodash'
@@ -13,11 +13,13 @@ export default function UserInfobox({
   handleMouseEnter,
   handleMouseLeave,
 }) {
+  console.log('UserInfobox component is being rendered!')
   const [isLoading, setIsLoading] = useState(true)
   const { authorsData, setAuthorsData } = useToastContext()
   const authorId = author._id
 
   useEffect(() => {
+    console.log('UserInfobox effect triggered!')
     const dataExists = authorsData?.find((author) => author._id === authorId)
     if (!dataExists) {
       const postsSum = countUserPosts(author._id)
