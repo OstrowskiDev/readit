@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, Suspense, lazy } from 'react'
+import { useState, Suspense, lazy, useEffect } from 'react'
 import { UserInfoboxLoader } from './loaders/UserInfoboxLoader'
 import useMouseHover from '../lib/hooks/useMouseHover'
 import { CommentBody } from './CommentBody'
@@ -20,6 +20,16 @@ export function Comment({
   const { isUserHovered, handleMouseEnter, handleMouseLeave } = useMouseHover()
   const [toggleCollapse, setToggleCollapse] = useState(false)
   const rootPostId = postId ? postId : comment.rootPostId
+
+  useEffect(() => {
+    if (comment) {
+      const id = window.location.hash.substring(1) // remove the '#' symbol
+      const element = document.getElementById(id)
+      if (element) {
+        element.scrollIntoView()
+      }
+    }
+  }, [comment])
 
   if (!comment) return null
   const commentBodyProps = {
@@ -44,7 +54,7 @@ export function Comment({
     <div className="comment-infobox-wrapper relative w-full">
       {anchorComment ? (
         <a
-          href={`/posts/post/${comment.rootPostId}`}
+          href={`/posts/post/${comment.rootPostId}#${comment._id}`}
           className="comment-anchor-container flex flex-col justify-between
         pb-4 px-4 my-2 rounded-md shadow-center-sm 
         border-white border-2 hover:border-blue-300

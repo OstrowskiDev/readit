@@ -1,4 +1,3 @@
-// - change structure of Comment component so it will not trigger warnings when wrapped in <a> tag and generating Infobox component.
 // - add favorites page, lol this will take some srs effort:
 //     - figure out how to change comment components to be able to handle buttons, optimistic ui changes and toasts. Currently structure of comments is totally different than posts and doesn't allow to use them separately without parent post.
 //     - add functionality to filter button so it can handle favorites page
@@ -8,7 +7,7 @@
 // - change favorites icon to star
 // - !!!! test user experience for non logged users
 // - !!!! add edit post functionality similar to edit comment (atm it still navigates to edit post page)
-// - add spinner from credits comment to its post
+// - move thanks to spinner creators from credits comment to credits post
 // - add password client side validation:
 //     - it will work for both creating account and changing password
 //     - add account creation
