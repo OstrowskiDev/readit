@@ -39,8 +39,13 @@ export function Comment({
       }
       const params = new URLSearchParams(window.location.search)
       const showEditForm = params.get('showEditForm')
+      const showReplyForm = params.get('showReplyForm')
       if (showEditForm === 'true' && comment._id === targetCommentId) {
         setIsEditVisible(true)
+      }
+
+      if (showReplyForm === 'true' && comment._id === targetCommentId) {
+        setIsReplyFormVis(true)
       }
       //delete # fragment identifier form the url, this prevents the page from scrolling to the comment on every users action
       history.replaceState(null, null, ' ')
