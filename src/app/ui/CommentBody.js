@@ -20,6 +20,10 @@ export function CommentBody({
   handleMouseEnter,
   handleMouseLeave,
   enableReplyBtn,
+  isReplyFormVis,
+  setIsReplyFormVis,
+  isEditVisible,
+  setIsEditVisible,
 }) {
   return (
     <div
@@ -67,6 +71,10 @@ export function CommentBody({
           comments={comments}
           setComments={setComments}
           enableReplyBtn={enableReplyBtn}
+          isReplyFormVis={isReplyFormVis}
+          setIsReplyFormVis={setIsReplyFormVis}
+          isEditVisible={isEditVisible}
+          setIsEditVisible={setIsEditVisible}
         >
           <CommentButtons />
         </CommentContextProvider>
@@ -86,6 +94,7 @@ export function CommentBody({
                   depth={depth + 1}
                   postId={postId}
                   renderChildren={renderChildren}
+                  enableReplyBtn={enableReplyBtn}
                 />
               )
             })}

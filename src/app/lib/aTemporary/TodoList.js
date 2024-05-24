@@ -1,7 +1,4 @@
-// - add favorites page, lol this will take some srs effort:
-//     - figure out how to change comment components to be able to handle buttons, optimistic ui changes and toasts. Currently structure of comments is totally different than posts and doesn't allow to use them separately without parent post.
-//     - add functionality to filter button so it can handle favorites page
-// - add functionality to posts page for handling favorite clicks, atm it redirects to post
+// - change behaviour of edit and reply buttons for favorites comments and posts?
 // - add functionality to PostMenu that handles situation where user clicks outside of the menu
 // - add rendering options for MyPosts and Favorites pages in case no MyPosts or Favorites were found
 // - change favorites icon to star

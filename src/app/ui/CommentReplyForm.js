@@ -10,8 +10,13 @@ import cloneDeep from 'lodash/cloneDeep'
 import { useToastContext } from '../lib/toasts/ToastProvider'
 
 export function CommentReplyForm({ parentType }) {
-  const { isVisible, setIsVisible, commentId, comments, setComments } =
-    useCommentContext()
+  const {
+    isReplyFormVis,
+    setIsReplyFormVis,
+    commentId,
+    comments,
+    setComments,
+  } = useCommentContext()
 
   const [input, setInput] = useState('')
   const { data: session } = useSession()
@@ -63,7 +68,7 @@ export function CommentReplyForm({ parentType }) {
       newCommentId,
     )
     setResponse(serverResponse)
-    setIsVisible(!isVisible)
+    setIsReplyFormVis(!isReplyFormVis)
     setInput('')
   }
 
@@ -113,7 +118,7 @@ export function CommentReplyForm({ parentType }) {
       <button
         className="comment-reply-cancel-btn btn-gray py-1 px-2 mt-1"
         type="button"
-        onClick={() => setIsVisible(!isVisible)}
+        onClick={() => setIsReplyFormVis(!isReplyFormVis)}
       >
         Cancel
       </button>
@@ -122,7 +127,7 @@ export function CommentReplyForm({ parentType }) {
 
   return (
     <>
-      {isVisible && (
+      {isReplyFormVis && (
         <div className="comment-reply-form change-border-on-child-focus p-2 ml-4 mr-1 my-1 bg-white border border-slate-300 rounded-lg">
           <form>
             <textarea

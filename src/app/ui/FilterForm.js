@@ -33,6 +33,12 @@ export function FilterForm({
                 placeholder=""
                 value={formState.title}
                 onChange={handleInputChange}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    e.preventDefault()
+                    onSubmit()
+                  }
+                }}
               />
             </div>
             <div className="filter-author-container flex px-4">
@@ -54,7 +60,12 @@ export function FilterForm({
                 placeholder=""
                 value={formState.author}
                 onChange={handleInputChange}
-                disabled={onlyCurrentUserPosts ? true : false}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    e.preventDefault()
+                    onSubmit()
+                  }
+                }}
               />
             </div>
             <div className="filter-content-container flex px-4">
@@ -67,6 +78,12 @@ export function FilterForm({
                 placeholder=""
                 value={formState.content}
                 onChange={handleInputChange}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    e.preventDefault()
+                    onSubmit()
+                  }
+                }}
               />
             </div>
             <div className="filter-sortBy-container flex px-4">

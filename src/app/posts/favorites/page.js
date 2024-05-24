@@ -122,7 +122,7 @@ export default function FavoritesPage({ searchParams }) {
                     postId={document._id}
                     post={document}
                     setPosts={setPosts}
-                    enableCommentBtn={false}
+                    enableCommentBtn={true}
                   />
                 ) : (
                   <Comment
@@ -135,7 +135,7 @@ export default function FavoritesPage({ searchParams }) {
                     setComments={setComments}
                     renderChildren={false}
                     anchorComment={true}
-                    enableReplyBtn={false}
+                    enableReplyBtn={true}
                   />
                 )
               })}

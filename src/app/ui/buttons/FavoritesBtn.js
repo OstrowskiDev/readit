@@ -8,7 +8,9 @@ export function FavoritesBtn({
   setIsPostMenuVis,
   setResponse,
 }) {
-  async function onFavoriteSubmit() {
+  async function onFavoriteSubmit(event) {
+    event.preventDefault()
+
     const serverResponse =
       type === 'post'
         ? await handlePostFavorites(documentId)

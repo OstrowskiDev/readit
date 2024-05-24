@@ -1,11 +1,24 @@
+import { usePathname } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import { EditIco } from '../icons/EditIco'
+import { useCommentContext } from '@/app/lib/context/CommentContextProvider'
 
 export function EditCommentBtn({
   setIsEditVisible,
   isEditVisible,
   setIsMenuVisible,
 }) {
-  function onEditClick() {
+  const { comment } = useCommentContext()
+  const router = useRouter()
+  const pathname = usePathname()
+
+  function onEditClick(event) {
+    event.preventDefault()
+    if (pathname === '/posts/favorites') {
+      const href = `/posts/post/${comment.rootPostId}?showEditForm=true#${comment._id}`
+      router.push(href)
+      return
+    }
     setIsEditVisible(!isEditVisible)
     setIsMenuVisible(false)
   }

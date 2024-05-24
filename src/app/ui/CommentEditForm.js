@@ -99,7 +99,7 @@ export function CommentEditForm() {
     <>
       {isEditVisible && (
         <div className="comment-reply-form change-border-on-child-focus p-2 ml-4 mr-1 my-1 bg-white border border-slate-300 rounded-lg">
-          <form>
+          <form onClick={(e) => e.preventDefault()}>
             <textarea
               id="content"
               name="content"
@@ -107,6 +107,7 @@ export function CommentEditForm() {
               placeholder="Add yor comment"
               value={input}
               onChange={(e) => setInput(e.target.value)}
+              onClick={(e) => e.preventDefault()}
             />
             <div className="comment-reply-btns flex justify-end">
               <CancelBtn />

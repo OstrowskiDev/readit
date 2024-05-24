@@ -6,11 +6,11 @@ import { signIn, useSession } from 'next-auth/react'
 
 export function ReplyBtn() {
   const { data: session } = useSession()
-  const { isVisible, setIsVisible } = useCommentContext()
+  const { isReplyFormVis, setIsReplyFormVis } = useCommentContext()
 
-  function handleClick() {
+  function handleClick(event) {
     event.preventDefault()
-    session ? setIsVisible(!isVisible) : signIn()
+    session ? setIsReplyFormVis(!isReplyFormVis) : signIn()
   }
   return (
     <button

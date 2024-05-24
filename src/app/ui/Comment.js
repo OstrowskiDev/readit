@@ -20,20 +20,32 @@ export function Comment({
   const [deleteOptimistically, setDeleteOptimistically] = useState(false)
   const { isUserHovered, handleMouseEnter, handleMouseLeave } = useMouseHover()
   const [toggleCollapse, setToggleCollapse] = useState(false)
+  const [isReplyFormVis, setIsReplyFormVis] = useState(false)
+  const [isEditVisible, setIsEditVisible] = useState(false)
+  const [targetCommentId, setTargetCommentId] = useState(null)
   const rootPostId = postId ? postId : comment.rootPostId
 
   useEffect(() => {
-    if (comment) {
-      // navigate to specific comment if its id was passed in the url
-      const commentElementId = window.location.hash.substring(1)
-      const element = document.getElementById(commentElementId)
+    const commentElementId = window.location.hash.substring(1)
+    setTargetCommentId(commentElementId)
+  }, [])
+
+  useEffect(() => {
+    if (comment && targetCommentId) {
+      const element = document.getElementById(targetCommentId)
       if (element) {
+        // navigate to specific comment
         element.scrollIntoView()
-        //below line deletes # fragment identifier form the url, this prevents the page from scrolling to the comment on every users action
-        history.replaceState(null, null, ' ')
       }
+      const params = new URLSearchParams(window.location.search)
+      const showEditForm = params.get('showEditForm')
+      if (showEditForm === 'true' && comment._id === targetCommentId) {
+        setIsEditVisible(true)
+      }
+      //delete # fragment identifier form the url, this prevents the page from scrolling to the comment on every users action
+      history.replaceState(null, null, ' ')
     }
-  }, [comment])
+  }, [comment, targetCommentId])
 
   if (!comment) return null
   const commentBodyProps = {
@@ -53,6 +65,10 @@ export function Comment({
     handleMouseEnter,
     handleMouseLeave,
     enableReplyBtn,
+    isReplyFormVis,
+    setIsReplyFormVis,
+    isEditVisible,
+    setIsEditVisible,
   }
 
   return (

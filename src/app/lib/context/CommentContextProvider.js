@@ -13,15 +13,16 @@ export function CommentContextProvider({
   comments,
   setComments,
   enableReplyBtn,
+  isReplyFormVis,
+  setIsReplyFormVis,
+  isEditVisible,
+  setIsEditVisible,
 }) {
-  const [isVisible, setIsVisible] = useState(false)
-  const [isEditVisible, setIsEditVisible] = useState(false)
-
   return (
     <CommentContext.Provider
       value={{
-        isVisible,
-        setIsVisible,
+        isReplyFormVis,
+        setIsReplyFormVis,
         isEditVisible,
         setIsEditVisible,
         comment,
