@@ -23,10 +23,13 @@ export function Comment({
 
   useEffect(() => {
     if (comment) {
-      const id = window.location.hash.substring(1) // remove the '#' symbol
-      const element = document.getElementById(id)
+      // navigate to specific comment if its id was passed in the url
+      const commentElementId = window.location.hash.substring(1)
+      const element = document.getElementById(commentElementId)
       if (element) {
         element.scrollIntoView()
+        //below line deletes # fragment identifier form the url, this prevents the page from scrolling to the comment on every users action
+        history.replaceState(null, null, ' ')
       }
     }
   }, [comment])
