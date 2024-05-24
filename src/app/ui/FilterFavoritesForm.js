@@ -1,16 +1,17 @@
 'use client'
 
 import { useState } from 'react'
-import { filterPosts } from '../lib/db'
+import { filterFavorites } from '../lib/db'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { FilterForm } from './FilterForm'
 
-export function FilterPostsForm({
+export function FilterFavoritesForm({
   setTriggerReset,
-  setPosts,
   isFilterFormVis,
   setIsFilterFormVis,
-  onlyCurrentUserPosts,
+  setPosts,
+  setComments,
+  setDocumentOrder,
 }) {
   const [formState, setFormState] = useState({
     title: '',
@@ -45,12 +46,19 @@ export function FilterPostsForm({
     }
     replace(`${pathname}?${params.toString()}`)
 
-    if (onlyCurrentUserPosts) {
-      filterData = { ...filterData, onlyCurrentUserPosts }
-    }
+    const fetchedData = await filterFavorites(filterData)
+    const sortedData = fetchedData.map((document) => ({
+      _id: document._id,
+      type: document.type,
+    }))
+    setDocumentOrder(sortedData)
 
-    const postsData = await filterPosts(filterData)
+    const postsData = fetchedData.filter((document) => document.type === 'post')
+    const commentsData = fetchedData.filter(
+      (document) => document.type === 'comment',
+    )
     setPosts(postsData)
+    setComments(commentsData)
     setTriggerReset((prevState) => !prevState)
   }
 
@@ -58,11 +66,10 @@ export function FilterPostsForm({
     <FilterForm
       isFilterFormVis={isFilterFormVis}
       setIsFilterFormVis={setIsFilterFormVis}
-      onlyCurrentUserPosts={onlyCurrentUserPosts}
       onSubmit={onSubmit}
       formState={formState}
       setFormState={setFormState}
-      enableActivityFilter={true}
+      enableActivityFilter={false}
     />
   )
 }

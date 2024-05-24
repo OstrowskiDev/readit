@@ -115,6 +115,7 @@ export default function PostPage({ params }) {
                         postId={postId}
                         renderChildren={true}
                         anchorComment={false}
+                        enableReplyBtn={true}
                       />
                     )
                   })}

@@ -8,12 +8,7 @@ export function FavoritesBtn({
   setIsPostMenuVis,
   setResponse,
 }) {
-  function handleFavOptimistically() {
-    console.log('optimistic UI for favorites not implemented yet...')
-  }
-
   async function onFavoriteSubmit() {
-    handleFavOptimistically()
     const serverResponse =
       type === 'post'
         ? await handlePostFavorites(documentId)

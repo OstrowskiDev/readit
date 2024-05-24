@@ -15,6 +15,7 @@ export function Comment({
   postId,
   renderChildren,
   anchorComment,
+  enableReplyBtn,
 }) {
   const [deleteOptimistically, setDeleteOptimistically] = useState(false)
   const { isUserHovered, handleMouseEnter, handleMouseLeave } = useMouseHover()
@@ -51,6 +52,7 @@ export function Comment({
     toggleCollapse,
     handleMouseEnter,
     handleMouseLeave,
+    enableReplyBtn,
   }
 
   return (

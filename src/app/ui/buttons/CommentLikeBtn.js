@@ -67,8 +67,8 @@ export function CommentLikeBtn({ styles }) {
     setComments(newComments)
   }
 
-  function SubmitButton() {
-    return (
+  return (
+    <form className="rounded-md hover:bg-gray-200">
       <button
         className={styles + ' flex justify-center items-center'}
         type="submit"
@@ -76,12 +76,6 @@ export function CommentLikeBtn({ styles }) {
       >
         {isAlreadyLiked ? <LikeIcoActive /> : <LikeIco />}
       </button>
-    )
-  }
-
-  return (
-    <form className="rounded-md hover:bg-gray-200">
-      <SubmitButton />
     </form>
   )
 }

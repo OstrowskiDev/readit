@@ -19,6 +19,7 @@ export function CommentBody({
   anchorComment,
   handleMouseEnter,
   handleMouseLeave,
+  enableReplyBtn,
 }) {
   return (
     <div
@@ -65,6 +66,7 @@ export function CommentBody({
           setDeleteOptimistically={setDeleteOptimistically}
           comments={comments}
           setComments={setComments}
+          enableReplyBtn={enableReplyBtn}
         >
           <CommentButtons />
         </CommentContextProvider>

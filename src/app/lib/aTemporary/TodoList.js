@@ -17,6 +17,7 @@
 // - add toast notification and optimistic UI for creating post in posts page
 // - dark mode could be nice
 // - maybe using html and emotes in posts?
+// - add ARIA for accessibility
 
 // - link to github repo
 //

@@ -1,33 +1,33 @@
 'use client'
 
-import { handleDislikeClick } from '@/app/lib/actions'
-import { DislikeIco } from '../icons/DislikeIco'
-import { DislikeIcoActive } from '../icons/DislikeIcoActive'
+import { handleLikeClick } from '@/app/lib/actions'
+import { LikeIco } from '../icons/LikeIco'
+import { LikeIcoActive } from '../icons/LikeIcoActive'
 import { usePostContext } from '@/app/lib/context/PostContextProvider'
-import { useSession } from 'next-auth/react'
+import { signIn, useSession } from 'next-auth/react'
 import { useEffect, useState } from 'react'
 import { usePathname } from 'next/navigation'
 import { useToastContext } from '@/app/lib/toasts/ToastProvider'
 
-export function PostDislikeBtn({ styles }) {
-  const { post, setPost, setPosts, postId, postDislikes } = usePostContext()
+export function PostLikeBtn({ styles }) {
+  const { post, setPost, setPosts, postId, postLikes } = usePostContext()
   const [response, setResponse] = useState({
     state: null,
     message: null,
-    wasLiked: false,
+    wasDisliked: false,
   })
   const pathname = usePathname()
-  const { data: session } = useSession()
   const { toastFunctions: toast } = useToastContext()
+  const { data: session } = useSession()
   const userId = session?.user?.id
-  const isAlreadyDisliked = postDislikes?.includes(userId)
+  const isAlreadyLiked = postLikes?.includes(userId)
   const collection = 'posts'
 
   useEffect(() => {
-    if (response.state === 'success') {
+    if (response?.state === 'success') {
       toast.success(response.message)
     }
-    if (response.state === 'error') {
+    if (response?.state === 'error') {
       toast.error(response.message)
       handlePostOptimistically()
     }
@@ -35,29 +35,29 @@ export function PostDislikeBtn({ styles }) {
 
   async function onClick(event) {
     event.preventDefault()
+    if (!session) return signIn()
     handlePostOptimistically()
-    const serverResponse = await handleDislikeClick(postId, collection)
+    const serverResponse = await handleLikeClick(postId, collection)
     setResponse(serverResponse)
   }
 
   function handlePostOptimistically() {
-    if (!session) return
     const newPost = { ...post }
 
-    if (!post.dislikes) {
-      newPost.dislikes = [userId]
-    } else if (!post.dislikes.includes(userId)) {
-      newPost.dislikes = [...post.dislikes, userId]
+    if (!post.likes) {
+      newPost.likes = [userId]
+    } else if (!post.likes.includes(userId)) {
+      newPost.likes = [...post.likes, userId]
     } else {
-      newPost.dislikes = post.dislikes.filter((id) => id !== userId)
-    }
-
-    if (post.likes?.includes(userId)) {
       newPost.likes = post.likes.filter((id) => id !== userId)
     }
 
-    if (response?.state === 'error' && response?.wasLiked === true) {
-      newPost.likes = [...newPost.likes, userId]
+    if (post.dislikes?.includes(userId)) {
+      newPost.dislikes = post.dislikes.filter((id) => id !== userId)
+    }
+
+    if (response?.state === 'error' && response?.wasDisliked === true) {
+      newPost.dislikes = [...newPost.dislikes, userId]
     }
 
     if (pathname.startsWith('/posts/post')) {
@@ -70,13 +70,13 @@ export function PostDislikeBtn({ styles }) {
   }
 
   return (
-    <form className="ml-[1px] rounded-md hover:bg-gray-300">
+    <form className="rounded-md hover:bg-gray-300">
       <button
         className={styles + ' flex justify-center items-center'}
         type="submit"
         onClick={onClick}
       >
-        {isAlreadyDisliked ? <DislikeIcoActive /> : <DislikeIco />}
+        {isAlreadyLiked ? <LikeIcoActive /> : <LikeIco />}
       </button>
     </form>
   )

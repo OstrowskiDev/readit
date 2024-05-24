@@ -67,8 +67,8 @@ export function CommentDislikeBtn({ styles }) {
     setComments(newComments)
   }
 
-  function SubmitButton() {
-    return (
+  return (
+    <form className="ml-[1px] rounded-md hover:bg-gray-200 ">
       <button
         className={styles + ' flex justify-center items-center'}
         type="submit"
@@ -76,12 +76,6 @@ export function CommentDislikeBtn({ styles }) {
       >
         {isAlreadyDisliked ? <DislikeIcoActive /> : <DislikeIco />}
       </button>
-    )
-  }
-
-  return (
-    <form className="ml-[1px] rounded-md hover:bg-gray-200 ">
-      <SubmitButton />
     </form>
   )
 }

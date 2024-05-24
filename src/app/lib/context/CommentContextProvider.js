@@ -12,6 +12,7 @@ export function CommentContextProvider({
   setDeleteOptimistically,
   comments,
   setComments,
+  enableReplyBtn,
 }) {
   const [isVisible, setIsVisible] = useState(false)
   const [isEditVisible, setIsEditVisible] = useState(false)
@@ -29,6 +30,7 @@ export function CommentContextProvider({
         setComments,
         postId,
         setDeleteOptimistically,
+        enableReplyBtn,
       }}
     >
       {children}

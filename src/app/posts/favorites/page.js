@@ -5,13 +5,12 @@ import { filterFavorites } from '@/app/lib/db'
 import { ToastProvider } from '@/app/lib/toasts/ToastProvider'
 import PostsSearch from '@/app/ui/PostsSearch'
 import { FilterBtn } from '@/app/ui/buttons/FilterBtn'
-import CreateBtn from '@/app/ui/buttons/CreateBtn'
 import { CreatePostForm } from '@/app/ui/CreatePostForm'
-import { FilterPostsForm } from '@/app/ui/FilterPostsForm'
 import { Post } from '@/app/ui/Post'
 import { Loader } from '@/app/ui/loaders/Loader'
 import { PostShimmer } from '@/app/ui/loaders/PostShimmer'
 import { Comment } from '@/app/ui/Comment'
+import { FilterFavoritesForm } from '@/app/ui/FilterFavoritesForm'
 
 export default function FavoritesPage({ searchParams }) {
   const [posts, setPosts] = useState(null)
@@ -21,15 +20,27 @@ export default function FavoritesPage({ searchParams }) {
   const [isFilterFormVis, setIsFilterFormVis] = useState(false)
   const [triggerReset, setTriggerReset] = useState(false)
   const [fastQuery, setFastQuery] = useState(searchParams.fastQuery || '')
+  const [documentOrder, setDocumentOrder] = useState([])
 
   useEffect(() => {
     async function fetchData() {
       let filterData = searchParams
       const fetchedData = await filterFavorites(filterData)
-      // !!!! I don't like this part of code. Posts and Comments need to be in same array for sorting purposes of favoritesPage. [posts, setPosts] is old naming convention used in PostPage.js. Here it stores also Comments. It doesn't make sense here. But all other components use it, and for rest of app it is logical since post-comment structure is build from top to bottom. So I will keep it for now.
-      //// !!!! [comments, setComments] is also naming convention used in rest of app. Here it is used for optimistic update for comment buttons. Since Posts have similar structure to Comments I can pass Posts+Comments array to Comment Component. It is good idea, since it will work nicely with sorting but naming convention is confusing. I want to find better solution for this.
-      setPosts(fetchedData)
-      setComments(fetchedData)
+
+      const sortedData = fetchedData.map((document) => ({
+        _id: document._id,
+        type: document.type,
+      }))
+      setDocumentOrder(sortedData)
+
+      const postsData = fetchedData.filter(
+        (document) => document.type === 'post',
+      )
+      const commentsData = fetchedData.filter(
+        (document) => document.type === 'comment',
+      )
+      setPosts(postsData)
+      setComments(commentsData)
     }
     fetchData()
   }, [])
@@ -41,22 +52,30 @@ export default function FavoritesPage({ searchParams }) {
     }
   }, [triggerReset])
 
-  const matchingDocuments = posts?.filter(
-    (document) =>
-      (document.type === 'post' &&
-        document.title.toLowerCase().includes(fastQuery.toLowerCase())) ||
-      document.authorData.name
-        .toLowerCase()
-        .includes(fastQuery.toLowerCase()) ||
-      document.content.toLowerCase().includes(fastQuery.toLowerCase()),
-  )
+  const allDocuments = documentOrder.map((document) => {
+    return document.type === 'post'
+      ? posts.find((post) => post._id === document._id)
+      : comments.find((comment) => comment._id === document._id)
+  })
+  const matchingDocuments = allDocuments
+    .filter(
+      (document) =>
+        (document.type === 'post' &&
+          document.title.toLowerCase().includes(fastQuery.toLowerCase())) ||
+        document.authorData.name
+          .toLowerCase()
+          .includes(fastQuery.toLowerCase()) ||
+        document.content.toLowerCase().includes(fastQuery.toLowerCase()),
+    )
+    .map((document) => ({ _id: document._id, type: document.type }))
+
   return (
     <>
       <ToastProvider authorsData={authorsData} setAuthorsData={setAuthorsData}>
         <div className="container mx-auto mt-8 px-4 max-w-[800px]">
           <div className="flex md:items-center flex-col md:flex-row md:h-10 mb-4">
             <h1 className="grow below-md:hidden text-2xl font-semibold mr-4">
-              Posts
+              Favorites
             </h1>
             <PostsSearch
               triggerReset={triggerReset}
@@ -69,10 +88,6 @@ export default function FavoritesPage({ searchParams }) {
               isFilterFormVis={isFilterFormVis}
               setIsFilterFormVis={setIsFilterFormVis}
             />
-            <CreateBtn
-              isCreateFormVis={isCreateFormVis}
-              setIsCreateFormVis={setIsCreateFormVis}
-            />
           </div>
           {isCreateFormVis && (
             <CreatePostForm
@@ -81,19 +96,26 @@ export default function FavoritesPage({ searchParams }) {
             />
           )}
           {isFilterFormVis && (
-            <FilterPostsForm
+            <FilterFavoritesForm
               enableActivityFilter={false}
               setTriggerReset={setTriggerReset}
-              setPosts={setPosts}
               isFilterFormVis={isFilterFormVis}
               setIsFilterFormVis={setIsFilterFormVis}
+              setPosts={setPosts}
+              setComments={setComments}
+              setDocumentOrder={setDocumentOrder}
             />
           )}
 
-          {posts ? (
+          {matchingDocuments && (posts || comments) ? (
             <div className="flex flex-col items-center">
-              {matchingDocuments.map((document) =>
-                document.type === 'post' ? (
+              {matchingDocuments.map((sortingObj) => {
+                const document =
+                  sortingObj.type === 'post'
+                    ? posts.find((post) => post._id === sortingObj._id)
+                    : comments.find((comment) => comment._id === sortingObj._id)
+                if (!document) return null
+                return document.type === 'post' ? (
                   <Post
                     key={document._id}
                     _id={document._id}
@@ -113,9 +135,10 @@ export default function FavoritesPage({ searchParams }) {
                     setComments={setComments}
                     renderChildren={false}
                     anchorComment={true}
+                    enableReplyBtn={false}
                   />
-                ),
-              )}
+                )
+              })}
             </div>
           ) : (
             <>
