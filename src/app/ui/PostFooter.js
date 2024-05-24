@@ -7,7 +7,7 @@ import { PostReplyForm } from './PostReplyForm'
 import { useState } from 'react'
 import { LikeBtn } from './buttons/LikeBtn'
 import { PostLikeCount } from './PostLikeCount'
-import { DislikeBtn } from './buttons/DislikeBtn'
+import { PostDislikeBtn } from './buttons/PostDislikeBtn'
 
 export function PostFooter({
   commentNo,
@@ -25,10 +25,7 @@ export function PostFooter({
           <div className="flex items-center h-10 bg-gray-200 rounded-md">
             <LikeBtn collection={'posts'} styles={'w-11 h-10 px-[10px]'} />
             <PostLikeCount postLikes={postLikes} postDislikes={postDislikes} />
-            <DislikeBtn
-              collection={'posts'}
-              styles={'w-11 h-10 px-[10px] pt-[3px]'}
-            />
+            <PostDislikeBtn styles={'w-11 h-10 px-[10px] pt-[3px]'} />
           </div>
           <SharePostBtn />
         </div>

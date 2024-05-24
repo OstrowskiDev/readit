@@ -523,6 +523,8 @@ export async function handleDislikeClick(documentId, collection) {
 
   async function getDocument() {
     let doc
+    console.log('documentId:', documentId)
+    console.log('collection:', collection)
     try {
       if (collection === 'posts') {
         doc = await Post.findOne({ _id: documentId })

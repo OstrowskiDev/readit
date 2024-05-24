@@ -3,25 +3,14 @@
 import { handleDislikeClick } from '@/app/lib/actions'
 import { DislikeIco } from '../icons/DislikeIco'
 import { DislikeIcoActive } from '../icons/DislikeIcoActive'
-import { useCommentContext } from '@/app/lib/context/CommentContextProvider'
 import { usePostContext } from '@/app/lib/context/PostContextProvider'
 import { useSession } from 'next-auth/react'
 import { useEffect, useState } from 'react'
 import { usePathname } from 'next/navigation'
 import { useToastContext } from '@/app/lib/toasts/ToastProvider'
 
-export function DislikeBtn({ styles, collection }) {
-  const { comment, commentId } =
-    collection === 'comments' ? useCommentContext() : { undefined, undefined }
-  const {
-    comments,
-    setComments,
-    post,
-    setPost,
-    setPosts,
-    postId,
-    postDislikes,
-  } = usePostContext()
+export function PostDislikeBtn({ styles }) {
+  const { post, setPost, setPosts, postId, postDislikes } = usePostContext()
   const [response, setResponse] = useState({
     state: null,
     message: null,
@@ -31,10 +20,8 @@ export function DislikeBtn({ styles, collection }) {
   const { data: session } = useSession()
   const { toastFunctions: toast } = useToastContext()
   const userId = session?.user?.id
-  const isAlreadyDisliked =
-    collection === 'posts'
-      ? postDislikes?.includes(userId)
-      : comment.dislikes?.includes(userId)
+  const isAlreadyDisliked = postDislikes?.includes(userId)
+  const collection = 'posts'
 
   useEffect(() => {
     if (response.state === 'success') {
@@ -42,22 +29,14 @@ export function DislikeBtn({ styles, collection }) {
     }
     if (response.state === 'error') {
       toast.error(response.message)
-      handleOptimisticError()
+      handlePostOptimistically()
     }
   }, [response])
 
   async function onClick(event) {
     event.preventDefault()
-
-    collection === 'posts'
-      ? handlePostOptimistically()
-      : handleCommentOptimistically()
-
-    const serverResponse =
-      collection === 'posts'
-        ? await handleDislikeClick(postId, postId, collection)
-        : await handleDislikeClick(commentId, postId, collection)
-
+    handlePostOptimistically()
+    const serverResponse = await handleDislikeClick(postId, collection)
     setResponse(serverResponse)
   }
 
@@ -90,41 +69,6 @@ export function DislikeBtn({ styles, collection }) {
     }
   }
 
-  function handleCommentOptimistically() {
-    if (!session) return
-    const newComments = [...comments]
-    const oldComment = comments.find((comment) => comment._id === commentId)
-    const newComment = { ...oldComment }
-
-    if (!oldComment.dislikes) {
-      newComment.dislikes = [userId]
-    } else if (!oldComment.dislikes.includes(userId)) {
-      newComment.dislikes = [...oldComment.dislikes, userId]
-    } else {
-      newComment.dislikes = oldComment.dislikes.filter((id) => id !== userId)
-    }
-
-    if (oldComment.likes?.includes(userId)) {
-      newComment.likes = oldComment.likes.filter((id) => id !== userId)
-    }
-
-    if (response?.state === 'error' && response?.wasLiked === true) {
-      newComment.likes = [...newComment.likes, userId]
-    }
-
-    const index = newComments.findIndex((comment) => comment._id === commentId)
-    if (index !== -1) {
-      newComments[index] = newComment
-    }
-    setComments(newComments)
-  }
-
-  function handleOptimisticError() {
-    collection === 'posts'
-      ? handlePostOptimistically()
-      : handleCommentOptimistically()
-  }
-
   function SubmitButton() {
     return (
       <button
@@ -138,12 +82,7 @@ export function DislikeBtn({ styles, collection }) {
   }
 
   return (
-    <form
-      className={
-        'ml-[1px] rounded-md ' +
-        (collection === 'comments' ? 'hover:bg-gray-200' : 'hover:bg-gray-300')
-      }
-    >
+    <form className="ml-[1px] rounded-md hover:bg-gray-300">
       <SubmitButton />
     </form>
   )
