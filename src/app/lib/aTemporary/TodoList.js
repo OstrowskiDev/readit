@@ -1,4 +1,4 @@
-// - change behaviour of edit and reply buttons for favorites comments and posts?
+// - change behavior of edit and reply buttons for posts?
 // - add functionality to PostMenu that handles situation where user clicks outside of the menu
 // - add rendering options for MyPosts and Favorites pages in case no MyPosts or Favorites were found
 // - change favorites icon to star

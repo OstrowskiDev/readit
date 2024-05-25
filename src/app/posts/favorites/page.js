@@ -138,8 +138,6 @@ export default function FavoritesPage({ searchParams }) {
                       comments={comments}
                       setComments={setComments}
                       renderChildren={false}
-                      // anchorComment={true}
-                      enableReplyBtn={true}
                     />
                   </a>
                 )

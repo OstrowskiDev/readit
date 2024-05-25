@@ -2,14 +2,12 @@ import Avatar from '../lib/avatars/Avatar'
 import TimeAgo from './TimeAgo'
 import { Suspense, lazy } from 'react'
 import { UserInfoboxLoader } from './loaders/UserInfoboxLoader'
+import useMouseHover from '../lib/hooks/useMouseHover'
 const LazyUserInfobox = lazy(() => import('./UserInfobox.js'))
 
-export function CommentAuthorsInfo({
-  comment,
-  handleMouseEnter,
-  handleMouseLeave,
-  isUserHovered,
-}) {
+export function CommentAuthorsInfo({ comment }) {
+  const { isUserHovered, handleMouseEnter, handleMouseLeave } = useMouseHover()
+
   const author = comment.authorData
 
   return (

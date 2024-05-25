@@ -1,7 +1,6 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import useMouseHover from '../lib/hooks/useMouseHover'
 import { CommentButtons } from './CommentButtons'
 import { CommentContextProvider } from '../lib/context/CommentContextProvider'
 import { CommentAuthorsInfo } from './CommentAuthorsInfo'
@@ -14,12 +13,8 @@ export function Comment({
   depth,
   postId,
   renderChildren,
-  anchorComment,
-  enableReplyBtn,
 }) {
   const [deleteOptimistically, setDeleteOptimistically] = useState(false)
-  //!!!! later move this down to its respective component
-  const { isUserHovered, handleMouseEnter, handleMouseLeave } = useMouseHover()
   const [toggleCollapse, setToggleCollapse] = useState(false)
   const [isReplyFormVis, setIsReplyFormVis] = useState(false)
   const [isEditVisible, setIsEditVisible] = useState(false)
@@ -55,9 +50,20 @@ export function Comment({
 
   if (!comment) return null
   return (
-    <div className="comment-infobox-wrapper relative w-full">
+    <CommentContextProvider
+      comment={comment}
+      commentId={commentId}
+      postId={rootPostId}
+      setDeleteOptimistically={setDeleteOptimistically}
+      comments={comments}
+      setComments={setComments}
+      isReplyFormVis={isReplyFormVis}
+      setIsReplyFormVis={setIsReplyFormVis}
+      isEditVisible={isEditVisible}
+      setIsEditVisible={setIsEditVisible}
+    >
       <div
-        className="comment-container relative flex pt-4 px-2"
+        className="comment-container relative flex pt-4 px-2 w-full"
         id={commentId}
         style={{
           marginLeft: depth === 0 ? 0 : 25,
@@ -78,13 +84,7 @@ export function Comment({
 
         <div className="comment-main-content-container w-full">
           {/* authors avatar, user name, comment time, edit time */}
-          <CommentAuthorsInfo
-            comment={comment}
-            anchorComment={anchorComment}
-            handleMouseEnter={handleMouseEnter}
-            handleMouseLeave={handleMouseLeave}
-            isUserHovered={isUserHovered}
-          />
+          <CommentAuthorsInfo comment={comment} />
 
           {/* comment content */}
           <div className="comment-body-container ml-4">
@@ -94,21 +94,7 @@ export function Comment({
           </div>
 
           {/* comment buttons */}
-          <CommentContextProvider
-            comment={comment}
-            commentId={commentId}
-            postId={rootPostId}
-            setDeleteOptimistically={setDeleteOptimistically}
-            comments={comments}
-            setComments={setComments}
-            enableReplyBtn={enableReplyBtn}
-            isReplyFormVis={isReplyFormVis}
-            setIsReplyFormVis={setIsReplyFormVis}
-            isEditVisible={isEditVisible}
-            setIsEditVisible={setIsEditVisible}
-          >
-            <CommentButtons />
-          </CommentContextProvider>
+          <CommentButtons />
 
           {/* comment replies */}
           {!toggleCollapse && renderChildren && (
@@ -125,7 +111,6 @@ export function Comment({
                     depth={depth + 1}
                     postId={postId}
                     renderChildren={renderChildren}
-                    enableReplyBtn={enableReplyBtn}
                   />
                 )
               })}
@@ -133,6 +118,6 @@ export function Comment({
           )}
         </div>
       </div>
-    </div>
+    </CommentContextProvider>
   )
 }

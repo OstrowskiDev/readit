@@ -1,6 +1,6 @@
 'use client'
 
-import { createContext, useContext, useState } from 'react'
+import { createContext, useContext } from 'react'
 
 const CommentContext = createContext()
 
@@ -12,7 +12,6 @@ export function CommentContextProvider({
   setDeleteOptimistically,
   comments,
   setComments,
-  enableReplyBtn,
   isReplyFormVis,
   setIsReplyFormVis,
   isEditVisible,
@@ -31,7 +30,6 @@ export function CommentContextProvider({
         setComments,
         postId,
         setDeleteOptimistically,
-        enableReplyBtn,
       }}
     >
       {children}
