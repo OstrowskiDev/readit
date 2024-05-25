@@ -2,6 +2,7 @@
 // - add functionality to PostMenu that handles situation where user clicks outside of the menu
 // - add rendering options for MyPosts and Favorites pages in case no MyPosts or Favorites were found
 // - change favorites icon to star
+// - create the profile page of users, that will be displayed after clicking on user name in InfoBox component, currently route redirects to empty page
 // - !!!! test user experience for non logged users
 // - !!!! add edit post functionality similar to edit comment (atm it still navigates to edit post page)
 // - move thanks to spinner creators from credits comment to credits post

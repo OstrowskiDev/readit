@@ -125,18 +125,23 @@ export default function FavoritesPage({ searchParams }) {
                     enableCommentBtn={true}
                   />
                 ) : (
-                  <Comment
+                  <a
+                    href={`/posts/post/${document.rootPostId}#${document._id}`}
                     key={document._id}
                     _id={document._id}
-                    comment={document}
-                    commentId={document._id}
-                    depth={1}
-                    comments={comments}
-                    setComments={setComments}
-                    renderChildren={false}
-                    anchorComment={true}
-                    enableReplyBtn={true}
-                  />
+                    className="comment-anchor-container flex pb-4 px-4 my-2 rounded-md shadow-center-sm border-white border-2 hover:border-blue-300 hover:shadow-center-lg hover:cursor-pointer hover:outline-red-50"
+                  >
+                    <Comment
+                      comment={document}
+                      commentId={document._id}
+                      depth={1}
+                      comments={comments}
+                      setComments={setComments}
+                      renderChildren={false}
+                      // anchorComment={true}
+                      enableReplyBtn={true}
+                    />
+                  </a>
                 )
               })}
             </div>

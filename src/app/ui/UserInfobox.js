@@ -7,6 +7,7 @@ import { cloneDeep } from 'lodash'
 import { FollowBtn } from './buttons/FollowBtn'
 import { MessageBtn } from './buttons/MessageBtn'
 import { useToastContext } from '../lib/toasts/ToastProvider'
+import { useRouter } from 'next/navigation'
 
 export default function UserInfobox({
   author,
@@ -14,6 +15,7 @@ export default function UserInfobox({
   handleMouseLeave,
 }) {
   const { authorsData, setAuthorsData } = useToastContext()
+  const router = useRouter()
   const authorId = author._id
 
   useEffect(() => {
@@ -56,12 +58,12 @@ export default function UserInfobox({
               </div>
 
               <div className="name-date-container flex flex-col ml-4">
-                <a
-                  href={`/user/${author._id}/posts`}
+                <div
+                  onClick={() => router.push(`/user/${author._id}/posts`)}
                   className="name text-gray-950 text-20 font-semibold hover:cursor-pointer hover:underline"
                 >
                   {author.name}
-                </a>
+                </div>
                 <p className="date text-gray-500 leading-tight font-medium">
                   Joined: Aug 2, 2020
                 </p>

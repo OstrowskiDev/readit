@@ -1,10 +1,10 @@
 'use client'
 
-import { useState, Suspense, lazy, useEffect } from 'react'
-import { UserInfoboxLoader } from './loaders/UserInfoboxLoader'
+import { useState, useEffect } from 'react'
 import useMouseHover from '../lib/hooks/useMouseHover'
-import { CommentBody } from './CommentBody'
-const LazyUserInfobox = lazy(() => import('./UserInfobox.js'))
+import { CommentButtons } from './CommentButtons'
+import { CommentContextProvider } from '../lib/context/CommentContextProvider'
+import { CommentAuthorsInfo } from './CommentAuthorsInfo'
 
 export function Comment({
   comment,
@@ -18,6 +18,7 @@ export function Comment({
   enableReplyBtn,
 }) {
   const [deleteOptimistically, setDeleteOptimistically] = useState(false)
+  //!!!! later move this down to its respective component
   const { isUserHovered, handleMouseEnter, handleMouseLeave } = useMouseHover()
   const [toggleCollapse, setToggleCollapse] = useState(false)
   const [isReplyFormVis, setIsReplyFormVis] = useState(false)
@@ -53,55 +54,85 @@ export function Comment({
   }, [comment, targetCommentId])
 
   if (!comment) return null
-  const commentBodyProps = {
-    comment,
-    comments,
-    setComments,
-    commentId,
-    depth,
-    postId,
-    renderChildren,
-    deleteOptimistically,
-    setDeleteOptimistically,
-    anchorComment,
-    rootPostId,
-    setToggleCollapse,
-    toggleCollapse,
-    handleMouseEnter,
-    handleMouseLeave,
-    enableReplyBtn,
-    isReplyFormVis,
-    setIsReplyFormVis,
-    isEditVisible,
-    setIsEditVisible,
-  }
-
   return (
     <div className="comment-infobox-wrapper relative w-full">
-      {anchorComment ? (
-        <a
-          href={`/posts/post/${comment.rootPostId}#${comment._id}`}
-          className="comment-anchor-container flex flex-col justify-between
-        pb-4 px-4 my-2 rounded-md shadow-center-sm 
-        border-white border-2 hover:border-blue-300
-        hover:shadow-center-lg hover:cursor-pointer hover:outline-red-50"
+      <div
+        className="comment-container relative flex pt-4 px-2"
+        id={commentId}
+        style={{
+          marginLeft: depth === 0 ? 0 : 25,
+          display: deleteOptimistically ? 'none' : 'flex',
+        }}
+      >
+        {/* comment accordion element */}
+        <div
+          className="comment-collapse-element comment-vertical-line absolute left-[4px] top-14 w-3"
+          onClick={() => setToggleCollapse((prevValue) => !prevValue)}
         >
-          <CommentBody {...commentBodyProps} />
-        </a>
-      ) : (
-        <CommentBody {...commentBodyProps} />
-      )}
+          {toggleCollapse && (
+            <div className="comment-collapse-icon absolute flex justify-center items-center w-5 h-5 top-8 left-[-4px] bg-gray-100 border border-gray-400 rounded-full text-gray-400">
+              <p className="pb-[2px]">+</p>
+            </div>
+          )}
+        </div>
 
-      {/* user infobox on hover */}
-      <Suspense fallback={<UserInfoboxLoader />}>
-        {isUserHovered && (
-          <LazyUserInfobox
-            author={comment.authorData}
+        <div className="comment-main-content-container w-full">
+          {/* authors avatar, user name, comment time, edit time */}
+          <CommentAuthorsInfo
+            comment={comment}
+            anchorComment={anchorComment}
             handleMouseEnter={handleMouseEnter}
             handleMouseLeave={handleMouseLeave}
+            isUserHovered={isUserHovered}
           />
-        )}
-      </Suspense>
+
+          {/* comment content */}
+          <div className="comment-body-container ml-4">
+            <pre className="comment-body mt-1 text-lg font-sans whitespace-pre-wrap">
+              {comment.content}
+            </pre>
+          </div>
+
+          {/* comment buttons */}
+          <CommentContextProvider
+            comment={comment}
+            commentId={commentId}
+            postId={rootPostId}
+            setDeleteOptimistically={setDeleteOptimistically}
+            comments={comments}
+            setComments={setComments}
+            enableReplyBtn={enableReplyBtn}
+            isReplyFormVis={isReplyFormVis}
+            setIsReplyFormVis={setIsReplyFormVis}
+            isEditVisible={isEditVisible}
+            setIsEditVisible={setIsEditVisible}
+          >
+            <CommentButtons />
+          </CommentContextProvider>
+
+          {/* comment replies */}
+          {!toggleCollapse && renderChildren && (
+            <div className="comment-replies ml-[20px]">
+              {comment.replies.map((replyId) => {
+                const reply = comments.find((c) => c._id === replyId)
+                return (
+                  <Comment
+                    key={replyId}
+                    comment={reply}
+                    comments={comments}
+                    setComments={setComments}
+                    commentId={replyId}
+                    depth={depth + 1}
+                    postId={postId}
+                    renderChildren={renderChildren}
+                    enableReplyBtn={enableReplyBtn}
+                  />
+                )
+              })}
+            </div>
+          )}
+        </div>
+      </div>
     </div>
   )
 }
