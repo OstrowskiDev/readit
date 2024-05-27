@@ -3,6 +3,7 @@ import { deletePost } from '../../lib/actions'
 import { usePostContext } from '@/app/lib/context/PostContextProvider'
 import { useEffect, useState } from 'react'
 import { useToastContext } from '@/app/lib/toasts/ToastProvider'
+import { usePathname, useRouter } from 'next/navigation'
 
 export function DeletePostBtn({ postId }) {
   const { setDeleted } = usePostContext()
@@ -11,6 +12,8 @@ export function DeletePostBtn({ postId }) {
     state: null,
     message: null,
   })
+  const router = useRouter()
+  const pathname = usePathname()
 
   useEffect(() => {
     if (response?.state === 'success') {
@@ -32,9 +35,15 @@ export function DeletePostBtn({ postId }) {
 
   async function onClick(event) {
     event.preventDefault()
-    optimisticUpdate()
-    const response = await deletePost(postId)
-    setResponse(response)
+
+    if (pathname === `/posts/post/${postId}`) {
+      await deletePost(postId)
+      router.push('/posts')
+    } else {
+      optimisticUpdate()
+      const response = await deletePost(postId)
+      setResponse(response)
+    }
   }
   return (
     <form>
