@@ -5,7 +5,6 @@ import { useEffect, useState } from 'react'
 import { ReplyFormBtns } from './buttons/ReplyFromBtns'
 import { signIn, useSession } from 'next-auth/react'
 import { v4 as uuidv4 } from 'uuid'
-import cloneDeep from 'lodash/cloneDeep'
 import { useToastContext } from '../lib/toasts/ToastProvider'
 
 export function CreatePostForm({
@@ -107,36 +106,35 @@ export function CreatePostForm({
 
   return (
     <>
-      {isCreateFormVis && (
-        <div className="post-create-form p-4 rounded-lg shadow-center-md mb-2">
-          <form>
-            <div className="change-border-on-child-focus p-1 mb-2 bg-gray-50 border border-slate-300 rounded-md">
-              <textarea
-                className="post-title-input w-full h-6 bg-gray-50 resize-none border-none focus:outline-none"
-                id="title"
-                name="title"
-                placeholder="Type post title here"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-              />
-            </div>
-            <div className="change-border-on-child-focus p-2 my-2 bg-gray-50 border border-slate-300 rounded-md">
-              <textarea
-                className="post-content-input w-full h-32 border-none focus:outline-none bg-gray-50"
-                id="content"
-                name="content"
-                placeholder="Type post content here"
-                value={content}
-                onChange={(e) => setContent(e.target.value)}
-              />
-              <ReplyFormBtns
-                onCancelClick={onCancelClick}
-                onSubmit={onSubmit}
-              />
-            </div>
-          </form>
-        </div>
-      )}
+      <div
+        className={`post-create-form p-4 rounded-lg shadow-center-md mb-2 ${
+          isCreateFormVis ? '' : 'hidden'
+        }`}
+      >
+        <form>
+          <div className="change-border-on-child-focus p-1 mb-2 bg-gray-50 border border-slate-300 rounded-md">
+            <textarea
+              className="post-title-input w-full h-6 bg-gray-50 resize-none border-none focus:outline-none"
+              id="title"
+              name="title"
+              placeholder="Type post title here"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+            />
+          </div>
+          <div className="change-border-on-child-focus p-2 my-2 bg-gray-50 border border-slate-300 rounded-md">
+            <textarea
+              className="post-content-input w-full h-32 border-none focus:outline-none bg-gray-50"
+              id="content"
+              name="content"
+              placeholder="Type post content here"
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
+            />
+            <ReplyFormBtns onCancelClick={onCancelClick} onSubmit={onSubmit} />
+          </div>
+        </form>
+      </div>
     </>
   )
 }

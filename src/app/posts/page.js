@@ -70,14 +70,12 @@ export default function PostsPage({ searchParams, onlyCurrentUserPosts }) {
               setIsCreateFormVis={setIsCreateFormVis}
             />
           </div>
-          {isCreateFormVis && (
-            <CreatePostForm
-              posts={posts}
-              setPosts={setPosts}
-              isCreateFormVis={isCreateFormVis}
-              setIsCreateFormVis={setIsCreateFormVis}
-            />
-          )}
+          <CreatePostForm
+            posts={posts}
+            setPosts={setPosts}
+            isCreateFormVis={isCreateFormVis}
+            setIsCreateFormVis={setIsCreateFormVis}
+          />
           {isFilterFormVis && (
             <FilterPostsForm
               setTriggerReset={setTriggerReset}
