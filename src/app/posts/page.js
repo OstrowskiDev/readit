@@ -29,7 +29,6 @@ export default function PostsPage({ searchParams, onlyCurrentUserPosts }) {
       }
       const postsData = await filterPosts(filterData)
       setPosts(postsData)
-      console.log(postsData)
     }
     fetchData()
   }, [])

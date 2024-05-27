@@ -51,23 +51,44 @@ export function CreatePostForm({
         avatar: session.user.avatar,
       },
     }
-    const oldPosts = cloneDeep(posts)
-    setPosts([...oldPosts, newPost])
+    function caseInsensitiveMatch(param, postProperty) {
+      const lowerParam = param?.toLowerCase()
+      const lowerPostProperty = postProperty.toLowerCase()
+      return !param || lowerPostProperty.includes(lowerParam)
+    }
+
+    const params = new URLSearchParams(window.location.search)
+    const sortBy = params.get('sortBy')
+    const sortOrder = params.get('sortOrder')
+    const author = params.get('author')
+    const titleParam = params.get('title')
+    const contentParam = params.get('content')
+
+    const authorMatch = caseInsensitiveMatch(author, newPost.authorData.name)
+    const titleMatch = caseInsensitiveMatch(titleParam, newPost.title)
+    const contentMatch = caseInsensitiveMatch(contentParam, newPost.content)
+
+    if (authorMatch && titleMatch && contentMatch) {
+      if (
+        (sortBy === 'time' && sortOrder === 'descending') ||
+        (sortBy === 'popularity' && sortOrder === 'ascending') ||
+        (sortBy === 'activity' && sortOrder === 'ascending')
+      ) {
+        setPosts([newPost, ...posts])
+      } else {
+        setPosts([...posts, newPost])
+      }
+    } else {
+      console.log(
+        "Created post doesn't match current filter criteria, and will not be displayed.",
+      )
+    }
   }
 
-  // function onOptimisticCreatePostError() {
-  //   const newCommentId = response.newCommentId
-  //   const newComments = cloneDeep(comments)
-  //   const oldComments = newComments.filter(
-  //     (comment) => comment._id !== newCommentId,
-  //   )
-  //   setComments(oldComments)
-
-  //   const oldReplies = post.comments.filter((id) => id !== newCommentId)
-  //   const oldPost = cloneDeep(post)
-  //   oldPost.comments = oldReplies
-  //   setPost(oldPost)
-  // }
+  function onOptimisticCreatePostError(postId) {
+    const oldPosts = posts.filter((post) => post._id !== postId)
+    setPosts(oldPosts)
+  }
 
   async function onSubmit() {
     if (!session) signIn()
