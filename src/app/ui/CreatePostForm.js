@@ -8,7 +8,12 @@ import { v4 as uuidv4 } from 'uuid'
 import cloneDeep from 'lodash/cloneDeep'
 import { useToastContext } from '../lib/toasts/ToastProvider'
 
-export function CreatePostForm({ isCreateFormVis, setIsCreateFormVis }) {
+export function CreatePostForm({
+  isCreateFormVis,
+  setIsCreateFormVis,
+  posts,
+  setPosts,
+}) {
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
   const { data: session } = useSession()
@@ -27,46 +32,30 @@ export function CreatePostForm({ isCreateFormVis, setIsCreateFormVis }) {
     }
     if (response.state === 'error') {
       toast.error(response.message)
-      // onOptimisticCreateCommentError()
+      onOptimisticCreatePostError(response.newPostId)
     }
   }, [response])
 
-  // function optimisticUpdate(newCommentId) {
-  //   const newComment = {
-  //     _id: newCommentId,
-  //     user_id: userId,
-  //     parent: {
-  //       type: 'post',
-  //       _id: parentId,
-  //     },
-  //     content: input,
-  //     replies: [],
-  //     likes: [],
-  //     dislikes: [],
-  //   }
+  function optimisticUpdate(newPostId) {
+    const newPost = {
+      _id: newPostId,
+      user_id: userId,
+      title: title,
+      content: content,
+      comments: [],
+      likes: [],
+      dislikes: [],
+      authorData: {
+        name: session.user.name,
+        _id: session.user.id,
+        avatar: session.user.avatar,
+      },
+    }
+    const oldPosts = cloneDeep(posts)
+    setPosts([...oldPosts, newPost])
+  }
 
-  //   const newComments = cloneDeep(comments)
-  //   newComments.push(newComment)
-  //   const newPost = cloneDeep(post)
-  //   if (!newPost.comments) newPost.comments = []
-  //   newPost.comments.push(newCommentId)
-
-  //   const authorExists = authors.find((author) => author._id === userId)
-  //   if (!authorExists) {
-  //     const newAuthor = {
-  //       _id: session.user.id,
-  //       name: session.user.name,
-  //     }
-  //     const newAuthors = cloneDeep(authors)
-  //     newAuthors.push(newAuthor)
-  //     setAuthors(newAuthors)
-  //   }
-
-  //   setComments(newComments)
-  //   setPost(newPost)
-  // }
-
-  // function onOptimisticCreateCommentError() {
+  // function onOptimisticCreatePostError() {
   //   const newCommentId = response.newCommentId
   //   const newComments = cloneDeep(comments)
   //   const oldComments = newComments.filter(
@@ -83,8 +72,8 @@ export function CreatePostForm({ isCreateFormVis, setIsCreateFormVis }) {
   async function onSubmit() {
     if (!session) signIn()
     const newPostId = uuidv4().toString()
-    // optimisticUpdate(newPostId)
-    const serverResponse = await createPost(title, content)
+    optimisticUpdate(newPostId)
+    const serverResponse = await createPost(title, content, newPostId)
     setResponse(serverResponse)
     setIsCreateFormVis(!isCreateFormVis)
     setTitle('')

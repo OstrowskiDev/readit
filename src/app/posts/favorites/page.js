@@ -89,12 +89,6 @@ export default function FavoritesPage({ searchParams }) {
               setIsFilterFormVis={setIsFilterFormVis}
             />
           </div>
-          {isCreateFormVis && (
-            <CreatePostForm
-              isCreateFormVis={isCreateFormVis}
-              setIsCreateFormVis={setIsCreateFormVis}
-            />
-          )}
           {isFilterFormVis && (
             <FilterFavoritesForm
               enableActivityFilter={false}

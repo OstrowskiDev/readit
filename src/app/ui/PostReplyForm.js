@@ -80,18 +80,6 @@ export function PostReplyForm({ isCommFormVisible, setIsCommFormVisible }) {
     if (!newPost.comments) newPost.comments = []
     newPost.comments.push(newCommentId)
 
-    // authors data is not longer passed by authors variable, it is now passed inside comment.authorData
-    // const authorExists = authors.find((author) => author._id === userId)
-    // if (!authorExists) {
-    //   const newAuthor = {
-    //     _id: session.user.id,
-    //     name: session.user.name,
-    //   }
-    //   const newAuthors = cloneDeep(authors)
-    //   newAuthors.push(newAuthor)
-    //   setAuthors(newAuthors)
-    // }
-
     setComments(newComments)
     setPost(newPost)
   }

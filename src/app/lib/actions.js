@@ -17,12 +17,18 @@ import { isUUID } from 'validator'
 let toastStatus
 let toastMessage
 
-export async function createPost(inputTitle, inputContent) {
+export async function createPost(inputTitle, inputContent, uuid) {
   const session = await getServerSession(authOptions)
   const userId = session.user.id
-  const uuid = uuidv4().toString()
+  const isValidUUID = isUUID(uuid)
+  if (!isValidUUID) {
+    console.error('Invalid postId in createPost func')
+    return { state: 'error', message: 'Invalid postId' }
+  }
   const title = validatePostTitle(inputTitle)
   const content = validatePostContent(inputContent)
+
+  resetToast()
 
   const newPost = new Post({
     _id: uuid,
@@ -34,11 +40,17 @@ export async function createPost(inputTitle, inputContent) {
   try {
     await connectToDatabase()
     await newPost.save()
+    setToast('success', 'Post created successfully!')
   } catch (error) {
+    setToast('error', 'Failed to create post')
     console.error('Error saving post:', error)
   }
-  // revalidatePath('/posts')
-  redirect('/posts')
+
+  return {
+    state: toastStatus,
+    message: toastMessage,
+    postId: uuid,
+  }
 }
 
 export async function updatePost(postId, formData) {
