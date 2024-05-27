@@ -1,6 +1,6 @@
 'use client'
 
-import { Suspense, lazy } from 'react'
+import { Suspense, lazy, useState } from 'react'
 import { PostFooter } from './PostFooter'
 import { PostContextProvider } from '../lib/context/PostContextProvider'
 import { PostHeader } from './PostHeader'
@@ -11,18 +11,21 @@ const LazyUserInfobox = lazy(() => import('./UserInfobox.js'))
 export function Post({
   postId,
   post,
+  posts,
   setPosts,
   authorsData,
   setAuthorsData,
   enableCommentBtn,
 }) {
   const { isUserHovered, handleMouseEnter, handleMouseLeave } = useMouseHover()
+  const [deleted, setDeleted] = useState(false)
 
   return (
     <>
       {post && (
         <PostContextProvider
           post={post}
+          posts={posts}
           setPosts={setPosts}
           postId={postId}
           postLikes={post.likes}
@@ -31,8 +34,9 @@ export function Post({
           setAuthorsData={setAuthorsData}
           handleMouseEnter={handleMouseEnter}
           handleMouseLeave={handleMouseLeave}
+          setDeleted={setDeleted}
         >
-          <div className="relative w-full">
+          <div className={`relative w-full ${deleted ? 'hidden' : ''}`}>
             <a
               href={`/posts/post/${postId}`}
               className="post-container flex flex-col justify-between

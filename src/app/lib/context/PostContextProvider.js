@@ -10,12 +10,14 @@ export function PostContextProvider({
   setAuthorsData,
   post,
   setPost,
+  posts,
   setPosts,
   postId,
   postLikes,
   postDislikes,
   handleMouseEnter,
   handleMouseLeave,
+  setDeleted,
 }) {
   return (
     <PostContext.Provider
@@ -26,12 +28,14 @@ export function PostContextProvider({
         setAuthorsData,
         post,
         setPost,
+        posts,
         setPosts,
         postId,
         postLikes,
         postDislikes,
         handleMouseEnter,
         handleMouseLeave,
+        setDeleted,
       }}
     >
       {children}

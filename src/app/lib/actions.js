@@ -11,6 +11,7 @@ import { validatePostContent, validatePostTitle } from './validation'
 import { getServerSession } from 'next-auth/next'
 import { authOptions } from '@/app/api/auth/[...nextauth]/authOptions'
 import { isUUID } from 'validator'
+import { set } from 'lodash'
 
 // !!!! delete all revalidatePath calls, app no longer uses ISR
 
@@ -83,26 +84,52 @@ export async function updatePost(postId, formData) {
 }
 
 export async function deletePost(postId) {
-  if (!isUUID(postId))
+  if (!isUUID(postId)) {
+    console.error('Invalid postId in deletePost func')
     return {
       state: 'error',
-      message: 'Invalid postId',
+      message: 'Failed to delete post',
     }
+  }
+
+  resetToast()
 
   try {
     await connectToDatabase()
+    const post = await Post.findOne({ _id: postId })
+    if (!post) {
+      console.error('Post not found')
+      setToast('error', 'Failed to delete post')
+      return {
+        state: toastStatus,
+        message: toastMessage,
+      }
+    }
+    if (post.comments && post.comments.length > 0) {
+      console.error('Post with comments cannot be deleted')
+      setToast('error', 'Post with comments cannot be deleted')
+      return {
+        state: toastStatus,
+        message: toastMessage,
+      }
+    }
+
     const deletedPost = await Post.findByIdAndDelete(postId)
     if (!deletedPost) {
       console.error('Post not found')
+      setToast('error', 'Failed to delete post')
     }
     console.log('Post deleted successfully')
+    setToast('success', 'Post deleted successfully')
   } catch (error) {
     console.error('Error deleting post:', error)
+    setToast('error', 'Failed to delete post')
   }
 
-  // revalidatePath('/posts')
-  redirect('/posts')
-  // !!!! return toast message
+  return {
+    state: toastStatus,
+    message: toastMessage,
+  }
 }
 
 export async function createComment(

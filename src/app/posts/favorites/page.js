@@ -16,7 +16,6 @@ export default function FavoritesPage({ searchParams }) {
   const [posts, setPosts] = useState(null)
   const [comments, setComments] = useState(null)
   const [authorsData, setAuthorsData] = useState([])
-  const [isCreateFormVis, setIsCreateFormVis] = useState(false)
   const [isFilterFormVis, setIsFilterFormVis] = useState(false)
   const [triggerReset, setTriggerReset] = useState(false)
   const [fastQuery, setFastQuery] = useState(searchParams.fastQuery || '')
@@ -115,6 +114,7 @@ export default function FavoritesPage({ searchParams }) {
                     _id={document._id}
                     postId={document._id}
                     post={document}
+                    posts={posts}
                     setPosts={setPosts}
                     enableCommentBtn={true}
                   />

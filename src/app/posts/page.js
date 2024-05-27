@@ -94,6 +94,7 @@ export default function PostsPage({ searchParams, onlyCurrentUserPosts }) {
                   _id={post._id}
                   postId={post._id}
                   post={post}
+                  posts={posts}
                   setPosts={setPosts}
                   authorsData={authorsData}
                   setAuthorsData={setAuthorsData}
