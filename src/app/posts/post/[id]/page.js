@@ -24,6 +24,14 @@ export default function PostPage({ params }) {
   const { isUserHovered, handleMouseEnter, handleMouseLeave } = useMouseHover()
 
   useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    const paramsEditPost = params.get('editPost')
+    if (paramsEditPost === 'true') {
+      setIsEditFormVisible(true)
+    }
+  }, [])
+
+  useEffect(() => {
     async function fetchData() {
       const [postData, commentsData] = await Promise.all([
         getPostData(postId),

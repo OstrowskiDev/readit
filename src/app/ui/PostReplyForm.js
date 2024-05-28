@@ -34,15 +34,17 @@ export function PostReplyForm({ isCommFormVisible, setIsCommFormVisible }) {
   }, [response])
 
   async function onSubmit() {
+    const parentType = 'post'
     if (!session) signIn()
     const newCommentId = uuidv4().toString()
     optimisticUpdate(newCommentId)
     const serverResponse = await createComment(
       parentId,
-      postId,
+      parentType,
       input,
       newCommentId,
     )
+
     setResponse(serverResponse)
     setIsCommFormVisible(!isCommFormVisible)
     setInput('')

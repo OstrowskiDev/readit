@@ -15,7 +15,7 @@ export function EditPostBtn({ postId }) {
     } else {
       // !!!! add search params that will open edit form
       e.preventDefault()
-      router.push(`/posts/post/${postId}`)
+      router.push(`/posts/post/${postId}?editPost=true`)
     }
   }
   return (
