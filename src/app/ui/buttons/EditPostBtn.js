@@ -9,11 +9,12 @@ export function EditPostBtn({ postId }) {
   const pathname = usePathname()
   const router = useRouter()
 
-  function onClick() {
+  function onClick(e) {
     if (pathname === `/posts/post/${postId}`) {
       setIsEditFormVisible((prevValue) => !prevValue)
     } else {
       // !!!! add search params that will open edit form
+      e.preventDefault()
       router.push(`/posts/post/${postId}`)
     }
   }

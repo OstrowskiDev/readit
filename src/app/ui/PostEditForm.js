@@ -1,16 +1,30 @@
-import { useState } from 'react'
+'use client'
+
+import { useEffect, useState } from 'react'
 import { EditFormBtns } from './buttons/EditFormBtns'
 import { usePostContext } from '../lib/context/PostContextProvider'
+import { updatePost } from '../lib/actions'
+import { useToastContext } from '../lib/toasts/ToastProvider'
 
 export function PostEditForm({ isEditFormVisible, setIsEditFormVisible }) {
-  const { post } = usePostContext()
+  const { post, setPost } = usePostContext()
+  const { toastFunctions: toast } = useToastContext()
+  const [response, setResponse] = useState(null)
+  const [oldPost, setOldPost] = useState(post)
   const [formData, setFormData] = useState({
-    _id: post._id,
     title: post.title,
     content: post.content,
   })
 
-  // !!!! ad Toasts
+  useEffect(() => {
+    if (response?.state === 'success') {
+      toast.success(response.message)
+    }
+    if (response?.state === 'error') {
+      toast.error(response.message)
+      handleOptimisticError()
+    }
+  }, [response])
 
   function handleInputChange(event) {
     const { name, value } = event.target
@@ -18,12 +32,25 @@ export function PostEditForm({ isEditFormVisible, setIsEditFormVisible }) {
   }
 
   function onCancelClick() {
+    setFormData({ title: post.title, content: post.content })
     setIsEditFormVisible(false)
   }
 
-  function onSubmit() {
-    // !!!! add editPost function
+  async function onSubmit() {
+    setOldPost(post)
+    const response = await updatePost(post._id, formData)
+    setResponse(response)
+    optimisticUpdate()
     setIsEditFormVisible(false)
+  }
+
+  function optimisticUpdate() {
+    const newPost = { ...post, ...formData }
+    setPost(newPost)
+  }
+
+  function handleOptimisticError() {
+    setPost(oldPost)
   }
 
   return (

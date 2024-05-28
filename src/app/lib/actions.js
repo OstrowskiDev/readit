@@ -55,14 +55,37 @@ export async function createPost(inputTitle, inputContent, uuid) {
 }
 
 export async function updatePost(postId, formData) {
-  const inputTitle = formData.get('title')
+  const session = await getServerSession(authOptions)
+  let oldPost
+  resetToast()
+  try {
+    oldPost = await Post.findOne({ _id: postId })
+  } catch (error) {
+    console.error('Error during fetching post for updatePost func:', error)
+    setToast('error', 'Failed to update post')
+    return {
+      state: toastStatus,
+      message: toastMessage,
+    }
+  }
+
+  if (session.user.id !== oldPost.user_id) {
+    setToast('error', 'Failed to update post')
+    console.error(
+      "Warning! Unauthorized attempt to edit post. User session Id doesn't match post author Id. Terminating updatePost func.",
+    )
+    return {
+      state: toastStatus,
+      message: toastMessage,
+    }
+  }
+  const inputTitle = formData.title
   const title = validatePostTitle(inputTitle)
-  const inputContent = formData.get('content')
+  const inputContent = formData.content
   const content = validatePostContent(inputContent)
 
   const updatedData = new Post({
     title: title,
-    user_id: formData.get('user'),
     content: content,
   })
 
@@ -72,15 +95,20 @@ export async function updatePost(postId, formData) {
 
     if (result.modifiedCount === 1) {
       console.log('Post updated successfully')
+      setToast('success', 'Post updated successfully!')
     } else {
       console.log('Post not found or not updated')
+      setToast('error', 'Failed to update post')
     }
   } catch (error) {
     console.error('Error updating post:', error)
+    setToast('error', 'Failed to update post')
   }
 
-  // revalidatePath('/posts')
-  redirect('/posts')
+  return {
+    state: toastStatus,
+    message: toastMessage,
+  }
 }
 
 export async function deletePost(postId) {
