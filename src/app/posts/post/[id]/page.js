@@ -11,6 +11,7 @@ import { ToastProvider } from '@/app/lib/toasts/ToastProvider'
 import { PostCommentShimmer } from '@/app/ui/loaders/PostCommentShimmer'
 import useMouseHover from '@/app/lib/hooks/useMouseHover'
 import { UserInfoboxLoader } from '@/app/ui/loaders/UserInfoboxLoader'
+import { PostEditForm } from '@/app/ui/PostEditForm'
 const LazyUserInfobox = lazy(() => import('@/app/ui/UserInfobox.js'))
 
 export default function PostPage({ params }) {
@@ -18,6 +19,8 @@ export default function PostPage({ params }) {
   const [post, setPost] = useState(null)
   const [comments, setComments] = useState(null)
   const [authorsData, setAuthorsData] = useState([])
+  const [isEditFormVisible, setIsEditFormVisible] = useState(false)
+
   const { isUserHovered, handleMouseEnter, handleMouseLeave } = useMouseHover()
 
   useEffect(() => {
@@ -59,6 +62,7 @@ export default function PostPage({ params }) {
         postDislikes={postDislikes}
         handleMouseEnter={handleMouseEnter}
         handleMouseLeave={handleMouseLeave}
+        setIsEditFormVisible={setIsEditFormVisible}
       >
         <div className="w-full flex justify-center my-8 px-4">
           <div className="post-card-container relative flex flex-col justify-between max-w-[800px] w-full p-4 mx-2 rounded-md shadow-center-sm">
@@ -85,6 +89,12 @@ export default function PostPage({ params }) {
             <pre className="post-body-text font-sans whitespace-pre-wrap">
               {post.content}
             </pre>
+
+            {/* Post edit form */}
+            <PostEditForm
+              isEditFormVisible={isEditFormVisible}
+              setIsEditFormVisible={setIsEditFormVisible}
+            />
 
             {/* Post footer */}
             <PostFooter

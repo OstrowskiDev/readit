@@ -1,12 +1,21 @@
 'use client'
 
+import { usePostContext } from '@/app/lib/context/PostContextProvider'
 import { EditIco } from '../icons/EditIco'
-import { useRouter } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 
 export function EditPostBtn({ postId }) {
+  const { setIsEditFormVisible } = usePostContext()
+  const pathname = usePathname()
   const router = useRouter()
+
   function onClick() {
-    router.push(`/posts/edit/${postId}`)
+    if (pathname === `/posts/post/${postId}`) {
+      setIsEditFormVisible((prevValue) => !prevValue)
+    } else {
+      // !!!! add search params that will open edit form
+      router.push(`/posts/post/${postId}`)
+    }
   }
   return (
     <button

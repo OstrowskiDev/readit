@@ -18,6 +18,7 @@ export function PostContextProvider({
   handleMouseEnter,
   handleMouseLeave,
   setDeleted,
+  setIsEditFormVisible,
 }) {
   return (
     <PostContext.Provider
@@ -36,6 +37,7 @@ export function PostContextProvider({
         handleMouseEnter,
         handleMouseLeave,
         setDeleted,
+        setIsEditFormVisible,
       }}
     >
       {children}

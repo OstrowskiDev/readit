@@ -1,4 +1,5 @@
-// - change behavior of edit and reply buttons for posts?
+// - change edit post button so it triggers edit form to appear below the post, or update post edit page
+// - change behavior of edit and reply buttons for posts on PostsPage and FavoritesPage
 // - add functionality to PostMenu that handles situation where user clicks outside of the menu
 // - add rendering options for MyPosts and Favorites pages in case no MyPosts or Favorites were found
 // - change favorites icon to star
@@ -12,7 +13,6 @@
 //     - chapta for account creation?
 //     - add email confirmation for account creation
 //     - add password reset
-// - add toast notification and optimistic UI for creating post in posts page
 // - dark mode could be nice
 // - maybe using html and emotes in posts?
 // - add ARIA for accessibility
