@@ -1,17 +1,30 @@
+import { signIn, useSession } from 'next-auth/react'
 import { DotsIco } from '../icons/DotsIco'
 
 export function PostOptionsBtn({ setIsPostMenuVis }) {
-  function onClick(event) {
+  const { data: session } = useSession()
+
+  function handleClick(event) {
     event.preventDefault()
-    setIsPostMenuVis((prevValue) => !prevValue)
+    if (!session) signIn()
+    setIsPostMenuVis(true)
+    document.addEventListener('click', handleDocumentClick)
+  }
+
+  function handleDocumentClick(event) {
+    event.preventDefault()
+    if (!event.target.closest('.menu-btn-container')) {
+      setIsPostMenuVis(false)
+      document.removeEventListener('click', handleDocumentClick)
+    }
   }
 
   return (
-    <div className="p-[3px] mt-[3px] rounded-md hover:bg-gray-200">
+    <div className="p-[7px] mt-[3px] rounded-md hover:bg-gray-200">
       <button
-        onClick={onClick}
+        onClick={handleClick}
         type="button"
-        className="w-[22px] m-1 flex justify-center items-center"
+        className="w-[22px] flex justify-center items-center"
       >
         <DotsIco />
       </button>
