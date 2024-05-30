@@ -14,9 +14,9 @@ export function PostFooter({
   postLikes,
   postDislikes,
   enableCommentBtn,
+  isCommFormVisible,
+  setIsCommFormVisible,
 }) {
-  const [isCommFormVisible, setIsCommFormVisible] = useState(false)
-
   return (
     <div className="post-bottom-container">
       <div className="post-bottom-btns-container flex justify-between items-center py-2">
@@ -31,10 +31,7 @@ export function PostFooter({
         </div>
         {enableCommentBtn && (
           <div className="post-bottom-btns-right comment-btn flex justify-end min-w-36">
-            <CommentPostBtn
-              isCommFormVisible={isCommFormVisible}
-              setIsCommFormVisible={setIsCommFormVisible}
-            />
+            <CommentPostBtn setIsCommFormVisible={setIsCommFormVisible} />
           </div>
         )}
       </div>

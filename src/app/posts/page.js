@@ -98,7 +98,7 @@ export default function PostsPage({ searchParams, onlyCurrentUserPosts }) {
                   setPosts={setPosts}
                   authorsData={authorsData}
                   setAuthorsData={setAuthorsData}
-                  enableCommentBtn={false}
+                  enableCommentBtn={true}
                 />
               ))}
             </div>

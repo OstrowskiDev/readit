@@ -19,6 +19,7 @@ export default function PostPage({ params }) {
   const [post, setPost] = useState(null)
   const [comments, setComments] = useState(null)
   const [authorsData, setAuthorsData] = useState([])
+  const [isCommFormVisible, setIsCommFormVisible] = useState(false)
   const [isEditFormVisible, setIsEditFormVisible] = useState(false)
 
   const { isUserHovered, handleMouseEnter, handleMouseLeave } = useMouseHover()
@@ -26,8 +27,12 @@ export default function PostPage({ params }) {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search)
     const paramsEditPost = params.get('editPost')
+    const paramCreateComment = params.get('createComment')
     if (paramsEditPost === 'true') {
       setIsEditFormVisible(true)
+    }
+    if (paramCreateComment === 'true') {
+      setIsCommFormVisible(true)
     }
   }, [])
 
@@ -111,6 +116,8 @@ export default function PostPage({ params }) {
               postLikes={postLikes}
               postDislikes={postDislikes}
               enableCommentBtn={true}
+              isCommFormVisible={isCommFormVisible}
+              setIsCommFormVisible={setIsCommFormVisible}
             />
 
             {/* Comments section */}

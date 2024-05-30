@@ -1,11 +1,22 @@
+import { usePostContext } from '@/app/lib/context/PostContextProvider'
 import { signIn, useSession } from 'next-auth/react'
+import { usePathname, useRouter } from 'next/navigation'
 
-export function CommentPostBtn({ isCommFormVisible, setIsCommFormVisible }) {
+export function CommentPostBtn({ setIsCommFormVisible }) {
   const { data: session } = useSession()
+  const { postId } = usePostContext()
+  const router = useRouter()
+  const pathname = usePathname()
 
   function handleClick(event) {
     event.preventDefault()
-    session ? setIsCommFormVisible(!isCommFormVisible) : signIn()
+    if (!session) signIn()
+    if (pathname !== `/posts/post/${postId}`) {
+      router.push(`/posts/post/${postId}?createComment=true`)
+      return
+    } else {
+      setIsCommFormVisible((prevValue) => !prevValue)
+    }
   }
 
   return (
