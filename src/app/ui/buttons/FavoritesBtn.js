@@ -1,5 +1,5 @@
 import { handleCommentFavorites, handlePostFavorites } from '@/app/lib/actions'
-import { SaveIco } from '../icons/SaveIco'
+import StarIco from '../icons/StarIco'
 
 export function FavoritesBtn({
   type,
@@ -24,8 +24,8 @@ export function FavoritesBtn({
       type="button"
       onClick={onFavoriteSubmit}
     >
-      <div className="menu-opt-save-ico w-5 m-1 flex justify-center items-center">
-        <SaveIco />
+      <div className="menu-opt-save-ico w-6 m-1 flex justify-center items-center">
+        <StarIco />
       </div>
       <p className="menu-opt-save-text ml-2 text-lg">Favorite</p>
     </button>

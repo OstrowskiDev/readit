@@ -1,4 +1,3 @@
-// - change favorites icon to star
 // - create user profile page, that will be displayed after clicking on user name in InfoBox component, currently route redirects to empty page
 // - !!!! test user experience for non logged users
 // - !!!! add edit post functionality similar to edit comment (atm it still navigates to edit post page)
