@@ -5,7 +5,6 @@ import { filterFavorites } from '@/app/lib/db'
 import { ToastProvider } from '@/app/lib/toasts/ToastProvider'
 import PostsSearch from '@/app/ui/PostsSearch'
 import { FilterBtn } from '@/app/ui/buttons/FilterBtn'
-import { CreatePostForm } from '@/app/ui/CreatePostForm'
 import { Post } from '@/app/ui/Post'
 import { Loader } from '@/app/ui/loaders/Loader'
 import { PostShimmer } from '@/app/ui/loaders/PostShimmer'
@@ -16,6 +15,7 @@ export default function FavoritesPage({ searchParams }) {
   const [posts, setPosts] = useState(null)
   const [comments, setComments] = useState(null)
   const [authorsData, setAuthorsData] = useState([])
+  const [isLoading, setIsLoading] = useState(true)
   const [isFilterFormVis, setIsFilterFormVis] = useState(false)
   const [triggerReset, setTriggerReset] = useState(false)
   const [fastQuery, setFastQuery] = useState(searchParams.fastQuery || '')
@@ -25,7 +25,6 @@ export default function FavoritesPage({ searchParams }) {
     async function fetchData() {
       let filterData = searchParams
       const fetchedData = await filterFavorites(filterData)
-
       const sortedData = fetchedData.map((document) => ({
         _id: document._id,
         type: document.type,
@@ -41,7 +40,7 @@ export default function FavoritesPage({ searchParams }) {
       setPosts(postsData)
       setComments(commentsData)
     }
-    fetchData()
+    fetchData().then(() => setIsLoading(false))
   }, [])
 
   useEffect(() => {
@@ -100,7 +99,7 @@ export default function FavoritesPage({ searchParams }) {
             />
           )}
 
-          {matchingDocuments && (posts || comments) ? (
+          {matchingDocuments && (posts || comments) && (
             <div className="flex flex-col items-center">
               {matchingDocuments.map((sortingObj) => {
                 const document =
@@ -137,13 +136,17 @@ export default function FavoritesPage({ searchParams }) {
                 )
               })}
             </div>
-          ) : (
+          )}
+          {isLoading && (
             <>
               <Loader />
               <PostShimmer />
               <PostShimmer />
               <PostShimmer />
             </>
+          )}
+          {!isLoading && matchingDocuments.length === 0 && (
+            <h2 className="text-xl m-4 italic">No documents found</h2>
           )}
         </div>
       </ToastProvider>

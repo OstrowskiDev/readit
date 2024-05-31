@@ -20,11 +20,11 @@ export function PostOptionsBtn({ setIsPostMenuVis }) {
   }
 
   return (
-    <div className="p-[7px] mt-[3px] rounded-md hover:bg-gray-200">
+    <div className=" mt-[3px] rounded-md hover:bg-gray-200">
       <button
         onClick={handleClick}
         type="button"
-        className="w-[22px] flex justify-center items-center"
+        className="w-[36px] p-[7px] flex justify-center items-center"
       >
         <DotsIco />
       </button>

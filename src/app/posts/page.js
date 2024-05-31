@@ -17,6 +17,7 @@ export default function PostsPage({ searchParams, onlyCurrentUserPosts }) {
   const [authorsData, setAuthorsData] = useState([])
   const [isCreateFormVis, setIsCreateFormVis] = useState(false)
   const [isFilterFormVis, setIsFilterFormVis] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
   const [triggerReset, setTriggerReset] = useState(false)
   const [fastQuery, setFastQuery] = useState(searchParams.fastQuery || '')
 
@@ -30,7 +31,7 @@ export default function PostsPage({ searchParams, onlyCurrentUserPosts }) {
       const postsData = await filterPosts(filterData)
       setPosts(postsData)
     }
-    fetchData()
+    fetchData().then(() => setIsLoading(false))
   }, [])
 
   useEffect(() => {
@@ -86,7 +87,7 @@ export default function PostsPage({ searchParams, onlyCurrentUserPosts }) {
             />
           )}
 
-          {posts ? (
+          {posts && (
             <div className="flex flex-col items-center">
               {matchingPosts.map((post) => (
                 <Post
@@ -102,13 +103,19 @@ export default function PostsPage({ searchParams, onlyCurrentUserPosts }) {
                 />
               ))}
             </div>
-          ) : (
+          )}
+
+          {isLoading && (
             <>
               <Loader />
               <PostShimmer />
               <PostShimmer />
               <PostShimmer />
             </>
+          )}
+
+          {!isLoading && matchingPosts.length === 0 && (
+            <h2 className="text-xl m-4 italic">No documents found</h2>
           )}
         </div>
       </ToastProvider>
