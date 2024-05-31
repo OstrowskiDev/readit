@@ -12,7 +12,11 @@ import { ToastProvider } from '../lib/toasts/ToastProvider'
 import { Loader } from '../ui/loaders/Loader'
 import { PostShimmer } from '../ui/loaders/PostShimmer'
 
-export default function PostsPage({ searchParams, onlyCurrentUserPosts }) {
+export default function PostsPage({
+  searchParams,
+  onlyCurrentUserPosts,
+  displayedPostsAuthor,
+}) {
   const [posts, setPosts] = useState(null)
   const [authorsData, setAuthorsData] = useState([])
   const [isCreateFormVis, setIsCreateFormVis] = useState(false)
@@ -27,6 +31,9 @@ export default function PostsPage({ searchParams, onlyCurrentUserPosts }) {
 
       if (onlyCurrentUserPosts) {
         filterData = { ...filterData, onlyCurrentUserPosts }
+      }
+      if (displayedPostsAuthor) {
+        filterData = { ...filterData, displayedPostsAuthor }
       }
       const postsData = await filterPosts(filterData)
       setPosts(postsData)

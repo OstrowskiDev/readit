@@ -1,4 +1,4 @@
-// - create user profile page, that will be displayed after clicking on user name in InfoBox component, currently route redirects to empty page
+// - add user avatar and about to user\[id]\posts page
 // - !!!! test user experience for non logged users
 // - !!!! add edit post functionality similar to edit comment (atm it still navigates to edit post page)
 // - move thanks to spinner creators from credits comment to credits post

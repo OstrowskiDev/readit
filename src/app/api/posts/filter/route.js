@@ -45,6 +45,10 @@ export async function GET(req, res) {
   )
   onlyCurrentUserPosts = onlyCurrentUserPosts === 'true' ? true : false
 
+  const displayedPostsAuthor = sanitize(
+    req.nextUrl.searchParams.get('displayedPostsAuthor'),
+  )
+
   let pipeline = []
 
   if (onlyCurrentUserPosts) {
@@ -56,6 +60,10 @@ export async function GET(req, res) {
         status: 401,
       })
     }
+  }
+
+  if (displayedPostsAuthor) {
+    pipeline.push({ $match: { user_id: displayedPostsAuthor } })
   }
 
   if (title) {
