@@ -51,6 +51,17 @@ async function getUser(userId) {
   return res.json()
 }
 
+async function getUserPrivate(userId) {
+  const res = await fetch(
+    `http://localhost:3000/api/users/user/private/${userId}`,
+    {
+      cache: 'no-store',
+    },
+  )
+  if (!res.ok) return null
+  return res.json()
+}
+
 async function getComment(commentId) {
   const res = await fetch(
     `http://localhost:3000/api/comments/comment/${commentId}`,
@@ -129,6 +140,7 @@ export {
   filterPosts,
   filterFavorites,
   getUser,
+  getUserPrivate,
   getComment,
   getPosts,
   getUsers,

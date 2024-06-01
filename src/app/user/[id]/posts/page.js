@@ -8,6 +8,9 @@ export default function UserPosts({ params, searchParams }) {
   console.log(params)
   return (
     <>
+      {/* profile section */}
+      {/* avatar */}
+      {/* about */}
       <PostsPage
         searchParams={searchParams}
         onlyCurrentUserPosts={false}

@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useEffect, useState } from 'react'
-import { getUser } from '../lib/db'
+import { getUserPrivate } from '../lib/db'
 import { signIn, useSession } from 'next-auth/react'
 import { countUserComments, countUserPosts } from '../lib/actions'
 import { ProfileSettings } from '../ui/ProfileSettings'
@@ -20,7 +20,7 @@ export default function MyProfile() {
     async function fetchData() {
       if (session.user.id) {
         const [fetchedData, postsSum, commentsSum] = await Promise.all([
-          getUser(session.user.id),
+          getUserPrivate(session.user.id),
           countUserPosts(session.user.id),
           countUserComments(session.user.id),
         ])
