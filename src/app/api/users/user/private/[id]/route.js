@@ -16,11 +16,6 @@ export async function GET(request, { params }) {
     return null
   }
 
-  if (!validator.isUUID(userId))
-    return new NextResponse('Invalid input: userId must be a valid UUID', {
-      status: 400,
-    })
-
   try {
     await connectToDatabase()
     const post = await User.findOne({ _id: userId }).select('-password')

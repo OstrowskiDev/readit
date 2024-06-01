@@ -3,7 +3,7 @@ import Avatar from '../lib/avatars/Avatar'
 export function ProfilePreview({ userData }) {
   return (
     <>
-      <div className="profile-avatar-name flex items-center pt-4 mb-4 border-t border-gray-200">
+      <div className="profile-avatar-name flex items-center pt-4 mb-4 border-gray-200">
         <Avatar
           seed={userData.avatar.seed}
           color={userData.avatar.color}

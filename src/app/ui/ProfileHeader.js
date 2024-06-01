@@ -36,6 +36,7 @@ export function ProfileHeader({ userData, setUserData }) {
         >
           {!editAvatar ? 'Profile preview:' : 'Create your new avatar:'}
         </h3>
+        <div className="profile-separator border-t"></div>
         {editAvatar ? (
           <ProfileAvatarSelection
             userData={userData}
