@@ -122,7 +122,7 @@ export default function FavoritesPage({ searchParams }) {
                     href={`/posts/post/${document.rootPostId}#${document._id}`}
                     key={document._id}
                     _id={document._id}
-                    className="comment-anchor-container flex pb-4 px-4 my-2 rounded-md shadow-center-sm border-white border-2 hover:border-blue-300 hover:shadow-center-lg hover:cursor-pointer hover:outline-red-50"
+                    className="comment-anchor-container flex w-full pb-4 px-4 my-2 rounded-md shadow-center-sm border-white border-2 hover:border-blue-300 hover:shadow-center-lg hover:cursor-pointer hover:outline-red-50"
                   >
                     <Comment
                       comment={document}

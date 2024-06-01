@@ -87,7 +87,7 @@ export function Comment({
           <CommentAuthorsInfo comment={comment} />
 
           {/* comment content */}
-          <div className="comment-body-container ml-4">
+          <div className="comment-body-container ml-4 ">
             <pre className="comment-body mt-1 text-lg font-sans whitespace-pre-wrap">
               {comment.content}
             </pre>

@@ -122,7 +122,7 @@ export default function PostPage({ params }) {
 
             {/* Comments section */}
             {post.comments && (
-              <div className="comments-container">
+              <div className="comments-container ">
                 <h3 className="comments-header text-lg pt-1 font-semibold">
                   Comments:
                 </h3>
