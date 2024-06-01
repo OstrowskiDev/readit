@@ -14,8 +14,10 @@ import { PostShimmer } from '../ui/loaders/PostShimmer'
 
 export default function PostsPage({
   searchParams,
+  pageTitle,
   onlyCurrentUserPosts,
   displayedPostsAuthor,
+  disableCreateBtn,
 }) {
   const [posts, setPosts] = useState(null)
   const [authorsData, setAuthorsData] = useState([])
@@ -59,9 +61,11 @@ export default function PostsPage({
       <ToastProvider authorsData={authorsData} setAuthorsData={setAuthorsData}>
         <div className="container mx-auto mt-8 px-4 max-w-[800px]">
           <div className="flex md:items-center flex-col md:flex-row md:h-10 mb-4">
-            <h1 className="grow below-md:hidden text-2xl font-semibold mr-4">
-              Posts
-            </h1>
+            {pageTitle && (
+              <h1 className="grow below-md:hidden text-2xl font-semibold mr-4">
+                {pageTitle}
+              </h1>
+            )}
             <PostsSearch
               triggerReset={triggerReset}
               setTriggerReset={setTriggerReset}
@@ -73,10 +77,12 @@ export default function PostsPage({
               isFilterFormVis={isFilterFormVis}
               setIsFilterFormVis={setIsFilterFormVis}
             />
-            <CreateBtn
-              isCreateFormVis={isCreateFormVis}
-              setIsCreateFormVis={setIsCreateFormVis}
-            />
+            {!disableCreateBtn && (
+              <CreateBtn
+                isCreateFormVis={isCreateFormVis}
+                setIsCreateFormVis={setIsCreateFormVis}
+              />
+            )}
           </div>
           <CreatePostForm
             posts={posts}

@@ -29,11 +29,12 @@ export default function UserProfile({ params, searchParams }) {
   return (
     <>
       {userData && (
-        <div className="profile-main-container flex flex-col mx-auto">
-          <h1 className="profile-title mt-6 mb-2 ml-4 text-2xl font-semibold text-gray-900">
-            Profile Page
+        <div className="profile-main-container mx-auto">
+          <h1 className="profile-title mt-6 mb-2 ml-4 text-xl font-semibold text-gray-800">
+            {`${userData.name}'s profile:`}
           </h1>
-          <div className="profile-user-data-container flex flex-col relative left-[10px] px-4 pt-3 pb-6 w-[800px] bg-white rounded-lg shadow-center-sm">
+
+          <div className="profile-user-data-container flex flex-col ml-4 px-4 pt-3 pb-6 w-[768px] bg-white rounded-lg shadow-center-sm">
             <ProfilePreview userData={userData} />
             <div className="profile-about-container relative mt-4 pt-4 border-t border-gray-200 transition-height">
               <h3 className="profile-about-label text-lg font-semibold text-gray-800 mb-2">
@@ -42,8 +43,13 @@ export default function UserProfile({ params, searchParams }) {
               <p className="profile-about pb-2 pr-16">{userData.about}</p>
             </div>
           </div>
+          <h2 className="profile-title relative mt-3 top-6 ml-4 text-xl font-semibold text-gray-900">
+            {`${userData.name}'s posts:`}
+          </h2>
           <PostsPage
             searchParams={searchParams}
+            pageTitle={''}
+            disableCreateBtn={true}
             onlyCurrentUserPosts={false}
             displayedPostsAuthor={displayedPostsAuthor}
           />
