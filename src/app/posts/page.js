@@ -18,6 +18,7 @@ export default function PostsPage({
   onlyCurrentUserPosts,
   displayedPostsAuthor,
   disableCreateBtn,
+  disableFilteringByAuthor,
 }) {
   const [posts, setPosts] = useState(null)
   const [authorsData, setAuthorsData] = useState([])
@@ -97,6 +98,7 @@ export default function PostsPage({
               isFilterFormVis={isFilterFormVis}
               setIsFilterFormVis={setIsFilterFormVis}
               onlyCurrentUserPosts={onlyCurrentUserPosts}
+              disableFilteringByAuthor={disableFilteringByAuthor}
             />
           )}
 

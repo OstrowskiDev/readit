@@ -11,6 +11,7 @@ export function FilterPostsForm({
   isFilterFormVis,
   setIsFilterFormVis,
   onlyCurrentUserPosts,
+  disableFilteringByAuthor,
 }) {
   const [formState, setFormState] = useState({
     title: '',
@@ -58,7 +59,7 @@ export function FilterPostsForm({
     <FilterForm
       isFilterFormVis={isFilterFormVis}
       setIsFilterFormVis={setIsFilterFormVis}
-      onlyCurrentUserPosts={onlyCurrentUserPosts}
+      disableFilteringByAuthor={disableFilteringByAuthor}
       onSubmit={onSubmit}
       formState={formState}
       setFormState={setFormState}

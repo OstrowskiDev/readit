@@ -5,12 +5,13 @@ import { FilterFormBtns } from './buttons/FilterFormBtns'
 export function FilterForm({
   isFilterFormVis,
   setIsFilterFormVis,
-  onlyCurrentUserPosts,
+  disableFilteringByAuthor,
   onSubmit,
   formState,
   setFormState,
   enableActivityFilter,
 }) {
+  const isFilterDisabled = disableFilteringByAuthor ? true : false
   const handleInputChange = (e) => {
     setFormState({
       ...formState,
@@ -44,14 +45,14 @@ export function FilterForm({
             <div className="filter-author-container flex px-4">
               <p
                 className={`filter-author-label w-[90px] ${
-                  onlyCurrentUserPosts && 'text-gray-400'
+                  disableFilteringByAuthor && 'text-gray-400'
                 }`}
               >
                 author:
               </p>
               <textarea
                 className={`filter-author-input w-full h-7 px-2 resize-none border rounded-md focus:outline-none ${
-                  onlyCurrentUserPosts
+                  disableFilteringByAuthor
                     ? 'bg-gray-100 border-gray-200 cursor-not-allowed'
                     : 'bg-gray-50 border-slate-300 focus:border-slate-500'
                 }`}
@@ -60,6 +61,7 @@ export function FilterForm({
                 placeholder=""
                 value={formState.author}
                 onChange={handleInputChange}
+                disabled={disableFilteringByAuthor ? true : false}
                 onKeyDown={(e) => {
                   if (e.key === 'Enter') {
                     e.preventDefault()

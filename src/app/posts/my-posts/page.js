@@ -4,7 +4,8 @@ export default function MyPostsPage({ searchParams }) {
   return (
     <PostsPage
       searchParams={searchParams}
-      disableCreateBtn={false}
+      disableCreateBtn={true}
+      disableFilteringByAuthor={true}
       onlyCurrentUserPosts={'true'}
       pageTitle={'My Posts'}
     />

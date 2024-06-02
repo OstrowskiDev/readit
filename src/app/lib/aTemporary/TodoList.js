@@ -1,4 +1,4 @@
-// - add user avatar and about to user\[id]\posts page
+// - add shimmer and loader for UsuerProfile page. Currently only PostsPage component has loader there and it is triggered after userData is set.
 // - !!!! test user experience for non logged users
 // - !!!! add edit post functionality similar to edit comment (atm it still navigates to edit post page)
 // - move thanks to spinner creators from credits comment to credits post
@@ -8,15 +8,13 @@
 //     - captcha for account creation?
 //     - add email confirmation for account creation
 //     - add password reset
-// - dark mode could be nice
-// - maybe using html and emotes in posts?
 // - add ARIA for accessibility
+// - test responsiveness on different devices (!!!!
+// - adding creation date for user accounts would be nice
+// - dark mode -> later if I got extra time
+// - using html and emotes in posts -> only after everything else is done
 
-// - link to github repo
-//
-// - Adding karma could be fun.
-// - Fix responsive design for mobile devices!
-// - add validation for "about" post ID, so only user with admin role can perform CUD operations on it.
+// - add validation for "about" and "credits" post ID, so only user with admin role can perform update/delete operations on it. Is it actually needed? Only creator of the post can edit it, so it should be fine.
 // - add validation for passwords before they are hashed. Previous schema below:
 // password: {
 //   type: String,
