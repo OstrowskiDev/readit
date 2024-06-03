@@ -51,7 +51,7 @@ export default function UserProfile({ params, searchParams }) {
             pageTitle={''}
             disableCreateBtn={true}
             disableFilteringByAuthor={true}
-            onlyCurrentUserPosts={false}
+            displayedPostsAuthor={displayedPostsAuthor}
           />
         </div>
       )}
