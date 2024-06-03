@@ -10,6 +10,7 @@ import { Loader } from '@/app/ui/loaders/Loader'
 import { PostShimmer } from '@/app/ui/loaders/PostShimmer'
 import { Comment } from '@/app/ui/Comment'
 import { FilterFavoritesForm } from '@/app/ui/FilterFavoritesForm'
+import { signIn, useSession } from 'next-auth/react'
 
 export default function FavoritesPage({ searchParams }) {
   const [posts, setPosts] = useState(null)
@@ -20,6 +21,8 @@ export default function FavoritesPage({ searchParams }) {
   const [triggerReset, setTriggerReset] = useState(false)
   const [fastQuery, setFastQuery] = useState(searchParams.fastQuery || '')
   const [documentOrder, setDocumentOrder] = useState([])
+  const { data: session } = useSession()
+  if (!session) return signIn()
 
   useEffect(() => {
     async function fetchData() {

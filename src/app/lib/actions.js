@@ -11,7 +11,6 @@ import { validatePostContent, validatePostTitle } from './validation'
 import { getServerSession } from 'next-auth/next'
 import { authOptions } from '@/app/api/auth/[...nextauth]/authOptions'
 import { isUUID } from 'validator'
-import { set } from 'lodash'
 
 // !!!! delete all revalidatePath calls, app no longer uses ISR
 
@@ -486,7 +485,7 @@ export async function handleLikeClick(documentId, collection) {
 
 export async function handleDislikeClick(documentId, collection) {
   const session = await getServerSession(authOptions)
-  if (!session) signIn()
+  if (!session) redirect('/login')
 
   resetToast()
 

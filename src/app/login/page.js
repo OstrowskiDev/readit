@@ -1,8 +1,25 @@
 'use client'
 
 import { signIn } from 'next-auth/react'
+import { useEffect, useState } from 'react'
+import validator from 'validator'
 
 export default function SignInForm() {
+  const [callbackUrl, setCallbackUrl] = useState(null)
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    const encodedUrl = params.get('callbackUrl')
+    let decodedUrl = decodeURIComponent(encodedUrl)
+    console.log('decodedUrl: ', decodedUrl)
+
+    if (!validator.isURL(decodedUrl)) {
+      decodedUrl = '/posts/'
+    }
+
+    setCallbackUrl(decodedUrl)
+  }, [])
+
   async function handleSubmit(event) {
     event.preventDefault()
     const formData = new FormData(event.target)
@@ -10,7 +27,7 @@ export default function SignInForm() {
     const password = formData.get('password')
 
     try {
-      await signIn('credentials', { email, password, callbackUrl: '/posts' })
+      await signIn('credentials', { email, password, callbackUrl: callbackUrl })
     } catch (error) {
       console.error('Sign-in error:', error)
     }
