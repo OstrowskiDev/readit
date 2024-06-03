@@ -17,10 +17,10 @@ export function PostOptMenu({ isPostMenuVis, setIsPostMenuVis }) {
   })
 
   useEffect(() => {
-    if (response.state === 'success') {
+    if (response?.state === 'success') {
       toast.success(response.message)
     }
-    if (response.state === 'error') {
+    if (response?.state === 'error') {
       toast.error(response.message)
       handleOptimisticallyDeleteError()
     }

@@ -29,10 +29,10 @@ export function CommentReplyForm({ parentType }) {
   })
 
   useEffect(() => {
-    if (response.state === 'success') {
+    if (response?.state === 'success') {
       toast.success(response.message)
     }
-    if (response.state === 'error') {
+    if (response?.state === 'error') {
       toast.error(response.message)
       if (response.optimisticUI === 'create post') {
         onOptimisticCreateCommentError()
@@ -58,7 +58,7 @@ export function CommentReplyForm({ parentType }) {
   }
 
   async function onClick() {
-    if (!session) signIn()
+    if (!session) return signIn()
     const newCommentId = uuidv4().toString()
     optimisticUpdate(newCommentId)
     const serverResponse = await createComment(

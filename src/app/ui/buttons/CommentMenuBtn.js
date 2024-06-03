@@ -11,7 +11,7 @@ export function CommentMenuBtn() {
 
   function handleClick(event) {
     event.preventDefault()
-    if (!session) signIn()
+    if (!session) return signIn()
     setIsMenuVisible(true)
     document.addEventListener('click', handleDocumentClick)
   }

@@ -26,10 +26,10 @@ export function CreatePostForm({
   })
 
   useEffect(() => {
-    if (response.state === 'success') {
+    if (response?.state === 'success') {
       toast.success(response.message)
     }
-    if (response.state === 'error') {
+    if (response?.state === 'error') {
       toast.error(response.message)
       onOptimisticCreatePostError(response.newPostId)
     }
@@ -90,7 +90,7 @@ export function CreatePostForm({
   }
 
   async function onSubmit() {
-    if (!session) signIn()
+    if (!session) return signIn()
     const newPostId = uuidv4().toString()
     optimisticUpdate(newPostId)
     const serverResponse = await createPost(title, content, newPostId)

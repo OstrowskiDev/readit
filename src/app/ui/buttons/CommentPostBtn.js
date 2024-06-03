@@ -10,7 +10,7 @@ export function CommentPostBtn({ setIsCommFormVisible }) {
 
   function handleClick(event) {
     event.preventDefault()
-    if (!session) signIn()
+    if (!session) return signIn()
     if (pathname !== `/posts/post/${postId}`) {
       router.push(`/posts/post/${postId}?createComment=true`)
       return
