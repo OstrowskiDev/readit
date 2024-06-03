@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { filterFavorites } from '@/app/lib/db'
 import { ToastProvider } from '@/app/lib/toasts/ToastProvider'
 import PostsSearch from '@/app/ui/PostsSearch'
@@ -22,7 +22,7 @@ export default function FavoritesPage({ searchParams }) {
   const [fastQuery, setFastQuery] = useState(searchParams.fastQuery || '')
   const [documentOrder, setDocumentOrder] = useState([])
   const { data: session } = useSession()
-  if (!session) return signIn()
+  const signingIn = useRef(false)
 
   useEffect(() => {
     async function fetchData() {
@@ -43,8 +43,21 @@ export default function FavoritesPage({ searchParams }) {
       setPosts(postsData)
       setComments(commentsData)
     }
-    fetchData().then(() => setIsLoading(false))
-  }, [])
+
+    if (!session) {
+      //below code to fix firefox issues with calling signIn() in useEffect
+      //reference to github next-auth issue 9177:
+      //https://github.com/nextauthjs/next-auth/issues/9177
+      if (signingIn.current) return
+      signingIn.current = true
+      signIn()
+      return
+    }
+
+    if (session?.user?.id) {
+      fetchData().then(() => setIsLoading(false))
+    }
+  }, [session])
 
   useEffect(() => {
     if (triggerReset) {

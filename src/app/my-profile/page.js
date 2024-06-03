@@ -10,10 +10,8 @@ import { ProfileMyData } from '../ui/ProfileMyData'
 import { ProfileAbout } from '../ui/ProfileAbout'
 import { MyProfileShimmer } from '../ui/loaders/MyProfileShimmer'
 import { Loader } from '../ui/loaders/Loader'
-import { useRouter } from 'next/navigation'
 
 export default function MyProfile() {
-  // const router = useRouter()
   const [userData, setUserData] = useState(null)
   const { data: session } = useSession()
   const signingIn = useRef(false)
@@ -34,17 +32,15 @@ export default function MyProfile() {
 
     if (!session) {
       //below code to fix firefox issues with calling signIn() in useEffect
-      //reference to github next-auth issue 9177 where solution was provided:
+      //reference to github next-auth issue 9177:
       //https://github.com/nextauthjs/next-auth/issues/9177
       if (signingIn.current) return
       signingIn.current = true
       signIn()
-      // router.push('/login')
       return
     }
 
     if (session?.user?.id) {
-      console.log('fetching data')
       fetchData()
     }
   }, [session])

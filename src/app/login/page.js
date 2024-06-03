@@ -2,7 +2,6 @@
 
 import { signIn } from 'next-auth/react'
 import { useEffect, useState } from 'react'
-import validator from 'validator'
 
 export default function SignInForm() {
   const [callbackUrl, setCallbackUrl] = useState(null)
@@ -11,9 +10,9 @@ export default function SignInForm() {
     const params = new URLSearchParams(window.location.search)
     const encodedUrl = params.get('callbackUrl')
     let decodedUrl = decodeURIComponent(encodedUrl)
-    console.log('decodedUrl: ', decodedUrl)
 
-    if (!validator.isURL(decodedUrl)) {
+    const urlPattern = new RegExp('^(http|https)://', 'i')
+    if (!decodedUrl.match(urlPattern)) {
       decodedUrl = '/posts/'
     }
 
