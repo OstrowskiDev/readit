@@ -1,10 +1,15 @@
 'use client'
 
-import { signIn } from 'next-auth/react'
+import { signIn, useSession } from 'next-auth/react'
 import { useEffect, useState } from 'react'
+import AlreadySignedIn from '../ui/AlreadySignedIn'
 
 export default function SignInForm() {
   const [callbackUrl, setCallbackUrl] = useState(null)
+  const { data: session } = useSession()
+  if (session) {
+    return <AlreadySignedIn />
+  }
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search)

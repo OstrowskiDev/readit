@@ -1,4 +1,4 @@
-// - add shimmer and loader for UsuerProfile page. Currently only PostsPage component has loader there and it is triggered after userData is set.
+// - add shimmer and loader for UserProfile page. Currently only PostsPage component has loader there and it is triggered after userData is set.
 // - !!!! test user experience for non logged users
 // - page or message after signing out
 // - custom page for 404 error

@@ -4,13 +4,14 @@ import { signIn, signOut, useSession } from 'next-auth/react'
 
 export function AuthBtn() {
   const { data: session } = useSession()
+  const appUrl = process.env.NEXT_PUBLIC_APP_URL
 
   async function handleSignIn() {
     signIn()
   }
 
   async function handleSighOut() {
-    await signOut({ redirect: false })
+    await signOut({ callbackUrl: `${appUrl}/goodbye` })
   }
 
   return (
