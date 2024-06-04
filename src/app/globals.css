@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  overflow-y: scroll;
+}
+
 .grow-2 {
   flex-grow: 2;
 }

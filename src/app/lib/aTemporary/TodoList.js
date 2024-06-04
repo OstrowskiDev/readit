@@ -1,8 +1,6 @@
 // - add shimmer and loader for UserProfile page. Currently only PostsPage component has loader there and it is triggered after userData is set.
-// - !!!! test user experience for non logged users
-// - page or message after signing out
 // - custom page for 404 error
-// - !!!! add edit post functionality similar to edit comment (atm it still navigates to edit post page)
+// - fix userInfobox getting closed when hovering over its root div (or generally outer div-s)
 // - move thanks to spinner creators from credits comment to credits post
 // - add password client side validation:
 //     - it will work for both creating account and changing password

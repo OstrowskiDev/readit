@@ -4,6 +4,8 @@ import { countUserComments, countUserPosts } from '@/app/lib/actions'
 import { getUser } from '@/app/lib/db'
 import PostsPage from '@/app/posts/page'
 import { ProfilePreview } from '@/app/ui/ProfilePreview'
+import { Loader } from '@/app/ui/loaders/Loader'
+import { UserProfileShimmer } from '@/app/ui/loaders/UserProfileShimmer'
 import { useEffect, useState } from 'react'
 
 export default function UserProfile({ params, searchParams }) {
@@ -27,9 +29,9 @@ export default function UserProfile({ params, searchParams }) {
   }, [])
 
   return (
-    <>
-      {userData && (
-        <div className="profile-main-container mx-auto">
+    <div className="profile-main-container mx-auto">
+      {userData ? (
+        <>
           <h1 className="profile-title mt-6 mb-2 ml-4 text-xl font-semibold text-gray-800">
             {`${userData.name}'s profile:`}
           </h1>
@@ -53,8 +55,15 @@ export default function UserProfile({ params, searchParams }) {
             disableFilteringByAuthor={true}
             displayedPostsAuthor={displayedPostsAuthor}
           />
-        </div>
+        </>
+      ) : (
+        <>
+          <UserProfileShimmer />
+          <div className="loader-position-adjuster mt-8 mr-16">
+            <Loader />
+          </div>
+        </>
       )}
-    </>
+    </div>
   )
 }

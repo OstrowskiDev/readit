@@ -16,7 +16,7 @@ export default function SignInForm() {
     const encodedUrl = params.get('callbackUrl')
     let decodedUrl = decodeURIComponent(encodedUrl)
 
-    const urlPattern = new RegExp('^(http|https)://', 'i')
+    const urlPattern = new RegExp('^https://', 'i')
     if (!decodedUrl.match(urlPattern)) {
       decodedUrl = '/posts/'
     }
