@@ -32,29 +32,35 @@ export default function UserProfile({ params, searchParams }) {
     <div className="profile-main-container mx-auto">
       {userData ? (
         <>
-          <h1 className="profile-title mt-6 mb-2 ml-4 text-xl font-semibold text-gray-800">
-            {`${userData.name}'s profile:`}
-          </h1>
+          <div className="users-data-container">
+            <h1 className="users-data-header mt-6 mb-2 ml-4 text-xl font-semibold text-gray-800">
+              {`${userData.name}'s profile:`}
+            </h1>
 
-          <div className="profile-user-data-container flex flex-col ml-4 px-4 pt-3 pb-6 w-[768px] bg-white rounded-lg shadow-center-sm">
-            <ProfilePreview userData={userData} />
-            <div className="profile-about-container relative mt-4 pt-4 border-t border-gray-200 transition-height">
-              <h3 className="profile-about-label text-lg font-semibold text-gray-800 mb-2">
-                About me:
-              </h3>
-              <p className="profile-about pb-2 pr-16">{userData.about}</p>
+            <div className="users-data-card flex flex-col ml-4 px-4 pt-3 pb-6 w-[768px] bg-white rounded-lg shadow-center-sm">
+              <ProfilePreview userData={userData} />
+              <div className="users-data-about-container relative mt-4 pt-4 border-t border-gray-200 transition-height">
+                <h3 className="users-data-about-label text-lg font-semibold text-gray-800 mb-2">
+                  About me:
+                </h3>
+                <p className="users-data-about-text pb-2 pr-16">
+                  {userData.about}
+                </p>
+              </div>
             </div>
           </div>
-          <h2 className="profile-title relative mt-3 top-6 ml-4 text-xl font-semibold text-gray-900">
-            {`${userData.name}'s posts:`}
-          </h2>
-          <PostsPage
-            searchParams={searchParams}
-            pageTitle={''}
-            disableCreateBtn={true}
-            disableFilteringByAuthor={true}
-            displayedPostsAuthor={displayedPostsAuthor}
-          />
+          <div className="posts-wrapper w-[800px]">
+            <h2 className="posts-header relative mt-3 top-6 ml-4 text-xl font-semibold text-gray-900">
+              {`${userData.name}'s posts:`}
+            </h2>
+            <PostsPage
+              searchParams={searchParams}
+              pageTitle={''}
+              disableCreateBtn={true}
+              disableFilteringByAuthor={true}
+              displayedPostsAuthor={displayedPostsAuthor}
+            />
+          </div>
         </>
       ) : (
         <>
