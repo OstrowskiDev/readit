@@ -10,7 +10,10 @@ export function MyProfileShimmer() {
 
           <div className="shimmer-profile-preview-container flex items-center pt-4 mb-4 border-t border-gray-200">
             <div className="shimmer avatar h-20 w-20 rounded-full"></div>
-            <div className="shimmer text-name ml-2 h-5 w-32"> </div>
+            <div className="shimmer-name-date-container flex flex-col ml-2">
+              <div className="shimmer text-name h-5 w-32"> </div>
+              <div className="shimmer text-creation-date mt-2 h-4 w-44"> </div>
+            </div>
           </div>
 
           <div className="shimmer-count-container mt-4 flex">

@@ -1,4 +1,5 @@
 import Avatar from '../lib/avatars/Avatar'
+import { AccountCreationDate } from './AccountCreationDate'
 
 export function ProfilePreview({ userData }) {
   return (
@@ -10,9 +11,12 @@ export function ProfilePreview({ userData }) {
           size={80}
           border={2}
         />
-        <p className="profile-name ml-2 text-lg font-semibold text-gray-800">
-          {userData.name}
-        </p>
+        <div className="flex flex-col ml-2">
+          <p className="profile-name text-lg font-semibold text-gray-800">
+            {userData.name}
+          </p>
+          <AccountCreationDate accountCreatedAt={userData.createdAt} />
+        </div>
       </div>
 
       <div className="posts-comments-numbers-container mt-4 flex">

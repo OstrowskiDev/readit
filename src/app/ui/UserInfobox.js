@@ -8,6 +8,7 @@ import { FollowBtn } from './buttons/FollowBtn'
 import { MessageBtn } from './buttons/MessageBtn'
 import { useToastContext } from '../lib/toasts/ToastProvider'
 import { useRouter } from 'next/navigation'
+import { AccountCreationDate } from './AccountCreationDate'
 
 export default function UserInfobox({
   author,
@@ -17,6 +18,7 @@ export default function UserInfobox({
   const { authorsData, setAuthorsData } = useToastContext()
   const router = useRouter()
   const authorId = author._id
+  const accountCreatedAt = author.createdAt
 
   useEffect(() => {
     const dataExists = authorsData?.find((author) => author._id === authorId)
@@ -27,6 +29,7 @@ export default function UserInfobox({
         _id: authorId,
         postsSum: postsSum,
         commentsSum: commentsSum,
+        createdAt: accountCreatedAt,
       }
       const newData = cloneDeep(authorsData)
       newData.push(newAuthor)
@@ -42,11 +45,7 @@ export default function UserInfobox({
     return (
       <>
         {userData && (
-          <div
-            className="infobox-event-handler"
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-          >
+          <div className="infobox-event-handler">
             <div className="avatar-name-date-container flex">
               <div className="avatar-container w-20 h-20">
                 <Avatar
@@ -64,12 +63,7 @@ export default function UserInfobox({
                 >
                   {author.name}
                 </div>
-                <p className="date text-gray-500 leading-tight font-medium">
-                  Joined: Aug 2, 2020
-                </p>
-                <p className="last-logged text-gray-500 leading-tight font-medium">
-                  Logged: Feb 24, 2024
-                </p>
+                <AccountCreationDate accountCreatedAt={accountCreatedAt} />
               </div>
             </div>
 
@@ -99,7 +93,11 @@ export default function UserInfobox({
   }
 
   return (
-    <div className="infobox-container absolute top-16 left-3 w-[350px] h-[260px] z-40 p-8 bg-white rounded-3xl drop-shadow-2xl hover:cursor-default">
+    <div
+      className="infobox-container absolute top-16 left-3 w-[350px] h-[260px] z-40 p-8 bg-white rounded-3xl drop-shadow-2xl hover:cursor-default"
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
       <InfoboxBody />
     </div>
   )
