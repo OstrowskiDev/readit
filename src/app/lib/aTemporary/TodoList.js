@@ -1,5 +1,3 @@
-// - add shimmer and loader for UserProfile page. Currently only PostsPage component has loader there and it is triggered after userData is set.
-// - custom page for 404 error
 // - fix userInfobox getting closed when hovering over its root div (or generally outer div-s)
 // - move thanks to spinner creators from credits comment to credits post
 // - add password client side validation:
