@@ -21,6 +21,9 @@ module.exports = {
         '2xl': { min: '1535px' },
         '3xl': { min: '1919px' },
       },
+      spacing: {
+        'plus-32px': 'calc(100% + 32px)',
+      },
     },
   },
   variants: {

@@ -7,8 +7,9 @@ import SessionProvider from '@/app/lib/SessionProvider'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
-  title: 'Next.js Baby Steps',
-  description: 'My personal playground for learning Next.js',
+  title: 'ReactClone app',
+  description:
+    'A clone of the popular social media platform Reddit. Created for fun and educational purposes.',
 }
 
 export default async function RootLayout({ children }) {

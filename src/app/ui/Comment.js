@@ -43,7 +43,7 @@ export function Comment({
       if (showReplyForm === 'true' && comment._id === targetCommentId) {
         setIsReplyFormVis(true)
       }
-      //delete # fragment identifier form the url, this prevents the page from scrolling to the comment on every users action
+      //delete # fragment identifier form the url, this prevents the page from scrolling to selected by identifier comment on every users action
       history.replaceState(null, null, ' ')
     }
   }, [comment, targetCommentId])
@@ -63,11 +63,12 @@ export function Comment({
       setIsEditVisible={setIsEditVisible}
     >
       <div
-        className="comment-container relative flex pt-4 px-2 w-full"
+        className="comment-container relative pt-4 px-2"
         id={commentId}
         style={{
-          marginLeft: depth === 0 ? 0 : 25,
-          display: deleteOptimistically ? 'none' : 'flex',
+          marginLeft: depth === 0 ? 0 : 8,
+
+          display: deleteOptimistically ? 'none' : 'block',
         }}
       >
         {/* comment accordion element */}
@@ -82,13 +83,17 @@ export function Comment({
           )}
         </div>
 
-        <div className="comment-main-content-container w-full">
+        <div className="comment-main-content-container">
           {/* authors avatar, user name, comment time, edit time */}
           <CommentAuthorsInfo comment={comment} />
 
           {/* comment content */}
-          <div className="comment-body-container ml-4 ">
-            <pre className="comment-body mt-1 text-lg font-sans whitespace-pre-wrap">
+          <div
+            className="comment-body-container ml-4"
+            //code below adjusts width of this element when its being deeply nested inside comments tree so it uses available space more efficiently
+            style={{ width: `calc(100% - 5px + ${depth * 4}px)` }}
+          >
+            <pre className="comment-body mt-1 font-sans whitespace-pre-wrap">
               {comment.content}
             </pre>
           </div>

@@ -77,8 +77,8 @@ export default function PostPage({ params }) {
         handleMouseLeave={handleMouseLeave}
         setIsEditFormVisible={setIsEditFormVisible}
       >
-        <div className="w-full flex justify-center my-8 px-4">
-          <div className="post-card-container relative flex flex-col justify-between max-w-[800px] w-full p-4 mx-2 rounded-md shadow-center-sm">
+        <div className="w-full flex justify-center my-8 xs:px-4">
+          <div className="post-card-container relative flex flex-col justify-between max-w-[800px] w-full p-4 mx-2 rounded-md xs:shadow-center-md">
             {/* Post header */}
             <PostHeader author={post.authorData} />
             <div className="post-header flex justify-between mb-4">
@@ -122,11 +122,11 @@ export default function PostPage({ params }) {
 
             {/* Comments section */}
             {post.comments && (
-              <div className="comments-container ">
+              <div className="comments-container below-xs:relative below-xs:right-4 below-xs:w-plus-32px">
                 <h3 className="comments-header text-lg pt-1 font-semibold">
                   Comments:
                 </h3>
-                <div className="comments-list bg-gray-100 pl-8 pr-3 pb-6 mt-1 rounded-md">
+                <div className="comments-list below-xs:px-2 bg-gray-100 xs:pl-8 xs:pr-3 pb-6 mt-1 rounded-md">
                   {post.comments?.map((commentId) => {
                     const comment = comments.find((c) => c._id === commentId)
                     return (
