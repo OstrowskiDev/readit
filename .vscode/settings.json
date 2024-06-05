@@ -8,6 +8,7 @@
     "maxlength",
     "nextauth",
     "perma",
+    "tailwindcss",
     "uuidv4"
   ]
 }

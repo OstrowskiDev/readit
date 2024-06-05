@@ -47,7 +47,9 @@ export function SharePostBtn() {
         <div className="btn-icon-container w-[22px]">
           <ShareIco2 />
         </div>
-        <p className="btn-text ml-[6px] font-semibold text-gray-500">Share</p>
+        <p className="btn-text below-xs:hidden ml-[6px] font-semibold text-gray-500">
+          Share
+        </p>
       </button>
     </div>
   )

@@ -13,6 +13,8 @@ module.exports = {
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
       screens: {
+        xs: '481px',
+        'below-xs': { max: '480px' },
         'below-md': { max: '768px' },
         '2col-filter': '860px',
         '2col': { min: '900px', max: '1297px' },
@@ -21,5 +23,23 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  variants: {
+    extend: {
+      boxShadow: ['responsive'],
+    },
+  },
+  plugins: [
+    function ({ addUtilities }) {
+      const newUtilities = {
+        '.shadow-center-md': {
+          boxShadow: '3px 3px 10px 1px rgba(0,0,0,0.3)',
+        },
+        '.shadow-center-lg': {
+          boxShadow: '4px 4px 10px 2px rgba(0,0,0,0.4)',
+        },
+      }
+
+      addUtilities(newUtilities, ['responsive'])
+    },
+  ],
 }

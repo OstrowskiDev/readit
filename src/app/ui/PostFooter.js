@@ -30,7 +30,7 @@ export function PostFooter({
           <SharePostBtn />
         </div>
         {enableCommentBtn && (
-          <div className="post-bottom-btns-right comment-btn flex justify-end min-w-36">
+          <div className="post-bottom-btns-right comment-btn flex justify-end min-w-28">
             <CommentPostBtn setIsCommFormVisible={setIsCommFormVisible} />
           </div>
         )}

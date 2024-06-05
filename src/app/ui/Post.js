@@ -40,9 +40,9 @@ export function Post({
             <a
               href={`/posts/post/${postId}`}
               className="post-container flex flex-col justify-between
-              py-1 px-4 my-2 rounded-md shadow-center-sm 
-              border-white border-2 hover:border-blue-300
-              hover:shadow-center-lg hover:cursor-pointer hover:outline-red-50"
+              py-2 xs:py-1 px-4 xs:my-2 xs:rounded-md xs:shadow-center-md
+              border-t xs:border-2 border-gray-300 xs:border-white hover:border-blue-300
+              xs:hover:shadow-center-lg hover:cursor-pointer hover:outline-red-50"
             >
               {/* Post header */}
               <PostHeader author={post.authorData} />

@@ -60,8 +60,8 @@ export default function PostsPage({
   return (
     <>
       <ToastProvider authorsData={authorsData} setAuthorsData={setAuthorsData}>
-        <div className="container mx-auto mt-8 px-4 max-w-[800px]">
-          <div className="flex md:items-center flex-col md:flex-row md:h-10 mb-4">
+        <div className="container mx-auto mt-8 px-0 xs:px-4 max-w-[800px]">
+          <div className="flex flex-col xs:flex-row mb-4">
             {pageTitle && (
               <h1 className="grow below-md:hidden text-2xl font-semibold mr-4">
                 {pageTitle}
@@ -74,16 +74,18 @@ export default function PostsPage({
               isFilterFormVis={isFilterFormVis}
               setIsFilterFormVis={setIsFilterFormVis}
             />
-            <FilterBtn
-              isFilterFormVis={isFilterFormVis}
-              setIsFilterFormVis={setIsFilterFormVis}
-            />
-            {!disableCreateBtn && (
-              <CreateBtn
-                isCreateFormVis={isCreateFormVis}
-                setIsCreateFormVis={setIsCreateFormVis}
+            <div className="search-btns flex mx-2 xs:mx-0">
+              <FilterBtn
+                isFilterFormVis={isFilterFormVis}
+                setIsFilterFormVis={setIsFilterFormVis}
               />
-            )}
+              {!disableCreateBtn && (
+                <CreateBtn
+                  isCreateFormVis={isCreateFormVis}
+                  setIsCreateFormVis={setIsCreateFormVis}
+                />
+              )}
+            </div>
           </div>
           <CreatePostForm
             posts={posts}
