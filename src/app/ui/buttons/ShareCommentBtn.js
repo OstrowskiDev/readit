@@ -1,6 +1,7 @@
 import { useCommentContext } from '@/app/lib/context/CommentContextProvider'
 import { useToastContext } from '@/app/lib/toasts/ToastProvider'
 import { useEffect, useState } from 'react'
+import { ShareIco2 } from '../icons/ShareIco2'
 
 export function ShareCommentBtn() {
   const [response, setResponse] = useState({
@@ -39,8 +40,18 @@ export function ShareCommentBtn() {
   }
   return (
     <div className="btn-container mt-[1px] rounded-md hover:bg-gray-200">
-      <button className="px-2 h-11" onClick={copyToClipboard}>
-        <p className="btn-text font-semibold  text-gray-500">Share</p>
+      <button
+        className="px-2 h-11 w-[44px] xs:w-[60px]"
+        onClick={copyToClipboard}
+      >
+        <div className="btn-icon-container w-[24px] mx-auto ">
+          <div className="comment-share-btn xs:hidden">
+            <ShareIco2 />
+          </div>
+          <p className="btn-text below-xs:hidden font-semibold  text-gray-500">
+            Share
+          </p>
+        </div>
       </button>
     </div>
   )

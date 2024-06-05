@@ -86,8 +86,8 @@ export default function FavoritesPage({ searchParams }) {
   return (
     <>
       <ToastProvider authorsData={authorsData} setAuthorsData={setAuthorsData}>
-        <div className="container mx-auto mt-8 px-4 max-w-[800px]">
-          <div className="flex md:items-center flex-col md:flex-row md:h-10 mb-4">
+        <div className="favorites-container mx-auto mt-8 xs:px-4 max-w-[800px]">
+          <div className="flex md:items-center md:h-10 below-xs:mr-2 mb-4">
             <h1 className="grow below-md:hidden text-2xl font-semibold mr-4">
               Favorites
             </h1>
@@ -138,7 +138,7 @@ export default function FavoritesPage({ searchParams }) {
                     href={`/posts/post/${document.rootPostId}#${document._id}`}
                     key={document._id}
                     _id={document._id}
-                    className="comment-anchor-container flex w-full pb-4 px-4 my-2 rounded-md shadow-center-sm border-white border-2 hover:border-blue-300 hover:shadow-center-lg hover:cursor-pointer hover:outline-red-50"
+                    className="comment-anchor-container flex w-full pb-4 px-4 xs:my-2 xs:rounded-md xs:shadow-center-md border-gray-300 xs:border-white border-t xs:border-2 xs:hover:border-blue-300 xs:hover:shadow-center-lg hover:cursor-pointer"
                   >
                     <Comment
                       comment={document}

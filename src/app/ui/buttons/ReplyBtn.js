@@ -29,7 +29,9 @@ export function ReplyBtn() {
       <div className="btn-icon w-[22px]">
         <ReplyIco />
       </div>
-      <p className="btn-text ml-1 font-semibold text-gray-500">Reply</p>
+      <p className="btn-text below-xs:hidden ml-1 font-semibold text-gray-500">
+        Reply
+      </p>
     </button>
   )
 }
