@@ -57,10 +57,12 @@ export default function TimeAgo({ createdAt, updatedAt }) {
   return (
     <>
       {createdAt && (
-        <span className="ml-2 text-gray-600 text-15">• {createdAgo}</span>
+        <span className="ml-2 below-xs:mb-[1px] below-xs:leading-none text-gray-600 text-15">
+          • {createdAgo}
+        </span>
       )}
       {wasEdited && (
-        <span className="below-xs:hidden ml-2 text-gray-600 text-15">
+        <span className="below-xs:hidden ml-2 below-xs:leading-none text-gray-600 text-15">
           • Edited {editedAgo}
         </span>
       )}

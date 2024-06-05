@@ -19,8 +19,8 @@ export function DeleteCommentBtn({ onDeleteSubmit }) {
   }
 
   return (
-    <form>
+    <div className="delete-comment-btn">
       <SubmitButton />
-    </form>
+    </div>
   )
 }

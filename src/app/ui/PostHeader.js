@@ -5,7 +5,7 @@ import Avatar from '../lib/avatars/Avatar'
 import TimeAgo from './TimeAgo'
 import { EditPostBtn } from './buttons/EditPostBtn'
 import { DeletePostBtn } from './buttons/DeletePostBtn'
-import { PostOptionsBtn } from './buttons/PostOptionsBtn'
+import { PostMenuBtn } from './buttons/PostMenuBtn'
 import { usePostContext } from '../lib/context/PostContextProvider'
 import { useState } from 'react'
 import { PostOptMenu } from './PostOptMenu'
@@ -22,10 +22,10 @@ export function PostHeader({ author }) {
   return (
     <>
       {post && author && (
-        <div className="comment-header-container relative right-0 flex items-center">
+        <div className="header-container relative right-0 flex items-center">
           {/* authors avatar */}
           <div
-            className="comment-avatar-container min-w-8 min-h-8 hover:cursor-pointer"
+            className="header-avatar-container min-w-8 min-h-8 hover:cursor-pointer"
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
           >
@@ -37,27 +37,29 @@ export function PostHeader({ author }) {
             />
           </div>
 
-          {/* authors name */}
-          <p
-            className="comment-author ml-2 font-bold text-blue-900 text-15 hover:cursor-pointer"
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-          >
-            {author.name}
-          </p>
+          <div className="flex below-xs:flex-col">
+            {/* authors name */}
+            <p
+              className="header-author ml-2 font-bold below-xs:leading-tight text-blue-900 text-15 hover:cursor-pointer"
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
+            >
+              {author.name}
+            </p>
 
-          {/* post time, edit time */}
-          <TimeAgo
-            createdAt={post.createdAt}
-            updatedAt={post.updatedAt}
-            type="created"
-          />
+            {/* post time, edit time */}
+            <TimeAgo
+              createdAt={post.createdAt}
+              updatedAt={post.updatedAt}
+              type="created"
+            />
+          </div>
 
           {/* top right buttons */}
           <div className="post-top-btns ml-auto flex">
             {isPostAuthor && <DeletePostBtn postId={postId} />}
             {isPostAuthor && <EditPostBtn postId={postId} />}
-            <PostOptionsBtn
+            <PostMenuBtn
               postId={postId}
               isPostMenuVis={isPostMenuVis}
               setIsPostMenuVis={setIsPostMenuVis}

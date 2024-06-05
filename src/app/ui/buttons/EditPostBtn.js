@@ -19,11 +19,13 @@ export function EditPostBtn({ postId }) {
     }
   }
   return (
-    <button
-      onClick={onClick}
-      className="w-10 mb-[1px] p-2 flex justify-center items-center rounded-md hover:bg-gray-200 "
-    >
-      <EditIco />
-    </button>
+    <div className="edit-post-btn mt-[1px]">
+      <button
+        onClick={onClick}
+        className="w-10 p-2 flex justify-center items-center rounded-md hover:bg-gray-200 "
+      >
+        <EditIco />
+      </button>
+    </div>
   )
 }

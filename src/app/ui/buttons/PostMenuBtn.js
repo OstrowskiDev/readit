@@ -1,7 +1,7 @@
 import { signIn, useSession } from 'next-auth/react'
 import { DotsIco } from '../icons/DotsIco'
 
-export function PostOptionsBtn({ setIsPostMenuVis }) {
+export function PostMenuBtn({ setIsPostMenuVis }) {
   const { data: session } = useSession()
 
   function handleClick(event) {
@@ -20,7 +20,7 @@ export function PostOptionsBtn({ setIsPostMenuVis }) {
   }
 
   return (
-    <div className=" mt-[3px] rounded-md hover:bg-gray-200">
+    <div className="post-menu-btn mt-[2px] rounded-md hover:bg-gray-200">
       <button
         onClick={handleClick}
         type="button"
