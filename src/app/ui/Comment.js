@@ -98,7 +98,7 @@ export function Comment({
             ref={contentRef}
             className="comment-body-container ml-4"
             //adjust width of this element when its being deeply nested inside comments tree so it uses available space more efficiently
-            style={{ width: `calc(100% - 5px + ${depth * 4}px)` }}
+            style={{ width: `calc(100% - 10px + ${depth * 4}px)` }}
           >
             <pre className="comment-body mt-1 font-sans whitespace-pre-wrap">
               {comment.content}

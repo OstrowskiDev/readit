@@ -31,15 +31,14 @@ export function DrawConnections({ contentRef, commentRef }) {
       return false
     }
   }
-  console.log('hasNextSibling', hasNextSibling())
 
   function LineToParent() {
     return (
       <div className="relative">
         {parentIsComment && (
           <>
-            <div className="line-to-parent absolute w-[30px] h-[2px] top-[22px] left-[-35px] bg-gray-300 "></div>
-            <div className="line-to-parent absolute w-[2px] h-[38px] top-[-16px] left-[-35px] bg-gray-300 "></div>
+            <div className="line-to-parent absolute w-[30px] h-[30px] top-[-6px] left-[-35px] border-2 circle-quarter"></div>
+            <div className="line-to-parent absolute w-[2px] h-[30px] top-[-16px] left-[-35px] bg-gray-300 "></div>
           </>
         )}
       </div>
@@ -69,7 +68,7 @@ export function DrawConnections({ contentRef, commentRef }) {
         {hasNextSibling() && (
           <>
             <div
-              className="line-to-sibling absolute w-[2px] top-[22px] left-[-35px] bg-gray-300"
+              className="line-to-sibling absolute w-[2px] left-[-35px] bg-gray-300"
               style={{
                 height: `${commentHeight + 12}px`,
               }}
