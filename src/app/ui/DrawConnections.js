@@ -1,15 +1,20 @@
 import { useEffect, useState } from 'react'
 import { useCommentContext } from '../lib/context/CommentContextProvider'
 
-export function DrawConnections({ parentRef }) {
-  const [parentHeight, setParentHeight] = useState(0)
+export function DrawConnections({ contentRef, commentRef }) {
+  const [contentHeight, setContentHeight] = useState(0)
+  const [commentHeight, setCommentHeight] = useState(0)
   const { comment, comments } = useCommentContext()
 
   useEffect(() => {
-    if (parentRef.current) {
-      setParentHeight(parentRef.current.offsetHeight)
+    // figure out how to update height when user resizes window
+    if (contentRef.current) {
+      setContentHeight(contentRef.current.offsetHeight)
     }
-  }, [parentRef])
+    if (commentRef.current) {
+      setCommentHeight(commentRef.current.offsetHeight)
+    }
+  }, [contentRef, commentRef])
 
   if (!comment || !comments) {
     return null
@@ -18,14 +23,68 @@ export function DrawConnections({ parentRef }) {
   const parentIsComment = comment.parent.type === 'comment'
   const hasChildren = comment.replies.length > 0
   const hasNextSibling = () => {
-    const parentComment = comments.find((c) => c._id === comment.parent._id)
-    const index = parentComment.replies.findIndex((id) => id === comment._id)
-    return index >= 0 && index < parentComment.replies.length - 1
+    if (comment.parent.type === 'comment') {
+      const parentComment = comments.find((c) => c._id === comment.parent._id)
+      const index = parentComment.replies.findIndex((id) => id === comment._id)
+      return index >= 0 && index < parentComment.replies.length - 1
+    } else {
+      return false
+    }
+  }
+  console.log('hasNextSibling', hasNextSibling())
+
+  function LineToParent() {
+    return (
+      <div className="relative">
+        {parentIsComment && (
+          <>
+            <div className="line-to-parent absolute w-[30px] h-[2px] top-[22px] left-[-35px] bg-gray-300 "></div>
+            <div className="line-to-parent absolute w-[2px] h-[38px] top-[-16px] left-[-35px] bg-gray-300 "></div>
+          </>
+        )}
+      </div>
+    )
+  }
+
+  function LineToChild() {
+    return (
+      <div className="relative">
+        {hasChildren && (
+          <>
+            <div
+              className="line-to-child absolute w-[2px] top-[48px] left-[1px] bg-gray-300 "
+              style={{
+                height: `${contentHeight + 49}px`,
+              }}
+            ></div>
+          </>
+        )}
+      </div>
+    )
+  }
+
+  function LineToSibling() {
+    return (
+      <div className="relative">
+        {hasNextSibling() && (
+          <>
+            <div
+              className="line-to-sibling absolute w-[2px] top-[22px] left-[-35px] bg-gray-300"
+              style={{
+                height: `${commentHeight + 12}px`,
+              }}
+            ></div>
+          </>
+        )}
+      </div>
+    )
   }
 
   return (
     <>
-      <p>{parentHeight}</p>
+      <LineToSibling />
+      <LineToChild />
+      <LineToParent />
     </>
   )
 }

@@ -22,7 +22,8 @@ export function Comment({
   const [targetCommentId, setTargetCommentId] = useState(null)
   const rootPostId = postId ? postId : comment.rootPostId
 
-  const parentRef = useRef()
+  const contentRef = useRef()
+  const commentRef = useRef()
 
   useEffect(() => {
     const commentElementId = window.location.hash.substring(1)
@@ -75,7 +76,9 @@ export function Comment({
         }}
       >
         {/* comment accordion element */}
-        <div
+        <DrawConnections contentRef={contentRef} commentRef={commentRef} />
+
+        {/* <div
           className="comment-collapse-element comment-vertical-line absolute left-[4px] top-14 w-3"
           onClick={() => setToggleCollapse((prevValue) => !prevValue)}
         >
@@ -84,21 +87,15 @@ export function Comment({
               <p className="pb-[2px]">+</p>
             </div>
           )}
-        </div>
+        </div> */}
 
-        <DrawConnections
-          comment={comment}
-          comments={comments}
-          parentRef={parentRef}
-        />
-
-        <div className="comment-main-content-container">
+        <div ref={commentRef} className="comment-main-content-container">
           {/* authors avatar, user name, comment time, edit time */}
           <CommentAuthorsInfo comment={comment} />
 
           {/* comment content */}
           <div
-            ref={parentRef}
+            ref={contentRef}
             className="comment-body-container ml-4"
             //adjust width of this element when its being deeply nested inside comments tree so it uses available space more efficiently
             style={{ width: `calc(100% - 5px + ${depth * 4}px)` }}
