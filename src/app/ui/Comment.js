@@ -1,9 +1,10 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { CommentButtons } from './CommentButtons'
 import { CommentContextProvider } from '../lib/context/CommentContextProvider'
 import { CommentAuthorsInfo } from './CommentAuthorsInfo'
+import { DrawConnections } from './DrawConnections'
 
 export function Comment({
   comment,
@@ -20,6 +21,8 @@ export function Comment({
   const [isEditVisible, setIsEditVisible] = useState(false)
   const [targetCommentId, setTargetCommentId] = useState(null)
   const rootPostId = postId ? postId : comment.rootPostId
+
+  const parentRef = useRef()
 
   useEffect(() => {
     const commentElementId = window.location.hash.substring(1)
@@ -83,14 +86,21 @@ export function Comment({
           )}
         </div>
 
+        <DrawConnections
+          comment={comment}
+          comments={comments}
+          parentRef={parentRef}
+        />
+
         <div className="comment-main-content-container">
           {/* authors avatar, user name, comment time, edit time */}
           <CommentAuthorsInfo comment={comment} />
 
           {/* comment content */}
           <div
+            ref={parentRef}
             className="comment-body-container ml-4"
-            //code below adjusts width of this element when its being deeply nested inside comments tree so it uses available space more efficiently
+            //adjust width of this element when its being deeply nested inside comments tree so it uses available space more efficiently
             style={{ width: `calc(100% - 5px + ${depth * 4}px)` }}
           >
             <pre className="comment-body mt-1 font-sans whitespace-pre-wrap">
