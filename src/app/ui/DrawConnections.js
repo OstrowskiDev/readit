@@ -7,13 +7,18 @@ export function DrawConnections({ contentRef, commentRef }) {
   const { comment, comments } = useCommentContext()
 
   useEffect(() => {
-    // figure out how to update height when user resizes window
-    if (contentRef.current) {
-      setContentHeight(contentRef.current.offsetHeight)
+    function updateHeight() {
+      if (contentRef.current) {
+        setContentHeight(contentRef.current.offsetHeight)
+      }
+      if (commentRef.current) {
+        setCommentHeight(commentRef.current.offsetHeight)
+      }
     }
-    if (commentRef.current) {
-      setCommentHeight(commentRef.current.offsetHeight)
-    }
+
+    updateHeight()
+    window.addEventListener('resize', updateHeight)
+    return () => window.removeEventListener('resize', updateHeight)
   }, [contentRef, commentRef])
 
   if (!comment || !comments) {
