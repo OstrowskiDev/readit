@@ -15,7 +15,7 @@ export function AuthBtn() {
   }
 
   return (
-    <div className="md:mt-2 min-w-24 md:w-full">
+    <div className="mt-2 min-w-24 w-full">
       {session ? (
         <button onClick={handleSighOut} className="nav-button py-4">
           Sign out

@@ -1,0 +1,48 @@
+import React from 'react'
+import { AuthBtn } from './buttons/AuthBtn'
+import { NavbarPosts } from './NavbarPosts'
+import { MobileMenu } from './MobileMenu'
+import { MobileSignIn } from './MobileSignIn'
+import { MobileLogo } from './MobileLogo'
+import { DesktopLogo } from './DesktopLogo'
+import { MobileAvatar } from './MobileAvatar'
+
+export default function AppLayout() {
+  return (
+    <>
+      {/* Mobile layout: */}
+      <div className="mobile-layout md:hidden flex flex-col nav-gradient">
+        <div className="mobile-navigation bg-blue-500 below-md:flex md:rounded-md shadow-md">
+          <MobileMenu />
+          <MobileLogo />
+          <div className="mobile-separator md:hidden ml-auto"></div>
+          <MobileAvatar />
+          <MobileSignIn />
+        </div>
+      </div>
+
+      {/* Desktop layout: */}
+      <div className="desktop-layout below-md:hidden fixed flex flex-col h-screen p-2 nav-gradient">
+        <DesktopLogo />
+
+        {/* Desktop navigation: */}
+        <nav className="desktop-navigation-container flex below-md:hidden items-center w-full h-full flex-col mt-2">
+          <div className="desktop-navigation-anchors flex md:flex-col w-full h-full space-y-2">
+            <NavbarPosts />
+            <a href="/my-profile" className="nav-button pl-4">
+              My profile
+            </a>
+            <a href="/posts/post/about" className="nav-button pl-4">
+              About
+            </a>
+            <a href="/posts/post/credits" className="nav-button pl-4">
+              Credits
+            </a>
+            <div className="bg-white h-auto rounded-md grow shadow-md"></div>
+          </div>
+          <AuthBtn />
+        </nav>
+      </div>
+    </>
+  )
+}

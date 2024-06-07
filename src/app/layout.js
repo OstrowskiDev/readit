@@ -1,6 +1,6 @@
 import { Inter } from 'next/font/google'
 import './globals.css'
-import SideNav from './ui/SideNav'
+import AppLayout from './ui/AppLayout'
 import { getServerSession } from 'next-auth'
 import SessionProvider from '@/app/lib/SessionProvider'
 
@@ -20,7 +20,7 @@ export default async function RootLayout({ children }) {
         <SessionProvider session={session}>
           <div className="md:flex">
             <div className="w-full flex-none md:w-60">
-              <SideNav />
+              <AppLayout />
             </div>
             {children}
           </div>

@@ -86,7 +86,7 @@ export default function FavoritesPage({ searchParams }) {
   return (
     <>
       <ToastProvider authorsData={authorsData} setAuthorsData={setAuthorsData}>
-        <div className="favorites-container mx-auto mt-8 xs:px-4 max-w-[800px]">
+        <div className="favorites-container mx-auto mt-1 xs:mt-8 xs:px-4 max-w-[800px]">
           <div className="flex md:items-center md:h-10 below-xs:mr-2 mb-4">
             <h1 className="grow below-md:hidden text-2xl font-semibold mr-4">
               Favorites

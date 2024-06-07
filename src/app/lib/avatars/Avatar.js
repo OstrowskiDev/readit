@@ -2,12 +2,18 @@ import { createAvatar } from '@dicebear/core'
 import { loreleiNeutral } from '@dicebear/collection'
 
 export default function Avatar({ seed, color, size, border }) {
-  // Consider using Just-in-Time mode for this in the future.
-  const { bgColor, borderColor } = getAvatarColors(color)
+  // ++ Consider using Just-in-Time mode for this in the future.
+  const { bgColor, borderColor, fillColor } = getAvatarColors(color)
 
   const avatar = createAvatar(loreleiNeutral, {
     seed: seed,
-    backgroundColor: ['#fff'], // must be set to any value for backgroundColor inside <img> tag to work properly.
+    eyebrowsColor: [fillColor],
+    eyesColor: [fillColor],
+    frecklesColor: [fillColor],
+    glassesColor: [fillColor],
+    mouthColor: [fillColor],
+    noseColor: [fillColor],
+    backgroundColor: ['transparent'],
   }).toDataUriSync()
 
   return (
@@ -27,6 +33,7 @@ export default function Avatar({ seed, color, size, border }) {
             backgroundColor: bgColor,
             borderRadius: '100px',
           }}
+          eyesColor="white"
           src={avatar}
           alt="Avatar"
         />
@@ -38,6 +45,7 @@ export default function Avatar({ seed, color, size, border }) {
 export function getAvatarColors(color) {
   let bgColor
   let borderColor
+  let fillColor = '000000'
 
   switch (color) {
     case 'red':
@@ -68,10 +76,15 @@ export function getAvatarColors(color) {
       bgColor = 'rgb(221 214 254)'
       borderColor = 'rgb(196 181 253)'
       break
+    case 'background-blue':
+      bgColor = 'rgb(59 130 246)'
+      borderColor = 'rgb(255 255 255)'
+      fillColor = 'FFFFFF'
+      break
     default:
       bgColor = 'transparent'
       borderColor = 'transparent'
   }
 
-  return { bgColor, borderColor }
+  return { bgColor, borderColor, fillColor }
 }

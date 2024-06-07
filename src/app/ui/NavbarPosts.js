@@ -6,7 +6,7 @@ export function NavbarPosts() {
   const [toggleCollapse, setToggleCollapse] = useState(false)
 
   return (
-    <div className="flex flex-col rounded-md bg-white shadow-md">
+    <div className="flex flex-col w-full rounded-md bg-white  shadow-md">
       <p
         className="p-3 hover:cursor-pointer hover:bg-blue-100 rounded-t-md select-none"
         onClick={() => setToggleCollapse((prevVal) => !prevVal)}
@@ -15,18 +15,18 @@ export function NavbarPosts() {
       </p>
       {toggleCollapse && (
         <div className="flex flex-col">
-          <div className="separator h-[2px] bg-gray-100"></div>
-          <a href="/posts" className="nav-sub-button pl-4">
+          <div className="separator h-[2px] bg-gray-200"></div>
+          <a href="/posts" className="nav-sub-button pl-6">
             Recent
           </a>
-          <div className="separator h-[2px] bg-gray-100"></div>
-          <a href="/posts/favorites" className="nav-sub-button pl-4">
+          <div className="separator h-[2px] bg-gray-200"></div>
+          <a href="/posts/favorites" className="nav-sub-button pl-6">
             Favorites
           </a>
-          <div className="separator h-[2px] bg-gray-100"></div>
+          <div className="separator h-[2px] bg-gray-200"></div>
           <a
             href="/posts/my-posts"
-            className="nav-sub-button pl-4 rounded-b-lg"
+            className="nav-sub-button pl-6 rounded-b-lg"
           >
             My posts
           </a>
