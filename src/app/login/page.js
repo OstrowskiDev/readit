@@ -38,7 +38,10 @@ export default function SignInForm() {
   }
 
   return (
-    <div className="min-h-screen w-full bg-white flex justify-center items-center">
+    <div
+      className="w-full bg-white flex justify-center items-center"
+      style={{ height: `calc(100vh - 72px)` }}
+    >
       <div className="bg-blue-500 p-8 rounded-lg shadow-lg">
         <h2 className="text-2xl font-semibold text-white mb-4">Login</h2>
         <form onSubmit={handleSubmit}>

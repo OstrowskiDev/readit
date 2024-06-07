@@ -60,7 +60,7 @@ export default function PostsPage({
   return (
     <>
       <ToastProvider authorsData={authorsData} setAuthorsData={setAuthorsData}>
-        <div className="container mx-auto mt-2 xs:mt-8 px-0 xs:px-4 max-w-[800px]">
+        <div className="container mx-auto mt-2 md:mt-8 px-0 md:px-4 max-w-[800px]">
           <div className="flex flex-col xs:flex-row mb-4">
             {pageTitle && (
               <h1 className="grow below-md:hidden text-2xl font-semibold mr-4">
@@ -131,7 +131,7 @@ export default function PostsPage({
             </>
           )}
 
-          {!isLoading && matchingPosts.length === 0 && (
+          {!isLoading && matchingPosts?.length === 0 && (
             <h2 className="text-xl m-4 italic">No documents found</h2>
           )}
         </div>

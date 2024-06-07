@@ -1,5 +1,5 @@
 import { ErrorIco } from '@/app/ui/icons/ErrorIco'
-import SuccessIco from '@/app/ui/icons/SuccessIco'
+import { SuccessIco } from '@/app/ui/icons/SuccessIco'
 import React, { useEffect, useRef, useState } from 'react'
 
 export function Toast({ message, state, forceUpdate }) {
@@ -24,25 +24,28 @@ export function Toast({ message, state, forceUpdate }) {
     }
   }, [message, state, forceUpdate])
 
+  // -translate-x-1/2 left-1/2 h-16
+
   return (
-    <div
-      className={`toast flex items-center fixed w-80 h-16 p-4 mb-16 font-semibold border-2 rounded-xl 
-      bottom-0 left-1/2 transform -translate-x-1/2 ${containerStateClasses(
-        state,
-      )} ${moveToastClass}`}
-    >
-      <div className="toast-icon w-10 ">{renderIcon(state)}</div>
-      <div className="toast-text ml-4">
-        <p
-          className={`toast-text-state leading-tight text-lg ${textStateClasses(
-            state,
-          )}`}
-        >
-          {capitalizeFirstLetter(state) + '!'}
-        </p>
-        <p className="toast-text-message leading-tight text-sm text-gray-700">
-          {message}
-        </p>
+    <div className={`toast fixed w-full bottom-0 transform ${moveToastClass}`}>
+      <div
+        className={`flex items-center w-80 h-16 mx-auto p-4 mb-16 font-semibold border-2 rounded-xl ${containerStateClasses(
+          state,
+        )}`}
+      >
+        <div className="toast-icon w-10 ">{renderIcon(state)}</div>
+        <div className="toast-text ml-4">
+          <p
+            className={`toast-text-state leading-tight text-lg ${textStateClasses(
+              state,
+            )}`}
+          >
+            {capitalizeFirstLetter(state) + '!'}
+          </p>
+          <p className="toast-text-message leading-tight text-sm text-gray-700">
+            {message}
+          </p>
+        </div>
       </div>
     </div>
   )

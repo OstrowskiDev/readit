@@ -16,7 +16,8 @@ export default function AppLayout() {
   return (
     <>
       {/* Mobile layout: */}
-      <div className="mobile-layout md:hidden relative flex flex-col nav-gradient">
+      <div className="mobile-layout-top md:hidden h-[72px] w-full "></div>
+      <div className="mobile-layout md:hidden fixed flex flex-col top-0 left-0 w-full nav-gradient z-10">
         <div className="mobile-navigation bg-blue-500 below-md:flex md:rounded-md shadow-md">
           <MobileMenu setToggleCollapse={setToggleCollapse} />
           <MobileLogo />
@@ -30,7 +31,6 @@ export default function AppLayout() {
       {/* Desktop layout: */}
       <div className="desktop-layout below-md:hidden fixed flex flex-col h-screen p-2 nav-gradient">
         <DesktopLogo />
-
         {/* Desktop navigation: */}
         <nav className="desktop-navigation-container flex below-md:hidden items-center w-full h-full flex-col mt-2">
           <div className="desktop-navigation-anchors flex md:flex-col w-full h-full space-y-2">

@@ -10,7 +10,10 @@ export default async function GoodbyePage() {
   }
 
   return (
-    <div className="min-h-screen w-full bg-white flex justify-center items-center">
+    <div
+      className="w-full bg-white flex justify-center items-center"
+      style={{ height: `calc(100vh - 72px)` }}
+    >
       <div className="goodbye-container flex flex-col items-center bg-blue-500 px-8 py-5 rounded-xl shadow-lg">
         <h1 className="goodbye-title text-3xl pt-1 font-bold text-white">
           Thanks for your visit!

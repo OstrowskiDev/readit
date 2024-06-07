@@ -33,7 +33,6 @@ export default function Avatar({ seed, color, size, border }) {
             backgroundColor: bgColor,
             borderRadius: '100px',
           }}
-          eyesColor="white"
           src={avatar}
           alt="Avatar"
         />
