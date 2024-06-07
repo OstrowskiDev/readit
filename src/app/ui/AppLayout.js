@@ -1,4 +1,6 @@
-import React from 'react'
+'use client'
+
+import React, { useState } from 'react'
 import { AuthBtn } from './buttons/AuthBtn'
 import { NavbarPosts } from './NavbarPosts'
 import { MobileMenu } from './MobileMenu'
@@ -6,19 +8,23 @@ import { MobileSignIn } from './MobileSignIn'
 import { MobileLogo } from './MobileLogo'
 import { DesktopLogo } from './DesktopLogo'
 import { MobileAvatar } from './MobileAvatar'
+import { MobileCollapseMenu } from './MobileCollapseMenu'
 
 export default function AppLayout() {
+  const [toggleCollapse, setToggleCollapse] = useState(false)
+
   return (
     <>
       {/* Mobile layout: */}
-      <div className="mobile-layout md:hidden flex flex-col nav-gradient">
+      <div className="mobile-layout md:hidden relative flex flex-col nav-gradient">
         <div className="mobile-navigation bg-blue-500 below-md:flex md:rounded-md shadow-md">
-          <MobileMenu />
+          <MobileMenu setToggleCollapse={setToggleCollapse} />
           <MobileLogo />
           <div className="mobile-separator md:hidden ml-auto"></div>
           <MobileAvatar />
           <MobileSignIn />
         </div>
+        {toggleCollapse && <MobileCollapseMenu />}
       </div>
 
       {/* Desktop layout: */}

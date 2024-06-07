@@ -9,15 +9,17 @@ export function MobileAvatar() {
   const { data: session } = useSession()
 
   useEffect(() => {
-    if (session.user) {
+    if (session?.user) {
       setUserData(session.user)
+    } else {
+      setUserData(null)
     }
   }, [session])
 
   return (
     <>
       {userData?.avatar && (
-        <div className=" mobile-avatar-container my-4 mx-2">
+        <a className="mobile-avatar-container my-4 mx-2" href="/my-profile">
           <div className="relative">
             <Avatar
               seed={userData.avatar.seed}
@@ -26,7 +28,7 @@ export function MobileAvatar() {
               border={3}
             />
           </div>
-        </div>
+        </a>
       )}
     </>
   )
