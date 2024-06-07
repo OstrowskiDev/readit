@@ -1,10 +1,15 @@
 import { useEffect, useState } from 'react'
 import { useCommentContext } from '../lib/context/CommentContextProvider'
+import { usePathname } from 'next/navigation'
 
 export function DrawConnections({ contentRef, commentRef }) {
   const [contentHeight, setContentHeight] = useState(0)
   const [commentHeight, setCommentHeight] = useState(0)
   const { comment, comments } = useCommentContext()
+  const pathname = usePathname()
+  if (!pathname.includes('/posts/post/')) {
+    return null
+  }
 
   useEffect(() => {
     function updateHeight() {

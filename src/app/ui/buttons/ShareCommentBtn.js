@@ -41,14 +41,14 @@ export function ShareCommentBtn() {
   return (
     <div className="btn-container mt-[1px] rounded-md hover:bg-gray-200">
       <button
-        className="px-2 h-11 w-[44px] xs:w-[60px]"
+        className="px-2 h-11 w-[44px] xs:w-[80px]"
         onClick={copyToClipboard}
       >
-        <div className="btn-icon-container w-[24px] mx-auto ">
+        <div className="btn-icon-container w-[24px] xs:w-full">
           <div className="comment-share-btn xs:hidden">
             <ShareIco2 />
           </div>
-          <p className="btn-text below-xs:hidden font-semibold  text-gray-500">
+          <p className="btn-text below-xs:hidden font-semibold text-center text-gray-500">
             Share
           </p>
         </div>

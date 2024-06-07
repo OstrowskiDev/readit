@@ -5,6 +5,7 @@ import { CommentButtons } from './CommentButtons'
 import { CommentContextProvider } from '../lib/context/CommentContextProvider'
 import { CommentAuthorsInfo } from './CommentAuthorsInfo'
 import { DrawConnections } from './DrawConnections'
+import { usePathname } from 'next/navigation'
 
 export function Comment({
   comment,
@@ -21,6 +22,11 @@ export function Comment({
   const [isEditVisible, setIsEditVisible] = useState(false)
   const [targetCommentId, setTargetCommentId] = useState(null)
   const rootPostId = postId ? postId : comment.rootPostId
+  const pathname = usePathname()
+  const isRenderedAsTree = pathname.includes('/posts/post/')
+  const adjustOutsideTree = !isRenderedAsTree
+    ? { position: 'relative', left: '-30px' }
+    : null
 
   const contentRef = useRef()
   const commentRef = useRef()
@@ -78,6 +84,7 @@ export function Comment({
         {/* comment accordion element */}
         <DrawConnections contentRef={contentRef} commentRef={commentRef} />
 
+        {/* !!!! update collapse element to work with DrawConnections component */}
         {/* <div
           className="comment-collapse-element comment-vertical-line absolute left-[4px] top-14 w-3"
           onClick={() => setToggleCollapse((prevValue) => !prevValue)}
@@ -93,20 +100,29 @@ export function Comment({
           {/* authors avatar, user name, comment time, edit time */}
           <CommentAuthorsInfo comment={comment} />
 
-          {/* comment content */}
           <div
-            ref={contentRef}
-            className="comment-body-container ml-4"
-            //adjust width of this element when its being deeply nested inside comments tree so it uses available space more efficiently
-            style={{ width: `calc(100% - 10px + ${depth * 4}px)` }}
+            className="adjust-position-when-outside-tree-structure"
+            style={adjustOutsideTree}
           >
-            <pre className="comment-body mt-1 font-sans whitespace-pre-wrap">
-              {comment.content}
-            </pre>
-          </div>
+            {/* comment content */}
+            <div
+              ref={contentRef}
+              className="comment-body-container ml-4"
+              //adjust width of this element when its being deeply nested inside comments tree so it uses available space more efficiently
+              style={
+                isRenderedAsTree
+                  ? { width: `calc(100% + ${depth * 4}px) - 10px` }
+                  : { width: `calc(100% + 22px)` }
+              }
+            >
+              <pre className="comment-body mt-1 font-sans whitespace-pre-wrap">
+                {comment.content}
+              </pre>
+            </div>
 
-          {/* comment buttons */}
-          <CommentButtons />
+            {/* comment buttons */}
+            <CommentButtons style={adjustOutsideTree} />
+          </div>
 
           {/* comment replies */}
           {!toggleCollapse && renderChildren && (
