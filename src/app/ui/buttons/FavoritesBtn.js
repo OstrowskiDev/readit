@@ -24,8 +24,8 @@ export function FavoritesBtn({
       type="button"
       onClick={onFavoriteSubmit}
     >
-      <div className="menu-opt-save-ico w-6 m-1 flex justify-center items-center">
-        <StarIco />
+      <div className="menu-opt-save-ico m-1 flex justify-center items-center">
+        <StarIco color={'darkslategray'} size={24} />
       </div>
       <p className="menu-opt-save-text ml-2 text-lg">Favorite</p>
     </button>
