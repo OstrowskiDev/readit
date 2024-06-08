@@ -74,7 +74,7 @@ export default function PostsPage({
               isFilterFormVis={isFilterFormVis}
               setIsFilterFormVis={setIsFilterFormVis}
             />
-            <div className="search-btns flex mx-2 xs:mx-0">
+            <div className="search-btns flex mx-2 xs:ml-0 md:mr-2">
               <FilterBtn
                 isFilterFormVis={isFilterFormVis}
                 setIsFilterFormVis={setIsFilterFormVis}
