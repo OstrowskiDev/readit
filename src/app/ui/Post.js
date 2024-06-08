@@ -40,9 +40,9 @@ export function Post({
             <a
               href={`/posts/post/${postId}`}
               className="post-container flex flex-col justify-between
-              py-2 xs:py-1 px-4 xs:my-2 xs:rounded-md xs:shadow-center-md
-              border-t xs:border-2 border-gray-300 xs:border-white hover:border-blue-300
-              xs:hover:shadow-center-lg hover:cursor-pointer hover:outline-red-50"
+              py-2 md:py-1 px-4 md:my-2 md:rounded-md md:shadow-center-md
+              border-t md:border-2 border-gray-300 md:border-white hover:border-blue-300
+              md:hover:shadow-center-lg hover:cursor-pointer hover:outline-red-50"
             >
               {/* Post header */}
               <PostHeader author={post.authorData} />
@@ -55,7 +55,7 @@ export function Post({
               </div>
 
               {/* Post body */}
-              <pre className="post-body-text mb-2 font-sans whitespace-pre-wrap below-xs:line-clamp-5 below-xs:overflow-hidden below-xs:overflow-ellipsis ">
+              <pre className="post-body-text mb-2 font-sans whitespace-pre-wrap below-md:line-clamp-5 below-md:overflow-hidden below-md:overflow-ellipsis ">
                 {post.content}
               </pre>
 

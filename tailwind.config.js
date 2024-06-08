@@ -16,6 +16,7 @@ module.exports = {
         xs: '481px',
         'below-xs': { max: '480px' },
         'below-md': { max: '768px' },
+        'just-md': { min: '481px', max: '768px' },
         '2col-filter': '860px',
         '2col': { min: '900px', max: '1297px' },
         '2xl': { min: '1535px' },

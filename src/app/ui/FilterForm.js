@@ -22,7 +22,7 @@ export function FilterForm({
   return (
     <>
       {isFilterFormVis && (
-        <div className="filter-posts-form py-4 px-2 rounded-lg shadow-center-md mb-2">
+        <div className="filter-posts-form px-2 py-2 md:py-4 md:mb-2 md:rounded-lg md:shadow-center-md below-md:border-t ">
           <form className="grid grid-cols-1 2col-filter:grid-cols-2 gap-2">
             <div className="filter-title-container flex px-4">
               <p className="filter-title-label w-[90px]">title:</p>

@@ -33,7 +33,7 @@ export default function PostsSearch({
   }, 700)
 
   return (
-    <div className="flex grow-2 below-md:mb-2 mx-2 xs:mx-0">
+    <div className="flex grow-2 below-md:mb-2 mx-2 md:mx-0">
       <input
         ref={inputRef}
         type="text"

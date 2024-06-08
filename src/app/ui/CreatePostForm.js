@@ -107,7 +107,7 @@ export function CreatePostForm({
   return (
     <>
       <div
-        className={`post-create-form p-4 rounded-lg shadow-center-md mb-2 ${
+        className={`post-create-form p-4 md:mb-2 rounded-lg md:shadow-center-md ${
           isCreateFormVis ? '' : 'hidden'
         }`}
       >
