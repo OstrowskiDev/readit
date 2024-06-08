@@ -2,9 +2,9 @@ import './shimmerStyles.css'
 
 export function MyProfileShimmer() {
   return (
-    <div className="shimmer-main-container flex justify-center items-center mx-auto mt-8 px-4 w-[800px]">
+    <div className="shimmer-main-container flex justify-center items-center mx-auto mt-3 md:mt-8 px-4 md:w-[800px]">
       {/* Profile preview: */}
-      <div className="shimmer-profile-container bg-white px-6 pt-3 pb-6 rounded-lg shadow-center-sm grow">
+      <div className="shimmer-profile-container md:px-6 md:pt-3 pb-6 mmd:rounded-lg md:shadow-center-sm bg-white grow">
         <div className="shimmer-profile-header-container relative">
           <div className="shimmer text-header-label h-6 w-36 mt-3 mb-4"></div>
 
@@ -31,10 +31,10 @@ export function MyProfileShimmer() {
         {/* About me: */}
         <div className="shimmer-about-container relative mt-4 pt-4 border-t border-gray-200">
           <div className="shimmer text-label-about h-6 w-24 mt-1 mb-5"></div>
-          <div className="shimmer text-about h-4 w-[600px] mb-3 mr-16"></div>
-          <div className="shimmer text-about h-4 w-[540px] mb-3 mr-16"></div>
-          <div className="shimmer text-about h-4 w-[580px] mb-3 mr-16"></div>
-          <div className="shimmer text-about h-4 w-[340px] mb-3 mr-16"></div>
+          <div className="shimmer text-about h-4 w-11/12 mb-3 mr-16"></div>
+          <div className="shimmer text-about h-4 w-10/12 mb-3 mr-16"></div>
+          <div className="shimmer text-about h-4 w-11/12 mb-3 mr-16"></div>
+          <div className="shimmer text-about h-4 w-8/12 mb-3 mr-16"></div>
         </div>
 
         {/* My data: */}
@@ -44,25 +44,25 @@ export function MyProfileShimmer() {
           <div className="shimmer-user-data-container">
             <div className="shimmer-value-key-pair-container flex items-center">
               <div className="shimmer text-key h-4 w-14 mr-8 my-2 "></div>
-              <div className="shimmer text-value h-4 w-[180px] mx-[9px] my-[10px]"></div>
+              <div className="shimmer text-value h-4 w-5/12 mx-[9px] my-[10px]"></div>
             </div>
           </div>
           <div className="shimmer-user-data-container">
             <div className="shimmer-value-key-pair-container flex items-center">
               <div className="shimmer text-key h-4 w-14 mr-8 my-2 "></div>
-              <div className="shimmer text-value h-4 w-[240px] mx-[9px] my-[10px]"></div>
+              <div className="shimmer text-value h-4 w-6/12 mx-[9px] my-[10px]"></div>
             </div>
           </div>
           <div className="shimmer-user-data-container">
             <div className="shimmer-value-key-pair-container flex items-center">
               <div className="shimmer text-key h-4 w-16 mr-6 my-2 "></div>
-              <div className="shimmer text-value h-4 w-[360px] mx-[9px] my-[10px]"></div>
+              <div className="shimmer text-value h-4 w-9/12 mx-[9px] my-[10px]"></div>
             </div>
           </div>
           <div className="shimmer-user-data-container">
             <div className="shimmer-value-key-pair-container flex items-center">
               <div className="shimmer text-key h-4 w-14 mr-8 my-2 "></div>
-              <div className="shimmer text-value h-4 w-[180px] mx-[9px] my-[10px]"></div>
+              <div className="shimmer text-value h-4 w-4/12 mx-[9px] my-[10px]"></div>
             </div>
           </div>
         </div>
