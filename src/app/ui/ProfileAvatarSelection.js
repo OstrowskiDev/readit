@@ -55,10 +55,10 @@ export function ProfileAvatarSelection({
           <h4 className="avatar-select-seed-label ml-4 pt-1 font-normal text-lg text-gray-800 border-t border-gray-200">
             select avatar seed:
           </h4>
-          <div className="avatar-select-seed flex flex-wrap mx-l mb-4 mr-4">
+          <div className="avatar-select-seed flex justify-center flex-wrap  md:ml-l md:mr-4 mb-4">
             {avatarSeeds.map((seed) => (
               <div
-                className="avatar-seed m-2 hover:cursor-pointer rounded-full "
+                className="avatar-seed m-1 md:m-2 hover:cursor-pointer rounded-full "
                 key={seed}
                 onClick={() => handleSelection('seed', seed)}
               >
@@ -80,10 +80,10 @@ export function ProfileAvatarSelection({
               </div>
             ))}
           </div>
-          <h4 className="avatar-select-color-label  ml-4 pt-1 font-normal text-lg text-gray-800">
+          <h4 className="avatar-select-color-label ml-4 pt-1 font-normal text-lg text-gray-800">
             select avatar color:
           </h4>
-          <div className="avatar-select-seed mx-8 flex flex-wrap justify-around">
+          <div className="avatar-select-seed mx-8 flex flex-wrap justify-center">
             {avatarColors.map((color) => {
               const { bgColor, borderColor } = getAvatarColors(color)
               return (
