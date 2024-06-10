@@ -38,7 +38,7 @@ export function UserDataForm({
   return (
     <form className="form-user-data-container flex flex-col">
       <div className="form-data-name flex items-center">
-        <label className="label-name w-20 mr-2 text-md grow text-gray-900">
+        <label className="label-name w-20 mr-2 text-md text-gray-900">
           name:
         </label>
         <input
