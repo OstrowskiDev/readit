@@ -36,7 +36,7 @@ export function ProfileAbout({ userData, setUserData }) {
         />
       ) : (
         <>
-          <p className="profile-about pb-2 pr-16">{userData.about}</p>
+          <p className="profile-about pb-2 pr-[10px]">{userData.about}</p>
           <div
             className="mimic-buttons-height transition-height"
             style={{ height: buttonsHeight }}

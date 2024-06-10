@@ -48,7 +48,7 @@ export function ProfileAboutForm({
   }
 
   return (
-    <form className="form-user-data-container flex flex-col relative left-[-5px] top-[-5px] pr-[51px]">
+    <form className="form-user-data-container flex flex-col relative left-[-5px] top-[-5px]">
       <div className="form-data-about flex items-center">
         <textarea
           className="input-about w-full px-1 text-md text-gray-900 my-1 bg-gray-100 border border-gray-300 rounded-md"

@@ -36,11 +36,13 @@ export function UserDataForm({
   }
 
   return (
-    <form className="form-user-data-container">
+    <form className="form-user-data-container flex flex-col">
       <div className="form-data-name flex items-center">
-        <label className="label-name w-20 text-md text-gray-900">name:</label>
+        <label className="label-name w-20 mr-2 text-md grow text-gray-900">
+          name:
+        </label>
         <input
-          className="input-name w-[330px] px-2 text-md text-gray-900 my-1 bg-gray-100 border border-gray-300 rounded-md"
+          className="input-name min-w-10 w-full max-w-[330px] px-2 text-md text-gray-900 my-1 bg-gray-100 border border-gray-300 rounded-md"
           name="name"
           value={formState.name}
           onChange={handleChange}
@@ -48,9 +50,11 @@ export function UserDataForm({
       </div>
 
       <div className="form-data-email flex items-center">
-        <label className="label-email w-20 text-md text-gray-900">email:</label>
+        <label className="label-email w-20 mr-2 text-md text-gray-900">
+          email:
+        </label>
         <input
-          className="input-email w-[330px] px-2 text-md text-gray-900 my-1 bg-gray-100 border border-gray-300 rounded-md"
+          className="input-email min-w-10 w-full max-w-[330px] px-2 text-md text-gray-900 my-1 bg-gray-100 border border-gray-300 rounded-md"
           name="email"
           value={formState.email}
           onChange={handleChange}
@@ -58,11 +62,11 @@ export function UserDataForm({
       </div>
 
       <div className="form-data-address flex items-center">
-        <label className="label-address w-20 text-md text-gray-900">
+        <label className="label-address w-20 mr-2 text-md text-gray-900">
           address:
         </label>
         <input
-          className="input-address w-[330px] px-2 text-md text-gray-900 my-1 bg-gray-100 border border-gray-300 rounded-md"
+          className="input-address min-w-10 w-full max-w-[330px] px-2 text-md text-gray-900 my-1 bg-gray-100 border border-gray-300 rounded-md"
           name="address"
           value={formState.address}
           onChange={handleChange}
@@ -70,16 +74,18 @@ export function UserDataForm({
       </div>
 
       <div className="form-data-phone flex items-center">
-        <label className="label-phone w-20 text-md text-gray-900">phone:</label>
+        <label className="label-phone w-20 mr-2 text-md text-gray-900">
+          phone:
+        </label>
         <input
-          className="input-phone w-[330px] px-2 text-md text-gray-900 my-1 bg-gray-100 border border-gray-300 rounded-md"
+          className="input-phone min-w-10 w-full max-w-[330px] px-2 text-md text-gray-900 my-1 bg-gray-100 border border-gray-300 rounded-md"
           name="phone"
           value={formState.phone}
           onChange={handleChange}
         />
       </div>
 
-      <div className="btns-position-correction relative left-[-26px]">
+      <div className="btns-position-correction relative md:left-[-26px]">
         <ProfileFormButtons
           handleSubmit={handleSubmit}
           handleCancel={handleCancel}

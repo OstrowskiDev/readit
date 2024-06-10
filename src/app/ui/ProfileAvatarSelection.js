@@ -49,7 +49,7 @@ export function ProfileAvatarSelection({
   }
 
   return (
-    <div>
+    <div className="avatar-select-container">
       {userData && (
         <>
           <h4 className="avatar-select-seed-label ml-4 pt-1 font-normal text-lg text-gray-800 border-t border-gray-200">
