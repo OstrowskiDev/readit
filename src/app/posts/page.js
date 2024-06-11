@@ -60,7 +60,7 @@ export default function PostsPage({
   return (
     <>
       <ToastProvider authorsData={authorsData} setAuthorsData={setAuthorsData}>
-        <div className="posts-page mx-auto mt-2 md:mt-8 px-0 md:px-4 max-w-[800px]">
+        <div className="posts-page mx-auto mt-2 md:mt-8 px-0 md:px-4 w-full max-w-[800px]">
           <div className="posts-container flex flex-col xs:flex-row below-xs:mb-2 md:mb-4">
             {pageTitle && (
               <h1 className="posts-title grow below-md:hidden text-2xl font-semibold mr-4">

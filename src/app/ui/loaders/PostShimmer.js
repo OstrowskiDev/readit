@@ -3,19 +3,16 @@ import './shimmerStyles.css'
 export function PostShimmer() {
   return (
     <div className="post-shimmer-container relative w-full">
-      <div
-        className="post-shimmer shimmer-border relative flex flex-col justify-between
-        py-1 px-4 md:my-4 bg-white rounded-md "
-      >
+      <div className="post-shimmer shimmer-border relative flex flex-col justify-between py-1 px-4 md:my-4 bg-white rounded-md ">
         {/* Post shimmer border */}
         <div className="shimmer-border-line horizontal-top"></div>
         <div className="shimmer-border-line horizontal-bottom"></div>
         <div className="shimmer-border-line vertical-left"></div>
         <div className="shimmer-border-line vertical-right"></div>
-        <div className="shimmer-border-circle top-right"></div>
-        <div className="shimmer-border-circle top-left"></div>
-        <div className="shimmer-border-circle bottom-right"></div>
-        <div className="shimmer-border-circle bottom-left"></div>
+        <div className="shimmer-border-circle top-right below-md:hidden"></div>
+        <div className="shimmer-border-circle top-left below-md:hidden"></div>
+        <div className="shimmer-border-circle bottom-right below-md:hidden"></div>
+        <div className="shimmer-border-circle bottom-left below-md:hidden"></div>
 
         {/* Post header */}
         <div className="post-shimmer-header relative right-0 flex items-center mt-3">
