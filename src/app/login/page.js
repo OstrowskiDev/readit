@@ -39,43 +39,50 @@ export default function SignInForm() {
 
   return (
     <div
-      className="w-full bg-white flex justify-center items-center"
+      className="login-page w-full bg-white flex justify-center items-center"
       style={{ height: `calc(100vh - 72px)` }}
     >
-      <div className="bg-blue-500 p-8 rounded-lg shadow-lg">
-        <h2 className="text-2xl font-semibold text-white mb-4">Login</h2>
-        <form onSubmit={handleSubmit}>
-          <div className="mt-4">
-            <label htmlFor="email" className="text-white block mb-1">
+      <div className="login-container w-[320px] p-8 rounded-lg bg-blue-500 shadow-lg">
+        <h1 className="login-title text-2xl font-semibold text-white mb-4">
+          Login
+        </h1>
+        <form className="login-form" onSubmit={handleSubmit}>
+          <div className="login-email mt-4">
+            <label
+              className="login-email-label text-white block mb-1"
+              htmlFor="email"
+            >
               Email
             </label>
             <input
+              className="login-email-input w-full px-4 py-2 rounded-lg bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
               type="email"
               name="email"
               id="email"
               required
-              className="w-full px-4 py-2 rounded-lg bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="Enter your email"
             />
           </div>
-          <div className="mt-4">
-            <label htmlFor="password" className="text-white block mb-1">
+          <div className="login-password mt-4">
+            <label
+              htmlFor="password"
+              className="login-password-label text-white block mb-1"
+            >
               Password
             </label>
             <input
+              className="login-password-input w-full px-4 py-2 rounded-lg bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
               type="password"
               name="password"
               id="password"
               required
-              className="w-full px-4 py-2 rounded-lg bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="Enter your password"
             />
           </div>
-          <div className="mt-10">
+          <div className="login-submit mt-10">
             <button
+              className="login-submit-button w-full h-12 bg-white text-blue-500 py-2 rounded-lg hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200 font-bold active:bg-blue-200 hover:text-lg"
               type="submit"
-              className="w-full h-12 bg-white text-blue-500 py-2 rounded-lg hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200 active:bg-blue-200 hover:text-lg"
-              style={{ fontWeight: 'bold' }}
             >
               Login!
             </button>

@@ -56,10 +56,10 @@ export function PostCommentShimmer() {
         {/* Post footer */}
         <div className="post-bottom-container">
           <div className="post-bottom-btns-container flex justify-between items-center py-2">
-            <div className="post-shimmer-bottom-btns-left flex items-center gap-3">
-              <div className="shimmer button h-10 w-[88px] ml-0 rounded-md"></div>
-              <div className="shimmer button h-10 w-[100px] rounded-md"></div>
-              <div className="shimmer button h-10 w-[105px] rounded-md"></div>
+            <div className="post-shimmer-bottom-btns-left flex items-center gap-3 w-full">
+              <div className="shimmer button h-10 min-w-[60x] w-full max-w-[88px] ml-0 rounded-md"></div>
+              <div className="shimmer button h-10 min-w-[60x] w-full max-w-[100px] rounded-md"></div>
+              <div className="shimmer button h-10 min-w-[60x] w-full max-w-[105px] rounded-md"></div>
             </div>
           </div>
         </div>

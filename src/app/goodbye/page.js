@@ -14,11 +14,11 @@ export default async function GoodbyePage() {
       className="w-full bg-white flex justify-center items-center"
       style={{ height: `calc(100vh - 72px)` }}
     >
-      <div className="goodbye-container flex flex-col items-center bg-blue-500 px-8 py-5 rounded-xl shadow-lg">
-        <h1 className="goodbye-title text-3xl pt-1 font-bold text-white">
+      <div className="goodbye-container flex flex-col items-center w-full md:w-[480px] px-2 md:px-8 py-5 bg-blue-500 md:rounded-xl shadow-lg">
+        <h1 className="goodbye-title below-xs:text-2xl text-3xl pt-1 text-center font-bold  text-white">
           Thanks for your visit!
         </h1>
-        <p className="goodbye-subtitle text-md my-1 text-white">
+        <p className="goodbye-subtitle below-xs:w-[315px] my-1 text-center text-md below-xs:text-sm text-white">
           You want to sign in back? No problem! Just
           <Link
             href="/login"

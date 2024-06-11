@@ -11,7 +11,7 @@ export function CommentShimmer() {
       </div>
 
       {/* comment title */}
-      <div className="shimmer text-comment-title h-6 w-64 my-4 py-2"></div>
+      <div className="shimmer text-comment-title h-6 min-w-20 w-full max-w-64 my-4 py-2"></div>
 
       {/* comment body */}
       <div className="comment-body-text mb-2">

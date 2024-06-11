@@ -21,7 +21,6 @@ export function MobileCollapseMenu() {
       <h3 className="mobile-nav-label italic text-gray-500 px-2 pt-2">
         Posts:
       </h3>
-      {/* <Separator gap={12} /> */}
       <a href="/posts" className="recent mobile-nav-button">
         <RecentIco color={'rgb(55 65 81)'} size={20} />
         <p className="recent-title ml-2">Recent</p>
@@ -41,7 +40,6 @@ export function MobileCollapseMenu() {
       <Separator gap={12} />
 
       <h3 className="mobile-nav-label italic text-gray-500 px-2 pt-2">App:</h3>
-      {/* <Separator gap={12} /> */}
 
       <a className="about mobile-nav-button " href="/posts/post/about">
         <AboutIco color={'rgb(55 65 81)'} size={20} />
