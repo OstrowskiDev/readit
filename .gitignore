@@ -37,3 +37,6 @@ next-env.d.ts
 
 # todo list
 TodoList.js
+
+# logs from PaaS:
+secretLogs.txt
