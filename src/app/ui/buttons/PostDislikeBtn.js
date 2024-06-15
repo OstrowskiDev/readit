@@ -23,6 +23,7 @@ export function PostDislikeBtn({ styles }) {
   const isAlreadyDisliked = postDislikes?.includes(userId)
   const collection = 'posts'
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (response?.state === 'success') {
       toast.success(response.message)

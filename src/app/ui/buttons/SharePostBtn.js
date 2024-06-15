@@ -13,6 +13,7 @@ export function SharePostBtn() {
   const appUrl = process.env.NEXT_PUBLIC_APP_URL
   const postUrl = appUrl + '/posts/post/' + postId
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (response?.state === 'success') {
       toast.success(response.message)

@@ -20,6 +20,7 @@ export default function UserInfobox({
   const authorId = author._id
   const accountCreatedAt = author.createdAt
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     const dataExists = authorsData?.find((author) => author._id === authorId)
     if (!dataExists) {

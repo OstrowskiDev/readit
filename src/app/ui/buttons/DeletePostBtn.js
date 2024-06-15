@@ -15,6 +15,7 @@ export function DeletePostBtn({ postId }) {
   const router = useRouter()
   const pathname = usePathname()
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (response?.state === 'success') {
       toast.success(response.message)

@@ -14,6 +14,7 @@ export function ShareCommentBtn() {
   const appUrl = process.env.NEXT_PUBLIC_APP_URL
   const commentUrl = appUrl + '/posts/post/' + postId + '#' + commentId
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (response?.state === 'success') {
       toast.success(response.message)

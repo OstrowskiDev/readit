@@ -21,6 +21,7 @@ export function CommentDislikeBtn({ styles }) {
   const isAlreadyDisliked = comment.dislikes?.includes(userId)
   const collection = 'comments'
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (response?.state === 'success') {
       toast.success(response.message)

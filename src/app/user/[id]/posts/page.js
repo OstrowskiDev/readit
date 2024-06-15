@@ -12,6 +12,7 @@ export default function UserProfile({ params, searchParams }) {
   const [userData, setUserData] = useState(null)
   const displayedPostsAuthor = params.id
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     async function fetchData() {
       const [fetchedData, postsSum, commentsSum] = await Promise.all([
