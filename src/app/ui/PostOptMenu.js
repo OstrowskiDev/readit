@@ -16,6 +16,7 @@ export function PostOptMenu({ isPostMenuVis, setIsPostMenuVis }) {
     message: null,
   })
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (response?.state === 'success') {
       toast.success(response.message)

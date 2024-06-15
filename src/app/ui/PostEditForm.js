@@ -16,6 +16,7 @@ export function PostEditForm({ isEditFormVisible, setIsEditFormVisible }) {
     content: post.content,
   })
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (response?.state === 'success') {
       toast.success(response.message)

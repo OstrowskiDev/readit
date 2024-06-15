@@ -7,6 +7,7 @@ export default function TimeAgo({ createdAt, updatedAt }) {
   const edited = new Date(updatedAt)
   const wasEdited = Boolean(edited - created)
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     function calculateTimeAgo() {
       const now = new Date()

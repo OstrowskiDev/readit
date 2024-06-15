@@ -7,9 +7,6 @@ export function DrawConnections({ contentRef, commentRef }) {
   const [commentHeight, setCommentHeight] = useState(0)
   const { comment, comments } = useCommentContext()
   const pathname = usePathname()
-  if (!pathname.includes('/posts/post/')) {
-    return null
-  }
 
   useEffect(() => {
     function updateHeight() {
@@ -25,6 +22,10 @@ export function DrawConnections({ contentRef, commentRef }) {
     window.addEventListener('resize', updateHeight)
     return () => window.removeEventListener('resize', updateHeight)
   }, [contentRef, commentRef])
+
+  if (!pathname.includes('/posts/post/')) {
+    return null
+  }
 
   if (!comment || !comments) {
     return null

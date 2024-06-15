@@ -13,6 +13,7 @@ export default function PostsSearch({
   const { replace } = useRouter()
   const inputRef = useRef()
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (triggerReset) {
       inputRef.current.value = ''
