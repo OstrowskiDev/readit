@@ -24,6 +24,7 @@ export default function FavoritesPage({ searchParams }) {
   const { data: session } = useSession()
   const signingIn = useRef(false)
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     async function fetchData() {
       let filterData = searchParams

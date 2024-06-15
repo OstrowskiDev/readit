@@ -28,6 +28,7 @@ export default function Avatar({ seed, color, size, border }) {
           borderRadius: '100px',
         }}
       >
+        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           style={{
             backgroundColor: bgColor,

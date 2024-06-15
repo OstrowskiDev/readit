@@ -36,6 +36,7 @@ export default function PostPage({ params }) {
     }
   }, [])
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     async function fetchData() {
       const [postData, commentsData] = await Promise.all([

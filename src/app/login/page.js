@@ -7,9 +7,6 @@ import AlreadySignedIn from '../ui/AlreadySignedIn'
 export default function SignInForm() {
   const [callbackUrl, setCallbackUrl] = useState(null)
   const { data: session } = useSession()
-  if (session) {
-    return <AlreadySignedIn />
-  }
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search)
@@ -40,6 +37,10 @@ export default function SignInForm() {
     } catch (error) {
       console.error('Sign-in error:', error)
     }
+  }
+
+  if (session) {
+    return <AlreadySignedIn />
   }
 
   return (

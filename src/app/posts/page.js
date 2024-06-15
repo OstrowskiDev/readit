@@ -28,6 +28,7 @@ export default function PostsPage({
   const [triggerReset, setTriggerReset] = useState(false)
   const [fastQuery, setFastQuery] = useState(searchParams.fastQuery || '')
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     async function fetchData() {
       let filterData = searchParams
