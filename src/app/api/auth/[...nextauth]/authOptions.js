@@ -1,4 +1,3 @@
-import GitHubProvider from 'next-auth/providers/github'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import { getUserByEmail } from '@/app/lib/db'
 import bcrypt from 'bcrypt'
@@ -26,14 +25,12 @@ export const authOptions = {
       session.user.id = token.userId
       session.user.name = token.name
       session.user.avatar = token.avatar
+      //!!!
+      console.log(`inside authOptions, session: ${new Date().toISOString()}`)
       return session
     },
   },
   providers: [
-    GitHubProvider({
-      clientId: process.env.GITHUB_ID,
-      clientSecret: process.env.GITHUB_SECRET,
-    }),
     CredentialsProvider({
       name: 'Credentials',
       credentials: {
