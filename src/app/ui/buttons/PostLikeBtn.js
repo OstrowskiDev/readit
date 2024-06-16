@@ -18,17 +18,8 @@ export function PostLikeBtn({ styles }) {
   })
   const pathname = usePathname()
   const { toastFunctions: toast } = useToastContext()
-  const { data: session, status } = useSession()
-  // !!!
-  if (status === 'loading')
-    console.log(
-      `starting to fetch session to PostLikeBtn: ${new Date().toISOString()}`,
-    )
-  if (status === 'authenticated')
-    console.log(`session fetched to PostLikeBtn: ${new Date().toISOString()}`)
-  if (status === 'authenticated') {
-    console.log('session:', session)
-  }
+  const { data: session } = useSession()
+
   const userId = session?.user?.id
   const isAlreadyLiked = postLikes?.includes(userId)
   const collection = 'posts'
