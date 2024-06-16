@@ -26,6 +26,9 @@ export function PostLikeBtn({ styles }) {
     )
   if (status === 'authenticated')
     console.log(`session fetched to PostLikeBtn: ${new Date().toISOString()}`)
+  if (status === 'authenticated') {
+    console.log('session:', session)
+  }
   const userId = session?.user?.id
   const isAlreadyLiked = postLikes?.includes(userId)
   const collection = 'posts'
