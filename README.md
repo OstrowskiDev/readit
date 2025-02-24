@@ -1,36 +1,18 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# RedditClone
 
-## Getting Started
+This project is a full-stack Reddit-like application that replicates the core functionalities of a subreddit. Built as a solo project, it includes both the front-end and back-end, offering a seamless user experience with real-time interactions.
 
-First, run the development server:
+## Live Demo
+The project is fully functional and can be viewed at:
+[https://readit-app-lf7oz.ondigitalocean.app/](https://readit-app-lf7oz.ondigitalocean.app/)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+I am also responsible for hosting this project, which is currently deployed on **Digital Ocean App Platform (VPS).**
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Features
+- **User Authentication**: Sign up, log in, and manage your profile with avatar selection.
+- **Post Management**: Create, edit, delete, and browse posts.
+- **Comments & Voting**: Engage with posts by commenting, upvoting, and downvoting both posts and comments.
+- **Filtering & Sorting**: Find posts efficiently with title, content, and author-based filtering. Sort by date, popularity, or activity.
+- **Favorites**: Save posts to your favorites and revisit them later.
+- **Optimized UI**: Smooth user experience with optimistic UI updates, loaders, shimmers, and toast messages.
+- **Security Enhancements**: Input sanitization using `sanitize-html`, `mongo-sanitize`, and `validator`.
