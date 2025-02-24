@@ -16,3 +16,13 @@ I am also responsible for hosting this project, which is currently deployed on *
 - **Favorites**: Save posts to your favorites and revisit them later.
 - **Optimized UI**: Smooth user experience with optimistic UI updates, loaders, shimmers, and toast messages.
 - **Security Enhancements**: Input sanitization using `sanitize-html`, `mongo-sanitize`, and `validator`.
+
+## Tech Stack
+- **Front-end**: Next.js 14 (App Router), React 18
+- **Back-end**: MongoDB + Mongoose (with aggregation pipelines for data processing)
+- **Authentication**: NextAuth.js
+- **Styling & UI**: Tailwind CSS
+- **Security**: bcrypt, validator, sanitize-html, mongo-sanitize
+- **Utility Libraries**: Lodash, use-debounce, UUID
+- **Icons & Avatars**: Font Awesome, Dicebear (LoreleiNeutral collection)
+- **Loaders**: Loading.io
