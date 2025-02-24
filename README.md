@@ -26,3 +26,29 @@ I am also responsible for hosting this project, which is currently deployed on *
 - **Utility Libraries**: Lodash, use-debounce, UUID
 - **Icons & Avatars**: Font Awesome, Dicebear (LoreleiNeutral collection)
 - **Loaders**: Loading.io
+
+## External Resources
+I would like to thank the creators of the resources used in this project:
+
+### Avatars
+- **Dicebear**: Avatars are generated using the LoreleiNeutral collection.
+  - [LoreleiNeutral Collection](https://www.dicebear.com/styles/lorelei-neutral/)
+
+### Icons
+- **Font Awesome**: Various icons used throughout the project.
+  - [Font Awesome](https://fontawesome.com/)
+
+### Loading Spinner
+- **Loading.io**: Provides animated loaders for better user experience.
+  - [Loading.io CSS Spinners](https://loading.io/css/)
+
+## Contributing
+If you have any feedback or suggestions, feel free to open an issue or submit a pull request!
+
+## License
+This project is open-source and available under the [MIT License](LICENSE).
+
+---
+
+Enjoy using **RedditClone**, and feel free to share your thoughts!
+
