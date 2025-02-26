@@ -4,13 +4,13 @@ import Post from './models/Post'
 import Comment from './models/Comment'
 import User from './models/User'
 import { v4 as uuidv4 } from 'uuid'
-// import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { connectToDatabase, getComment, getUser } from './db'
 import { validatePostContent, validatePostTitle } from './validation'
 import { getServerSession } from 'next-auth/next'
 import { authOptions } from '@/app/api/auth/[...nextauth]/authOptions'
 import { isUUID } from 'validator'
+import { hashPassword } from './security/hashPassword'
 
 // !!!! delete all revalidatePath calls, app no longer uses ISR
 
@@ -870,5 +870,37 @@ export async function handleCommentFavorites(commentId) {
   return {
     state: toastStatus,
     message: toastMessage,
+  }
+}
+
+export async function createUser({ name, email, password }) {
+  try {
+    const existingUser = await User.findOne({ $or: [{ email }, { name }] })
+    if (existingUser) {
+      throw new Error('User with this email or name already exists')
+    }
+
+    const hashedPassword = hashPassword(password, 10)
+
+    const newUser = new User({
+      _id: new mongoose.Types.ObjectId().toString(),
+      name,
+      email,
+      password: hashedPassword,
+      address: '',
+      phone: '',
+      about: '',
+      avatar: {
+        seed: 'Jack', // Default avatar seed
+        color: 'red', // Default avatar color
+      },
+      favorites: [],
+    })
+
+    await newUser.save()
+
+    return { success: true, message: 'User created successfully' }
+  } catch (error) {
+    return { success: false, message: error.message }
   }
 }
