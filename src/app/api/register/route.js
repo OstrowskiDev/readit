@@ -1,4 +1,4 @@
-import bcrypt from 'bcrypt'
+import { hashPassword } from '@app/lib/security/hashPassword'
 
 export async function POST(req) {
   try {
@@ -9,12 +9,6 @@ export async function POST(req) {
       return new Response(JSON.stringify({ error: 'Invalid request' }), {
         status: 400,
       })
-    }
-
-    async function hashPassword(password, saltNo) {
-      const salt = await bcrypt.genSalt(saltNo)
-      const hashedPassword = await bcrypt.hash(password, salt)
-      console.log(`Plaintext: ${password}, Hashed: ${hashedPassword}`)
     }
 
     const hashedPassword = hashPassword(password, 10)
