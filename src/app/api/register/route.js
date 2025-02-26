@@ -11,7 +11,6 @@ export async function POST(req) {
       })
     }
 
-    // const hashedPassword = await hash(password, 10)
     async function hashPassword(password, saltNo) {
       const salt = await bcrypt.genSalt(saltNo)
       const hashedPassword = await bcrypt.hash(password, salt)
