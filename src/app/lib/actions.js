@@ -11,6 +11,7 @@ import { getServerSession } from 'next-auth/next'
 import { authOptions } from '@/app/api/auth/[...nextauth]/authOptions'
 import { isUUID } from 'validator'
 import { hashPassword } from './security/hashPassword'
+import { validateSignUp } from './security/validateSignUp'
 
 // !!!! delete all revalidatePath calls, app no longer uses ISR
 
@@ -873,17 +874,14 @@ export async function handleCommentFavorites(commentId) {
   }
 }
 
-export async function createUser({ name, email, password }) {
+export async function createUser({ name, email, hashedPassword }) {
   try {
-    const existingUser = await User.findOne({ $or: [{ email }, { name }] })
-    if (existingUser) {
-      throw new Error('User with this email or name already exists')
-    }
+    // validation is done on server before createUser is called
 
-    const hashedPassword = hashPassword(password, 10)
+    const newUserId = uuidv4().toString()
 
     const newUser = new User({
-      _id: new mongoose.Types.ObjectId().toString(),
+      _id: newUserId,
       name,
       email,
       password: hashedPassword,
@@ -897,10 +895,10 @@ export async function createUser({ name, email, password }) {
       favorites: [],
     })
 
+    await connectToDatabase()
     await newUser.save()
-
-    return { success: true, message: 'User created successfully' }
+    console.log('User created successfully')
   } catch (error) {
-    return { success: false, message: error.message }
+    console.error('Error creating user:', error)
   }
 }
