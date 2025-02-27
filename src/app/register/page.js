@@ -11,7 +11,7 @@ export default function RegisterForm() {
     const formData = new FormData(event.target)
 
     const payload = {
-      username: formData.get('username'),
+      name: formData.get('name'),
       email: formData.get('email'),
       password: formData.get('password'),
       fullName: formData.get('fullName'), // honeypot
@@ -42,17 +42,17 @@ export default function RegisterForm() {
           Register
         </h1>
         <form className="register-form" onSubmit={handleSubmit}>
-          <div className="register-username mt-4">
-            <label className="text-white block mb-1" htmlFor="username">
-              Username
+          <div className="register-name mt-4">
+            <label className="text-white block mb-1" htmlFor="name">
+              name
             </label>
             <input
               className="w-full px-4 py-2 rounded-lg bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
               type="text"
-              name="username"
-              id="username"
+              name="name"
+              id="name"
               required
-              placeholder="Enter your username"
+              placeholder="Enter your name"
             />
           </div>
           <div className="register-email mt-4">
