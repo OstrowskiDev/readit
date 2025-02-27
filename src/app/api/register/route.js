@@ -1,19 +1,33 @@
-import { hashPassword } from '@app/lib/security/hashPassword'
+import { validateSignUp } from '@/app/lib/security/validateSignUp'
+import { hashPassword } from '@/app/lib/security/hashPassword'
+import { createUser } from '@/app/lib/actions'
 
 export async function POST(req) {
   try {
-    const { username, email, password, fullName } = await req.json()
+    const { name, email, password, fullName } = await req.json()
 
-    // honeypot bot check
-    if (fullName) {
-      return new Response(JSON.stringify({ error: 'Invalid request' }), {
-        status: 400,
-      })
+    const validationResults = validateSignUp({
+      name,
+      email,
+      password,
+      fullName,
+    })
+
+    if (validationResults.length > 0) {
+      console.error(
+        'Server validation failed for signup route, validation details:',
+        validationResults,
+      )
+      return new Response(
+        JSON.stringify({ message: 'Incorrect sign up data.' }),
+        {
+          status: 400,
+        },
+      )
     }
 
-    const hashedPassword = hashPassword(password, 10)
-
-    console.log('New user:', { username, email, hashedPassword })
+    const hashedPassword = await hashPassword(password, 10)
+    createUser({ name, email, hashedPassword })
 
     return new Response(
       JSON.stringify({ message: 'User registered successfully' }),
