@@ -45,7 +45,7 @@ export default function RegisterForm() {
         <form className="register-form" onSubmit={handleSubmit}>
           <div className="register-name mt-4">
             <label className="text-white block mb-1" htmlFor="name">
-              name
+              Username
             </label>
             <input
               className="w-full px-4 py-2 rounded-lg bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -53,7 +53,7 @@ export default function RegisterForm() {
               name="name"
               id="name"
               required
-              placeholder="Enter your name"
+              placeholder="Enter your username"
             />
           </div>
           <div className="register-email mt-4">
