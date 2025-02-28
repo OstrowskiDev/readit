@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Link from 'next/link'
 
 export default function RegisterForm() {
   const [error, setError] = useState(null)
@@ -97,6 +98,14 @@ export default function RegisterForm() {
         </form>
         {error && <p className="text-red-200 mt-4">{error}</p>}
         {success && <p className="text-white mt-4">{success}</p>}
+        <div className="login-container mt-6 text-center">
+          <span className="text-white text-sm">Already have an account?</span>
+          <Link href="/login">
+            <span className="ml-1 text-white text-sm font-semibold cursor-pointer hover:underline">
+              Login now
+            </span>
+          </Link>
+        </div>
       </div>
     </div>
   )
