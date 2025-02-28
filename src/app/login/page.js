@@ -3,6 +3,7 @@
 import { signIn, useSession } from 'next-auth/react'
 import { useEffect, useState } from 'react'
 import AlreadySignedIn from '../ui/AlreadySignedIn'
+import Link from 'next/link'
 
 export default function SignInForm() {
   const [callbackUrl, setCallbackUrl] = useState(null)
@@ -85,15 +86,31 @@ export default function SignInForm() {
               placeholder="Enter your password"
             />
           </div>
-          <div className="login-submit mt-10">
+          <div className="forgot-password-container text-right">
+            <Link href="/">
+              <span className="text-gray-300 text-sm cursor-pointer hover:underline">
+                Forgot password?
+              </span>
+            </Link>
+          </div>
+          <div className="login-submit mt-6">
             <button
               className="login-submit-button w-full h-12 bg-white text-blue-500 py-2 rounded-lg hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200 font-bold active:bg-blue-200 hover:text-lg"
               type="submit"
             >
-              Login!
+              Login
             </button>
           </div>
         </form>
+
+        <div className="register-container mt-6 text-center">
+          <span className="text-white text-sm">Don't have an account?</span>
+          <Link href="/register">
+            <span className="ml-1 text-white text-sm font-semibold cursor-pointer hover:underline">
+              Register now
+            </span>
+          </Link>
+        </div>
       </div>
     </div>
   )
