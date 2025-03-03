@@ -878,10 +878,14 @@ export async function createUser({ name, email, hashedPassword }) {
   try {
     // validation is done on server before createUser is called
 
-    const newUserId = uuidv4().toString()
+    const newUserId = uuidv4()
+    const newActivationToken = uuidv4()
 
     const newUser = new User({
       _id: newUserId,
+      activation_token: newActivationToken,
+      token_expires_at: new Date(Date.now() + 24 * 60 * 60 * 1000), // 24 hours
+      is_active: false,
       name,
       email,
       password: hashedPassword,
