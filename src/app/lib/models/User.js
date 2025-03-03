@@ -7,6 +7,12 @@ import { avatarSeeds, avatarColors } from '../avatars/avatarProps'
 const usersSchema = new mongoose.Schema(
   {
     _id: String,
+    activation_token: String,
+    token_expires_at: Date,
+    is_active: {
+      type: Boolean,
+      default: false,
+    },
     name: {
       type: String,
       required: true,
