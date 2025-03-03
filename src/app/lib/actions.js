@@ -906,3 +906,31 @@ export async function createUser({ name, email, hashedPassword }) {
     console.error('Error creating user:', error)
   }
 }
+
+export async function activateAccount({ activation_token }) {
+  if (!activation_token) {
+    console.error('Activation token is missing')
+    return
+  }
+  try {
+    await connectToDatabase()
+    const userAccount = await User.findOne({
+      activation_token: activation_token,
+    })
+    if (!userAccount) {
+      console.error(
+        `User account was not found for activation_token: ${activation_token}`,
+      )
+      return
+    }
+
+    userAccount.is_active = true
+    userAccount.activation_token = null
+    userAccount.token_expires_at = null
+
+    await userAccount.save()
+    console.log('User account activated successfully')
+  } catch (error) {
+    console.error('Error activating user account:', error)
+  }
+}
