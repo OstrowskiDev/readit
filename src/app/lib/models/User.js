@@ -76,4 +76,6 @@ const usersSchema = new mongoose.Schema(
   { timestamps: true },
 )
 
+usersSchema.index({ token_expires_at: 1 }, { expireAfterSeconds: 0 })
+
 export default mongoose.models.User || mongoose.model('User', usersSchema)
