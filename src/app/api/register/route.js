@@ -1,6 +1,7 @@
 import { validateSignUp } from '@/app/lib/security/validateSignUp'
 import { hashPassword } from '@/app/lib/security/hashPassword'
 import { createUser } from '@/app/lib/actions'
+import { sendActivationEmail } from '@/app/lib/sendgrid/sendActivationEmail'
 
 export async function POST(req) {
   try {
@@ -14,20 +15,20 @@ export async function POST(req) {
     })
 
     if (validationResults.length > 0) {
-      console.error(
+      throw new Error(
         'Server validation failed for signup route, validation details:',
         validationResults,
-      )
-      return new Response(
-        JSON.stringify({ message: 'Incorrect sign up data.' }),
-        {
-          status: 400,
-        },
       )
     }
 
     const hashedPassword = await hashPassword(password, 10)
-    createUser({ name, email, hashedPassword })
+    const results = await createUser({ name, email, hashedPassword })
+    if (results.state !== 'success') {
+      throw new Error('Error occurred while executing createUser() function')
+    }
+
+    const activationToken = results.activation_token
+    sendActivationEmail(email, activationToken)
 
     return new Response(
       JSON.stringify({ message: 'User registered successfully' }),
@@ -36,9 +37,12 @@ export async function POST(req) {
       },
     )
   } catch (error) {
-    console.error('Error in registration:', error)
-    return new Response(JSON.stringify({ error: 'Something went wrong' }), {
-      status: 500,
-    })
+    console.error('Error during registration:', error)
+    return new Response(
+      JSON.stringify({ error: 'Error during registration' }),
+      {
+        status: 500,
+      },
+    )
   }
 }

@@ -902,8 +902,10 @@ export async function createUser({ name, email, hashedPassword }) {
     await connectToDatabase()
     await newUser.save()
     console.log('User created successfully')
+    return { state: 'success', activation_token: newActivationToken }
   } catch (error) {
     console.error('Error creating user:', error)
+    return { state: 'error' }
   }
 }
 

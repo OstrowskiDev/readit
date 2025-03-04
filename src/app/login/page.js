@@ -50,11 +50,9 @@ export default function SignInForm() {
       style={{ height: `calc(100vh - 72px)` }}
     >
       <div className="login-container flex flex-col justify-between w-[320px] h-[484px] p-8 rounded-lg bg-blue-500 shadow-lg">
-        <h1 className="login-title text-2xl font-semibold text-white mb-4">
-          Login
-        </h1>
+        <h1 className="login-title text-2xl font-semibold text-white">Login</h1>
         <form className="login-form" onSubmit={handleSubmit}>
-          <div className="login-email mt-4">
+          <div className="login-email">
             <label
               className="login-email-label text-white block mb-1"
               htmlFor="email"
