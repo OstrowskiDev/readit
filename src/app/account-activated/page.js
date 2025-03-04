@@ -7,7 +7,7 @@ export default function AccountActivated() {
       className="account-activated-page w-full bg-white flex justify-center items-center text-center"
       style={{ height: `calc(100vh - 72px)` }}
     >
-      <div className="account-activated-container w-[320px] p-8 pt-6 rounded-lg bg-blue-500 shadow-lg">
+      <div className="account-activated-container flex flex-col justify-between w-[320px] h-[484px] p-8 pt-6 rounded-lg bg-blue-500 shadow-lg">
         <div className="account-activated-header flex flex-col items-center mb-6">
           <div className="account-activated-icon w-40 mb-2">
             <ActivationSuccessIco />
@@ -17,7 +17,7 @@ export default function AccountActivated() {
           </h1>
         </div>
 
-        <p className="account-activated-message mt-4 text-white text-lg">
+        <p className="account-activated-message text-white text-lg">
           Congratulations, your account has been activated successfully!
         </p>
         <Link href="/login">
