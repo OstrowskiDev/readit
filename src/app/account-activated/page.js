@@ -1,0 +1,34 @@
+import Link from 'next/link'
+import { ActivationSuccessIco } from '../ui/icons/ActivationSuccessIco'
+
+export default function AccountActivated() {
+  return (
+    <div
+      className="account-activated-page w-full bg-white flex justify-center items-center text-center"
+      style={{ height: `calc(100vh - 72px)` }}
+    >
+      <div className="account-activated-container w-[320px] p-8 pt-6 rounded-lg bg-blue-500 shadow-lg">
+        <div className="account-activated-header flex flex-col items-center mb-6">
+          <div className="account-activated-icon w-40 mb-2">
+            <ActivationSuccessIco />
+          </div>
+          <h1 className="account-activated-title uppercase text-2xl text-white">
+            Success
+          </h1>
+        </div>
+
+        <p className="account-activated-message mt-4 text-white text-lg">
+          Congratulations, your account has been activated successfully!
+        </p>
+        <Link href="/login">
+          <button
+            className="w-full h-12 mt-6 bg-white text-blue-500 py-2 rounded-lg hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200 font-bold active:bg-blue-200 hover:text-lg"
+            type="button"
+          >
+            Login
+          </button>
+        </Link>
+      </div>
+    </div>
+  )
+}
