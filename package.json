@@ -28,6 +28,7 @@
     "validator": "^13.11.0"
   },
   "devDependencies": {
+    "@svgr/cli": "^8.1.0",
     "@types/node": "20.11.16",
     "@types/react": "18.2.51",
     "autoprefixer": "^10.0.1",
