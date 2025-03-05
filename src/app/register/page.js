@@ -1,35 +1,68 @@
 'use client'
 
-import { useState } from 'react'
+import { useRouter } from 'next/navigation'
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
+import { validateSignUp } from '../lib/security/validateSignUp'
+import axios from 'axios'
 
 export default function RegisterForm() {
-  const [error, setError] = useState(null)
-  const [success, setSuccess] = useState(null)
+  const initialFormDaa = {
+    name: '',
+    email: '',
+    password: '',
+    fullName: '', // Honeypot field
+  }
+
+  const validationObject = {
+    name: { message: [] },
+    email: { message: [] },
+    password: { message: [] },
+  }
+
+  const [formData, setFormData] = useState(initialFormDaa)
+  const [submitAttempted, setSubmitAttempted] = useState(false)
+  const [fieldValidity, setFieldValidity] = useState({ ...validationObject })
+  const router = useRouter()
+
+  useEffect(() => {
+    const results = validateSignUp(formData)
+    setFieldValidity(results)
+  }, [formData])
+
+  function printError(fieldName) {
+    return fieldValidity[fieldName].message.length > 0 && submitAttempted
+  }
+  const printNameError = printError('name')
+  const printEmailError = printError('email')
+  const printPasswordError = printError('password')
+
+  function onInputChange(event) {
+    setFormData({ ...formData, [event.target.name]: event.target.value })
+  }
 
   async function handleSubmit(event) {
     event.preventDefault()
-    const formData = new FormData(event.target)
+    setSubmitAttempted(true)
 
-    const payload = {
-      name: formData.get('name'),
-      email: formData.get('email'),
-      password: formData.get('password'),
-      fullName: formData.get('fullName'), // honeypot
+    const hasValidationErrors = Object.values(fieldValidity).some(
+      (field) => field.message.length > 0,
+    )
+
+    if (hasValidationErrors) {
+      console.log(
+        'Form submission failed, change required fields according to error messages',
+      )
+      return
     }
 
-    const res = await fetch('/api/register', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload),
-    })
-
-    const result = await res.json()
-    if (!res.ok) {
-      setError(result.error)
-    } else {
-      setSuccess('Account created successfully!')
-      event.target.reset()
+    try {
+      const response = await axios.post('/api/register', formData)
+      if (response.status === 201) {
+        router.push('/activation-email-send')
+      }
+    } catch (error) {
+      console.error('Error during registration:', error)
     }
   }
 
@@ -44,43 +77,67 @@ export default function RegisterForm() {
         </h1>
         <form className="register-form" onSubmit={handleSubmit}>
           <div className="register-name mt-4">
-            <label className="text-white block mb-1" htmlFor="name">
+            <label
+              className="register-name-label text-white block mb-1"
+              htmlFor="name"
+            >
               Username
             </label>
             <input
-              className="w-full px-4 py-2 rounded-lg bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="register-name-input w-full px-4 py-2 rounded-lg bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              id="name"
               type="text"
               name="name"
-              id="name"
-              required
+              value={formData.name}
+              onChange={onInputChange}
               placeholder="Enter your username"
+              required
             />
+            <label className="register-name-error text-xs text-red-200">
+              {printNameError && fieldValidity.name.message.join()}
+            </label>
           </div>
           <div className="register-email mt-4">
-            <label className="text-white block mb-1" htmlFor="email">
+            <label
+              className="register-email-label text-white block mb-1"
+              htmlFor="email"
+            >
               Email
             </label>
             <input
-              className="w-full px-4 py-2 rounded-lg bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="register-email-input w-full px-4 py-2 rounded-lg bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              id="email"
               type="email"
               name="email"
-              id="email"
-              required
+              value={formData.email}
+              onChange={onInputChange}
               placeholder="Enter your email"
+              required
             />
+            <label className="register-email-error text-xs text-red-200">
+              {printEmailError && fieldValidity.email.message.join()}
+            </label>
           </div>
           <div className="register-password mt-4">
-            <label className="text-white block mb-1" htmlFor="password">
+            <label
+              className="register-password-label text-white block mb-1"
+              htmlFor="password"
+            >
               Password
             </label>
             <input
-              className="w-full px-4 py-2 rounded-lg bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="register-password-input w-full px-4 py-2 rounded-lg bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              id="password"
               type="password"
               name="password"
-              id="password"
-              required
+              value={formData.password}
+              onChange={onInputChange}
               placeholder="Enter your password"
+              required
             />
+            <label className="register-password-error text-xs text-red-200">
+              {printPasswordError && fieldValidity.password.message.join()}
+            </label>
           </div>
           {/* Honeypot field */}
           <div className="register-fullName hidden">
@@ -96,8 +153,6 @@ export default function RegisterForm() {
             </button>
           </div>
         </form>
-        {error && <p className="text-red-200 mt-4">{error}</p>}
-        {success && <p className="text-white mt-4">{success}</p>}
         <div className="login-container mt-6 text-center">
           <span className="text-white text-sm">Already have an account?</span>
           <Link href="/login">
