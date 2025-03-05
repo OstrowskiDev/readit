@@ -5,20 +5,18 @@ import { sendActivationEmail } from '@/app/lib/sendgrid/sendActivationEmail'
 
 export async function POST(req) {
   try {
-    const { name, email, password, fullName } = await req.json()
+    const formData = await req.json()
+    const { name, email, password, fullName } = formData
 
-    const validationResults = validateSignUp({
-      name,
-      email,
-      password,
-      fullName,
-    })
+    const validationResults = validateSignUp(formData)
+    const hasErrors = Object.values(validationResults).some(
+      (field) => field.message.length > 0,
+    )
 
-    if (validationResults.length > 0) {
-      throw new Error(
-        'Server validation failed for signup route, validation details:',
-        validationResults,
-      )
+    if (hasErrors) {
+      return new Response(JSON.stringify({ error: 'Invalid input data' }), {
+        status: 400,
+      })
     }
 
     const hashedPassword = await hashPassword(password, 10)
