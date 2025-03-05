@@ -57,7 +57,7 @@ export function validateSignUp(formData) {
   validateField(
     'name',
     () => !validator.matches(name, /^[a-zA-Z\s]*$/),
-    'name cannot contain numbers or special characters.',
+    'Name cannot contain numbers or special characters.',
   )
 
   validateField(
@@ -69,7 +69,7 @@ export function validateSignUp(formData) {
   validateField(
     'email',
     () => !validator.isEmail(email),
-    'Proszę wprowadzić prawidłowy adres email.',
+    'Please enter valid email address.',
   )
 
   // Password regex: at least 8 chars, 1 uppercase, 1 lowercase, 1 digit, 1 special character
@@ -79,7 +79,7 @@ export function validateSignUp(formData) {
   validateField(
     'password',
     () => !passwordRegex.test(password),
-    'Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one number, and one special character.',
+    'Password must be at least 8 characters, with an uppercase letter, lowercase letter, number, and special character.',
   )
 
   // validateField(
