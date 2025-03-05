@@ -7,11 +7,11 @@ import { validateSignUp } from '../lib/security/validateSignUp'
 import axios from 'axios'
 
 export default function RegisterForm() {
-  const initialFormDaa = {
+  const initialFormData = {
     name: '',
     email: '',
     password: '',
-    fullName: '', // Honeypot field
+    fullName: '', // honeypot field
   }
 
   const validationObject = {
@@ -20,7 +20,7 @@ export default function RegisterForm() {
     password: { message: [] },
   }
 
-  const [formData, setFormData] = useState(initialFormDaa)
+  const [formData, setFormData] = useState(initialFormData)
   const [submitAttempted, setSubmitAttempted] = useState(false)
   const [fieldValidity, setFieldValidity] = useState({ ...validationObject })
   const router = useRouter()
@@ -29,13 +29,6 @@ export default function RegisterForm() {
     const results = validateSignUp(formData)
     setFieldValidity(results)
   }, [formData])
-
-  function printError(fieldName) {
-    return fieldValidity[fieldName].message.length > 0 && submitAttempted
-  }
-  const printNameError = printError('name')
-  const printEmailError = printError('email')
-  const printPasswordError = printError('password')
 
   function onInputChange(event) {
     setFormData({ ...formData, [event.target.name]: event.target.value })
@@ -50,9 +43,6 @@ export default function RegisterForm() {
     )
 
     if (hasValidationErrors) {
-      console.log(
-        'Form submission failed, change required fields according to error messages',
-      )
       return
     }
 
@@ -94,7 +84,9 @@ export default function RegisterForm() {
               required
             />
             <label className="register-name-error text-xs text-red-200">
-              {printNameError && fieldValidity.name.message.join()}
+              {fieldValidity.name.message.length > 0 &&
+                submitAttempted &&
+                fieldValidity.name.message.join()}
             </label>
           </div>
           <div className="register-email mt-4">
@@ -115,7 +107,9 @@ export default function RegisterForm() {
               required
             />
             <label className="register-email-error text-xs text-red-200">
-              {printEmailError && fieldValidity.email.message.join()}
+              {fieldValidity.email.message.length > 0 &&
+                submitAttempted &&
+                fieldValidity.email.message.join()}
             </label>
           </div>
           <div className="register-password mt-4">
@@ -136,7 +130,9 @@ export default function RegisterForm() {
               required
             />
             <label className="register-password-error text-xs text-red-200">
-              {printPasswordError && fieldValidity.password.message.join()}
+              {fieldValidity.password.message.length > 0 &&
+                submitAttempted &&
+                fieldValidity.password.message.join()}
             </label>
           </div>
           {/* Honeypot field */}
