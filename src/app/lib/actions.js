@@ -931,8 +931,32 @@ export async function activateAccount({ activation_token }) {
     userAccount.token_expires_at = null
 
     await userAccount.save()
+    // !!!! brak logów mających miejsce faktycznie po otrzymaniu wiadomości o sukcesie aktywacji konta z mongoDB
     console.log('User account activated successfully')
   } catch (error) {
     console.error('Error activating user account:', error)
+  }
+}
+
+export async function addRecoveryToken(email) {
+  if (!email) {
+    console.error('Email is missing in addRecoveryToken func call')
+    return
+  }
+  try {
+    await connectToDatabase()
+    const userAccount = await User.findOne({ email: email })
+    if (!userAccount) {
+      console.error(`User account not found for provided email`)
+      return { error: 'User account not found for provided email' }
+    }
+    userAccount.recovery_token = uuidv4()
+    userAccount.recovery_token_expires_at = new Date(
+      Date.now() + 60 * 60 * 1000,
+    ) // 60 minutes
+    await userAccount.save()
+  } catch (error) {
+    console.error('Error during adding recovery token:', error)
+    return { error: 'Error during adding recovery token' }
   }
 }
