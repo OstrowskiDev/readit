@@ -1,0 +1,54 @@
+'use client'
+
+export default function ForgotPassword() {
+  async function handleSubmit() {
+    return
+  }
+
+  return (
+    <div
+      className="password-recovery-page w-full bg-white flex justify-center items-center"
+      style={{ height: `calc(100vh - 72px)` }}
+    >
+      <div className="password-recovery-container flex flex-col w-[320px] h-[484px] p-8 rounded-lg bg-blue-500 shadow-lg">
+        <h1 className="password-recovery-title text-2xl font-semibold text-white">
+          Send recovery email
+        </h1>
+        <form
+          className="password-recovery-form flex flex-col flex-grow"
+          onSubmit={handleSubmit}
+        >
+          <div className="password-recovery-email">
+            <p className="password-recovery-description mt-4 text-white text-sm mb-4">
+              Enter the email associated with your account and we'll send you an
+              email with instructions to reset your password.
+            </p>
+            <label
+              className="password-recovery-email-label text-white block mt-8 mb-1"
+              htmlFor="email"
+            >
+              Email
+            </label>
+            <input
+              className="password-recovery-email-input w-full px-4 py-2 rounded-lg bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              type="email"
+              name="email"
+              id="email"
+              required
+              placeholder="Enter your email"
+            />
+          </div>
+          <div className="password-recovery-separator flex-grow mt-4"></div>
+          <div className="password-recovery-submit">
+            <button
+              className="password-recovery-submit-button w-full h-12 bg-white text-blue-500 py-2 rounded-lg hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200 font-bold active:bg-blue-200 hover:text-lg"
+              type="submit"
+            >
+              Send
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  )
+}
