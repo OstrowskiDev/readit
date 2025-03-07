@@ -22,12 +22,12 @@ const usersSchema = new mongoose.Schema(
       maxlength: 30,
       match: /^[a-zA-Z0-9 ]+$/,
     },
-    // password is hashed, its main validation is done before hashing
     password: {
       type: String,
       required: true,
-      maxlength: 128,
     },
+    recovery_token: String,
+    recovery_token_expires_at: Date,
     email: {
       type: String,
       required: true,
