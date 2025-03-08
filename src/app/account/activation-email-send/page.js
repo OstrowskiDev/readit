@@ -1,4 +1,4 @@
-import { ActivationSuccessIco } from '../ui/icons/ActivationSuccessIco'
+import { ActivationSuccessIco } from '@/app/ui/icons/ActivationSuccessIco'
 
 export default function ActivationEmailSend() {
   return (

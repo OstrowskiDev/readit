@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { ActivationSuccessIco } from '../ui/icons/ActivationSuccessIco'
+import { ActivationSuccessIco } from '@/app/ui/icons/ActivationSuccessIco'
 
 export default function AccountActivated() {
   return (

@@ -1,4 +1,4 @@
-import { ActivationFailedIco } from '../ui/icons/ActivationFailedIco'
+import { ActivationFailedIco } from '@/app/ui/icons/ActivationFailedIco'
 
 export default function ActivationFailed() {
   return (

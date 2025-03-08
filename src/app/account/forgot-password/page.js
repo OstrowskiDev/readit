@@ -1,8 +1,40 @@
 'use client'
 
+import { validateEmail } from '@/app//lib/security/validateEmail'
+import { useRouter } from 'next/navigation'
+import { useEffect, useState } from 'react'
+import axios from 'axios'
+
 export default function ForgotPassword() {
-  async function handleSubmit() {
-    return
+  const router = useRouter()
+  const [email, setEmail] = useState('')
+  const [submitAttempted, setSubmitAttempted] = useState(false)
+  const [validationMessage, setValidationMessage] = useState({ message: '' })
+
+  useEffect(() => {
+    const validationResults = validateEmail(email)
+    setValidationMessage(validationResults)
+  }, [email])
+
+  function onInputChange(event) {
+    setEmail(event.target.value)
+  }
+
+  async function handleSubmit(event) {
+    event.preventDefault()
+    setSubmitAttempted(true)
+    if (validationMessage.message.length > 0) {
+      setValidationMessage(validateEmail(email))
+      return
+    }
+    try {
+      const results = await axios.post('/api/recovery-email', { email })
+      if (results.status === 200) {
+        router.push('/account/recovery-email-send')
+      }
+    } catch (error) {
+      console.error('Error during password recovery:', error)
+    }
   }
 
   return (
@@ -34,9 +66,16 @@ export default function ForgotPassword() {
               type="email"
               name="email"
               id="email"
-              required
+              value={email}
+              onChange={onInputChange}
               placeholder="Enter your email"
+              required
             />
+            <label className="password-recovery-email-error text-xs text-red-200">
+              {validationMessage.message.length > 0 &&
+                submitAttempted &&
+                validationMessage.message}
+            </label>
           </div>
           <div className="password-recovery-separator flex-grow mt-4"></div>
           <div className="password-recovery-submit">
