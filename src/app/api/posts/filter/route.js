@@ -93,6 +93,11 @@ export async function GET(req, res) {
       'authorData.address': 0,
       'authorData.email': 0,
       'authorData.phone': 0,
+      'authorData.activation_token': 0,
+      'authorData.token_expires_at': 0,
+      'authorData.is_active': 0,
+      'authorData.recovery_token': 0,
+      'authorData.recovery_token_expires_at': 0,
     },
   })
 
