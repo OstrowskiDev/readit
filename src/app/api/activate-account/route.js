@@ -7,13 +7,14 @@ export async function GET(req) {
     const url = new URL(req.url)
     const activation_token = url.searchParams.get('activation_token')
     if (!activation_token) {
-      return NextResponse.redirect(new URL('/activation-failed', req.url))
+      return NextResponse.redirect(
+        new URL('/account/activation-failed', req.url),
+      )
     }
-
     activateAccount({ activation_token })
-    return NextResponse.redirect(new URL('/account-activated', req.url))
+    return NextResponse.redirect(new URL('/account/account-activated', req.url))
   } catch (error) {
     console.error('Error in account activation:', error)
-    return NextResponse.redirect(new URL('/activation-failed', req.url))
+    return NextResponse.redirect(new URL('/account/activation-failed', req.url))
   }
 }

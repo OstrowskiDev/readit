@@ -1,15 +1,17 @@
 import { addRecoveryToken } from '@/app/lib/actions/user'
+import { validateEmail } from '@/app/lib/security/validateEmail'
+import sendPasswordResetEmail from '@/app/lib/sendgrid/sendPasswordResetEmail'
 
 export async function POST(req) {
   try {
     const { email } = await req.json()
 
-    // const validationResults = validateEmail(email)
-    // if (validationResults.message.length > 0) {
-    //   return new Response(JSON.stringify('Email validation failed'), {
-    //     status: 400,
-    //   })
-    // }
+    const validationResults = validateEmail(email)
+    if (validationResults.message.length > 0) {
+      return new Response(JSON.stringify('Email validation failed'), {
+        status: 400,
+      })
+    }
 
     const results = await addRecoveryToken(email)
     if (!results) {
@@ -20,5 +22,13 @@ export async function POST(req) {
     const recoveryToken = results.recovery_token
     const userName = results.name
     sendPasswordResetEmail(email, recoveryToken, userName)
-  } catch (error) {}
+    return new Response(JSON.stringify('Recovery email sent successfully'), {
+      status: 200,
+    })
+  } catch (error) {
+    console.error('Error during password recovery:', error)
+    return new Response(JSON.stringify('Error during password recovery'), {
+      status: 500,
+    })
+  }
 }

@@ -4,7 +4,7 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY)
 
 export default function sendPasswordResetEmail(email, recoveryToken, userName) {
   try {
-    const recoveryLink = `http://localhost:3000/api/reset_password?recovery_token=${recoveryToken}`
+    const recoveryLink = `http://localhost:3000/account/reset-password?recovery_token=${recoveryToken}`
 
     const msg = {
       to: email,

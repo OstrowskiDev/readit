@@ -85,7 +85,7 @@ export default function SignInForm() {
             />
           </div>
           <div className="forgot-password-container text-right">
-            <Link href="/">
+            <Link href="/account/forgot-password">
               <span className="text-gray-300 text-sm cursor-pointer hover:underline">
                 Forgot password?
               </span>

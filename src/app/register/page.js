@@ -49,7 +49,7 @@ export default function RegisterForm() {
     try {
       const response = await axios.post('/api/register', formData)
       if (response.status === 201) {
-        router.push('/activation-email-send')
+        router.push('/account/activation-email-send')
       }
     } catch (error) {
       console.error('Error during registration:', error)
