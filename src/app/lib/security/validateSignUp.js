@@ -1,4 +1,6 @@
 import validator from 'validator'
+import { passwordRegex } from './passwordRegex'
+import { validateField } from './validationUtils'
 
 // !!!! add proper validation for user email and name
 // const existingUser = await User.findOne({ $or: [{ email }, { name }] })
@@ -30,59 +32,46 @@ export function validateSignUp(formData) {
   //crating deep copy of validationObject
   const validationResults = JSON.parse(JSON.stringify(validationObject))
 
-  function addMessage(field, messageText) {
-    validationResults[field].message.push(messageText)
-  }
-
-  function removeMessage(field, messageText) {
-    const filteredMessages = validationResults[field].message.filter(
-      (msg) => msg !== messageText,
-    )
-    validationResults[field].message = filteredMessages
-  }
-
-  function validateField(field, validationFn, messageText) {
-    if (validationFn()) {
-      addMessage(field, messageText)
-    } else {
-      removeMessage(field, messageText)
-    }
-  }
-
   const fieldRequired = ['name', 'email', 'password']
   for (const field of fieldRequired) {
-    validateField(field, () => !formData[field], 'This field is required.')
+    validateField(
+      validationResults,
+      field,
+      () => !formData[field],
+      'This field is required.',
+    )
   }
 
   validateField(
+    validationResults,
     'name',
     () => !validator.matches(name, /^[a-zA-Z\s]*$/),
     'Name cannot contain numbers or special characters.',
   )
 
   validateField(
+    validationResults,
     'fullName',
     () => !validator.isLength(name, { max: 16 }),
     'Name cannot be longer than 16 characters.',
   )
 
   validateField(
+    validationResults,
     'email',
     () => !validator.isEmail(email),
     'Please enter valid email address.',
   )
 
-  // Password regex: at least 8 chars, 1 uppercase, 1 lowercase, 1 digit, 1 special character
-  const passwordRegex =
-    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>]).{8,}$/
-
   validateField(
+    validationResults,
     'password',
     () => !passwordRegex.test(password),
     'Password must be at least 8 characters, with an uppercase letter, lowercase letter, number, and special character.',
   )
 
   // validateField(
+  //   validationResults,
   //   "acceptRodo",
   //   () => acceptRodo !== "yes",
   //   "Aby wysłać wiadomość wymagana jest akceptacja warunków Polityki Prywatności.",
@@ -90,7 +79,12 @@ export function validateSignUp(formData) {
 
   // validateField("jsEnabled", () => jsEnabled !== "yes", "bot detected")
 
-  validateField('fullName', () => fullName !== '', 'bot detected')
+  validateField(
+    validationResults,
+    'fullName',
+    () => fullName !== '',
+    'bot detected',
+  )
 
   return validationResults
 }
