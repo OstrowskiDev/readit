@@ -2,7 +2,7 @@ import validator from 'validator'
 import { passwordRegex } from './passwordRegex'
 import { validateField } from './validationUtils'
 
-// !!!! add proper validation for user email and name
+// !!!! add proper validation for user email and name (check if they are unique)
 // const existingUser = await User.findOne({ $or: [{ email }, { name }] })
 // if (existingUser) {
 //   throw new Error('User with this email or name already exists')
