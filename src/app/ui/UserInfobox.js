@@ -1,21 +1,21 @@
 'use client'
 
-import React, { useEffect } from 'react'
+import React, { use, useEffect } from 'react'
 import { countUserComments, countUserPosts } from '../lib/actions'
 import Avatar from '../lib/avatars/Avatar'
 import { cloneDeep } from 'lodash'
 import { FollowBtn } from './buttons/FollowBtn'
 import { MessageBtn } from './buttons/MessageBtn'
-import { useToastContext } from '../lib/toasts/ToastProvider'
 import { useRouter } from 'next/navigation'
 import { AccountCreationDate } from './AccountCreationDate'
+import { useAuthorsContext } from '../lib/context/AuthorsDataProvider'
 
 export default function UserInfobox({
   author,
   handleMouseEnter,
   handleMouseLeave,
 }) {
-  const { authorsData, setAuthorsData } = useToastContext()
+  const { authorsData, setAuthorsData } = useAuthorsContext()
   const router = useRouter()
   const authorId = author._id
   const accountCreatedAt = author.createdAt

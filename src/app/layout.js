@@ -1,9 +1,10 @@
 import { Inter } from 'next/font/google'
 import './globals.css'
-import AppLayout from './ui/AppLayout'
+
 import { getServerSession } from 'next-auth'
 import SessionProvider from '@/app/lib/SessionProvider'
 import { authOptions } from './api/auth/[...nextauth]/authOptions'
+import AppLayout from './ui/AppLayout'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -19,12 +20,7 @@ export default async function RootLayout({ children }) {
     <html lang="en">
       <body className={inter.className}>
         <SessionProvider session={session}>
-          <div className="md:flex">
-            <div className="w-full flex-none md:w-60">
-              <AppLayout />
-            </div>
-            {children}
-          </div>
+          <AppLayout children={children} />
         </SessionProvider>
       </body>
     </html>
