@@ -3,16 +3,13 @@
 import Post from './models/Post'
 import Comment from './models/Comment'
 import User from './models/User'
-import { v4 as uuidv4 } from 'uuid'
 import { redirect } from 'next/navigation'
 import { connectToDatabase, getComment, getUser } from './db'
 import { validatePostContent, validatePostTitle } from './validation'
 import { getServerSession } from 'next-auth/next'
 import { authOptions } from '@/app/api/auth/[...nextauth]/authOptions'
 import { isUUID } from 'validator'
-
-let toastStatus
-let toastMessage
+import { toast, setToast, returnToast } from './toasts/ToastUtils'
 
 export async function createPost(inputTitle, inputContent, uuid) {
   const session = await getServerSession(authOptions)
@@ -20,12 +17,10 @@ export async function createPost(inputTitle, inputContent, uuid) {
   const isValidUUID = isUUID(uuid)
   if (!isValidUUID) {
     console.error('Invalid postId in createPost func')
-    return { state: 'error', message: 'Invalid postId' }
+    return returnToast('error', 'Failed to create post')
   }
   const title = validatePostTitle(inputTitle)
   const content = validatePostContent(inputContent)
-
-  resetToast()
 
   const newPost = new Post({
     _id: uuid,
@@ -39,41 +34,27 @@ export async function createPost(inputTitle, inputContent, uuid) {
     await newPost.save()
     setToast('success', 'Post created successfully!')
   } catch (error) {
-    setToast('error', 'Failed to create post')
     console.error('Error saving post:', error)
+    setToast('error', 'Failed to create post')
   }
-
-  return {
-    state: toastStatus,
-    message: toastMessage,
-    postId: uuid,
-  }
+  return { ...toast, postId: uuid }
 }
 
 export async function updatePost(postId, formData) {
   const session = await getServerSession(authOptions)
   let oldPost
-  resetToast()
   try {
     oldPost = await Post.findOne({ _id: postId })
   } catch (error) {
     console.error('Error during fetching post for updatePost func:', error)
-    setToast('error', 'Failed to update post')
-    return {
-      state: toastStatus,
-      message: toastMessage,
-    }
+    return returnToast('error', 'Failed to update post')
   }
 
   if (session.user.id !== oldPost.user_id) {
-    setToast('error', 'Failed to update post')
     console.error(
-      "Warning! Unauthorized attempt to edit post. User session Id doesn't match post author Id. Terminating updatePost func.",
+      "Error updating post. User session Id doesn't match post author Id.",
     )
-    return {
-      state: toastStatus,
-      message: toastMessage,
-    }
+    return returnToast('error', 'Failed to update post')
   }
   const inputTitle = formData.title
   const title = validatePostTitle(inputTitle)
@@ -100,42 +81,25 @@ export async function updatePost(postId, formData) {
     console.error('Error updating post:', error)
     setToast('error', 'Failed to update post')
   }
-
-  return {
-    state: toastStatus,
-    message: toastMessage,
-  }
+  return toast
 }
 
 export async function deletePost(postId) {
   if (!isUUID(postId)) {
     console.error('Invalid postId in deletePost func')
-    return {
-      state: 'error',
-      message: 'Failed to delete post',
-    }
+    return returnToast('error', 'Failed to delete post')
   }
-
-  resetToast()
 
   try {
     await connectToDatabase()
     const post = await Post.findOne({ _id: postId })
     if (!post) {
       console.error('Post not found')
-      setToast('error', 'Failed to delete post')
-      return {
-        state: toastStatus,
-        message: toastMessage,
-      }
+      return returnToast('error', 'Failed to delete post')
     }
     if (post.comments && post.comments.length > 0) {
       console.error('Post with comments cannot be deleted')
-      setToast('error', 'Post with comments cannot be deleted')
-      return {
-        state: toastStatus,
-        message: toastMessage,
-      }
+      return returnToast('error', 'Post with comments cannot be deleted')
     }
 
     const deletedPost = await Post.findByIdAndDelete(postId)
@@ -149,11 +113,7 @@ export async function deletePost(postId) {
     console.error('Error deleting post:', error)
     setToast('error', 'Failed to delete post')
   }
-
-  return {
-    state: toastStatus,
-    message: toastMessage,
-  }
+  return toast
 }
 
 export async function createComment(
@@ -164,8 +124,6 @@ export async function createComment(
 ) {
   const session = await getServerSession(authOptions)
   const content = validatePostContent(userInput)
-
-  resetToast()
 
   const newComment = new Comment({
     _id: newCommentId,
@@ -183,6 +141,7 @@ export async function createComment(
     await newComment.save()
   } catch (error) {
     console.error('Error saving comment:', error)
+    return returnToast('error', 'Failed to create comment')
   }
 
   //update parent replies prop
@@ -210,32 +169,22 @@ export async function createComment(
     setToast('error', `Failed to create comment`)
     console.error(`Error updating {parentType}:`, error)
   }
-
-  return {
-    state: toastStatus,
-    message: toastMessage,
-    newCommentId: newCommentId,
-  }
+  return { ...toast, newCommentId: newCommentId }
 }
 
 export async function deleteComment(commentId) {
   if (!isUUID(commentId))
-    return { state: 'error', message: 'Invalid commentId' }
+    return returnToast('error', 'Failed to delete comment')
 
   const session = await getServerSession(authOptions)
   if (!session) {
     redirect('/login')
   }
 
-  const errorResponse = {
-    state: 'error',
-    message: 'Failed to delete comment',
-  }
-
   const commentData = await getComment(commentId)
   if (!commentData) {
     console.error('deleteComment func: document not found')
-    return errorResponse
+    return returnToast('error', 'Failed to delete comment')
   }
 
   const commentAuthorId = commentData.user_id
@@ -243,15 +192,13 @@ export async function deleteComment(commentId) {
     console.error(
       "Warning! UserId doesn't match authorId inside deleteComment server function.",
     )
-    return errorResponse
+    return returnToast('error', 'Failed to delete comment')
   }
 
   const parentType = commentData.parent.type
   const parentId = commentData.parent._id
   const replies = commentData.replies
   const hasReplies = Boolean(replies) && replies.length !== 0
-
-  resetToast()
 
   // delete comment if it has no replies
   if (!hasReplies) {
@@ -260,12 +207,12 @@ export async function deleteComment(commentId) {
       const deleteComment = await Comment.findByIdAndDelete(commentId)
       if (!deleteComment) {
         console.error('deleteComment func: comment not found')
-        return errorResponse
+        return returnToast('error', 'Failed to delete comment')
       }
       console.log('Comment deleted successfully')
     } catch (error) {
       console.error('Error deleting comment:', error)
-      return errorResponse
+      return returnToast('error', 'Failed to delete comment')
     }
 
     //update parent children list
@@ -298,12 +245,9 @@ export async function deleteComment(commentId) {
   } else {
     console.log("comment can't be deleted when it has replies")
     setToast('error', "Comment can't be deleted when it has replies")
-
     // !!!! change deleted flag to true
-    // don't update comment or post children array:
-    // comment was not perma deleted so no need
   }
-  return { state: toastStatus, message: toastMessage }
+  return toast
 }
 
 export async function updateComment(commentId, userInput) {
@@ -315,16 +259,11 @@ export async function updateComment(commentId, userInput) {
     console.log(
       "Warning! During update comment operation user id doesn't match author id.",
     )
-    return {
-      state: 'error',
-      message: 'Failed to update comment!',
-      updatedCommentId: commentId,
-    }
+    setToast('error', 'Failed to update comment!')
+    return { ...toast, updatedCommentId: commentId }
   }
 
   const content = validatePostContent(userInput)
-
-  resetToast()
 
   const updatedData = new Comment({
     _id: commentId,
@@ -349,19 +288,12 @@ export async function updateComment(commentId, userInput) {
     console.error('Error updating comment:', error)
     setToast('error', 'Failed to update comment!')
   }
-
-  return {
-    state: toastStatus,
-    message: toastMessage,
-    updatedCommentId: commentId,
-  }
+  return { ...toast, updatedCommentId: commentId }
 }
 
 export async function handleLikeClick(documentId, collection) {
   const session = await getServerSession(authOptions)
   if (!session) redirect('/login')
-
-  resetToast()
 
   const document = await getDocument()
   if (!document) {
@@ -377,15 +309,10 @@ export async function handleLikeClick(documentId, collection) {
     const result = await updateDocument()
     logResults(result)
   } catch (error) {
-    setToast('error', 'Failed updating like')
     console.error('Error updating document:', error)
+    setToast('error', 'Failed updating like')
   }
-
-  return {
-    state: toastStatus,
-    message: toastMessage,
-    wasDisliked: alreadyDisliked,
-  }
+  return { ...toast, wasDisliked: alreadyDisliked }
 
   async function updateDocument() {
     async function updateComment() {
@@ -444,8 +371,8 @@ export async function handleLikeClick(documentId, collection) {
     } else if (collection === 'comments') {
       updateResult = await updateComment()
     } else {
-      setToast('error', 'Failed updating like')
       console.error('updateDocument called with invalid value of collection')
+      setToast('error', 'Failed updating like')
       return
     }
     return updateResult
@@ -483,8 +410,6 @@ export async function handleLikeClick(documentId, collection) {
 export async function handleDislikeClick(documentId, collection) {
   const session = await getServerSession(authOptions)
   if (!session) redirect('/login')
-
-  resetToast()
 
   const document = await getDocument()
   if (!document) {
@@ -651,22 +576,7 @@ export async function getCommentsAndAuthors(postId) {
   return [comments, authors]
 }
 
-function setToast(status, message) {
-  toastStatus = status
-  toastMessage = message
-}
-
-function resetToast() {
-  toastStatus = ''
-  toastMessage = ''
-}
-
-function returnToast(status, message) {
-  return { state: status, message: message }
-}
-
 export async function countUserPosts(userId) {
-  console.log('Counting user posts...')
   try {
     const count = await Post.countDocuments({ user_id: userId })
     return count
@@ -677,7 +587,6 @@ export async function countUserPosts(userId) {
 }
 
 export async function countUserComments(userId) {
-  console.log('Counting user comments...')
   try {
     const count = await Comment.countDocuments({ user_id: userId })
     return count
@@ -688,7 +597,6 @@ export async function countUserComments(userId) {
 }
 
 export async function countPostComments(postId) {
-  console.log('Counting post comments...')
   try {
     const count = await Comment.countDocuments({
       'parent.type': 'post',
@@ -725,14 +633,9 @@ export async function updateUserData(userObj) {
     await connectToDatabase()
     const user = await User.findById(_id)
 
-    resetToast()
-
     if (!user) {
       console.error('User with given _id not found')
-      return {
-        state: 'error',
-        message: 'Failed to update user data',
-      }
+      return returnToast('error', 'Failed to update user data')
     }
 
     user.name = name || user.name
@@ -757,16 +660,10 @@ export async function updateUserData(userObj) {
     console.error('Error updating user:', error)
     setToast('error', 'Failed to update user data!')
   }
-
-  return {
-    state: toastStatus,
-    message: toastMessage,
-  }
+  return toast
 }
 
 export async function handlePostFavorites(postId) {
-  resetToast()
-
   if (postId !== 'about' && postId !== 'credits' && !isUUID(postId)) {
     console.error('Invalid postId in handleFavoritesClick func')
     return returnToast('error', 'Failed updating favorites')
@@ -810,16 +707,10 @@ export async function handlePostFavorites(postId) {
     console.log('Document not found or not updated')
     setToast('error', 'Failed to update favorites')
   }
-
-  return {
-    state: toastStatus,
-    message: toastMessage,
-  }
+  return toast
 }
 
 export async function handleCommentFavorites(commentId) {
-  resetToast()
-
   if (!isUUID(commentId)) {
     console.error('Invalid commentId in handleFavoritesClick func')
     return returnToast('error', 'Failed updating favorites')
@@ -863,9 +754,5 @@ export async function handleCommentFavorites(commentId) {
     console.log('Document not found or not updated')
     setToast('error', 'Failed to update favorites')
   }
-
-  return {
-    state: toastStatus,
-    message: toastMessage,
-  }
+  return toast
 }

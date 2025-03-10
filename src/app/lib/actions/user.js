@@ -5,6 +5,7 @@ import { connectToDatabase } from '@/app/lib/db'
 import User from '@/app/lib/models/User'
 import { validatePasswords } from '../security/validatePasswords'
 import { hashPassword } from '../security/hashPassword'
+import { toast, resetToast, setToast } from '../toasts/ToastUtils'
 
 export async function createUser({ name, email, hashedPassword }) {
   try {
@@ -96,9 +97,14 @@ export async function resetPassword({
   recoveryToken,
 }) {
   try {
+    resetToast()
+    const toastErrorMessage =
+      'Password reset failed. Please request a new one recovery link.'
+
     if (!password || !repeatPassword || !recoveryToken) {
       console.error('Missing data in resetPassword func call')
-      return
+      setToast('error', toastErrorMessage)
+      return toast
     }
     const validationResults = validatePasswords({ password, repeatPassword })
     const hasErrors = Object.values(validationResults).some(
@@ -106,26 +112,41 @@ export async function resetPassword({
     )
     if (hasErrors) {
       console.error('Password validation failed')
-      return
+      setToast('error', toastErrorMessage)
+      return toast
     }
     await connectToDatabase()
     const userAccount = await User.findOne({ recovery_token: recoveryToken })
     if (!userAccount) {
       console.error('User account not found for provided reset token')
-      return
+      setToast('error', toastErrorMessage)
+      return toast
     }
     if (userAccount.recovery_token_expires_at < new Date()) {
-      console.error('Reset token has expired')
-      return
+      setToast('error', toastErrorMessage)
+      return toast
     }
     const hashedPassword = await hashPassword(password, 10)
     userAccount.password = hashedPassword
     userAccount.recovery_token = null
     userAccount.recovery_token_expires_at = null
     await userAccount.save()
-    return 'success'
+    setToast('success', 'Password reset successful')
+    return toast
   } catch (error) {
     console.error('Error during password reset:', error)
-    return
+    setToast('error', toastErrorMessage)
+    return toast
+  }
+}
+
+export async function checkEmailAvailability(email) {
+  try {
+    await connectToDatabase()
+    const user = await User.findOne({ email: email })
+    const isEmailAvailable = user ? false : true
+    return isEmailAvailable
+  } catch {
+    console.error('Error checking email availability')
   }
 }
