@@ -7,11 +7,11 @@ import { Suspense, lazy, useEffect, useState } from 'react'
 import { Loader } from '@/app/ui/loaders/Loader'
 import { PostContextProvider } from '@/app/lib/context/PostContextProvider'
 import { PostHeader } from '@/app/ui/PostHeader'
-import { ToastProvider } from '@/app/lib/toasts/ToastProvider'
 import { PostCommentShimmer } from '@/app/ui/loaders/PostCommentShimmer'
 import useMouseHover from '@/app/lib/hooks/useMouseHover'
 import { UserInfoboxLoader } from '@/app/ui/loaders/UserInfoboxLoader'
 import { PostEditForm } from '@/app/ui/PostEditForm'
+import { AuthorsDataProvider } from '@/app/lib/context/AuthorsDataProvider'
 const LazyUserInfobox = lazy(() => import('@/app/ui/UserInfobox.js'))
 
 export default function PostPage({ params }) {
@@ -65,7 +65,10 @@ export default function PostPage({ params }) {
   const postDislikes = post.dislikes
 
   return (
-    <ToastProvider authorsData={authorsData} setAuthorsData={setAuthorsData}>
+    <AuthorsDataProvider
+      authorsData={authorsData}
+      setAuthorsData={setAuthorsData}
+    >
       <PostContextProvider
         comments={comments}
         setComments={setComments}
@@ -152,6 +155,6 @@ export default function PostPage({ params }) {
           </div>
         </div>
       </PostContextProvider>
-    </ToastProvider>
+    </AuthorsDataProvider>
   )
 }

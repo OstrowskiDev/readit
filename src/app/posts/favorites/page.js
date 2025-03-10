@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { filterFavorites } from '@/app/lib/db'
-import { ToastProvider } from '@/app/lib/toasts/ToastProvider'
 import PostsSearch from '@/app/ui/PostsSearch'
 import { FilterBtn } from '@/app/ui/buttons/FilterBtn'
 import { Post } from '@/app/ui/Post'
@@ -11,6 +10,7 @@ import { PostShimmer } from '@/app/ui/loaders/PostShimmer'
 import { Comment } from '@/app/ui/Comment'
 import { FilterFavoritesForm } from '@/app/ui/FilterFavoritesForm'
 import { signIn, useSession } from 'next-auth/react'
+import { AuthorsDataProvider } from '@/app/lib/context/AuthorsDataProvider'
 
 export default function FavoritesPage({ searchParams }) {
   const [posts, setPosts] = useState(null)
@@ -86,7 +86,10 @@ export default function FavoritesPage({ searchParams }) {
 
   return (
     <>
-      <ToastProvider authorsData={authorsData} setAuthorsData={setAuthorsData}>
+      <AuthorsDataProvider
+        authorsData={authorsData}
+        setAuthorsData={setAuthorsData}
+      >
         <div className="favorites-container mx-auto mt-2 xs:mt-8 xs:px-4 max-w-[800px]">
           <div className="flex md:items-center md:h-10 below-xs:mr-2 mb-4">
             <h1 className="grow below-md:hidden text-2xl font-semibold mr-4">
@@ -166,7 +169,7 @@ export default function FavoritesPage({ searchParams }) {
             <h2 className="text-xl m-4 italic">No documents found</h2>
           )}
         </div>
-      </ToastProvider>
+      </AuthorsDataProvider>
     </>
   )
 }

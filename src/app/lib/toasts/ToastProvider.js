@@ -2,7 +2,7 @@ import { useState, useContext } from 'react'
 import { Toast } from './Toast'
 import { ToastContext } from './ToastContext'
 
-export function ToastProvider({ children, authorsData, setAuthorsData }) {
+export function ToastProvider({ children }) {
   const [toast, setToast] = useState(null)
 
   const toastFunctions = {
@@ -18,8 +18,6 @@ export function ToastProvider({ children, authorsData, setAuthorsData }) {
     <ToastContext.Provider
       value={{
         toastFunctions,
-        authorsData,
-        setAuthorsData,
       }}
     >
       {children}

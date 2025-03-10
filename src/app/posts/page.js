@@ -8,9 +8,9 @@ import { useEffect, useState } from 'react'
 import { CreatePostForm } from '../ui/CreatePostForm'
 import { FilterPostsForm } from '../ui/FilterPostsForm'
 import { FilterBtn } from '../ui/buttons/FilterBtn'
-import { ToastProvider } from '../lib/toasts/ToastProvider'
 import { Loader } from '../ui/loaders/Loader'
 import { PostShimmer } from '../ui/loaders/PostShimmer'
+import { AuthorsDataProvider } from '../lib/context/AuthorsDataProvider'
 
 export default function PostsPage({
   searchParams,
@@ -60,7 +60,10 @@ export default function PostsPage({
   )
   return (
     <>
-      <ToastProvider authorsData={authorsData} setAuthorsData={setAuthorsData}>
+      <AuthorsDataProvider
+        authorsData={authorsData}
+        setAuthorsData={setAuthorsData}
+      >
         <div className="posts-page mx-auto mt-2 md:mt-8 px-0 md:px-4 w-full max-w-[800px]">
           <div className="posts-container flex flex-col xs:flex-row below-xs:mb-2 md:mb-4">
             {pageTitle && (
@@ -136,7 +139,7 @@ export default function PostsPage({
             <h2 className="text-xl m-4 italic">No documents found</h2>
           )}
         </div>
-      </ToastProvider>
+      </AuthorsDataProvider>
     </>
   )
 }
