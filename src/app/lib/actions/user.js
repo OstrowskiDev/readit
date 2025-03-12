@@ -44,7 +44,7 @@ export async function createUser({ name, email, hashedPassword }) {
 export async function activateAccount({ activation_token }) {
   if (!activation_token) {
     console.error('Activation token is missing')
-    return
+    return { state: 'error' }
   }
   try {
     await connectToDatabase()
@@ -52,15 +52,17 @@ export async function activateAccount({ activation_token }) {
       activation_token: activation_token,
     })
     if (!userAccount) {
-      return
+      return { state: 'error' }
     }
     userAccount.is_active = true
     userAccount.activation_token = null
     userAccount.token_expires_at = null
     await userAccount.save()
     console.log('User account activated successfully')
+    return { state: 'success' }
   } catch (error) {
     console.error('Error activating user account:', error)
+    return { state: 'error' }
   }
 }
 
