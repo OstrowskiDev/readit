@@ -1,5 +1,7 @@
 import sgMail from '@sendgrid/mail'
 
+// !!!! do dopracowania: layout i grafika maila
+
 sgMail.setApiKey(process.env.SENDGRID_API_KEY)
 
 export async function sendActivationEmail(email, activationToken) {
