@@ -19,12 +19,12 @@ export default async function GoodbyePage() {
           Thanks for your visit!
         </h1>
         <p className="goodbye-subtitle below-xs:w-[315px] my-1 text-center text-md below-xs:text-sm text-white">
-          You want to sign in back? No problem! Just
+          Want to sign in back? No problem! Just
           <Link
             href="/login"
             className="goodbye-log-back font-bold cursor-pointer "
           >
-            {'  click here!'}
+            {'  click here'}
           </Link>
         </p>
       </div>
