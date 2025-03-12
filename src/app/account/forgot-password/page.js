@@ -52,8 +52,8 @@ export default function ForgotPassword() {
         >
           <div className="password-recovery-email">
             <p className="password-recovery-description mt-4 text-white text-sm mb-4">
-              Enter the email associated with your account and we'll send you an
-              email with instructions to reset your password.
+              Enter the email associated with your account and we&apos;ll send
+              you an email with instructions to reset your password.
             </p>
             <label
               className="password-recovery-email-label text-white block mt-8 mb-1"

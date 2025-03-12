@@ -102,7 +102,9 @@ export default function SignInForm() {
         </form>
 
         <div className="register-container mt-6 text-center">
-          <span className="text-white text-sm">Don't have an account?</span>
+          <span className="text-white text-sm">
+            Don&apos;t have an account?
+          </span>
           <Link href="/register">
             <span className="ml-1 text-white text-sm font-semibold cursor-pointer hover:underline">
               Register now

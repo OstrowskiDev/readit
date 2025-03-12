@@ -141,7 +141,7 @@ export default function ConfirmEmail() {
                     rel="noreferrer noopener"
                     href={urlGitHubRepo}
                   >
-                    App's GitHub Repo
+                    App&apos;s GitHub Repo
                   </a>
                 </td>
               </tr>
