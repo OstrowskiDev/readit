@@ -4,6 +4,10 @@ import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { resetPassword } from '@/app/lib/actions/user'
 import { validatePasswords } from '@/app/lib/security/validatePasswords'
+import { useToastContext } from '@/app/lib/toasts/ToastProvider'
+
+// !!!! do przetestowania: czy można się logować po zmianie hasła
+// !!!! jeśli nie, zacznę od sprawdzenia tego gdzie dokładnie jest szyfrowane hasło i w jaki sposób jest przekazywany hash do DB.
 
 export default function ResetPassword() {
   const router = useRouter()
@@ -16,6 +20,23 @@ export default function ResetPassword() {
   const [submitAttempted, setSubmitAttempted] = useState(false)
   const [fieldValidity, setFieldValidity] = useState({ ...validationObject })
   const [recoveryToken, setRecoveryToken] = useState('')
+  const { toastFunctions: toast } = useToastContext()
+
+  const [response, setResponse] = useState({
+    state: null,
+    message: null,
+  })
+
+  useEffect(() => {
+    console.log('useEffect triggered, response:', response)
+    if (response?.state === 'success') {
+      toast.success(response.message)
+    }
+    if (response?.state === 'error') {
+      console.log('Setting toast error message:', response.message)
+      toast.error(response.message)
+    }
+  }, [response])
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search)
@@ -47,8 +68,11 @@ export default function ResetPassword() {
         repeatPassword: formData.repeatPassword,
         recoveryToken: recoveryToken,
       })
-      if (results === 'success') {
+      if (results.state === 'success') {
         router.push('/account/password-changed')
+      } else {
+        console.log('Error during password recovery: results Obj:', results)
+        setResponse(results)
       }
     } catch (error) {
       console.error('Error during password recovery:', error)
@@ -77,9 +101,9 @@ export default function ResetPassword() {
             </label>
             <input
               className="password-change-new-password-input w-full px-4 py-2 rounded-lg bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              type="new-password"
-              name="new-password"
-              id="new-password"
+              type="password"
+              name="password"
+              id="password"
               value={password}
               onChange={onInputChange}
               placeholder="Enter new password"
@@ -101,9 +125,9 @@ export default function ResetPassword() {
             </label>
             <input
               className="password-change-repeat-password-input w-full px-4 py-2 rounded-lg bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              type="repeat-password"
-              name="repeat-password"
-              id="repeat-password"
+              type="password"
+              name="repeatPassword"
+              id="repeatPassword"
               value={repeatPassword}
               onChange={onInputChange}
               placeholder="Repeat new password"
