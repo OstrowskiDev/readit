@@ -9,9 +9,9 @@ import SmileyFaceIco from '@/app/ui/icons/SmileyFaceIco'
 // 3. rem units are not behaving as expected,
 //    use px instead, conversion rate for this file is 1rem = 16px
 // 4. <a> tags are automatically styled with <u> by email clients
-//    so use inline styles to remove it
+//    so use inline styles to remove underline
 // 5. :hover, :active, and other pseudo-classes are not supported
-//    just cry instead
+//    don't use those
 // 6. in some circumstances, email clients will overwrite text color
 //    so use inline styles to enforce it
 
@@ -21,22 +21,11 @@ import SmileyFaceIco from '@/app/ui/icons/SmileyFaceIco'
 // 3. underline-none class needs to be converted to inline style
 //    text-decoration: none;
 // 4. rem needs to be converted to px with 1rem = 16px
-// 5. hover:text-gray-600 needs to be converted to inline style
-//    onmouseover="this.style.color='#4b5563'"
-//    onmouseout="this.style.color='#6b7280'"
-// 6. active:bg-blue-700 needs to be converted to inline style
-//    also hover:bg-blue-600 needs to be converted to inline style
-//    onmouseover="this.style.backgroundColor='#2563eb';"
-//    onmouseout="this.style.backgroundColor='#3b82f6';"
-//    onmousedown="this.style.backgroundColor='#1d4ed8';"
-//    onmouseup="this.style.backgroundColor='#2563eb';"
 
-export default function ConfirmEmail() {
+export default function generateEmailBody(username, activation_token) {
   const urlGitHubRepo = env.URL_GITHUB_PROJECT_REPO
   const urlPortfolio = env.URL_PORTFOLIO
   const urlAppPage = env.URL_READIT_APP
-  const username = 'John Doe' // will be imported
-  const activation_token = '1234567890' // will be imported
   const urlActivateAccount = `${env.URL_READIT_APP}/api/activate-account?activation_token=${activation_token}`
 
   return (
