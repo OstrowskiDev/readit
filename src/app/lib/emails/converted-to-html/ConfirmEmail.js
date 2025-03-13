@@ -1,5 +1,4 @@
 import { env } from 'process'
-import SmileyFaceIco from '@/app/ui/icons/SmileyFaceIco'
 
 const urlGitHubRepo = env.URL_GITHUB_PROJECT_REPO
 const urlPortfolio = env.URL_PORTFOLIO
@@ -15,7 +14,7 @@ export function generateEmailBody(username, activation_token) {
             <tr>
               <td align="center">
                 <div style="width: 48px; height: 48px; margin-left: 8px; border-color: white;">
-                  ${SmileyFaceIco()}
+                  <div style="width: 48px; height: 48px; background-image: url('${urlAppPage}/logo-sm-email-alfa.png'); background-size: cover; background-position: center;"></div>
                 </div>
               </td>
               <td align="center">
@@ -66,7 +65,7 @@ export function generateEmailBody(username, activation_token) {
               <tbody style="padding: 0; margin: 0; line-height: 1;">
                 <tr style="padding: 0; margin: 0; line-height: 1;">
                   <td align="center" style="padding: 0; margin: 0; height: 20px;">
-                    <a style="text-decoration: none; color: #6b7280; font-size: 14px; line-height: 20px;" href="${urlAppPage}" target="_blank" rel="noreferrer noopener">
+                    <a style="text-decoration: underline; color: #6b7280; font-size: 14px; line-height: 20px;" href="${urlAppPage}" target="_blank" rel="noreferrer noopener">
                       ReadIt App Page
                     </a>
                   </td>
@@ -74,7 +73,7 @@ export function generateEmailBody(username, activation_token) {
                     <p style="color: #6b7280; font-size: 14px; line-height: 20px;">I</p>
                   </td>
                   <td align="center" style="padding: 0; margin: 0; height: 20px;">
-                    <a style="text-decoration: none; color: #6b7280; font-size: 14px; line-height: 20px;" href="${urlPortfolio}" target="_blank" rel="noreferrer noopener">
+                    <a style="text-decoration: underline; color: #6b7280; font-size: 14px; line-height: 20px;" href="${urlPortfolio}" target="_blank" rel="noreferrer noopener">
                       View My Portfolio
                     </a>
                   </td>
@@ -82,7 +81,7 @@ export function generateEmailBody(username, activation_token) {
                     <p style="font-size: 14px; color: #6b7280; line-height: 20px;">I</p>
                   </td>
                   <td align="center" style="padding: 0; margin: 0; height: 20px;">
-                    <a style="text-decoration: none; color: #6b7280;" href="${urlGitHubRepo}" target="_blank" rel="noreferrer noopener">
+                    <a style="text-decoration: underline; color: #6b7280;" href="${urlGitHubRepo}" target="_blank" rel="noreferrer noopener">
                       App's GitHub Repo
                     </a>
                   </td>
