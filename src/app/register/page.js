@@ -5,6 +5,9 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { validateSignUp } from '../lib/security/validateSignUp'
 import axios from 'axios'
+import { checkEmailAvailability } from '../lib/actions/user'
+
+// !!!! do poprawy: podczas rejestracji po naciśnięciu przycisku register pojawia się błąd pod jednym z pól
 
 export default function RegisterForm() {
   const initialFormData = {
@@ -23,12 +26,23 @@ export default function RegisterForm() {
   const [formData, setFormData] = useState(initialFormData)
   const [submitAttempted, setSubmitAttempted] = useState(false)
   const [fieldValidity, setFieldValidity] = useState({ ...validationObject })
+  const [isEmailAvailable, setIsEmailAvailable] = useState(false)
   const router = useRouter()
 
   useEffect(() => {
     const results = validateSignUp(formData)
     setFieldValidity(results)
   }, [formData])
+
+  useEffect(() => {
+    if (submitAttempted) {
+      const debouncedEmailAvaCheck = setTimeout(async () => {
+        const result = await checkEmailAvailability(formData.email)
+        setIsEmailAvailable(result)
+      }, 500)
+      return () => clearTimeout(debouncedEmailAvaCheck)
+    }
+  }, [formData.email])
 
   function onInputChange(event) {
     setFormData({ ...formData, [event.target.name]: event.target.value })
@@ -45,6 +59,8 @@ export default function RegisterForm() {
     if (hasValidationErrors) {
       return
     }
+
+    setIsEmailAvailable(await checkEmailAvailability(formData.email))
 
     try {
       const response = await axios.post('/api/register', formData)
@@ -110,6 +126,11 @@ export default function RegisterForm() {
               {fieldValidity.email.message.length > 0 &&
                 submitAttempted &&
                 fieldValidity.email.message.join()}
+            </label>
+            <label className="register-email-already-taken text-xs text-red-200">
+              {!isEmailAvailable &&
+                submitAttempted &&
+                'An account with this email already exists. Please login or reset your password.'}
             </label>
           </div>
           <div className="register-password mt-4">
