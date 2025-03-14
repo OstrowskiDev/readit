@@ -23,6 +23,7 @@ import SmileyFaceIco from '@/app/ui/icons/SmileyFaceIco'
 // 4. rem needs to be converted to px with 1rem = 16px
 
 export default function generateEmailBody(username, activation_token) {
+  console.log('adding this to trigger a build on DO !!!! delete later')
   const urlGitHubRepo = env.URL_GITHUB_PROJECT_REPO
   const urlPortfolio = env.URL_PORTFOLIO
   const urlAppPage = env.URL_READIT_APP
