@@ -90,7 +90,7 @@ export default function RegisterForm() {
               Username
             </label>
             <input
-              className="register-name-input w-full px-4 py-2 rounded-lg bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="register-name-input w-full px-4 py-2 rounded-lg bg-blue-100 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-400"
               id="name"
               type="text"
               name="name"
@@ -113,7 +113,7 @@ export default function RegisterForm() {
               Email
             </label>
             <input
-              className="register-email-input w-full px-4 py-2 rounded-lg bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="register-email-input w-full px-4 py-2 rounded-lg bg-blue-100 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-400"
               id="email"
               type="email"
               name="email"
@@ -141,7 +141,7 @@ export default function RegisterForm() {
               Password
             </label>
             <input
-              className="register-password-input w-full px-4 py-2 rounded-lg bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="register-password-input w-full px-4 py-2 rounded-lg bg-blue-100 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-400"
               id="password"
               type="password"
               name="password"
@@ -163,7 +163,7 @@ export default function RegisterForm() {
           </div>
           <div className="register-submit mt-10">
             <button
-              className="w-full h-12 bg-white text-blue-500 py-2 rounded-lg hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200 font-bold active:bg-blue-200 hover:text-lg"
+              className="w-full h-12 bg-white text-blue-500 py-2 rounded-lg hover:bg-blue-100 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all duration-200 font-bold active:bg-blue-200 hover:text-lg"
               type="submit"
             >
               Register!
