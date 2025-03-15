@@ -3,9 +3,10 @@ import { env } from 'process'
 const urlGitHubRepo = env.URL_GITHUB_PROJECT_REPO
 const urlPortfolio = env.URL_PORTFOLIO
 const urlAppPage = env.URL_READIT_APP
+const appUrl = env.NEXT_PUBLIC_APP_URL
 
 export function generateEmailBody(username, activation_token) {
-  const urlActivateAccount = `${env.URL_READIT_APP}/api/activate-account?activation_token=${activation_token}`
+  const urlActivateAccount = `${appUrl}/api/activate-account?activation_token=${activation_token}`
 
   return `
       <div style="background-color: #e2e8f0; width: 100%; font-family: ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';">
