@@ -26,7 +26,7 @@ export default function RegisterForm() {
   const [formData, setFormData] = useState(initialFormData)
   const [submitAttempted, setSubmitAttempted] = useState(false)
   const [fieldValidity, setFieldValidity] = useState({ ...validationObject })
-  const [isEmailAvailable, setIsEmailAvailable] = useState(false)
+  const [isEmailAvailable, setIsEmailAvailable] = useState(true)
   const router = useRouter()
 
   useEffect(() => {
