@@ -11,7 +11,7 @@ export async function GET(req) {
         new URL('/account/activation-failed', req.url),
       )
     }
-    const response = activateAccount({ activation_token })
+    const response = await activateAccount({ activation_token })
     if (response.state === 'success') {
       return NextResponse.redirect(
         new URL('/account/account-activated', req.url),
