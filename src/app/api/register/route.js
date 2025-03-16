@@ -26,7 +26,7 @@ export async function POST(req) {
     }
 
     const activationToken = results.activation_token
-    sendActivationEmail(email, activationToken)
+    sendActivationEmail(name, email, activationToken)
 
     return new Response(
       JSON.stringify({ message: 'User registered successfully' }),
