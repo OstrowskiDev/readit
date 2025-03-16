@@ -90,7 +90,11 @@ export default function RegisterForm() {
               Username
             </label>
             <input
-              className="register-name-input w-full px-4 py-2 rounded-lg bg-blue-100 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-400"
+              className={`register-name-input w-full px-4 py-2 rounded-lg bg-blue-100 focus:bg-white focus:outline-none ring-2 ${
+                fieldValidity.name.message.length > 0 && submitAttempted
+                  ? 'ring-red-400 focus:ring-red-500'
+                  : 'ring-blue-500 focus:ring-blue-400'
+              }`}
               id="name"
               type="text"
               name="name"
@@ -113,7 +117,11 @@ export default function RegisterForm() {
               Email
             </label>
             <input
-              className="register-email-input w-full px-4 py-2 rounded-lg bg-blue-100 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-400"
+              className={`register-email-input w-full px-4 py-2 rounded-lg bg-blue-100 focus:bg-white focus:outline-none ring-2 ${
+                fieldValidity.email.message.length > 0 && submitAttempted
+                  ? 'ring-red-400 focus:ring-red-500'
+                  : 'ring-blue-500 focus:ring-blue-400'
+              }`}
               id="email"
               type="email"
               name="email"
@@ -141,7 +149,11 @@ export default function RegisterForm() {
               Password
             </label>
             <input
-              className="register-password-input w-full px-4 py-2 rounded-lg bg-blue-100 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-400"
+              className={`register-password-input w-full px-4 py-2 rounded-lg bg-blue-100 focus:bg-white focus:outline-none ring-2 ${
+                fieldValidity.password.message.length > 0 && submitAttempted
+                  ? 'ring-red-400 focus:ring-red-500'
+                  : 'ring-blue-500 focus:ring-blue-400'
+              }`}
               id="password"
               type="password"
               name="password"

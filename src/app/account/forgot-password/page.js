@@ -62,7 +62,7 @@ export default function ForgotPassword() {
               Email
             </label>
             <input
-              className="password-recovery-email-input w-full px-4 py-2 rounded-lg bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="password-recovery-email-input w-full px-4 py-2 rounded-lg bg-blue-100 focus:bg-white focus:outline-none ring-2 focus:ring-blue-400"
               type="email"
               name="email"
               id="email"
