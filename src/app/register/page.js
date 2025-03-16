@@ -81,7 +81,7 @@ export default function RegisterForm() {
         <h1 className="register-title text-2xl font-semibold text-white mb-4">
           Register
         </h1>
-        <form className="register-form" onSubmit={handleSubmit}>
+        <form className="register-form" onSubmit={handleSubmit} noValidate>
           <div className="register-name mt-4">
             <label
               className="register-name-label text-white block mb-1"
