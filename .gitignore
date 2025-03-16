@@ -40,3 +40,6 @@ TodoList.js
 
 # logs from PaaS:
 secretLogs.txt
+
+# cypress .env data:
+cypress.config.js
