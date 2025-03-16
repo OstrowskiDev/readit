@@ -4,7 +4,6 @@ import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { resetPassword } from '@/app/lib/actions/user'
 import { validatePasswords } from '@/app/lib/security/validatePasswords'
-import { useToastContext } from '@/app/lib/toasts/ToastProvider'
 
 // !!!! do przetestowania: czy można się logować po zmianie hasła
 // !!!! jeśli nie, zacznę od sprawdzenia tego gdzie dokładnie jest szyfrowane hasło i w jaki sposób jest przekazywany hash do DB.
@@ -20,23 +19,6 @@ export default function ResetPassword() {
   const [submitAttempted, setSubmitAttempted] = useState(false)
   const [fieldValidity, setFieldValidity] = useState({ ...validationObject })
   const [recoveryToken, setRecoveryToken] = useState('')
-  const { toastFunctions: toast } = useToastContext()
-
-  const [response, setResponse] = useState({
-    state: null,
-    message: null,
-  })
-
-  useEffect(() => {
-    console.log('useEffect triggered, response:', response)
-    if (response?.state === 'success') {
-      toast.success(response.message)
-    }
-    if (response?.state === 'error') {
-      console.log('Setting toast error message:', response.message)
-      toast.error(response.message)
-    }
-  }, [response])
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search)
@@ -70,9 +52,6 @@ export default function ResetPassword() {
       })
       if (results.state === 'success') {
         router.push('/account/password-changed')
-      } else {
-        console.log('Error during password recovery: results Obj:', results)
-        setResponse(results)
       }
     } catch (error) {
       console.error('Error during password recovery:', error)
@@ -100,7 +79,11 @@ export default function ResetPassword() {
               New Password
             </label>
             <input
-              className="password-change-new-password-input w-full px-4 py-2 rounded-lg bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className={`password-change-new-password-input w-full px-4 py-2 rounded-lg bg-blue-100 focus:bg-white focus:outline-none ring-2 ${
+                fieldValidity.password.message.length > 0 && submitAttempted
+                  ? 'ring-red-400 focus:ring-red-500'
+                  : 'ring-blue-500 focus:ring-blue-400'
+              }`}
               type="password"
               name="password"
               id="password"
@@ -124,7 +107,12 @@ export default function ResetPassword() {
               Confirm Password
             </label>
             <input
-              className="password-change-repeat-password-input w-full px-4 py-2 rounded-lg bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className={`password-change-repeat-password-input w-full px-4 py-2 rounded-lg bg-blue-100 focus:bg-white focus:outline-none ring-2 ${
+                fieldValidity.repeatPassword.message.length > 0 &&
+                submitAttempted
+                  ? 'ring-red-400 focus:ring-red-500'
+                  : 'ring-blue-500 focus:ring-blue-400'
+              }`}
               type="password"
               name="repeatPassword"
               id="repeatPassword"
