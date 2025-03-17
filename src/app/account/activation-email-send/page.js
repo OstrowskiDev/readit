@@ -16,7 +16,7 @@ export default function ActivationEmailSend() {
           </h1>
         </div>
         <p className="activation-email-message mt-24 text-white text-lg ">
-          Please check your inbox and click the link to activate your account.
+          Please check your email and click the link to activate your account.
         </p>
       </div>
     </div>

@@ -17,11 +17,17 @@ export function AuthBtn() {
   return (
     <div className="mt-2 min-w-24 w-full">
       {session ? (
-        <button onClick={handleSighOut} className="nav-button py-4">
+        <button
+          onClick={handleSighOut}
+          className="nav-button sign-out-button py-4"
+        >
           Sign out
         </button>
       ) : (
-        <button onClick={handleSignIn} className="nav-button py-4">
+        <button
+          onClick={handleSignIn}
+          className="nav-button sign-in-button py-4"
+        >
           Sign in
         </button>
       )}
