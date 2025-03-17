@@ -49,6 +49,7 @@ export default function ForgotPassword() {
         <form
           className="password-recovery-form flex flex-col flex-grow"
           onSubmit={handleSubmit}
+          noValidate
         >
           <div className="password-recovery-email">
             <p className="password-recovery-description mt-4 text-white text-sm mb-4">

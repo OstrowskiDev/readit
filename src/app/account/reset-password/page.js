@@ -70,6 +70,7 @@ export default function ResetPassword() {
         <form
           className="password-change-form flex flex-col flex-grow"
           onSubmit={handleSubmit}
+          noValidate
         >
           <div className="password-change-new-password">
             <label

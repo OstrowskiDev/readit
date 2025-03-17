@@ -65,7 +65,7 @@ export default function SignInForm() {
     >
       <div className="login-container flex flex-col justify-between w-[320px] h-[484px] p-8 rounded-lg bg-blue-500 shadow-lg">
         <h1 className="login-title text-2xl font-semibold text-white">Login</h1>
-        <form className="login-form" onSubmit={handleSubmit}>
+        <form className="login-form" onSubmit={handleSubmit} noValidate>
           {errorMessage && (
             <div className="login-error-container flex w-full items-center mb-4 px-4 py-2 rounded-lg text-red-500 text-sm bg-red-50">
               <div className="login-error-ico w-12">
