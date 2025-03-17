@@ -2,6 +2,9 @@ import sgMail from '@sendgrid/mail'
 import { NextResponse } from 'next/server'
 import { generateEmailBody } from '@/app/lib/emails/converted-to-html/ResetPassword'
 
+// !!!! change email "from"
+// !!!! delete this route so its not used in production
+
 export async function POST() {
   console.log('POST /api/tests/email-template triggered')
   const username = 'John Doe'
