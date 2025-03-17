@@ -1,6 +1,10 @@
 describe('User Registration', () => {
+  const userName = Cypress.env('TEST_USER_NAME')
+  const userPasswrod = Cypress.env('TEST_USER_PASSWORD')
+  const userEmail = Cypress.env('TEST_USER_EMAIL')
+  const baseUrl = Cypress.env('BASE_URL')
   beforeEach(() => {
-    cy.visit('http://localhost:3000/register')
+    cy.visit(`${baseUrl}/register`)
   })
 
   it('should show validation errors for empty fields', () => {
@@ -50,30 +54,6 @@ describe('User Registration', () => {
     )
   })
 
-  it('should successfully register a new user', () => {
-    cy.get('#name').type('TestUser')
-    cy.get('#email').type('testuser@example.com')
-    cy.get('#password').type('SecurePass123!')
-    cy.get("button[type='submit']").click()
-
-    cy.url({ timeout: 8000 }).should(
-      'include',
-      '/account/activation-email-send',
-    )
-  })
-
-  it('should show error if email is already taken', () => {
-    cy.get('#name').type('TestUser')
-    cy.get('#email').type('testuser@example.com')
-    cy.get('#password').type('SecurePass123!')
-    cy.get("button[type='submit']").click()
-
-    cy.get('.register-email-already-taken').should(
-      'contain',
-      'An account with this email already exists',
-    )
-  })
-
   it('should delte test user', () => {
     const testUserSecret = Cypress.env('TEST_USER_SECRET')
     cy.request({
@@ -84,5 +64,29 @@ describe('User Registration', () => {
       expect(response.status).to.eq(200)
       expect(response.body).to.include('User deleted')
     })
+  })
+
+  it('should successfully register a new user', () => {
+    cy.get('#name').type(userName)
+    cy.get('#email').type(userEmail)
+    cy.get('#password').type(userPasswrod)
+    cy.get("button[type='submit']").click()
+
+    cy.url({ timeout: 8000 }).should(
+      'include',
+      '/account/activation-email-send',
+    )
+  })
+
+  it('should show error if email is already taken', () => {
+    cy.get('#name').type(userName)
+    cy.get('#email').type(userEmail)
+    cy.get('#password').type(userPasswrod)
+    cy.get("button[type='submit']").click()
+
+    cy.get('.register-email-already-taken').should(
+      'contain',
+      'An account with this email already exists',
+    )
   })
 })
