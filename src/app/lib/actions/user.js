@@ -152,3 +152,18 @@ export async function checkEmailAvailability(email) {
     console.error('Error checking email availability')
   }
 }
+
+export async function deleteTestUser() {
+  try {
+    await connectToDatabase()
+    const result = await User.deleteOne({ email: 'testuser@example.com' })
+    if (result.deletedCount === 1) {
+      return { state: 'success' }
+    } else {
+      return { state: 'error' }
+    }
+  } catch (error) {
+    console.error('Error deleting test user:', error)
+    return { state: 'error' }
+  }
+}
