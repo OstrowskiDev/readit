@@ -104,7 +104,7 @@ export default function PostPage({ params }) {
               </Suspense>
 
               {/* Post body */}
-              <pre className="post-body-text font-sans whitespace-pre-wrap">
+              <pre className="post-content font-sans whitespace-pre-wrap">
                 {post.content}
               </pre>
 

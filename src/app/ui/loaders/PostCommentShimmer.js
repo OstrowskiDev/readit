@@ -26,7 +26,7 @@ export function PostCommentShimmer() {
         <div className="shimmer text-post-title h-6 w-64 my-4 py-2"></div>
 
         {/* Post body */}
-        <div className="post-body-text mb-2">
+        <div className="post-content mb-2">
           <div
             className="shimmer text h-3 mb-3"
             style={{ width: '100%' }}

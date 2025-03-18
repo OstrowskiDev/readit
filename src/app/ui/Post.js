@@ -55,7 +55,7 @@ export function Post({
               </div>
 
               {/* Post body */}
-              <pre className="post-body-text mb-2 font-sans whitespace-pre-wrap below-md:line-clamp-5 below-md:overflow-hidden below-md:overflow-ellipsis ">
+              <pre className="post-content mb-2 font-sans whitespace-pre-wrap below-md:line-clamp-5 below-md:overflow-hidden below-md:overflow-ellipsis ">
                 {post.content}
               </pre>
 
