@@ -9,7 +9,7 @@ export default function CreateBtn({ isCreateFormVis, setIsCreateFormVis }) {
   }
   return (
     <button
-      className="btn-blue h-10 px-4 py-2 ml-2 just-md:mr-2 md:mr-0"
+      className="create-new-post-button btn-blue h-10 px-4 py-2 ml-2 just-md:mr-2 md:mr-0"
       onClick={onClick}
     >
       Create +

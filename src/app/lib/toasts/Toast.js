@@ -29,12 +29,12 @@ export function Toast({ message, state, forceUpdate }) {
   return (
     <div className={`toast fixed w-full bottom-0 transform ${moveToastClass}`}>
       <div
-        className={`flex items-center w-80 h-[74px] mx-auto p-4 mb-16 font-semibold border-2 rounded-xl ${containerStateClasses(
+        className={`toast-container flex items-center w-80 h-[74px] mx-auto p-4 mb-16 font-semibold border-2 rounded-xl ${containerStateClasses(
           state,
         )}`}
       >
         <div className="toast-icon w-10 ">{renderIcon(state)}</div>
-        <div className="toast-text ml-4">
+        <div className="toast-text-container ml-4">
           <p
             className={`toast-text-state leading-tight text-lg ${textStateClasses(
               state,
