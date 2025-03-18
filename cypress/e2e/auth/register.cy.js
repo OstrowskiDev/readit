@@ -1,10 +1,18 @@
-describe('User Registration', () => {
+describe('Register Page', () => {
   const userName = Cypress.env('TEST_USER_NAME')
   const userPasswrod = Cypress.env('TEST_USER_PASSWORD')
   const userEmail = Cypress.env('TEST_USER_EMAIL')
   const baseUrl = Cypress.env('BASE_URL')
   beforeEach(() => {
     cy.visit(`${baseUrl}/register`)
+  })
+
+  it('should display the registration form', () => {
+    cy.get('register-name-input').should('be.visible')
+    cy.get('register-email-input').should('be.visible')
+    cy.get('register-password-input').should('be.visible')
+    cy.get('register-submit').should('be.visible')
+    cy.get('login-container').should('be.visible')
   })
 
   it('should show validation errors for empty fields', () => {
