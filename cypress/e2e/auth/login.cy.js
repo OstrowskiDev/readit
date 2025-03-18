@@ -1,5 +1,7 @@
 describe('Login Page', () => {
   const baseUrl = Cypress.env('BASE_URL')
+  const userPasswrod = Cypress.env('TEST_USER_PASSWORD')
+  const userEmail = Cypress.env('TEST_USER_EMAIL')
 
   beforeEach(() => {
     cy.visit(`${baseUrl}/login`)
@@ -25,10 +27,10 @@ describe('Login Page', () => {
   })
 
   it('should redirect to posts page after successful login', () => {
-    cy.get('.login-email-input').type('user@example.com')
-    cy.get('.login-password-input').type('correctpassword')
+    cy.get('.login-email-input').type(userEmail)
+    cy.get('.login-password-input').type(userPasswrod)
     cy.get('.login-submit-button').click()
-    cy.url().should('include', `${baseUrl}/posts/`)
+    cy.url().should('include', `${baseUrl}/posts`)
   })
 
   it('should navigate to forgot password page', () => {
