@@ -6,7 +6,8 @@ describe('User Registration Flow', () => {
   const userNewPassword = Cypress.env('TEST_USER_NEW_PASSWORD')
   const testUserSecret = Cypress.env('TEST_USER_SECRET')
 
-  it('should delte test user', () => {
+  before(() => {
+    cy.log('Delete test user before starting the test')
     cy.request({
       method: 'DELETE',
       url: `${baseUrl}/api/tests/delete-test-user`,
@@ -48,11 +49,7 @@ describe('User Registration Flow', () => {
     cy.get('#password').type(userPassword)
     cy.get('.login-submit-button').click()
     cy.url({ timeout: 6000 }).should('include', '/posts')
-    // cy.session('userSession', () => {
-    //   cy.getCookie('next-auth.session-token').should('exist')
-    // })
     cy.get('.sign-out-button ').click()
-    // cy.getCookie('next-auth.session-token').should('not.exist')
     cy.url().should('include', '/goodbye')
   })
 
