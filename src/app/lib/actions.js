@@ -430,11 +430,7 @@ export async function handleDislikeClick(documentId, collection) {
     console.error('Error updating comment:', error)
   }
 
-  return {
-    state: toastStatus,
-    message: toastMessage,
-    wasLiked: alreadyLiked,
-  }
+  return { ...toast, wasLiked: alreadyLiked }
 
   async function updateDocument() {
     async function updateComment() {
