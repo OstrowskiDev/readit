@@ -71,7 +71,7 @@ export function PostLikeBtn({ styles }) {
   }
 
   return (
-    <form className="rounded-md hover:bg-gray-300">
+    <form className="post-like-button rounded-md hover:bg-gray-300">
       <button
         className={styles + ' flex justify-center items-center'}
         type="submit"
