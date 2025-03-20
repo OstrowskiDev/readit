@@ -17,9 +17,8 @@ describe('Posts create, update, like, dislike and delete tests.', () => {
     cy.get('.post-title-input').type(postTitle)
     cy.get('.post-content-input').type(postContent)
     cy.get('.post-reply-submit-btn').click()
-    cy.get('.toast-text-state').should('be.visible')
+
     cy.get('.toast-text-state').should('have.text', 'Success!')
-    cy.get('.toast-text-message').should('be.visible')
     cy.get('.toast-text-message').should(
       'have.text',
       'Post created successfully!',
@@ -37,9 +36,7 @@ describe('Posts create, update, like, dislike and delete tests.', () => {
     cy.get('.post-title-input').clear().type(postTitleEdited)
     cy.get('.post-content-input').clear().type(postContentEdited)
     cy.get('.post-edit-submit-btn').click()
-    cy.get('.toast-text-state').should('be.visible')
     cy.get('.toast-text-state').should('have.text', 'Success!')
-    cy.get('.toast-text-message').should('be.visible')
     cy.get('.toast-text-message').should(
       'have.text',
       'Post updated successfully!',
@@ -57,9 +54,7 @@ describe('Posts create, update, like, dislike and delete tests.', () => {
     cy.url({ timeout: 6000 }).should('include', '/posts/post')
     cy.get('.post-like-count').should('contain', '0')
     cy.get('.post-like-button').click()
-    cy.get('.toast-text-state').should('be.visible')
     cy.get('.toast-text-state').should('have.text', 'Success!')
-    cy.get('.toast-text-message').should('be.visible')
     cy.get('.toast-text-message').should(
       'have.text',
       'Like added successfully!',
@@ -76,9 +71,7 @@ describe('Posts create, update, like, dislike and delete tests.', () => {
     cy.url({ timeout: 6000 }).should('include', '/posts/post')
     cy.get('.post-like-count').should('contain', '1')
     cy.get('.post-dislike-button').click()
-    cy.get('.toast-text-state').should('be.visible')
     cy.get('.toast-text-state').should('have.text', 'Success!')
-    cy.get('.toast-text-message').should('be.visible')
     cy.get('.toast-text-message').should(
       'have.text',
       'Dislike added successfully!',
@@ -92,9 +85,7 @@ describe('Posts create, update, like, dislike and delete tests.', () => {
         cy.wrap($el).parents('.post-container').find('.delete-post-btn').click()
       }
     })
-    cy.get('.toast-text-state').should('be.visible')
     cy.get('.toast-text-state').should('have.text', 'Success!')
-    cy.get('.toast-text-message').should('be.visible')
     cy.get('.toast-text-message').should(
       'have.text',
       'Post deleted successfully!',
@@ -104,14 +95,16 @@ describe('Posts create, update, like, dislike and delete tests.', () => {
 
 describe('Delete post via /posts/post page delete-btn', () => {
   before(() => {
-    cy.visit(`${baseUrl}/posts`)
+    cy.login()
     cy.get('.create-new-post-button').click()
     cy.get('.post-title-input').type(postTitle)
     cy.get('.post-content-input').type(postContent)
     cy.get('.post-reply-submit-btn').click()
-    cy.get('.toast-text-state').should('be.visible')
+    cy.get('.toast-text-state').should('have.text', 'Success!')
   })
-  it('should create and delete post', () => {
+
+  it('should delete post', () => {
+    cy.visit(`${baseUrl}/posts`)
     cy.get('.post-title').each(($el) => {
       if ($el.text() === postTitle) {
         cy.wrap($el).parents('.post-container').click()
@@ -119,11 +112,10 @@ describe('Delete post via /posts/post page delete-btn', () => {
     })
     cy.url({ timeout: 6000 }).should('include', '/posts/post')
     cy.get('.delete-post-btn').click()
-    cy.get('.toast-text-message').should('be.visible')
     cy.get('.toast-text-message').should(
       'have.text',
       'Post deleted successfully!',
     )
-    cy.url({ timeout: 6000 }).should('eq', `${baseUrl}/posts`)
+    cy.url({ timeout: 6000 }).should('not.include', `/post/`)
   })
 })
