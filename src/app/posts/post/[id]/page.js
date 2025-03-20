@@ -21,6 +21,7 @@ export default function PostPage({ params }) {
   const [authorsData, setAuthorsData] = useState([])
   const [isCommFormVisible, setIsCommFormVisible] = useState(false)
   const [isEditFormVisible, setIsEditFormVisible] = useState(false)
+  const [deleted, setDeleted] = useState(false)
 
   const { isUserHovered, handleMouseEnter, handleMouseLeave } = useMouseHover()
 
@@ -72,6 +73,7 @@ export default function PostPage({ params }) {
       <PostContextProvider
         comments={comments}
         setComments={setComments}
+        setDeleted={setDeleted}
         post={post}
         setPost={setPost}
         postId={postId}
@@ -82,7 +84,11 @@ export default function PostPage({ params }) {
         setIsEditFormVisible={setIsEditFormVisible}
       >
         <div className="post-page w-full flex flex-col justify-center md:px-4 mt-1 md:my-8 md:mx-auto">
-          <div className="post-card-container max-w-[800px] mx-auto md:shadow-center-md rounded-md">
+          <div
+            className={`post-card-container max-w-[800px] mx-auto md:shadow-center-md rounded-md ${
+              deleted ? 'hidden' : ''
+            }`}
+          >
             <div className="post-container relative flex flex-col justify-between w-full pt-4 px-4 md:pb-4">
               {/* Post header */}
               <PostHeader author={post.authorData} />
@@ -154,6 +160,7 @@ export default function PostPage({ params }) {
             </div>
           </div>
         </div>
+        {deleted && <Loader />}
       </PostContextProvider>
     </AuthorsDataProvider>
   )

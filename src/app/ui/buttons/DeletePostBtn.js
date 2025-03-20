@@ -36,14 +36,12 @@ export function DeletePostBtn({ postId }) {
 
   async function onClick(event) {
     event.preventDefault()
-
+    optimisticUpdate()
+    const response = await deletePost(postId)
+    setResponse(response)
     if (pathname === `/posts/post/${postId}`) {
-      await deletePost(postId)
+      await new Promise((resolve) => setTimeout(resolve, 2000))
       router.push('/posts')
-    } else {
-      optimisticUpdate()
-      const response = await deletePost(postId)
-      setResponse(response)
     }
   }
   return (
