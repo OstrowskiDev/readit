@@ -9,7 +9,9 @@ export async function GET(request, { params }) {
     if (
       validator.isUUID(postId) ||
       postId === 'about' ||
-      postId === 'credits'
+      postId === 'credits' ||
+      postId === 'cypress-test-post' ||
+      postId === 'cypress-test-comment'
     ) {
       await connectToDatabase()
       const post = await Post.aggregate([
