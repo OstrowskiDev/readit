@@ -10,6 +10,7 @@ import { getServerSession } from 'next-auth/next'
 import { authOptions } from '@/app/api/auth/[...nextauth]/authOptions'
 import { isUUID } from 'validator'
 import { toast, setToast, returnToast } from './toasts/ToastUtils'
+import allowedPostIds from './security/allowedPostIds'
 
 export async function createPost(inputTitle, inputContent, uuid) {
   const session = await getServerSession(authOptions)
@@ -660,7 +661,7 @@ export async function updateUserData(userObj) {
 }
 
 export async function handlePostFavorites(postId) {
-  if (postId !== 'about' && postId !== 'credits' && !isUUID(postId)) {
+  if (!allowedPostIds.includes(postId) && !isUUID(postId)) {
     console.error('Invalid postId in handleFavoritesClick func')
     return returnToast('error', 'Failed updating favorites')
   }
