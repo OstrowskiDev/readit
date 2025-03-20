@@ -108,7 +108,7 @@ export async function deletePost(postId) {
       setToast('error', 'Failed to delete post')
     }
     console.log('Post deleted successfully')
-    setToast('success', 'Post deleted successfully')
+    setToast('success', 'Post deleted successfully!')
   } catch (error) {
     console.error('Error deleting post:', error)
     setToast('error', 'Failed to delete post')
