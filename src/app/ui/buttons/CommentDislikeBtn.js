@@ -69,9 +69,11 @@ export function CommentDislikeBtn({ styles }) {
   }
 
   return (
-    <form className="ml-[1px] rounded-md hover:bg-gray-200 ">
+    <form className="comment-dislike-btn-container ml-[1px] rounded-md hover:bg-gray-200 ">
       <button
-        className={styles + ' flex justify-center items-center'}
+        className={
+          'comment-dislike-btn ' + styles + ' flex justify-center items-center'
+        }
         type="submit"
         onClick={onClick}
       >

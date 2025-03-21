@@ -69,9 +69,11 @@ export function CommentLikeBtn({ styles }) {
   }
 
   return (
-    <form className="rounded-md hover:bg-gray-200">
+    <form className="comment-like-btn-container rounded-md hover:bg-gray-200">
       <button
-        className={styles + ' flex justify-center items-center'}
+        className={
+          'comment-like-btn ' + styles + ' flex justify-center items-center'
+        }
         type="submit"
         onClick={onClick}
       >

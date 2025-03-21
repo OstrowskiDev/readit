@@ -8,7 +8,7 @@ export async function GET(request, { params }) {
   const postId = params.id
 
   if (!validator.isUUID(postId) && !allowedPostIds.includes(postId)) {
-    console.error('Invalid UUID:', postId)
+    console.error('Invalid UUID in api/posts/[id]/comments, UUID:', postId)
     return new NextResponse('Post not found', { status: 404 })
   }
   try {

@@ -5,8 +5,7 @@ import User from '@/app/lib/models/User'
 export async function POST(req) {
   const secret = process.env.TEST_USER_SECRET
   const { secret: reqSecret } = await req.json()
-  console.log('secret:', secret)
-  console.log('reqSecret:', reqSecret)
+
   if (secret !== reqSecret) {
     return new NextResponse('Invalid data', { status: 401 })
   }

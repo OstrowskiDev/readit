@@ -25,13 +25,13 @@ export function CommentMenuBtn() {
   }
 
   return (
-    <div className="menu-btn-container relative">
+    <div className="comment-menu-btn-container relative">
       <button
-        className=" h-11 py-[7px] px-3 mt-[1px] rounded-md hover:bg-gray-200"
+        className="comment-menu-btn h-11 py-[7px] px-3 mt-[1px] rounded-md hover:bg-gray-200"
         type="button"
         onClick={handleClick}
       >
-        <div className="menu-btn-icon w-[22px] flex justify-center items-center">
+        <div className="comment-menu-btn-icon w-[22px] flex justify-center items-center">
           <DotsIco />
         </div>
       </button>
