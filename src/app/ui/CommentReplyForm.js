@@ -58,7 +58,7 @@ export function CommentReplyForm({ parentType }) {
     setComments(oldComments)
   }
 
-  async function onClick() {
+  async function onSubmit() {
     if (!session) return signIn()
     const newCommentId = uuidv4().toString()
     optimisticUpdate(newCommentId)
@@ -106,8 +106,8 @@ export function CommentReplyForm({ parentType }) {
     return (
       <button
         className="comment-reply-submit-btn btn-blue py-1 px-2 mx-2 mt-1"
-        type="submit"
-        onClick={onClick}
+        type="button"
+        onClick={onSubmit}
       >
         Comment
       </button>
