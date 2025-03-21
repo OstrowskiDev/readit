@@ -20,12 +20,12 @@ export function CommentPostBtn({ setIsCommFormVisible }) {
   }
 
   return (
-    <div className="create-commnet-btn-container h-10 mt-[1px] rounded-md bg-gray-200 hover:bg-gray-300">
+    <div className="create-comment-btn-container h-10 mt-[1px] rounded-md bg-gray-200 hover:bg-gray-300">
       <button
         onClick={handleClick}
-        className="create-commnet-btn-body flex justify-center items-center p-2 "
+        className="create-comment-btn-body flex justify-center items-center p-2 "
       >
-        <p className="create-commnet-btn-text block px-2">Comment</p>
+        <p className="create-comment-btn-text block px-2">Comment</p>
       </button>
     </div>
   )

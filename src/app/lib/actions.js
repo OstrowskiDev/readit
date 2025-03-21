@@ -232,7 +232,7 @@ export async function deleteComment(commentId) {
 
       if (result.modifiedCount === 1) {
         console.log('Comment updated successfully')
-        setToast('success', 'Comment deleted successfully')
+        setToast('success', 'Comment deleted successfully!')
       } else {
         console.log('Comment not found or not updated')
         setToast('error', 'Failed to delete comment')

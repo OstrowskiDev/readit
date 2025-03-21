@@ -9,7 +9,7 @@ import {
   newReplyContent,
 } from '../../support/mock'
 
-// !!!! add functionality to create new post that will hard reload /posts page, so newly created post will be displayed on top
+// !!!! add functionality to create new post that will trigger url update at /posts page, so newly created post will be processed by filter options
 
 describe('Prepare tests environment', () => {
   it('should create test post', () => {
@@ -120,5 +120,33 @@ describe('Reply-level comment create, edit, like, dislike, likeCount tests', () 
     cy.findReply().find('.comment-dislike-btn').click()
     cy.expectToast('Success!', 'Dislike removed successfully!')
     cy.findReply().find('.comment-like-count').should('contain', '0')
+  })
+})
+
+describe('Top-level and Reply-level comments delete tests', () => {
+  beforeEach(() => {
+    cy.login()
+    cy.visit(`${baseUrl}/posts/post/cypress-test-post`)
+  })
+
+  it('should delete reply-level comment', () => {
+    cy.findReply().find('.comment-menu-btn').click()
+    cy.get('.menu-opt-delete-btn').click()
+    cy.expectToast('Success!', 'Comment deleted successfully!')
+  })
+
+  it('should delete top-level comment', () => {
+    cy.get('.comment-menu-btn').click()
+    cy.get('.menu-opt-delete-btn').click()
+    cy.expectToast('Success!', 'Comment deleted successfully!')
+  })
+})
+
+describe('Clean up after tests', () => {
+  it('should delete test post', () => {
+    cy.login()
+    cy.visit(`${baseUrl}/posts/post/cypress-test-post`)
+    cy.get('.delete-post-btn').click()
+    cy.expectToast('Success!', 'Post deleted successfully!')
   })
 })

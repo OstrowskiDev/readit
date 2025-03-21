@@ -7,8 +7,8 @@ import allowedPostIds from '@/app/lib/security/allowedPostIds'
 export async function GET(request, { params }) {
   const postId = params.id
 
-  if (!validator.isUUID(postId) || !allowedPostIds) {
-    console.error('Invalid UUID:', postId)
+  if (!validator.isUUID(postId) && !allowedPostIds.includes(postId)) {
+    console.error('Invalid UUID in /api/posts/post/[id] rotue, UUID:', postId)
     return new NextResponse('Post not found', { status: 404 })
   }
   try {
