@@ -7,6 +7,10 @@ const postContent =
   'This is a test post created by Cypress. It will be deleted after the test. Tests include creating, editing, deleting and commenting top-level comments. Also liking and unliking top-level comments.'
 const commentContent =
   'This is a test top-level comment created by Cypress. It will be deleted after the test. Tests include creating, editing, deleting and commenting top-level comments. Also liking and unliking top-level comments.'
+const newCommentContent = `${commentContent} Edited`
+const replyContent =
+  'This is a test reply-level comment created by Cypress. It will be deleted after the test. Tests include creating, editing, deleting and commenting reply-level comments. Also liking and unliking reply-level comments.'
+const newReplyContent = `${replyContent} Edited`
 
 describe('Top-level comments: create, update, like, dislike and delete tests.', () => {
   beforeEach(() => {
@@ -31,7 +35,7 @@ describe('Top-level comments: create, update, like, dislike and delete tests.', 
     })
   })
 
-  it('should create comment', () => {
+  it('should create comment for post', () => {
     cy.visit(`${baseUrl}/posts/post/cypress-test-post`)
     cy.get('.post-container').should('be.visible')
     cy.get('.create-commnet-btn-container').click()
@@ -44,11 +48,80 @@ describe('Top-level comments: create, update, like, dislike and delete tests.', 
     )
   })
 
-  after(() => {
+  it('should edit comment', () => {
     cy.visit(`${baseUrl}/posts/post/cypress-test-post`)
-    // delete test comments
-    // delete post
+    cy.get('.comment-container').should('be.visible')
+    cy.get('.comment-menu-btn').click()
+    cy.get('.menu-opt-edit-btn').click()
+    cy.get('.comment-edit-input').clear().type(newCommentContent)
+    cy.get('.comment-edit-submit-btn').click()
+    cy.get('.toast-text-state').should('have.text', 'Success!')
+    cy.get('.toast-text-message').should(
+      'have.text',
+      'Comment updated successfully!',
+    )
   })
+
+  it('should add/remove like to comment', () => {
+    cy.visit(`${baseUrl}/posts/post/cypress-test-post`)
+    cy.get('.comment-container').should('be.visible')
+    cy.get('.comment-like-count').should('contain', '0')
+    cy.get('.comment-like-btn').click()
+    cy.get('.toast-text-state').should('have.text', 'Success!')
+    cy.get('.toast-text-message').should(
+      'have.text',
+      'Like added successfully!',
+    )
+    cy.get('.comment-like-count').should('contain', '1')
+    cy.get('.comment-like-btn').click()
+    cy.get('.toast-text-state').should('have.text', 'Success!')
+    cy.get('.toast-text-message').should(
+      'have.text',
+      'Like removed successfully!',
+    )
+    cy.get('.comment-like-count').should('contain', '0')
+  })
+
+  it('should add/remove dislike to comment', () => {
+    cy.visit(`${baseUrl}/posts/post/cypress-test-post`)
+    cy.get('.comment-container').should('be.visible')
+    cy.get('.comment-like-count').should('contain', '0')
+    cy.get('.comment-dislike-btn').click()
+    cy.get('.toast-text-state').should('have.text', 'Success!')
+    cy.get('.toast-text-message').should(
+      'have.text',
+      'Dislike added successfully!',
+    )
+    cy.get('.comment-like-count').should('contain', '1')
+    cy.get('.comment-dislike-btn').click()
+    cy.get('.toast-text-state').should('have.text', 'Success!')
+    cy.get('.toast-text-message').should(
+      'have.text',
+      'Dislike removed successfully!',
+    )
+    cy.get('.comment-like-count').should('contain', '0')
+  })
+
+  it('should create comment for top-level comment', () => {
+    cy.visit(`${baseUrl}/posts/post/cypress-test-post`)
+    cy.get('.comment-reply-btn').click()
+    cy.get('.comment-reply-input').type(replyContent)
+    cy.get('.comment-reply-submit-btn').click()
+    cy.get('.toast-text-state', { timeout: 5000 }).should(
+      'have.text',
+      'Success!',
+    )
+    cy.get('.toast-text-message').should(
+      'have.text',
+      'Comment created successfully!',
+    )
+  })
+
+  // after(() => {
+  //   cy.visit(`${baseUrl}/posts/post/cypress-test-post`)
+  //   delete test comments
+  //   delete post
+  // })
 
   // it('should create new comment', () => {
   //   cy.visit(`${baseUrl}/posts/post/cypress-test-post`)
