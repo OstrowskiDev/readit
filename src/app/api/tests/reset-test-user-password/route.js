@@ -4,6 +4,7 @@ export async function POST(req) {
   try {
     const { secret: reqSecret } = await req.json()
     const secret = process.env.TEST_USER_SECRET
+
     if (secret !== reqSecret) {
       return new Response('Invalid data', { status: 401 })
     }

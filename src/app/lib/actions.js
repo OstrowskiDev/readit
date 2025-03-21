@@ -86,7 +86,7 @@ export async function updatePost(postId, formData) {
 }
 
 export async function deletePost(postId) {
-  if (!isUUID(postId)) {
+  if (!isUUID(postId) && !allowedPostIds.includes(postId)) {
     console.error('Invalid postId in deletePost func')
     return returnToast('error', 'Failed to delete post')
   }
