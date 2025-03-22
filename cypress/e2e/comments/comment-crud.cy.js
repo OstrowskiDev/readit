@@ -1,12 +1,9 @@
 const baseUrl = Cypress.env('BASE_URL')
-const userSecret = Cypress.env('TEST_USER_SECRET')
 import {
-  postTitle,
-  postContent,
   commentContent,
-  newCommentContent,
+  commentContentEdited,
   replyContent,
-  newReplyContent,
+  replyContentEdited,
 } from '../../support/mock'
 
 // !!!! add functionality to create new post that will trigger url update at /posts page, so newly created post will be processed by filter options
@@ -14,21 +11,7 @@ import {
 describe('Prepare tests environment', () => {
   it('should create test post', () => {
     cy.login()
-    cy.request({
-      method: 'POST',
-      url: '/api/tests/create-test-post',
-      body: {
-        title: postTitle,
-        content: postContent,
-        postId: 'cypress-test-post',
-        secret: userSecret,
-      },
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    }).then((response) => {
-      expect(response.status).to.eq(200)
-    })
+    cy.createTestPost()
   })
 })
 
@@ -50,7 +33,7 @@ describe('Top-level comments: create, update, like, dislike, likeCount tests.', 
     cy.get('.comment-container').should('be.visible')
     cy.get('.comment-menu-btn').click()
     cy.get('.menu-opt-edit-btn').click()
-    cy.get('.comment-edit-input').clear().type(newCommentContent)
+    cy.get('.comment-edit-input').clear().type(commentContentEdited)
     cy.get('.comment-edit-submit-btn').click()
     cy.expectToast('Success!', 'Comment updated successfully!')
   })
@@ -97,7 +80,7 @@ describe('Reply-level comment create, edit, like, dislike, likeCount tests', () 
       .find('.comment-menu-btn-icon')
       .click()
     cy.get('.menu-opt-edit-btn').click()
-    cy.get('.comment-edit-input').clear().type(newReplyContent)
+    cy.get('.comment-edit-input').clear().type(replyContentEdited)
     cy.get('.comment-edit-submit-btn').click()
     cy.expectToast('Success!', 'Comment updated successfully!')
   })

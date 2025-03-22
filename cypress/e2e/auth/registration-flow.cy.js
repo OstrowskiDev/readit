@@ -1,4 +1,4 @@
-describe('User Registration Flow', () => {
+describe('User Registration/Password Recovery Flow', () => {
   const baseUrl = Cypress.env('BASE_URL')
   const userName = Cypress.env('TEST_USER_NAME')
   const userEmail = Cypress.env('TEST_USER_EMAIL')
@@ -8,14 +8,7 @@ describe('User Registration Flow', () => {
 
   before(() => {
     cy.log('Delete test user before starting the test')
-    cy.request({
-      method: 'DELETE',
-      url: `${baseUrl}/api/tests/delete-test-user`,
-      body: { secret: testUserSecret },
-    }).then((response) => {
-      expect(response.status).to.eq(200)
-      expect(response.body).to.include('User deleted')
-    })
+    cy.deleteTestUser()
   })
 
   it('should successfully register a new user', () => {
@@ -53,7 +46,7 @@ describe('User Registration Flow', () => {
     cy.url().should('include', '/goodbye')
   })
 
-  it('should navigate to forgot password page adn request password reset', () => {
+  it('should navigate to forgot password page and request password reset', () => {
     cy.visit(`${baseUrl}/login`)
     cy.get('.forgot-password-container a').click()
     cy.url().should('include', '/account/forgot-password')
