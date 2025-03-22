@@ -12,7 +12,7 @@ export function ProfileFormButtons({ handleSubmit, handleCancel }) {
       <button
         type="submit"
         onClick={handleSubmit}
-        className="form-submit-button py-[6px] px-4 ml-4 bg-blue-500 hover:bg-blue-600 text-white font-bold  rounded"
+        className="form-submit-btn py-[6px] px-4 ml-4 bg-blue-500 hover:bg-blue-600 text-white font-bold  rounded"
       >
         Save changes
       </button>

@@ -58,7 +58,7 @@ export function ProfileAvatarSelection({
           <div className="avatar-select-seed flex justify-center flex-wrap  md:ml-l md:mr-4 mb-4">
             {avatarSeeds.map((seed) => (
               <div
-                className="avatar-seed m-1 md:m-2 hover:cursor-pointer rounded-full "
+                className={`avatar-seed-${seed.toLowerCase()} m-1 md:m-2 hover:cursor-pointer rounded-full `}
                 key={seed}
                 onClick={() => handleSelection('seed', seed)}
               >
@@ -89,10 +89,9 @@ export function ProfileAvatarSelection({
               return (
                 <div key={color}>
                   <div
-                    className={
-                      'avatar-color w-12 h-12 m-[6px] border rounded-full hover:cursor-pointer transform transition-all duration-200 hover:scale-110 overflow-hidden ' +
-                      (selectedAvatar.color === color ? 'scale-110' : '')
-                    }
+                    className={`avatar-color-${color.toLowerCase()} w-12 h-12 m-[6px] border rounded-full hover:cursor-pointer transform transition-all duration-200 hover:scale-110 overflow-hidden 
+                      ${selectedAvatar.color === color ? 'scale-110' : ''}
+                    `}
                     style={{ background: bgColor, borderColor: borderColor }}
                     onClick={() => handleSelection('color', color)}
                   ></div>

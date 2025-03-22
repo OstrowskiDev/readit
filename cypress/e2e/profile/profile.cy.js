@@ -1,4 +1,5 @@
 const baseUrl = Cypress.env('BASE_URL')
+import { userAboutMe, userAddress, userPhone } from '../../support/mock'
 
 describe('Prepare environment before tests.', () => {
   it('should delete testUser', () => {
@@ -31,8 +32,28 @@ describe('Update users profile', () => {
     cy.wait(2000)
     cy.get('.avatar-seed-annie').click()
     cy.get('.avatar-color-yellow').click()
-    cy.get('.form-submit-button').click()
+    cy.get('.form-submit-btn').click()
     cy.wait(2000)
     cy.get('.avatar-annie-yellow').should('be.visible')
+  })
+
+  it("should change 'About me' data", () => {
+    cy.get('.about-edit-btn').click()
+    cy.wait(2000)
+    cy.get('.input-about').type(userAboutMe)
+    cy.get('.form-submit-btn').click()
+    cy.wait(2000)
+    cy.get('.profile-about').should('contain', userAboutMe)
+  })
+
+  it("should change address and phone in 'My Data'", () => {
+    cy.get('.my-data-edit-btn').click()
+    cy.wait(2000)
+    cy.get('.input-address').type(userAddress)
+    cy.get('.input-phone').type(userPhone)
+    cy.get('.form-submit-btn').click()
+    cy.wait(2000)
+    cy.get('.profile-user-data-address').should('contain', userAddress)
+    cy.get('.profile-user-data-phone').should('contain', userPhone)
   })
 })

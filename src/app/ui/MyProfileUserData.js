@@ -5,7 +5,7 @@ export function MyProfileUserData({ userData }) {
         <p className="profile-label-user-data min-w-20 w-20 mr-2 text-md text-gray-900">
           name:
         </p>
-        <p className="profile-user-data my-[5px] text-md text-gray-600 max-lines-1">
+        <p className="profile-user-data-name my-[5px] text-md text-gray-600 max-lines-1">
           {userData.name}
         </p>
       </div>
@@ -13,7 +13,7 @@ export function MyProfileUserData({ userData }) {
         <p className="profile-label-user-data min-w-20 w-20 mr-2 text-md text-gray-900">
           email:
         </p>
-        <p className="profile-user-data my-[5px] text-md text-gray-600 max-lines-1">
+        <p className="profile-user-data-email my-[5px] text-md text-gray-600 max-lines-1">
           {userData.email}
         </p>
       </div>
@@ -21,7 +21,7 @@ export function MyProfileUserData({ userData }) {
         <p className="profile-label-user-data min-w-20 w-20 mr-2 text-md text-gray-900">
           address:
         </p>
-        <p className="profile-user-data my-[5px] text-md text-gray-600 max-lines-1">
+        <p className="profile-user-data-address my-[5px] text-md text-gray-600 max-lines-1">
           {userData.address}
         </p>
       </div>
@@ -29,7 +29,7 @@ export function MyProfileUserData({ userData }) {
         <p className="profile-label-user-data min-w-20 w-20 mr-2 text-md text-gray-900">
           phone:
         </p>
-        <p className="profile-user-data my-[5px] text-md text-gray-600 max-lines-1">
+        <p className="profile-user-data-phone my-[5px] text-md text-gray-600 max-lines-1">
           {userData.phone}
         </p>
       </div>
