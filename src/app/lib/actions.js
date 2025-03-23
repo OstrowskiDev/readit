@@ -625,7 +625,7 @@ export async function updateUserData(userObj) {
   if (!isUUID(userObj._id)) throw new Error('Invalid user id')
 
   try {
-    const { _id, name, email, address, phone, about, avatar } = userObj
+    const { _id, address, phone, about, avatar } = userObj
 
     await connectToDatabase()
     const user = await User.findById(_id)
@@ -635,12 +635,10 @@ export async function updateUserData(userObj) {
       return returnToast('error', 'Failed to update user data')
     }
 
-    user.name = name || user.name
-    user.email = email || user.email
-    user.address = address || user.address
-    user.phone = phone || user.phone
-    user.about = about || user.about
-    user.avatar = avatar || user.avatar
+    user.address = address ?? user.address
+    user.phone = phone ?? user.phone
+    user.about = about ?? user.about
+    user.avatar = avatar ?? user.avatar
 
     const updatedUser = await user.save()
 

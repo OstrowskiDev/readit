@@ -42,10 +42,10 @@ export function UserDataForm({
           name:
         </label>
         <input
-          className="input-name min-w-10 w-full max-w-[330px] px-2 text-md text-gray-900 my-1 bg-gray-100 border border-gray-300 rounded-md"
+          className="input-name min-w-10 w-full max-w-[330px] px-2 text-md text-gray-500 my-1 bg-white border border-white rounded-md"
           name="name"
           value={formState.name}
-          onChange={handleChange}
+          disabled
         />
       </div>
 
@@ -54,10 +54,10 @@ export function UserDataForm({
           email:
         </label>
         <input
-          className="input-email min-w-10 w-full max-w-[330px] px-2 text-md text-gray-900 my-1 bg-gray-100 border border-gray-300 rounded-md"
+          className="input-email min-w-10 w-full max-w-[330px] px-2 text-md text-gray-500 my-1 bg-white border border-white rounded-md"
           name="email"
           value={formState.email}
-          onChange={handleChange}
+          disabled
         />
       </div>
 
