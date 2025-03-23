@@ -21,14 +21,6 @@ export async function createUser({ name, email, hashedPassword }) {
       name,
       email,
       password: hashedPassword,
-      address: '',
-      phone: '',
-      about: '',
-      avatar: {
-        seed: 'Jack', // Default avatar seed
-        color: 'red', // Default avatar color
-      },
-      favorites: [],
     })
 
     await connectToDatabase()
