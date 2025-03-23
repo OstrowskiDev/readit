@@ -88,10 +88,10 @@ export function FilterForm({
                 }}
               />
             </div>
-            <div className="filter-sortBy-container flex px-4">
-              <p className="filter-sortBy-label w-[90px]">sort by:</p>
+            <div className="filter-sort-by-container flex px-4">
+              <p className="filter-sort-by-label w-[90px]">sort by:</p>
               <select
-                className="filter-sortBy-input w-full h-7 px-2 bg-gray-50 border border-slate-300 rounded-md
+                className="filter-sort-by-input w-full h-7 px-2 bg-gray-50 border border-slate-300 rounded-md
                 focus:border-slate-500 focus:outline-none"
                 id="sortBy"
                 name="sortBy"
@@ -106,10 +106,10 @@ export function FilterForm({
                 )}
               </select>
             </div>
-            <div className="filter-sortOrder-container flex px-4">
-              <p className="filter-sortOrder-label w-[90px]">order:</p>
+            <div className="filter-sort-order-container flex px-4">
+              <p className="filter-sort-order-label w-[90px]">order:</p>
               <select
-                className="filter-sortOrder-input w-full h-7 px-2 bg-gray-50 border border-slate-300 rounded-md
+                className="filter-sort-order-input w-full h-7 px-2 bg-gray-50 border border-slate-300 rounded-md
                 focus:border-slate-500 focus:outline-none"
                 id="sortOrder"
                 name="sortOrder"

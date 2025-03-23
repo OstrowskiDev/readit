@@ -19,7 +19,7 @@ export default function Avatar({ seed, color, size, border }) {
   return (
     <>
       <div
-        className="avatar-container"
+        className={`avatar-container avatar-${seed.toLowerCase()}-${color}`}
         style={{
           height: `${size}px`,
           width: `${size}px`,
