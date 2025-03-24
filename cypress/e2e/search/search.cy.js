@@ -12,14 +12,14 @@ describe('Search Bar And Filter Options Tests', () => {
     cy.get('.filter-content-input').should('be.visible')
     cy.get('.filter-sort-by-input').should('be.visible')
     cy.get('.filter-sort-order-input').should('be.visible')
-    cy.get('.post-reply-submit-btn').should('be.visible')
+    cy.get('.filter-options-submit-btn').should('be.visible')
   })
 
   it('should find Welcome post', () => {
     cy.get('.filter-btn').click()
     cy.get('.filter-title-input').type('Welcome')
     cy.get('.filter-author-input').type('Marcin Ostrowski')
-    cy.get('.post-reply-submit-btn').click()
+    cy.get('.filter-options-submit-btn').click()
     cy.url().should(
       'include',
       '?title=Welcome&author=Marcin+Ostrowski&sortBy=time&sortOrder=descending',
@@ -62,5 +62,34 @@ describe('Search Bar And Filter Options Tests', () => {
       .first()
       .find('.post-title')
       .should('contain', 'Loading implementation tests incoming')
+  })
+
+  it('should sort posts by time in ascending/descending order', () => {
+    cy.get('.filter-btn').click()
+    cy.get('.filter-author-input').type('Bob Smith')
+    cy.get('.filter-sort-by-input').select('time')
+    cy.get('.filter-sort-order-input').select('descending')
+    cy.get('.filter-options-submit-btn').click()
+    cy.get('.post-container')
+      .first()
+      .find('.post-title')
+      .should('contain', 'Nostrud Exercitation Minim Veniam')
+    cy.get('.filter-sort-order-input').select('ascending')
+    cy.get('.filter-options-submit-btn').click()
+    cy.get('.post-container')
+      .first()
+      .find('.post-title')
+      .should('contain', 'Loading implementation tests incoming')
+  })
+
+  it('should close filter options form', () => {
+    cy.get('.filter-btn').click()
+    cy.get('.filter-options-cancel-btn').click()
+    cy.get('.filter-title-input').should('not.be.visible')
+    cy.get('.filter-author-input').should('not.be.visible')
+    cy.get('.filter-content-input').should('not.be.visible')
+    cy.get('.filter-sort-by-input').should('not.be.visible')
+    cy.get('.filter-sort-order-input').should('not.be.visible')
+    cy.get('.filter-options-submit-btn').should('not.be.visible')
   })
 })
