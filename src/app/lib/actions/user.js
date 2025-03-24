@@ -6,6 +6,8 @@ import User from '@/app/lib/models/User'
 import { validatePasswords } from '../security/validatePasswords'
 import { hashPassword } from '../security/hashPassword'
 import { toast, resetToast, setToast } from '../toasts/ToastUtils'
+import { getServerSession } from 'next-auth'
+import { authOptions } from '@/app/api/auth/[...nextauth]/authOptions'
 
 export async function createUser({ name, email, hashedPassword }) {
   try {
@@ -124,6 +126,52 @@ export async function resetPassword({
     userAccount.password = hashedPassword
     userAccount.recovery_token = null
     userAccount.recovery_token_expires_at = null
+    await userAccount.save()
+    setToast('success', 'Password reset successful')
+    return toast
+  } catch (error) {
+    console.error('Error during password reset:', error)
+    setToast('error', toastErrorMessage)
+    return toast
+  }
+}
+
+export async function changePassword({ password, repeatPassword }) {
+  try {
+    resetToast()
+    const toastErrorMessage = 'Failed to change password'
+
+    const session = await getServerSession(authOptions)
+    if (!session) {
+      console.error('Unauthorized')
+      setToast('error', toastErrorMessage)
+    }
+
+    if (!password || !repeatPassword) {
+      console.error('Missing data in changePassword func call')
+      setToast('error', toastErrorMessage)
+      return toast
+    }
+    const validationResults = validatePasswords({ password, repeatPassword })
+    const hasErrors = Object.values(validationResults).some(
+      (field) => field.message.length > 0,
+    )
+    if (hasErrors) {
+      console.error('Password validation failed')
+      setToast('error', toastErrorMessage)
+      return toast
+    }
+    await connectToDatabase()
+    const userId = session.user.id
+    const userAccount = await User.findOne({ _id: userId })
+    if (!userAccount) {
+      console.error('User account not found for provided user _id:', { userId })
+      setToast('error', toastErrorMessage)
+      return toast
+    }
+
+    const hashedPassword = await hashPassword(password, 10)
+    userAccount.password = hashedPassword
     await userAccount.save()
     setToast('success', 'Password reset successful')
     return toast
