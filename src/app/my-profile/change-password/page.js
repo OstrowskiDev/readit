@@ -2,10 +2,10 @@
 
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
-import { resetPassword } from '@/app/lib/actions/user'
+import { changePassword } from '@/app/lib/actions/user'
 import { validatePasswords } from '@/app/lib/security/validatePasswords'
 
-export default function ResetPassword() {
+export default function ChangePassword() {
   const router = useRouter()
   const validationObject = {
     password: { message: [] },
@@ -42,16 +42,15 @@ export default function ResetPassword() {
       return
     }
     try {
-      const results = await resetPassword({
+      const results = await changePassword({
         password: formData.password,
         repeatPassword: formData.repeatPassword,
-        recoveryToken: recoveryToken,
       })
       if (results.state === 'success') {
         router.push('/account/password-changed')
       }
     } catch (error) {
-      console.error('Error during password recovery:', error)
+      console.error('Error during password change:', error)
     }
   }
 
@@ -62,7 +61,7 @@ export default function ResetPassword() {
     >
       <div className="password-change-container flex flex-col w-[320px] h-[484px] p-8 rounded-lg bg-blue-500 shadow-lg">
         <h1 className="password-change-title text-2xl font-semibold text-white">
-          Reset Password
+          Change Password
         </h1>
         <form
           className="password-change-form flex flex-col flex-grow"
@@ -131,7 +130,7 @@ export default function ResetPassword() {
               className="password-change-submit-button w-full h-12 bg-white text-blue-500 py-2 rounded-lg hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200 font-bold active:bg-blue-200 hover:text-lg"
               type="submit"
             >
-              Send
+              Save Changes
             </button>
           </div>
         </form>
