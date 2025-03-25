@@ -8,26 +8,15 @@ import { validateField } from './validationUtils'
 //   throw new Error('User with this email or name already exists')
 // }
 
-// !!!! uncomment rodo and bot detection validation and add required logic for it
-
 export const validationObject = {
   name: { message: [] },
   email: { message: [] },
   password: { message: [] },
   fullName: { message: [] }, //honeypot field
-  // acceptRodo: { message: [] },
-  // jsEnabled: { message: [] },
 }
 
 export function validateSignUp(formData) {
-  const {
-    fullName,
-    name,
-    email,
-    password,
-    // acceptRodo,
-    // jsEnabled,
-  } = formData
+  const { fullName, name, email, password } = formData
 
   //crating deep copy of validationObject
   const validationResults = JSON.parse(JSON.stringify(validationObject))
@@ -49,11 +38,26 @@ export function validateSignUp(formData) {
     'Name cannot contain numbers or special characters.',
   )
 
+  const forbiddenWords = ['admin', 'moderator', 'root']
   validateField(
     validationResults,
-    'fullName',
+    'name',
+    () => forbiddenWords.some((word) => name.toLowerCase().includes(word)),
+    "Words 'admin', 'moderator' and 'root' are not allowed.",
+  )
+
+  validateField(
+    validationResults,
+    'name',
     () => !validator.isLength(name, { max: 16 }),
     'Name cannot be longer than 16 characters.',
+  )
+
+  validateField(
+    validationResults,
+    'name',
+    () => !(name.trim() === name),
+    'Name cannot have spaces at the beginning or end.',
   )
 
   validateField(
@@ -69,15 +73,6 @@ export function validateSignUp(formData) {
     () => !passwordRegex.test(password),
     'Password must be at least 8 characters, with an uppercase letter, lowercase letter, number, and special character.',
   )
-
-  // validateField(
-  //   validationResults,
-  //   "acceptRodo",
-  //   () => acceptRodo !== "yes",
-  //   "Aby wysłać wiadomość wymagana jest akceptacja warunków Polityki Prywatności.",
-  // )
-
-  // validateField("jsEnabled", () => jsEnabled !== "yes", "bot detected")
 
   validateField(
     validationResults,

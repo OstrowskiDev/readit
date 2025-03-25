@@ -133,7 +133,7 @@ describe('validateSignUp function', () => {
     const result = validateSignUp(formData)
 
     expect(result.name.message).toContain(
-      'Name cannot contain numbers or special characters.',
+      'Name cannot have spaces at the beginning or end.',
     )
   })
 
@@ -146,7 +146,7 @@ describe('validateSignUp function', () => {
     const result = validateSignUp(formData)
 
     expect(result.name.message).toContain(
-      'Name cannot contain numbers or special characters.',
+      'Name cannot have spaces at the beginning or end.',
     )
   })
 
@@ -159,7 +159,7 @@ describe('validateSignUp function', () => {
     const result = validateSignUp(formData)
 
     expect(result.name.message).toContain(
-      'Name cannot contain numbers or special characters.',
+      "Words 'admin', 'moderator' and 'root' are not allowed.",
     )
   })
 
@@ -172,7 +172,7 @@ describe('validateSignUp function', () => {
     const result = validateSignUp(formData)
 
     expect(result.name.message).toContain(
-      'Name cannot contain numbers or special characters.',
+      "Words 'admin', 'moderator' and 'root' are not allowed.",
     )
   })
 
@@ -185,7 +185,7 @@ describe('validateSignUp function', () => {
     const result = validateSignUp(formData)
 
     expect(result.name.message).toContain(
-      'Name cannot contain numbers or special characters.',
+      "Words 'admin', 'moderator' and 'root' are not allowed.",
     )
   })
 
@@ -197,7 +197,7 @@ describe('validateSignUp function', () => {
     }
     const result = validateSignUp(formData)
 
-    expect(result.fullName.message).toContain(
+    expect(result.name.message).toContain(
       'Name cannot be longer than 16 characters.',
     )
   })
