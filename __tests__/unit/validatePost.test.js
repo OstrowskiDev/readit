@@ -9,35 +9,13 @@ describe('validatePostTitle', () => {
     expect(result.error).toBe('Post title is required')
   })
 
-  test('should return error if title is an object', () => {
-    const result = validatePostTitle({ message: 'passing an object' })
-    expect(result.error).toBe('Invalid Post title data')
-  })
-
-  test('should return error if title is boolean false', () => {
-    const result = validatePostTitle(false)
-    expect(result.error).toBe('Invalid Post title data')
-  })
-
-  test('should return error if title is boolean true', () => {
-    const result = validatePostTitle(true)
-    expect(result.error).toBe('Invalid Post title data')
-  })
-
-  test('should return error if title is NaN', () => {
-    const result = validatePostTitle(NaN)
-    expect(result.error).toBe('Invalid Post title data')
-  })
-
-  test('should return error if title is undefined', () => {
-    const result = validatePostTitle(undefined)
-    expect(result.error).toBe('Invalid Post title data')
-  })
-
-  test('should return error if title is null', () => {
-    const result = validatePostTitle(null)
-    expect(result.error).toBe('Invalid Post title data')
-  })
+  test.each([false, true, NaN, undefined, null, {}, []])(
+    'should return error for invalid title input: %p',
+    (input) => {
+      const result = validatePostTitle(input)
+      expect(result.error).toBe('Invalid Post title data')
+    },
+  )
 
   test('should return error if title consists of only spaces', () => {
     const result = validatePostTitle('     ')
@@ -63,30 +41,13 @@ describe('validatePostContent', () => {
     expect(result.error).toBe('Post content is required')
   })
 
-  test('should return error if content is an object', () => {
-    const result = validatePostContent({ message: 'passing an object' })
-    expect(result.error).toBe('Invalid Post content data')
-  })
-
-  test('should return error if content is a boolean', () => {
-    const result = validatePostContent(true)
-    expect(result.error).toBe('Invalid Post content data')
-  })
-
-  test('should return error if content is NaN', () => {
-    const result = validatePostContent(NaN)
-    expect(result.error).toBe('Invalid Post content data')
-  })
-
-  test('should return error if content is undefined', () => {
-    const result = validatePostContent(undefined)
-    expect(result.error).toBe('Invalid Post content data')
-  })
-
-  test('should return error if content is null', () => {
-    const result = validatePostContent(null)
-    expect(result.error).toBe('Invalid Post content data')
-  })
+  test.each([false, true, NaN, undefined, null, {}, []])(
+    'should return error for invalid content input: %p',
+    (input) => {
+      const result = validatePostContent(input)
+      expect(result.error).toBe('Invalid Post content data')
+    },
+  )
 
   test('should return error if content consists of only spaces', () => {
     const result = validatePostContent('    ')
