@@ -1,5 +1,5 @@
 function validateCommentContent(content) {
-  if (!(typeof input === 'string')) {
+  if (typeof content !== 'string') {
     return { error: 'Invalid Comment content data' }
   }
 

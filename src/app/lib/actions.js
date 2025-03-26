@@ -286,7 +286,7 @@ export async function updateComment(commentId, userInput) {
   const comment = await getComment(commentId)
   const authorId = comment.user_id
   if (session.user.id !== authorId) {
-    console.log('User id does not match author id in updateComent func.')
+    console.log('User id does not match author id in updateComment func.')
     setToast('error', 'Failed to update comment!')
     return { ...toast, updatedCommentId: commentId }
   }
