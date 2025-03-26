@@ -5,7 +5,7 @@ import Comment from './models/Comment'
 import User from './models/User'
 import { redirect } from 'next/navigation'
 import { connectToDatabase, getComment, getUser } from './db'
-import { validatePostContent, validatePostTitle } from './validation'
+import { validatePostContent, validatePostTitle } from './security/validatePost'
 import { getServerSession } from 'next-auth/next'
 import { authOptions } from '@/app/api/auth/[...nextauth]/authOptions'
 import { isUUID } from 'validator'
@@ -20,8 +20,18 @@ export async function createPost(inputTitle, inputContent, uuid) {
     console.error('Invalid postId in createPost func')
     return returnToast('error', 'Failed to create post')
   }
-  const title = validatePostTitle(inputTitle)
-  const content = validatePostContent(inputContent)
+
+  const titleValidation = validatePostTitle(inputTitle)
+  if (titleValidation.error) {
+    return returnToast('error', `${titleValidation.error}`)
+  }
+  const contentValidation = validatePostContent(inputContent)
+  if (contentValidation.error) {
+    return returnToast('error', `${contentValidation.error}`)
+  }
+
+  const title = titleValidation.sanitizedString
+  const content = contentValidation.sanitizedString
 
   const newPost = new Post({
     _id: uuid,
