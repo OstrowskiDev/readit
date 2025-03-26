@@ -67,10 +67,18 @@ export async function updatePost(postId, formData) {
     )
     return returnToast('error', 'Failed to update post')
   }
-  const inputTitle = formData.title
-  const title = validatePostTitle(inputTitle)
-  const inputContent = formData.content
-  const content = validatePostContent(inputContent)
+
+  const titleValidation = validatePostTitle(formData.title)
+  if (titleValidation.error) {
+    return returnToast('error', `${titleValidation.error}`)
+  }
+  const contentValidation = validatePostContent(formData.content)
+  if (contentValidation.error) {
+    return returnToast('error', `${contentValidation.error}`)
+  }
+
+  const title = titleValidation.sanitizedString
+  const content = contentValidation.sanitizedString
 
   const updatedData = new Post({
     title: title,
