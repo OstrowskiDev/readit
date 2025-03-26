@@ -21,7 +21,7 @@ describe('validateSignUp function', () => {
     expect(result.email.message).toContain('Please enter valid email address.')
   })
 
-  test('should not allow dot at the begginign of email address', () => {
+  test('should not allow dot at the beginning of email address', () => {
     const formData = {
       name: 'Johnny',
       email: '.invalid@example.com',

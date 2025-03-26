@@ -17,7 +17,7 @@ function validatePostTitle(title) {
     return { sanitizedString: title, error: null }
   }
   //Title sanitization: remove non-alphanumeric characters, excluding space
-  //in below regex space that comes after 0-9 is required to whitelits it
+  //in below regex space that comes after 0-9 is required to whitelist it
   const sanitizedTitle = title.replace(/[^a-zA-Z0-9 ]/g, '')
   return { sanitizedString: sanitizedTitle, error: null }
 }
