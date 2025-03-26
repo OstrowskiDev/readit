@@ -6,14 +6,17 @@ import User from './models/User'
 import { redirect } from 'next/navigation'
 import { connectToDatabase, getComment, getUser } from './db'
 import { validatePostContent, validatePostTitle } from './security/validatePost'
+import { validateCommentContent } from './security/validateComment'
+import allowedPostIds from './security/allowedPostIds'
+import { isUUID } from 'validator'
 import { getServerSession } from 'next-auth/next'
 import { authOptions } from '@/app/api/auth/[...nextauth]/authOptions'
-import { isUUID } from 'validator'
 import { toast, setToast, returnToast } from './toasts/ToastUtils'
-import allowedPostIds from './security/allowedPostIds'
 
 export async function createPost(inputTitle, inputContent, uuid) {
   const session = await getServerSession(authOptions)
+  if (!session) redirect('/login')
+
   const userId = session.user.id
   const isValidUUID = isUUID(uuid)
   if (!isValidUUID) {
@@ -53,6 +56,8 @@ export async function createPost(inputTitle, inputContent, uuid) {
 
 export async function updatePost(postId, formData) {
   const session = await getServerSession(authOptions)
+  if (!session) redirect('/login')
+
   let oldPost
   try {
     oldPost = await Post.findOne({ _id: postId })
@@ -142,7 +147,14 @@ export async function createComment(
   newCommentId,
 ) {
   const session = await getServerSession(authOptions)
-  const content = validatePostContent(userInput)
+  if (!session) redirect('/login')
+
+  const contentValidation = validateCommentContent(userInput)
+  if (contentValidation.error) {
+    return returnToast('error', `${contentValidation.error}`)
+  }
+
+  const content = contentValidation.sanitizedString
 
   const newComment = new Comment({
     _id: newCommentId,
@@ -196,9 +208,7 @@ export async function deleteComment(commentId) {
     return returnToast('error', 'Failed to delete comment')
 
   const session = await getServerSession(authOptions)
-  if (!session) {
-    redirect('/login')
-  }
+  if (!session) redirect('/login')
 
   const commentData = await getComment(commentId)
   if (!commentData) {
@@ -271,18 +281,22 @@ export async function deleteComment(commentId) {
 
 export async function updateComment(commentId, userInput) {
   const session = await getServerSession(authOptions)
+  if (!session) redirect('/login')
+
   const comment = await getComment(commentId)
   const authorId = comment.user_id
-  if (!session) redirect('/login')
   if (session.user.id !== authorId) {
-    console.log(
-      "Warning! During update comment operation user id doesn't match author id.",
-    )
+    console.log('User id does not match author id in updateComent func.')
     setToast('error', 'Failed to update comment!')
     return { ...toast, updatedCommentId: commentId }
   }
 
-  const content = validatePostContent(userInput)
+  const contentValidation = validateCommentContent(userInput)
+  if (contentValidation.error) {
+    return returnToast('error', `${contentValidation.error}`)
+  }
+
+  const content = contentValidation.sanitizedString
 
   const updatedData = new Comment({
     _id: commentId,
@@ -683,6 +697,8 @@ export async function handlePostFavorites(postId) {
   }
 
   const session = await getServerSession(authOptions)
+  if (!session) redirect('/login')
+
   const userId = session.user.id
   const userDocument = await getUser(userId)
   const alreadyInFavorites = userDocument.favorites?.some(
@@ -730,6 +746,8 @@ export async function handleCommentFavorites(commentId) {
   }
 
   const session = await getServerSession(authOptions)
+  if (!session) redirect('/login')
+
   const userId = session.user.id
   const userDocument = await getUser(userId)
   const alreadyInFavorites = userDocument.favorites?.some(
