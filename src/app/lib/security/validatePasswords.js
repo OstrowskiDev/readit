@@ -7,11 +7,23 @@ export function validatePasswords(formData) {
     password: { message: [] },
     repeatPassword: { message: [] },
   }
-
+  // !!!! not sure about this deep copy, it looks like its not needed anymore:
   const validationResults = JSON.parse(JSON.stringify(validationObject))
 
-  const fieldRequired = ['password', 'repeatPassword']
-  for (const field of fieldRequired) {
+  const formFields = ['password', 'repeatPassword']
+  for (const field of formFields) {
+    validateField(
+      validationResults,
+      field,
+      () => typeof formData[field] !== 'string',
+      'Invalid data.',
+    )
+  }
+
+  if (typeof password !== 'string' || typeof repeatPassword !== 'string')
+    return validationResults
+
+  for (const field of formFields) {
     validateField(
       validationResults,
       field,
