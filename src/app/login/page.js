@@ -1,13 +1,15 @@
 'use client'
 
 import { signIn, useSession } from 'next-auth/react'
-import { useSearchParams } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import AlreadySignedIn from '../ui/AlreadySignedIn'
 import Link from 'next/link'
 import { ErrorTriangleIco } from '../ui/icons/ErrorTriangleIco'
+import { validateSignIn } from '../lib/security/validateSignIn'
 
 export default function SignInForm() {
+  const router = useRouter()
   const searchParams = useSearchParams()
   const error = searchParams.get('error')
   const [callbackUrl, setCallbackUrl] = useState(null)
@@ -17,9 +19,13 @@ export default function SignInForm() {
 
   function getErrorMessage(error) {
     if (!error) return null
-    return error === 'CredentialsSignin'
-      ? 'Invalid email or password. Please try again.'
-      : 'An error occurred. Please try again.'
+    if (error === 'CredentialsSignin') {
+      return 'Invalid email or password. Please try again.'
+    } else if (error === 'AccountBlocked') {
+      return 'Your account was blocked due to too many failed login attempts. Reset password to regain access.'
+    } else {
+      return 'An error occurred. Please try again.'
+    }
   }
 
   useEffect(() => {
@@ -47,7 +53,17 @@ export default function SignInForm() {
     const email = formData.get('email')
     const password = formData.get('password')
 
+    const isInputValid = validateSignIn({ email, password })
+    if (!isInputValid) {
+      router.push('/login?error=CredentialsSignin')
+    }
+
     try {
+      //!!!! add server action:
+      const isAccountBlocked = await checkAccountState(email)
+      if (isAccountBlocked) {
+        router.push('/login?error=AccountBlocked')
+      }
       await signIn('credentials', { email, password, callbackUrl: callbackUrl })
     } catch (error) {
       console.error('Sign-in error:', error)
