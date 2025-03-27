@@ -18,7 +18,7 @@ export const validationObject = {
 export function validateSignUp(formData) {
   const { fullName, name, email, password } = formData
 
-  //crating deep copy of validationObject
+  //!!!! crating deep copy of validationObject
   const validationResults = JSON.parse(JSON.stringify(validationObject))
 
   const fieldRequired = ['name', 'email', 'password']

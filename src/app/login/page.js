@@ -27,7 +27,7 @@ export default function SignInForm() {
     const encodedUrl = params.get('callbackUrl')
     let decodedUrl = decodeURIComponent(encodedUrl)
 
-    // !!!! this pattern needs to be change to env var representing the domain
+    // !!!! this pattern needs to be changed to env var representing the domain
     const httpsPattern = new RegExp('^https://', 'i')
     const httpPattern = new RegExp('^http://', 'i')
 
