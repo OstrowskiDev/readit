@@ -163,16 +163,16 @@ export async function changePassword({ password, repeatPassword }) {
     }
     await connectToDatabase()
     const userId = session.user.id
-    const userAccount = await User.findOne({ _id: userId })
-    if (!userAccount) {
+    const user = await User.findOne({ _id: userId })
+    if (!user) {
       console.error('User account not found for provided user _id:', { userId })
       setToast('error', toastErrorMessage)
       return toast
     }
 
     const hashedPassword = await hashPassword(password, 10)
-    userAccount.password = hashedPassword
-    await userAccount.save()
+    user.password = hashedPassword
+    await user.save()
     setToast('success', 'Password reset successful')
     return toast
   } catch (error) {
@@ -190,8 +190,39 @@ export async function checkAccountState(email) {
     if (user.locked) return { state: 'locked' }
     return { state: 'ok' }
   } catch (error) {
-    console.error('Error checking accunt state:', error)
-    return { error: 'error checking accunt state' }
+    console.error('Error checking account state:', error)
+    return { error: 'error checking account state' }
+  }
+}
+
+export async function handleFailedLogin(email) {
+  try {
+    await connectToDatabase()
+    const user = await User.findOne({ email })
+    if (!user) {
+      console.error(`User with email: ${email} not found`)
+      return
+    }
+    const currentDate = Date.now()
+    const oneHourAgo = currentDate - 60 * 60 * 1000
+
+    // Below for accounts that were created before adding blocking accounts after 5 failed login attempts:
+    user.last_login_attempt = user.last_login_attempt || 0
+    user.failed_login_attempts = user.failed_login_attempts || 0
+
+    if (user.last_login_attempt > oneHourAgo) {
+      user.failed_login_attempts += 1
+    } else {
+      user.failed_login_attempts = 1
+    }
+    if (user.failed_login_attempts > 4) {
+      user.status = 'locked'
+    }
+    user.last_login_attempt = currentDate
+    await user.save()
+    const updatedUser = await User.findById(user._id)
+  } catch (error) {
+    console.error('Error handling failed login attempt:', error)
   }
 }
 
