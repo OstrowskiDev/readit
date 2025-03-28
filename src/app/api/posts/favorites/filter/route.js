@@ -229,6 +229,7 @@ export async function GET(req, res) {
     $unwind: '$authorData',
   })
 
+  // !!!! change this to whitelist instead of blacklist:
   pipeline.push({
     $project: {
       'authorData.password': 0,
@@ -237,6 +238,14 @@ export async function GET(req, res) {
       'authorData.phone': 0,
       'authorData.about': 0,
       'authorData.favorites': 0,
+      'authorData.failed_login_attempts': 0,
+      'authorData.last_login_attempt': 0,
+      'authorData.status': 0,
+      'authorData.recovery_token': 0,
+      'authorData.recovery_token_expires_at': 0,
+      'authorData.activation_token': 0,
+      'authorData.token_expires_at': 0,
+      'authorData.is_active': 0,
     },
   })
 

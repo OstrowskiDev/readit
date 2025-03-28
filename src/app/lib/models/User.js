@@ -28,6 +28,15 @@ const usersSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    failed_login_attempts: {
+      type: Number,
+      default: 0,
+    },
+    last_login_attempt: Date,
+    status: {
+      type: String,
+      default: 'ok',
+    },
     recovery_token: String,
     recovery_token_expires_at: Date,
     email: {
