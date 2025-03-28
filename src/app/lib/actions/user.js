@@ -182,14 +182,27 @@ export async function changePassword({ password, repeatPassword }) {
   }
 }
 
+export async function checkAccountState(email) {
+  try {
+    await connectToDatabase()
+    const user = await User.findOne({ email: email })
+    if (!user) return { error: "account doesn't exist" }
+    if (user.locked) return { state: 'locked' }
+    return { state: 'ok' }
+  } catch (error) {
+    console.error('Error checking accunt state:', error)
+    return { error: 'error checking accunt state' }
+  }
+}
+
 export async function checkEmailAvailability(email) {
   try {
     await connectToDatabase()
     const user = await User.findOne({ email: email })
     const isEmailAvailable = user ? false : true
     return isEmailAvailable
-  } catch {
-    console.error('Error checking email availability')
+  } catch (error) {
+    console.error('Error checking email availability:', error)
   }
 }
 
