@@ -1,10 +1,13 @@
 import CredentialsProvider from 'next-auth/providers/credentials'
 import { getUserByEmail } from '@/app/lib/db'
 import bcrypt from 'bcrypt'
+import { validateSignIn } from '@/app/lib/security/validateSignIn'
+import { handleFailedLogin } from '@/app/lib/actions/user'
 
 export const authOptions = {
   pages: {
     signIn: '/login',
+    error: '/login',
   },
   callbacks: {
     jwt({ token, user, trigger, session }) {
@@ -43,11 +46,23 @@ export const authOptions = {
         },
       },
       async authorize(credentials) {
-        if (!credentials.email || !credentials.password) return null
-        const user = await getUserByEmail(credentials.email)
+        const { email, password } = credentials
 
+        const isInputValid = validateSignIn({ email, password })
+        if (!isInputValid) return null
+
+        const user = await getUserByEmail(credentials.email)
         if (!user) return null
+
+        if (user.status === 'locked') {
+          throw new Error('AccountBlocked')
+        }
+
         const match = await bcrypt.compare(credentials.password, user.password)
+        if (!match) {
+          console.log('authorize func handleFailedLogin')
+          handleFailedLogin(email)
+        }
 
         return match ? user : null
       },

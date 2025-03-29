@@ -7,7 +7,6 @@ import AlreadySignedIn from '../ui/AlreadySignedIn'
 import Link from 'next/link'
 import { ErrorTriangleIco } from '../ui/icons/ErrorTriangleIco'
 import { validateSignIn } from '../lib/security/validateSignIn'
-import { checkAccountState } from '../lib/actions/user'
 
 export default function SignInForm() {
   const router = useRouter()
@@ -60,11 +59,6 @@ export default function SignInForm() {
     }
 
     try {
-      const userAccount = await checkAccountState(email)
-      const isAccountBlocked = userAccount.state === 'locked' ? true : false
-      if (isAccountBlocked) {
-        router.push('/login?error=AccountBlocked')
-      }
       await signIn('credentials', { email, password, callbackUrl: callbackUrl })
     } catch (error) {
       console.error('Sign-in error:', error)
