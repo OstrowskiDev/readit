@@ -2,8 +2,6 @@ import mongoose from 'mongoose'
 import validator from 'validator'
 import { avatarSeeds, avatarColors } from '../avatars/avatarProps'
 
-// !! Important! When adding new fields to the schema, in case those fields are confidential, make sure to update aggregation pipeline in /app/api/posts/filter/route.js to exclude those fields from the response.
-
 const usersSchema = new mongoose.Schema(
   {
     _id: {
