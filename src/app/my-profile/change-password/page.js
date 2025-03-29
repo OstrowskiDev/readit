@@ -15,13 +15,6 @@ export default function ChangePassword() {
   const { password, repeatPassword } = formData
   const [submitAttempted, setSubmitAttempted] = useState(false)
   const [fieldValidity, setFieldValidity] = useState({ ...validationObject })
-  const [recoveryToken, setRecoveryToken] = useState('')
-
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search)
-    const token = params.get('recovery_token')
-    setRecoveryToken(token)
-  }, [])
 
   useEffect(() => {
     const results = validatePasswords(formData)

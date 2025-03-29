@@ -126,6 +126,7 @@ export async function resetPassword({
     userAccount.password = hashedPassword
     userAccount.recovery_token = null
     userAccount.recovery_token_expires_at = null
+    userAccount.status = 'ok'
     await userAccount.save()
     setToast('success', 'Password reset successful')
     return toast
