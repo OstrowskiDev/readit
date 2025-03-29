@@ -31,20 +31,17 @@ export default function SignInForm() {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search)
     const encodedUrl = params.get('callbackUrl')
-    let decodedUrl = decodeURIComponent(encodedUrl)
-
-    // !!!! this pattern needs to be changed to env var representing the domain
-    const httpsPattern = new RegExp('^https://', 'i')
-    const httpPattern = new RegExp('^http://', 'i')
-
-    const isHttps = decodedUrl.match(httpsPattern)
-    const isHttp = decodedUrl.match(httpPattern)
-
-    if (!isHttps && !isHttp) {
+    let decodedUrl
+    try {
+      decodedUrl = decodeURIComponent(encodedUrl)
+    } catch (error) {
       decodedUrl = '/posts/'
     }
+    const appUrl = process.env.NEXT_PUBLIC_APP_URL
+    const isAppUrl = decodedUrl.startsWith(appUrl)
+    const sanitizedUrl = isAppUrl ? decodedUrl : '/posts/'
 
-    setCallbackUrl(decodedUrl)
+    setCallbackUrl(sanitizedUrl)
   }, [])
 
   async function handleSubmit(event) {
