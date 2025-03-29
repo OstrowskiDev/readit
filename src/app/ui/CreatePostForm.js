@@ -58,8 +58,8 @@ export function CreatePostForm({
     }
 
     const params = new URLSearchParams(window.location.search)
-    const sortBy = params.get('sortBy')
-    const sortOrder = params.get('sortOrder')
+    const sortBy = params.get('sortBy') || 'time'
+    const sortOrder = params.get('sortOrder') || 'descending'
     const author = params.get('author')
     const titleParam = params.get('title')
     const contentParam = params.get('content')
@@ -74,8 +74,10 @@ export function CreatePostForm({
         (sortBy === 'popularity' && sortOrder === 'ascending') ||
         (sortBy === 'activity' && sortOrder === 'ascending')
       ) {
+        console.log('case one')
         setPosts([newPost, ...posts])
       } else {
+        console.log('case two')
         setPosts([...posts, newPost])
       }
     } else {

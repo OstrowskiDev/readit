@@ -6,8 +6,6 @@ import {
   replyContentEdited,
 } from '../../support/mock'
 
-// !!!! add functionality to create new post that will trigger url update at /posts page, so newly created post will be processed by filter options
-
 describe('Prepare tests environment', () => {
   it('should create test post', () => {
     cy.login()
