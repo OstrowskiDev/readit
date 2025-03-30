@@ -3,14 +3,17 @@ import { NextResponse } from 'next/server'
 import { generateEmailBody } from '@/app/lib/emails/converted-to-html/ResetPassword'
 
 // !!!! change email "from"
-// !!!! delete this route so its not used in production
 
 export async function POST() {
-  console.log('POST /api/tests/email-template triggered')
+  const nodeEnv = process.env.NODE_ENV || 'production'
+  const inProduction = nodeEnv === 'production'
+  if (inProduction) {
+    return new NextResponse('Access denied', { status: 403 })
+  }
+
   const username = 'John Doe'
   const activation_token = '1234567890'
   const emailBody = generateEmailBody(username, activation_token)
-  console.log('emailBody created')
 
   const msg = {
     to: 'marcin.ostrowsky@gmail.com',
