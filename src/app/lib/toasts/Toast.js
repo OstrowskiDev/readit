@@ -2,8 +2,6 @@ import { ErrorIco } from '@/app/ui/icons/ErrorIco'
 import { SuccessIco } from '@/app/ui/icons/SuccessIco'
 import React, { useEffect, useRef, useState } from 'react'
 
-// !!!! do dopracowania: korekta wizualna, obecnie toast jest wycentrowany w stosunku do szerokości ekranu, ale powinien być wycentrowany w stosunku do szerokości kontenera, w którym się znajduje
-
 export function Toast({ message, state, forceUpdate }) {
   const [moveToastClass, setMoveToastClass] = useState('hide')
   const timerArrivedRef = useRef()
@@ -27,13 +25,15 @@ export function Toast({ message, state, forceUpdate }) {
   }, [message, state, forceUpdate])
 
   return (
-    <div className={`toast fixed w-full bottom-0 transform ${moveToastClass}`}>
+    <div
+      className={`toast fixed w-full ml-[120px] below-md:ml-[0px] bottom-0 transform ${moveToastClass}`}
+    >
       <div
         className={`toast-container flex items-center w-80 h-[74px] mx-auto p-4 mb-16 font-semibold border-2 rounded-xl ${containerStateClasses(
           state,
         )}`}
       >
-        <div className="toast-icon w-10 ">{renderIcon(state)}</div>
+        <div className="toast-icon w-10">{renderIcon(state)}</div>
         <div className="toast-text-container ml-4">
           <p
             className={`toast-text-state leading-tight text-lg ${textStateClasses(
