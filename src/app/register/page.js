@@ -106,7 +106,7 @@ export default function RegisterForm() {
             <label className="register-name-error text-xs text-red-200">
               {fieldValidity.name.message.length > 0 &&
                 submitAttempted &&
-                fieldValidity.name.message.join()}
+                fieldValidity.name.message.join(' ')}
             </label>
           </div>
           <div className="register-email mt-4">
@@ -133,7 +133,7 @@ export default function RegisterForm() {
             <label className="register-email-error text-xs text-red-200">
               {fieldValidity.email.message.length > 0 &&
                 submitAttempted &&
-                fieldValidity.email.message.join()}
+                fieldValidity.email.message.join(' ')}
             </label>
             <label className="register-email-already-taken text-xs text-red-200">
               {!isEmailAvailable &&
@@ -165,7 +165,7 @@ export default function RegisterForm() {
             <label className="register-password-error text-xs text-red-200">
               {fieldValidity.password.message.length > 0 &&
                 submitAttempted &&
-                fieldValidity.password.message.join()}
+                fieldValidity.password.message.join(' ')}
             </label>
           </div>
           {/* Honeypot field */}

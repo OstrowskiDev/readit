@@ -5,7 +5,7 @@ export function ProfileSettings() {
       <ul className="space-y-2">
         <li>
           <a
-            href="/profile/change-password"
+            href="/my-profile/change-password"
             className="text-blue-500 hover:text-blue-700 transition-colors duration-200"
           >
             Change Password
