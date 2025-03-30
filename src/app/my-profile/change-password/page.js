@@ -40,7 +40,7 @@ export default function ChangePassword() {
         repeatPassword: formData.repeatPassword,
       })
       if (results.state === 'success') {
-        router.push('/account/password-changed')
+        router.push('/my-profile/password-changed')
       }
     } catch (error) {
       console.error('Error during password change:', error)
