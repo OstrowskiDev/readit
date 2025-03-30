@@ -239,9 +239,15 @@ export async function checkEmailAvailability(email) {
 }
 
 export async function deleteTestUser() {
+  const testUserEmail = process.env.TEST_USER_EMAIL
+  console.log('test user email:', testUserEmail)
   try {
     await connectToDatabase()
-    const result = await User.deleteOne({ email: 'testuser@example.com' })
+
+    const user = await User.findOne({ email: testUserEmail })
+    if (!user) return { state: 'success' }
+
+    const result = await User.deleteOne({ email: testUserEmail })
     if (result.deletedCount === 1) {
       return { state: 'success' }
     } else {

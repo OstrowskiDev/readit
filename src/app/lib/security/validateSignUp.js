@@ -2,24 +2,15 @@ import validator from 'validator'
 import { passwordRegex } from './passwordRegex'
 import { validateField } from './validationUtils'
 
-// !!!! add proper validation for user email and name (check if they are unique)
-// const existingUser = await User.findOne({ $or: [{ email }, { name }] })
-// if (existingUser) {
-//   throw new Error('User with this email or name already exists')
-// }
-
-export const validationObject = {
-  name: { message: [] },
-  email: { message: [] },
-  password: { message: [] },
-  fullName: { message: [] }, //honeypot field
-}
-
 export function validateSignUp(formData) {
   const { fullName, name, email, password } = formData
 
-  //!!!! crating deep copy of validationObject
-  const validationResults = JSON.parse(JSON.stringify(validationObject))
+  const validationResults = {
+    name: { message: [] },
+    email: { message: [] },
+    password: { message: [] },
+    fullName: { message: [] }, //honeypot field
+  }
 
   const fieldRequired = ['name', 'email', 'password']
   for (const field of fieldRequired) {

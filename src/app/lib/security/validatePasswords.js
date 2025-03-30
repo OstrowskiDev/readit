@@ -3,12 +3,10 @@ import { validateField } from './validationUtils'
 
 export function validatePasswords(formData) {
   const { password, repeatPassword } = formData
-  const validationObject = {
+  const validationResults = {
     password: { message: [] },
     repeatPassword: { message: [] },
   }
-  // !!!! not sure about this deep copy, it looks like its not needed anymore:
-  const validationResults = JSON.parse(JSON.stringify(validationObject))
 
   const formFields = ['password', 'repeatPassword']
   for (const field of formFields) {
