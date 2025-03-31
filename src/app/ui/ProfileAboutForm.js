@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { ProfileFormButtons } from './ProfileFormButtons'
 import { updateUserData } from '../lib/actions'
+import { validateAbout } from '../lib/security/validateAbout'
 
 export function ProfileAboutForm({
   userData,
@@ -8,6 +9,8 @@ export function ProfileAboutForm({
   handleAboutFormVisibility,
 }) {
   const [formState, setFormState] = useState(userData)
+  const [errorMsg, setErrorMsg] = useState('')
+  const [wasSubmited, setWasSubmited] = useState(false)
   const textareaRef = useRef(null)
 
   useEffect(() => {
@@ -26,11 +29,13 @@ export function ProfileAboutForm({
 
   const handleSubmit = (event) => {
     event.preventDefault()
+    setWasSubmited(true)
 
-    // !!!! add some feedback to user if the about field is too long
-    if (formState.about.length > 600) {
-      console.error('About field can be max 600 characters long.')
-      return
+    const validationResults = validateAbout(FormData)
+    if (validationResults.errors) {
+      setErrorMsg(validationResults.errors)
+    } else {
+      setErrorMsg('')
     }
 
     setUserData(formState)
@@ -57,6 +62,11 @@ export function ProfileAboutForm({
           onChange={handleChange}
           ref={textareaRef}
         />
+        {wasSubmited && errorMsg && (
+          <label className="input-about-error text-red-500 text-sm">
+            {errorMsg}
+          </label>
+        )}
       </div>
       <div className="btns-position-correction transition-height relative left-[5px]">
         <ProfileFormButtons
