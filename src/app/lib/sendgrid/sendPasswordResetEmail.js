@@ -5,10 +5,11 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY)
 
 export default function sendPasswordResetEmail(email, recoveryToken, userName) {
   try {
+    const emailFrom = process.env.SENDGRID_EMAIL_FROM
     const body = generateEmailBody(userName, recoveryToken)
     const msg = {
       to: email,
-      from: 'sekretariat@kancelaria-ciesielskamarkiewicz.com.pl', // !!!! use different email in production
+      from: emailFrom,
       subject: 'ReadIt App - Password Recovery',
       html: body,
     }

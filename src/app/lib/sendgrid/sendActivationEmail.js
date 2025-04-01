@@ -4,10 +4,11 @@ import { generateEmailBody } from '@/app/lib/emails/converted-to-html/ConfirmEma
 sgMail.setApiKey(process.env.SENDGRID_API_KEY)
 
 export async function sendActivationEmail(name, email, activationToken) {
+  const emailFrom = process.env.SENDGRID_EMAIL_FROM
   const body = generateEmailBody(name, activationToken)
   const msg = {
     to: email,
-    from: 'sekretariat@kancelaria-ciesielskamarkiewicz.com.pl', // !!!! use different email in production
+    from: emailFrom,
     subject: 'Activate Your Account on ReadIt App',
     html: body,
   }
