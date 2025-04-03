@@ -5,11 +5,10 @@ export async function GET(req, res) {
   console.log('image get API route was triggered...')
   // const { key } = req.query;
   const key = 'testfile.png'
-  const bucket = 'readit'
   try {
     const data = await s3
       .getObject({
-        Bucket: bucket,
+        Bucket: process.env.CLOUDFLARE_BUCKET,
         Key: key,
       })
       .promise()
