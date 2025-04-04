@@ -42,13 +42,17 @@ export async function PUT(req) {
       )
     }
 
-    const imageType = await validateImageFile(file)
+    const validationResult = await validateImageFile(file)
 
-    if (!imageType.valid) {
+    if (!validationResult.type) {
       return NextResponse.json(
         { error: 'File type not allowed' },
-        { statys: 415 },
+        { status: 415 },
       )
+    }
+
+    if (!validationResult.size) {
+      return NextResponse.json({ error: 'File too large' }, { status: 413 })
     }
 
     const fileBuffer = await file.arrayBuffer()
