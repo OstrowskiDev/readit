@@ -6,3 +6,5 @@ const imageTypesWhitelist = [
   { ext: 'webp', mime: 'image/webp' },
   { ext: 'bmp', mime: 'image/bmp' },
 ]
+
+export default imageTypesWhitelist

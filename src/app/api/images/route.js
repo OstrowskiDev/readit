@@ -1,4 +1,5 @@
 import s3 from '@/app/lib/cloudflare-sdk/s3'
+import validateImageFile from '@/app/lib/security/validateImageFile'
 import { NextResponse } from 'next/server'
 
 export async function GET(req, res) {
@@ -38,6 +39,15 @@ export async function PUT(req) {
       return NextResponse.json(
         { error: 'Missing file or _id' },
         { status: 400 },
+      )
+    }
+
+    const imageType = await validateImageFile(file)
+
+    if (!imageType.valid) {
+      return NextResponse.json(
+        { error: 'File type not allowed' },
+        { statys: 415 },
       )
     }
 
