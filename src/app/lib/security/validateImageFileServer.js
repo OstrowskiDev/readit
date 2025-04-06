@@ -2,7 +2,7 @@ import imageTypeWhitelist from './imageTypesWhitelist'
 import fs from 'fs'
 import fileType from 'file-type'
 
-export default async function validateImageFile(imageFile) {
+export default async function validateImageFileServer(imageFile) {
   const validationObject = { type: false, size: false }
 
   const buffer = fs.readFileSync(imageFile)

@@ -144,6 +144,7 @@ export function CreatePostForm({
               onCancelClick={onCancelClick}
               onSubmit={onSubmit}
               setImageFile={setImageFile}
+              setResponse={setResponse}
             />
           </div>
         </form>

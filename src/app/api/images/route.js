@@ -1,5 +1,5 @@
 import s3 from '@/app/lib/cloudflare-sdk/s3'
-import validateImageFile from '@/app/lib/security/validateImageFile'
+import validateImageFileServer from '@/app/lib/security/validateImageFileServer'
 import { NextResponse } from 'next/server'
 
 export async function GET(req, res) {
@@ -42,7 +42,7 @@ export async function PUT(req) {
       )
     }
 
-    const validationResult = await validateImageFile(file)
+    const validationResult = await validateImageFileServer(file)
 
     if (!validationResult.type) {
       return NextResponse.json(

@@ -12,7 +12,7 @@ import { isUUID } from 'validator'
 import { getServerSession } from 'next-auth/next'
 import { authOptions } from '@/app/api/auth/[...nextauth]/authOptions'
 import { toast, setToast, returnToast } from './toasts/ToastUtils'
-import validateImageFile from './security/validateImageFile'
+import validateImageFileServer from './security/validateImageFileServer'
 
 export async function createPost(inputTitle, inputContent, uuid, imageFile) {
   const session = await getServerSession(authOptions)
@@ -35,7 +35,7 @@ export async function createPost(inputTitle, inputContent, uuid, imageFile) {
   }
 
   if (imageFile) {
-    const imageValidation = await validateImageFile(imageFile)
+    const imageValidation = await validateImageFileServer(imageFile)
     if (!imageValidation.type) {
       return returnToast(
         'error',

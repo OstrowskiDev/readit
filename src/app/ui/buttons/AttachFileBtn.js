@@ -1,14 +1,29 @@
 'use client'
 
+import { signIn, useSession } from 'next-auth/react'
 import { AttachIco } from '../icons/AttachIco'
+import validateImageFileClient from '@/app/lib/security/validateImageFileClient'
 
-export function AttachFileBtn({ setImageFile }) {
-  function handleChange(event) {
-    //!!!! tutaj sprawdzenie autoryzacji
+export function AttachFileBtn({ setImageFile, setResponse }) {
+  const { data: session } = useSession()
+
+  async function handleChange(event) {
+    if (!session) return signIn()
     const file = event.target.files[0]
-    //!!!! tutaj walidacja obrazu po stronie klienta
     if (file) {
-      setImageFile(file)
+      const validationResults = await validateImageFileClient(file)
+      if (validationResults.type && validationResults.size) {
+        setImageFile(file)
+        setResponse({
+          state: 'success',
+          message: 'Image attached sucessfully!',
+        })
+      } else {
+        setResponse({
+          state: 'error',
+          message: 'You can only upload one image not larger than 2MB',
+        })
+      }
     }
   }
 
