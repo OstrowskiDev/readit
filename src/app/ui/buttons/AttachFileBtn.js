@@ -2,20 +2,21 @@
 
 import { AttachIco } from '../icons/AttachIco'
 
-export function AttachFileBtn({ onFileSelect }) {
+export function AttachFileBtn({ setImageFile }) {
   function handleChange(event) {
+    //!!!! tutaj sprawdzenie autoryzacji
     const file = event.target.files[0]
-    if (file && onFileSelect) {
-      onFileSelect(file)
+    //!!!! tutaj walidacja obrazu po stronie klienta
+    if (file) {
+      setImageFile(file)
     }
   }
 
   return (
-    <label
-      className="attach-image-btn btn-blue h-10 w-10 px-4 py-2 ml-2 just-md:mr-2 md:mr-0"
-      onClick={onClick}
-    >
-      <AttachIco />
+    <label className="attach-image-btn ">
+      <div className="attach-image-icon btn-blue h-8 w-8 px-2 pt-[6px] ml-2 mt-1 cursor-pointer">
+        <AttachIco />
+      </div>
       <input
         className="hidden"
         type="file"

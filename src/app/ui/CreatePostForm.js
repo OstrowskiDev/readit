@@ -15,6 +15,7 @@ export function CreatePostForm({
 }) {
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
+  const [imageFile, setImageFile] = useState(null)
   const { data: session } = useSession()
   const { toastFunctions: toast } = useToastContext()
 
@@ -96,7 +97,12 @@ export function CreatePostForm({
     if (!session) return signIn()
     const newPostId = uuidv4().toString()
     optimisticUpdate(newPostId)
-    const serverResponse = await createPost(title, content, newPostId)
+    const serverResponse = await createPost(
+      title,
+      content,
+      newPostId,
+      imageFile,
+    )
     setResponse(serverResponse)
     setIsCreateFormVis(!isCreateFormVis)
     setTitle('')
@@ -134,7 +140,11 @@ export function CreatePostForm({
               value={content}
               onChange={(e) => setContent(e.target.value)}
             />
-            <ReplyFormBtns onCancelClick={onCancelClick} onSubmit={onSubmit} />
+            <ReplyFormBtns
+              onCancelClick={onCancelClick}
+              onSubmit={onSubmit}
+              setImageFile={setImageFile}
+            />
           </div>
         </form>
       </div>
