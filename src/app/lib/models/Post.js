@@ -22,6 +22,10 @@ const postSchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
+    has_image: {
+      type: Boolean,
+      default: false,
+    },
     comments: {
       type: [String],
       default: undefined,
