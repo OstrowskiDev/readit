@@ -12,8 +12,9 @@ import { isUUID } from 'validator'
 import { getServerSession } from 'next-auth/next'
 import { authOptions } from '@/app/api/auth/[...nextauth]/authOptions'
 import { toast, setToast, returnToast } from './toasts/ToastUtils'
+import validateImageFile from './security/validateImageFile'
 
-export async function createPost(inputTitle, inputContent, uuid) {
+export async function createPost(inputTitle, inputContent, uuid, imageFile) {
   const session = await getServerSession(authOptions)
   if (!session) redirect('/login')
 
@@ -33,14 +34,30 @@ export async function createPost(inputTitle, inputContent, uuid) {
     return returnToast('error', `${contentValidation.error}`)
   }
 
+  if (imageFile) {
+    const imageValidation = await validateImageFile(imageFile)
+    if (!imageValidation.type) {
+      return returnToast(
+        'error',
+        'Only png, jpg, jpeg, gif, webp and bmp files are allowed.',
+      )
+    }
+    if (!imageValidation.size) {
+      return returnToast('error', 'Image needs to be 2MB or smaller.')
+    }
+    imageFile.name = `${uuid}`
+  }
+
   const title = titleValidation.sanitizedString
   const content = contentValidation.sanitizedString
+  const hasImage = imageFile ? true : false
 
   const newPost = new Post({
     _id: uuid,
     title: title,
     user_id: userId,
     content: content,
+    has_image: hasImage,
   })
 
   try {
