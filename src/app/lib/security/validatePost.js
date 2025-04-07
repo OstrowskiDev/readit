@@ -1,41 +1,54 @@
 import validator from 'validator'
+import { validateField } from './validationUtils'
 
-function validatePostTitle(title) {
-  if (!isString(title)) {
-    return { error: 'Invalid Post title data' }
+export function validatePost(formData) {
+  const validationResults = {
+    title: { message: [], sanitized: '' },
+    content: { message: [], sanitized: '' },
   }
 
-  if (!title) {
-    return { error: 'Post title is required' }
+  const fieldRequired = ['title', 'content']
+
+  for (const field of fieldRequired) {
+    validateField(
+      validationResults,
+      field,
+      () => !isString(formData[field]),
+      `Invalid post ${field} data`,
+    )
   }
 
-  if (containsOnlySpaces(title)) {
-    return { error: 'Post title is required' }
+  for (const field of fieldRequired) {
+    validateField(
+      validationResults,
+      field,
+      () => !formData[field],
+      `Post ${field} is required.`,
+    )
   }
 
-  if (validator.isAlphanumeric(title)) {
-    return { sanitizedString: title, error: null }
-  }
-  //Title sanitization: remove non-alphanumeric characters, excluding space
-  //in below regex space that comes after 0-9 is required to whitelist it
-  const sanitizedTitle = title.replace(/[^a-zA-Z0-9 ]/g, '')
-  return { sanitizedString: sanitizedTitle, error: null }
-}
-
-function validatePostContent(content) {
-  if (!isString(content)) {
-    return { error: 'Invalid Post content data' }
+  for (const field of fieldRequired) {
+    validateField(
+      validationResults,
+      field,
+      () => containsOnlySpaces(formData[field]),
+      `Post ${field} is required.`,
+    )
   }
 
-  if (!content) {
-    return { error: 'Post content is required' }
+  if (validator.isAlphanumeric(formData.title)) {
+    validationResults.title.sanitized = formData.title
+  } else {
+    //Title sanitization: remove non-alphanumeric characters, excluding space
+    //in below regex space that comes after 0-9 is required to whitelist it
+    const sanitizedTitle = formData.title.replace(/[^a-zA-Z0-9 ]/g, '')
+    validationResults.title.sanitized = sanitizedTitle
   }
 
-  if (containsOnlySpaces(content)) {
-    return { error: 'Post content is required' }
-  }
+  const sanitizedContent = formData.content.trim()
+  validationResults.content.sanitized = sanitizedContent
 
-  return { sanitizedString: content, error: null }
+  return validationResults
 }
 
 function isString(input) {
@@ -45,5 +58,3 @@ function isString(input) {
 function containsOnlySpaces(input) {
   return input.trim() === ''
 }
-
-export { validatePostTitle, validatePostContent }
