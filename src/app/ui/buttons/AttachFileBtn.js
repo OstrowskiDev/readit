@@ -16,7 +16,7 @@ export function AttachFileBtn({ setImageFile, setResponse }) {
         setImageFile(file)
         setResponse({
           state: 'success',
-          message: 'Image attached sucessfully!',
+          message: 'Image attached successfully!',
         })
       } else {
         setResponse({

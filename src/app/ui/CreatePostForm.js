@@ -6,6 +6,9 @@ import { ReplyFormBtns } from './buttons/ReplyFromBtns'
 import { signIn, useSession } from 'next-auth/react'
 import { v4 as uuidv4 } from 'uuid'
 import { useToastContext } from '../lib/toasts/ToastProvider'
+import { validatePost } from '../lib/security/validatePost'
+import { hasErrors } from '../lib/security/hasErrors'
+import validateImageFileClient from '../lib/security/validateImageFileClient'
 
 export function CreatePostForm({
   isCreateFormVis,
@@ -13,9 +16,15 @@ export function CreatePostForm({
   posts,
   setPosts,
 }) {
-  const [title, setTitle] = useState('')
-  const [content, setContent] = useState('')
+  const validationObject = {
+    title: { message: [] },
+    content: { message: [] },
+  }
+
+  const [formData, setFormData] = useState({ title: '', content: '' })
   const [imageFile, setImageFile] = useState(null)
+  const [wasSubmitted, setWasSubmitted] = useState(false)
+  const [fieldValidity, setFieldValidity] = useState(validationObject)
   const { data: session } = useSession()
   const { toastFunctions: toast } = useToastContext()
 
@@ -25,6 +34,11 @@ export function CreatePostForm({
     state: null,
     message: null,
   })
+
+  useEffect(() => {
+    const results = validatePost(formData)
+    setFieldValidity(results)
+  }, [formData])
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
@@ -38,11 +52,12 @@ export function CreatePostForm({
   }, [response])
 
   function optimisticUpdate(newPostId) {
+    //!!!! optimistically add image?
     const newPost = {
       _id: newPostId,
       user_id: userId,
-      title: title,
-      content: content,
+      title: formData.title,
+      content: formData.content,
       comments: [],
       likes: [],
       dislikes: [],
@@ -93,20 +108,67 @@ export function CreatePostForm({
     setPosts(oldPosts)
   }
 
+  function onInputChange(event) {
+    setFormData({ ...formData, [event.target.name]: event.target.value })
+  }
+
   async function onSubmit() {
     if (!session) return signIn()
+    setWasSubmitted(true)
+    console.log('wasSubmitted:', wasSubmitted)
+    console.log('fieldValidity.title.message:', fieldValidity.title.message)
+    console.log('fieldValidity.content.message:', fieldValidity.content.message)
+
+    if (hasErrors(fieldValidity)) return
+
+    if (imageFile) {
+      const imageValidationRes = await validateImageFileClient(imageFile)
+      if (!imageValidationRes.size) {
+        setResponse({
+          state: 'error',
+          message: 'You can upload image no larger than 2MB',
+        })
+        return
+      }
+      if (!imageValidationRes.size) {
+        setResponse({
+          state: 'error',
+          message: 'Only png, jpg, jpeg, webp, gif, bmp are allowed.',
+        })
+        return
+      }
+    }
+
     const newPostId = uuidv4().toString()
     optimisticUpdate(newPostId)
+
+    if (imageFile) {
+      const imageData = new FormData()
+      imageData.append('file', imageFile)
+      imageData.append('_id', newPostId)
+
+      const sendImageRes = await fetch('api/images', {
+        method: 'PUT',
+        body: imageData,
+      })
+      if (sendImageRes.status !== 200) {
+        setResponse({ state: 'error', message: 'Failed to upload image.' })
+        return
+      }
+    }
+
+    const hasImage = imageFile ? true : false
     const serverResponse = await createPost(
-      title,
-      content,
+      formData.title,
+      formData.content,
       newPostId,
-      imageFile,
+      hasImage,
     )
     setResponse(serverResponse)
+    if (serverResponse.state !== 'success') return
     setIsCreateFormVis(!isCreateFormVis)
-    setTitle('')
-    setContent('')
+    setFormData({ title: '', content: '' })
+    setImageFile(null)
   }
 
   function onCancelClick() {
@@ -121,24 +183,39 @@ export function CreatePostForm({
         }`}
       >
         <form>
-          <div className="change-border-on-child-focus p-1 mb-2 bg-gray-50 border border-slate-300 rounded-md">
+          <div className="post-title-container mb-2 ">
             <textarea
-              className="post-title-input w-full h-6 bg-gray-50 resize-none border-none focus:outline-none"
+              className={`post-title-input w-full h-8 px-2 py-1  border border-slate-300 rounded-md bg-gray-50 resize-none border-none focus:outline-none ring-1 ${
+                wasSubmitted && fieldValidity.title.message.length > 0
+                  ? 'ring-red-400 focus:ring-red-500'
+                  : 'ring-slate-300 focus:ring-blue-400'
+              }`}
               id="title"
               name="title"
               placeholder="Type post title here"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
+              value={formData.title}
+              onChange={onInputChange}
             />
+            <label className="post-title-error text-xs text-red-500">
+              {fieldValidity.title.message.length > 0 &&
+                wasSubmitted &&
+                fieldValidity.title.message.join(' ')}
+            </label>
           </div>
-          <div className="change-border-on-child-focus p-2 my-2 bg-gray-50 border border-slate-300 rounded-md">
+          <div
+            className={`post-content-container p-2 mt-2 bg-gray-50 rounded-md ring-1 ${
+              wasSubmitted && fieldValidity.content.message.length > 0
+                ? 'ring-red-400 focus-within:ring-red-500'
+                : 'ring-slate-300 focus-within:ring-blue-400'
+            }`}
+          >
             <textarea
               className="post-content-input w-full h-32 border-none focus:outline-none bg-gray-50"
               id="content"
               name="content"
               placeholder="Type post content here"
-              value={content}
-              onChange={(e) => setContent(e.target.value)}
+              value={formData.content}
+              onChange={onInputChange}
             />
             <ReplyFormBtns
               onCancelClick={onCancelClick}
@@ -147,6 +224,11 @@ export function CreatePostForm({
               setResponse={setResponse}
             />
           </div>
+          <label className="post-content-error mb-2 text-xs text-red-500">
+            {fieldValidity.content.message.length > 0 &&
+              wasSubmitted &&
+              fieldValidity.content.message.join(' ')}
+          </label>
         </form>
       </div>
     </>
