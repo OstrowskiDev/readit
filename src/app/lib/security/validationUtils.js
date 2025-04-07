@@ -1,4 +1,8 @@
 function addMessage(validationResults, field, messageText) {
+  const alreadyExists = validationResults[field].message.some(
+    (msg) => msg === messageText,
+  )
+  if (alreadyExists) return
   validationResults[field].message.push(messageText)
 }
 
