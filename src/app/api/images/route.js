@@ -1,6 +1,7 @@
 import s3 from '@/app/lib/cloudflare-sdk/s3'
 import validateImageFileServer from '@/app/lib/security/validateImageFileServer'
 import { NextResponse } from 'next/server'
+import { fileTypeFromBuffer } from 'file-type'
 
 export async function GET(req, res) {
   console.log('image get API route was triggered...')
@@ -56,14 +57,16 @@ export async function PUT(req) {
     }
 
     const fileBuffer = await file.arrayBuffer()
-    const fileName = `${_id}.png`
+    const buffer = Buffer.from(fileBuffer)
+    const type = await fileTypeFromBuffer(buffer)
+    const fileName = `${_id}.${type.ext}`
 
     await s3
       .putObject({
         Bucket: process.env.CLOUDFLARE_BUCKET,
         Key: fileName,
-        Body: Buffer.from(fileBuffer),
-        ContentType: 'image/png',
+        Body: buffer,
+        ContentType: type.mime,
       })
       .promise()
 
