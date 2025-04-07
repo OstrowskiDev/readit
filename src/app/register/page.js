@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { validateSignUp } from '../lib/security/validateSignUp'
 import axios from 'axios'
 import { checkEmailAvailability } from '../lib/actions/user'
+import { hasErrors } from '../lib/security/hasErrors'
 
 // !!!! do poprawy: podczas rejestracji po naciśnięciu przycisku register pojawia się błąd pod jednym z pól
 
@@ -52,13 +53,7 @@ export default function RegisterForm() {
     event.preventDefault()
     setSubmitAttempted(true)
 
-    const hasValidationErrors = Object.values(fieldValidity).some(
-      (field) => field.message.length > 0,
-    )
-
-    if (hasValidationErrors) {
-      return
-    }
+    if (hasErrors(fieldValidity)) return
 
     setIsEmailAvailable(await checkEmailAvailability(formData.email))
 

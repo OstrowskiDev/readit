@@ -2,6 +2,7 @@ import { validateSignUp } from '@/app/lib/security/validateSignUp'
 import { hashPassword } from '@/app/lib/security/hashPassword'
 import { createUser } from '@/app/lib/actions/user'
 import { sendActivationEmail } from '@/app/lib/sendgrid/sendActivationEmail'
+import { hasErrors } from '@/app/lib/security/hasErrors'
 
 export async function POST(req) {
   try {
@@ -9,11 +10,7 @@ export async function POST(req) {
     const { name, email, password, fullName } = formData
 
     const validationResults = validateSignUp(formData)
-    const hasErrors = Object.values(validationResults).some(
-      (field) => field.message.length > 0,
-    )
-
-    if (hasErrors) {
+    if (hasErrors(validationResults)) {
       return new Response(JSON.stringify({ error: 'Invalid input data' }), {
         status: 400,
       })

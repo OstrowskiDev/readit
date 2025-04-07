@@ -8,6 +8,7 @@ import { hashPassword } from '../security/hashPassword'
 import { toast, resetToast, setToast } from '../toasts/ToastUtils'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/app/api/auth/[...nextauth]/authOptions'
+import { hasErrors } from '../security/hasErrors'
 
 export async function createUser({ name, email, hashedPassword }) {
   try {
@@ -103,10 +104,7 @@ export async function resetPassword({
       return toast
     }
     const validationResults = validatePasswords({ password, repeatPassword })
-    const hasErrors = Object.values(validationResults).some(
-      (field) => field.message.length > 0,
-    )
-    if (hasErrors) {
+    if (hasErrors(validationResults)) {
       console.error('Password validation failed')
       setToast('error', toastErrorMessage)
       return toast

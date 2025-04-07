@@ -6,7 +6,7 @@ import {
 describe('validatePostTitle', () => {
   test('should return error if title is empty', () => {
     const result = validatePostTitle('')
-    expect(result.error).toBe('Post title is required')
+    expect(result.error).toBe('Post title is required.')
   })
 
   test.each([false, true, NaN, undefined, null, {}, []])(
@@ -19,7 +19,7 @@ describe('validatePostTitle', () => {
 
   test('should return error if title consists of only spaces', () => {
     const result = validatePostTitle('     ')
-    expect(result.error).toBe('Post title is required')
+    expect(result.error).toBe('Post title is required.')
   })
 
   test('should return title if title is valid', () => {
