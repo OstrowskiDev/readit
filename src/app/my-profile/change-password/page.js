@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { changePassword } from '@/app/lib/actions/user'
 import { validatePasswords } from '@/app/lib/security/validatePasswords'
+import { hasErrors } from '@/app/lib/security/hasErrors'
 
 export default function ChangePassword() {
   const router = useRouter()
@@ -28,12 +29,8 @@ export default function ChangePassword() {
   async function handleSubmit(event) {
     event.preventDefault()
     setSubmitAttempted(true)
-    const hasValidationErrors = Object.values(fieldValidity).some(
-      (field) => field.message.length > 0,
-    )
-    if (hasValidationErrors) {
-      return
-    }
+    if (hasErrors(fieldValidity)) return
+
     try {
       const results = await changePassword({
         password: formData.password,

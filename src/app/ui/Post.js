@@ -16,6 +16,8 @@ export function Post({
   authorsData,
   setAuthorsData,
   enableCommentBtn,
+  hasImage = false,
+  imageExtension = '',
 }) {
   const { isUserHovered, handleMouseEnter, handleMouseLeave } = useMouseHover()
   const [deleted, setDeleted] = useState(false)
@@ -55,9 +57,19 @@ export function Post({
               </div>
 
               {/* Post body */}
-              <pre className="post-content mb-2 font-sans whitespace-pre-wrap below-md:line-clamp-5 below-md:overflow-hidden below-md:overflow-ellipsis ">
-                {post.content}
-              </pre>
+              {hasImage ? (
+                <>
+                  <img
+                    className="post-image"
+                    src={`api/images/${postId}.${imageExtension}`}
+                    alt="post image"
+                  />
+                </>
+              ) : (
+                <pre className="post-content mb-2 font-sans whitespace-pre-wrap below-md:line-clamp-5 below-md:overflow-hidden below-md:overflow-ellipsis ">
+                  {post.content}
+                </pre>
+              )}
 
               {/* Post footer */}
               <PostFooter

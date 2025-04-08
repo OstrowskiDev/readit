@@ -4,7 +4,6 @@ export function ReplyFormBtns({
   onCancelClick,
   onSubmit,
   setImageFile,
-  imageFile,
   setResponse,
 }) {
   return (

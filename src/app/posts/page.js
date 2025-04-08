@@ -121,6 +121,8 @@ export default function PostsPage({
                   authorsData={authorsData}
                   setAuthorsData={setAuthorsData}
                   enableCommentBtn={true}
+                  hasImage={post.has_image}
+                  imageExtension={post.image_extension}
                 />
               ))}
             </div>
