@@ -49,6 +49,7 @@ export async function createPost(inputTitle, inputContent, uuid, hasImage) {
     user_id: userId,
     content: content,
     has_image: hasImage,
+    image_extension: 'webp',
   })
 
   try {

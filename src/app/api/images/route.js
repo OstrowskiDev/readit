@@ -2,10 +2,11 @@ import s3 from '@/app/lib/cloudflare-sdk/s3'
 import validateImageFileServer from '@/app/lib/security/validateImageFileServer'
 import { NextResponse } from 'next/server'
 import { fileTypeFromBuffer } from 'file-type'
+import sharp from 'sharp'
 
 export async function GET(req, res) {
+  //!!!! do zmiany lub zastanowienia się czy wgl jest potrzebny ten API route, sokoro i tak GET jest używane tylko w api/images/[id].[imageExtension]/
   console.log('image get API route was triggered...')
-  // const { key } = req.query;
   const key = 'testfile.png'
   try {
     const data = await s3
@@ -31,6 +32,8 @@ export async function GET(req, res) {
 }
 
 export async function PUT(req) {
+  // dodaj auth do ochrony route
+
   try {
     const formData = await req.formData()
     const file = formData.get('file')
@@ -56,17 +59,26 @@ export async function PUT(req) {
       return NextResponse.json({ error: 'File too large' }, { status: 413 })
     }
 
-    const fileBuffer = await file.arrayBuffer()
-    const buffer = Buffer.from(fileBuffer)
+    const arrayBuffer = await file.arrayBuffer()
+    const buffer = Buffer.from(arrayBuffer)
+
     const type = await fileTypeFromBuffer(buffer)
-    const fileName = `${_id}.${type.ext}`
+    let webpBuffer
+    if (type.ext === 'webp') {
+      webpBuffer = buffer
+    } else {
+      webpBuffer = await sharp(buffer).webp({ quality: 80 }).toBuffer()
+    }
+
+    const fileName = `${_id}.webp`
 
     await s3
       .putObject({
         Bucket: process.env.CLOUDFLARE_BUCKET,
         Key: fileName,
-        Body: buffer,
-        ContentType: type.mime,
+        Body: webpBuffer,
+        // ContentType: type.mime,
+        ContentType: 'image/webp',
       })
       .promise()
 
@@ -81,6 +93,8 @@ export async function PUT(req) {
 }
 
 export async function DELETE(req) {
+  // dodaj auth do ochrony route
+
   try {
     const { searchParams } = new URL(req.url)
     const _id = searchParams.get('_id')

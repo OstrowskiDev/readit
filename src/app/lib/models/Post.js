@@ -8,7 +8,7 @@ const postSchema = new mongoose.Schema(
     },
     title: {
       type: String,
-      maxLength: 30,
+      maxLength: 40,
       required: true,
       trim: true,
     },
@@ -26,6 +26,7 @@ const postSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    image_extension: String,
     comments: {
       type: [String],
       default: undefined,
