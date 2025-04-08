@@ -4,6 +4,10 @@ const nextConfig = {
     config.resolve.fallback = {
       aws4: false,
     }
+    config.module.rules.push({
+      test: /\.node$/,
+      use: 'node-loader',
+    })
     return config
   },
 }
