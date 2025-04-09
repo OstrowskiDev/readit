@@ -6,6 +6,7 @@ import { PostContextProvider } from '../lib/context/PostContextProvider'
 import { PostHeader } from './PostHeader'
 import { UserInfoboxLoader } from './loaders/UserInfoboxLoader'
 import useMouseHover from '../lib/hooks/useMouseHover'
+import { ImagePlaceholderIco } from './icons/ImagePlaceholderIco'
 const LazyUserInfobox = lazy(() => import('./UserInfobox.js'))
 
 export function Post({
@@ -21,6 +22,7 @@ export function Post({
 }) {
   const { isUserHovered, handleMouseEnter, handleMouseLeave } = useMouseHover()
   const [deleted, setDeleted] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
 
   return (
     <>
@@ -58,17 +60,28 @@ export function Post({
 
               {/* Post body */}
               {hasImage ? (
-                <>
+                <div className="post-image-container aspect-[16/9] w-full bg-gray-200">
+                  {isLoading && (
+                    <div className="post-image-container flex justify-center  aspect-[16/9] w-full bg-gray-200 rounded-md">
+                      <ImagePlaceholderIco color={'#d8dbe3'} />
+                    </div>
+                  )}
+
                   <img
                     className="post-image"
                     src={`api/images/${postId}.${imageExtension}`}
                     alt="post image"
+                    onLoad={() => setIsLoading(false)}
+                    onError={() => setIsLoading(false)}
                   />
-                </>
+                </div>
               ) : (
-                <pre className="post-content mb-2 font-sans whitespace-pre-wrap below-md:line-clamp-5 below-md:overflow-hidden below-md:overflow-ellipsis ">
-                  {post.content}
-                </pre>
+                <div className="post-image-container flex justify-center  aspect-[16/9] w-full bg-gray-200 rounded-md">
+                  <ImagePlaceholderIco color={'#d8dbe3'} />
+                </div>
+                // <pre className="post-content mb-2 font-sans whitespace-pre-wrap below-md:line-clamp-5 below-md:overflow-hidden below-md:overflow-ellipsis ">
+                //   {post.content}
+                // </pre>
               )}
 
               {/* Post footer */}
