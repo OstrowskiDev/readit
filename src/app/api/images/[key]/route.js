@@ -4,11 +4,10 @@ import validateImageFileServer from '@/app/lib/security/validateImageFileServer'
 import { fileTypeFromBuffer } from 'file-type'
 import sharp from 'sharp'
 import { getServerSession } from 'next-auth'
-import { redirect } from 'next/navigation'
+// pamars {key: 'fileName.ext'}
 
 //!!!! dodaj caching by nie pobierać w kółko tego samego obrazu
 //!!!! dodaj rate limiting
-// key: 'name.ext'
 
 export async function GET(request, { params }) {
   const { key } = params
@@ -100,7 +99,7 @@ export async function DELETE(request, { params }) {
     return NextResponse.redirect(new URL('/login', request.url))
   }
 
-  //!!!! dodaj sprawdzenie czy dany post faktycznie należy do zalogowanego usera
+  //!!!! dodaj sprawdzenie czy dany post faktycznie należy do zalogowanego użytkownika
 
   try {
     const { key } = params
