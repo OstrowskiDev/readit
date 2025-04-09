@@ -117,24 +117,7 @@ export function CreatePostForm({
     setWasSubmitted(true)
 
     if (hasErrors(fieldValidity)) return
-
-    if (imageFile) {
-      const imageValidationRes = await validateImageFileClient(imageFile)
-      if (!imageValidationRes.size) {
-        setResponse({
-          state: 'error',
-          message: 'You can upload image no larger than 2MB',
-        })
-        return
-      }
-      if (!imageValidationRes.size) {
-        setResponse({
-          state: 'error',
-          message: 'Only png, jpg, jpeg, webp, gif, bmp are allowed.',
-        })
-        return
-      }
-    }
+    // client side image validation  is done in AttachFileBtn component during attachment attempt
 
     const newPostId = uuidv4().toString()
     optimisticUpdate(newPostId)
@@ -192,11 +175,20 @@ export function CreatePostForm({
               value={formData.title}
               onChange={onInputChange}
             />
-            <label className="post-title-error text-xs text-red-500">
-              {fieldValidity.title.message.length > 0 &&
-                wasSubmitted &&
-                fieldValidity.title.message.join(' ')}
-            </label>
+            <div className="post-title-feedback flex flex-row justify-between">
+              <label className="post-title-error text-xs text-red-500">
+                {fieldValidity.title.message.length > 0 &&
+                  wasSubmitted &&
+                  fieldValidity.title.message.join(' ')}
+              </label>
+              <div
+                className={`post-title-charcount px-2 text-xs ${
+                  formData.title.length <= 40 ? 'text-gray-600' : 'text-red-500'
+                }`}
+              >
+                {formData.title.length}/40
+              </div>
+            </div>
           </div>
           <div
             className={`post-content-container p-2 mt-2 bg-gray-50 rounded-md ring-1 ${
@@ -216,6 +208,7 @@ export function CreatePostForm({
             <ReplyFormBtns
               onCancelClick={onCancelClick}
               onSubmit={onSubmit}
+              imageFile={imageFile}
               setImageFile={setImageFile}
               setResponse={setResponse}
             />

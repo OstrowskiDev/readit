@@ -12,16 +12,24 @@ export function AttachFileBtn({ setImageFile, setResponse }) {
     const file = event.target.files[0]
     if (file) {
       const validationResults = await validateImageFileClient(file)
-      if (validationResults.type && validationResults.size) {
+      if (
+        validationResults.type.status === 'success' &&
+        validationResults.size.status === 'success'
+      ) {
         setImageFile(file)
         setResponse({
           state: 'success',
           message: 'Image attached successfully!',
         })
+      } else if (validationResults.type.status === 'error') {
+        setResponse({
+          state: 'error',
+          message: validationResults.type.message,
+        })
       } else {
         setResponse({
           state: 'error',
-          message: 'You can only upload one image not larger than 2MB',
+          message: validationResults.size.message,
         })
       }
     }

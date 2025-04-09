@@ -1,18 +1,23 @@
 import imageTypeWhitelist from './imageTypesWhitelist'
 
 export default async function validateImageFileClient(imageFile) {
-  console.log('imageFile:', imageFile)
-  const validationObject = { type: false, size: false }
+  const validationObject = {
+    type: { status: 'error', message: '' },
+    size: { status: 'error', message: '' },
+  }
 
   const isAllowedType = imageTypeWhitelist.some(
     (allowedType) => allowedType.mime === imageFile.type,
   )
-  validationObject.type = isAllowedType
+  validationObject.type.status = isAllowedType ? 'success' : 'error'
+  validationObject.type.message =
+    'Only png, jpg, jpeg, webp, gif, bmp are allowed.'
 
   const fileSizeInBytes = imageFile.size
   const maxFileSize = 2 * 1024 * 1024 //2MB
   const hasAllowedSize = maxFileSize >= fileSizeInBytes
-  validationObject.size = hasAllowedSize
+  validationObject.size.status = hasAllowedSize ? 'success' : 'error'
+  validationObject.size.message = 'You can upload image no larger than 2MB'
 
   return validationObject
 }

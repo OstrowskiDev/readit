@@ -36,6 +36,27 @@ export function validatePost(formData) {
     )
   }
 
+  validateField(
+    validationResults,
+    'title',
+    () => formData.title.length > 40,
+    'Title is too long',
+  )
+
+  validateField(
+    validationResults,
+    'content',
+    () => formData.content.length < 40,
+    'Post needs to have at least 20 characters.',
+  )
+
+  validateField(
+    validationResults,
+    'content',
+    () => formData.content.length > 10000,
+    'Your post is too long. Who will read more than 10ooo characters?',
+  )
+
   if (validator.isAlphanumeric(formData.title)) {
     validationResults.title.sanitized = formData.title
   } else {
