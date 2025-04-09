@@ -6,7 +6,7 @@ import { PostContextProvider } from '../lib/context/PostContextProvider'
 import { PostHeader } from './PostHeader'
 import { UserInfoboxLoader } from './loaders/UserInfoboxLoader'
 import useMouseHover from '../lib/hooks/useMouseHover'
-import { ImagePlaceholderIco } from './icons/ImagePlaceholderIco'
+import { ImageShimmerAnimated } from './loaders/ImageShimmerAnimated'
 const LazyUserInfobox = lazy(() => import('./UserInfobox.js'))
 
 export function Post({
@@ -62,8 +62,8 @@ export function Post({
               {hasImage ? (
                 <div className="post-image-container aspect-[16/9] w-full bg-gray-200">
                   {isLoading && (
-                    <div className="post-image-container flex justify-center  aspect-[16/9] w-full bg-gray-200 rounded-md">
-                      <ImagePlaceholderIco color={'#d8dbe3'} />
+                    <div className="post-image-container flex justify-center  aspect-[16/9] w-full bg-gray-200 rounded-md relative">
+                      <ImageShimmerAnimated />
                     </div>
                   )}
 
@@ -76,12 +76,9 @@ export function Post({
                   />
                 </div>
               ) : (
-                <div className="post-image-container flex justify-center  aspect-[16/9] w-full bg-gray-200 rounded-md">
-                  <ImagePlaceholderIco color={'#d8dbe3'} />
-                </div>
-                // <pre className="post-content mb-2 font-sans whitespace-pre-wrap below-md:line-clamp-5 below-md:overflow-hidden below-md:overflow-ellipsis ">
-                //   {post.content}
-                // </pre>
+                <pre className="post-content mb-2 font-sans whitespace-pre-wrap below-md:line-clamp-5 below-md:overflow-hidden below-md:overflow-ellipsis ">
+                  {post.content}
+                </pre>
               )}
 
               {/* Post footer */}
