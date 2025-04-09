@@ -115,9 +115,6 @@ export function CreatePostForm({
   async function onSubmit() {
     if (!session) return signIn()
     setWasSubmitted(true)
-    console.log('wasSubmitted:', wasSubmitted)
-    console.log('fieldValidity.title.message:', fieldValidity.title.message)
-    console.log('fieldValidity.content.message:', fieldValidity.content.message)
 
     if (hasErrors(fieldValidity)) return
 
@@ -145,9 +142,8 @@ export function CreatePostForm({
     if (imageFile) {
       const imageData = new FormData()
       imageData.append('file', imageFile)
-      imageData.append('_id', newPostId)
 
-      const sendImageRes = await fetch('api/images', {
+      const sendImageRes = await fetch(`api/images/${_id}.webp`, {
         method: 'PUT',
         body: imageData,
       })

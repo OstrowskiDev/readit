@@ -15,7 +15,6 @@ import { toast, setToast, returnToast } from './toasts/ToastUtils'
 import { hasErrors } from './security/hasErrors'
 
 export async function createPost(inputTitle, inputContent, uuid, hasImage) {
-  console.log('inputContent', inputContent)
   const session = await getServerSession(authOptions)
   if (!session) redirect('/login')
 
@@ -36,13 +35,8 @@ export async function createPost(inputTitle, inputContent, uuid, hasImage) {
     return returnToast('error', 'Failed to create post.')
   }
 
-  console.log(
-    'validationResults.content.sanitized',
-    validationResults.content.sanitized,
-  )
   const title = validationResults.title.sanitized
   const content = validationResults.content.sanitized
-  console.log('content', content)
   const newPost = new Post({
     _id: uuid,
     title: title,
