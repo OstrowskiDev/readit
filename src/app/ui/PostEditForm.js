@@ -15,6 +15,12 @@ export function PostEditForm({ isEditFormVisible, setIsEditFormVisible }) {
     title: post.title,
     content: post.content,
   })
+  const [imageFile, setImageFile] = useState(null)
+
+  useEffect(() => {
+    if (post.has_image)
+      setImageFile({ status: 'already exists', name: 'current image.webp' })
+  })
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
@@ -83,7 +89,13 @@ export function PostEditForm({ isEditFormVisible, setIsEditFormVisible }) {
                 onChange={handleInputChange}
               />
             </div>
-            <EditFormBtns onCancelClick={onCancelClick} onSubmit={onSubmit} />
+            <EditFormBtns
+              onCancelClick={onCancelClick}
+              onSubmit={onSubmit}
+              setResponse={setResponse}
+              imageFile={imageFile}
+              setImageFile={setImageFile}
+            />
           </form>
         </div>
       )}

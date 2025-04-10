@@ -7,10 +7,16 @@ export function AttachedImage({ imageFile, setImageFile }) {
   }
 
   function shortFileName(fileName) {
-    const maxLength = 16
+    const maxLength = 18
     return fileName.length > maxLength
       ? fileName.substring(0, maxLength) + '...'
       : fileName
+  }
+
+  function fileSize(fileSize) {
+    const imageSize = `(${Math.ceil(imageFile.size / 1024)}K)`
+    if (fileSize) return imageSize
+    return ''
   }
 
   return (
@@ -19,7 +25,7 @@ export function AttachedImage({ imageFile, setImageFile }) {
         <div className="attached-image-box btn-blue flex flex-row h-8 px-2 pt-[6px] ml-2 mt-1 mr-2 text-sm">
           <p className="attached-image-info text-gray-100 cursor-default">{`${shortFileName(
             imageFile.name,
-          )} (${Math.ceil(imageFile.size / 1024)}K)`}</p>
+          )} ${fileSize(imageFile.size)}`}</p>
           <button
             className="attached-image-disattach ml-2 px-1 mb-2 text-white cursor-pointer"
             onClick={handleClick}
