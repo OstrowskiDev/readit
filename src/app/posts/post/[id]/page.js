@@ -12,6 +12,7 @@ import useMouseHover from '@/app/lib/hooks/useMouseHover'
 import { UserInfoboxLoader } from '@/app/ui/loaders/UserInfoboxLoader'
 import { PostEditForm } from '@/app/ui/PostEditForm'
 import { AuthorsDataProvider } from '@/app/lib/context/AuthorsDataProvider'
+import { ImageShimmerAnimated } from '@/app/ui/loaders/ImageShimmerAnimated'
 const LazyUserInfobox = lazy(() => import('@/app/ui/UserInfobox.js'))
 
 export default function PostPage({ params }) {
@@ -19,6 +20,7 @@ export default function PostPage({ params }) {
   const [post, setPost] = useState(null)
   const [comments, setComments] = useState(null)
   const [authorsData, setAuthorsData] = useState([])
+  const [imageIsLoading, setImageIsLoading] = useState(true)
   const [isCommFormVisible, setIsCommFormVisible] = useState(false)
   const [isEditFormVisible, setIsEditFormVisible] = useState(false)
   const [deleted, setDeleted] = useState(false)
@@ -108,6 +110,25 @@ export default function PostPage({ params }) {
                   />
                 )}
               </Suspense>
+
+              {/* Post image */}
+              {post.has_image && (
+                <div className="post-image-container aspect-[16/9] w-full  mb-6 bg-gray-200">
+                  {imageIsLoading && (
+                    <div className="post-image-container flex justify-center  aspect-[16/9] w-full bg-gray-200 rounded-md relative">
+                      <ImageShimmerAnimated />
+                    </div>
+                  )}
+
+                  <img
+                    className="post-image"
+                    src={`/api/images/${postId}.${post.image_extension}`}
+                    alt="post image"
+                    onLoad={() => setImageIsLoading(false)}
+                    onError={() => setImageIsLoading(false)}
+                  />
+                </div>
+              )}
 
               {/* Post body */}
               <pre className="post-content font-sans whitespace-pre-wrap">

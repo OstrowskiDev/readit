@@ -69,7 +69,7 @@ export function Post({
 
                   <img
                     className="post-image"
-                    src={`api/images/${postId}.${imageExtension}`}
+                    src={`/api/images/${postId}.${imageExtension}`}
                     alt="post image"
                     onLoad={() => setIsLoading(false)}
                     onError={() => setIsLoading(false)}
