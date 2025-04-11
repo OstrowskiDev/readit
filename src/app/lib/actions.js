@@ -13,6 +13,7 @@ import { getServerSession } from 'next-auth/next'
 import { authOptions } from '@/app/api/auth/[...nextauth]/authOptions'
 import { toast, setToast, returnToast } from './toasts/ToastUtils'
 import { hasErrors } from './security/hasErrors'
+import validateImageFileServer from './security/validateImageFileServer'
 
 export async function createPost(inputTitle, inputContent, uuid, hasImage) {
   const session = await getServerSession(authOptions)
@@ -57,7 +58,8 @@ export async function createPost(inputTitle, inputContent, uuid, hasImage) {
   return { ...toast, postId: uuid }
 }
 
-export async function updatePost(postId, formData) {
+export async function updatePost(postId, formData, imageData) {
+  console.log('Running updatePost server action...')
   const session = await getServerSession(authOptions)
   if (!session) redirect('/login')
 
@@ -76,21 +78,51 @@ export async function updatePost(postId, formData) {
     return returnToast('error', 'Failed to update post')
   }
 
-  const titleValidation = validatePostTitle(formData.title)
-  if (titleValidation.error) {
-    return returnToast('error', `${titleValidation.error}`)
-  }
-  const contentValidation = validatePostContent(formData.content)
-  if (contentValidation.error) {
-    return returnToast('error', `${contentValidation.error}`)
+  const validationResults = validatePost(formData)
+  if (hasErrors(validationResults)) {
+    console.error('Post update data failed validation')
+    return returnToast('error', 'Failed to update post')
   }
 
-  const title = titleValidation.sanitizedString
-  const content = contentValidation.sanitizedString
+  const title = validationResults.title.sanitized
+  const content = validationResults.content.sanitized
+
+  const imageStatus = imageData.get('imageStatus')
+  const file = imageData.get('file')
+
+  if (imageStatus === 'new') {
+    const results = await validateImageFileServer(file)
+    if (!results.type || !results.size) {
+      return returnToast('error', 'Failed to update post')
+    }
+    const baseUrl = process.env.NEXT_PUBLIC_APP_URL
+    const imageUpdate = await fetch(`${baseUrl}/api/images/${postId}.webp`, {
+      method: 'PUT',
+      body: imageData,
+    })
+
+    console.log('!!api response:')
+    console.log('Response status:', imageUpdate.status)
+    console.log('Response headers:', imageUpdate.headers)
+    console.log('Location header:', imageUpdate.headers.get('Location'))
+
+    if (imageUpdate.status !== 200) {
+      console.error(
+        'Failed to update image in R2 bucket, status:',
+        imageUpdate.status,
+      )
+      return returnToast('error', 'Failed to update post')
+    }
+  }
+
+  const hasImage = imageStatus !== 'delete' ? true : false
+  const imageExtension = imageStatus !== 'delete' ? 'webp' : ''
 
   const updatedData = new Post({
     title: title,
     content: content,
+    has_image: hasImage,
+    image_extension: imageExtension,
   })
 
   try {
