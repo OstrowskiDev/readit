@@ -14,6 +14,7 @@ import { authOptions } from '@/app/api/auth/[...nextauth]/authOptions'
 import { toast, setToast, returnToast } from './toasts/ToastUtils'
 import { hasErrors } from './security/hasErrors'
 import validateImageFileServer from './security/validateImageFileServer'
+import { NextResponse } from 'next/server'
 
 export async function createPost(inputTitle, inputContent, uuid, hasImage) {
   const session = await getServerSession(authOptions)
@@ -99,12 +100,12 @@ export async function updatePost(postId, formData, imageData) {
     const imageUpdate = await fetch(`${baseUrl}/api/images/${postId}.webp`, {
       method: 'PUT',
       body: imageData,
+      cache: 'no-store',
     })
 
-    console.log('!!api response:')
-    console.log('Response status:', imageUpdate.status)
-    console.log('Response headers:', imageUpdate.headers)
-    console.log('Location header:', imageUpdate.headers.get('Location'))
+    if (imageUpdate.status === 401) {
+      return NextResponse.redirect(new URL('/login', request.url))
+    }
 
     if (imageUpdate.status !== 200) {
       console.error(

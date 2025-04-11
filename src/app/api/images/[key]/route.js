@@ -4,6 +4,7 @@ import validateImageFileServer from '@/app/lib/security/validateImageFileServer'
 import { fileTypeFromBuffer } from 'file-type'
 import sharp from 'sharp'
 import { getServerSession } from 'next-auth'
+import { authOptions } from '@/app/api/auth/[...nextauth]/authOptions'
 // pamars {key: 'fileName.ext'}
 
 //!!!! dodaj caching by nie pobierać w kółko tego samego obrazu
@@ -37,13 +38,17 @@ export async function GET(request, { params }) {
 export async function PUT(request, { params }) {
   const session = await getServerSession(authOptions)
   if (!session) {
-    return NextResponse.redirect(new URL('/login', request.url))
+    console.log('!!! inside redirect')
+    return NextResponse.json({ error: 'Not authorized' }, { status: 401 })
   }
 
   const { key } = params
+  console.log('!!! image key:', key)
+  //!!!! make sure that key from params is not abused by user: check if it matches UUID.webp pattern, also check if UUID matches postId && userId === session.userId
+  //!!! if implementing above make sure that admin can update his post that don't fallow UUID pattern
 
   try {
-    const formData = await req.formData()
+    const formData = await request.formData()
     const file = formData.get('file')
 
     if (!file || !key) {
@@ -84,7 +89,7 @@ export async function PUT(request, { params }) {
       .promise()
 
     return NextResponse.json(
-      { message: 'File uploaded successfully', fileName },
+      { message: 'File uploaded successfully', key },
       { status: 200 },
     )
   } catch (error) {
