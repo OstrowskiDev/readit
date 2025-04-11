@@ -8,7 +8,6 @@ import { v4 as uuidv4 } from 'uuid'
 import { useToastContext } from '../lib/toasts/ToastProvider'
 import { validatePost } from '../lib/security/validatePost'
 import { hasErrors } from '../lib/security/hasErrors'
-import validateImageFileClient from '../lib/security/validateImageFileClient'
 
 export function CreatePostForm({
   isCreateFormVis,
