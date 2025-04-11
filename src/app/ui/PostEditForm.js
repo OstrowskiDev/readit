@@ -6,6 +6,7 @@ import { usePostContext } from '../lib/context/PostContextProvider'
 import { updatePost } from '../lib/actions'
 import { useToastContext } from '../lib/toasts/ToastProvider'
 import { validatePost } from '../lib/security/validatePost'
+import { hasErrors } from '../lib/security/hasErrors'
 
 export function PostEditForm({ isEditFormVisible, setIsEditFormVisible }) {
   const validationObject = {
@@ -57,27 +58,33 @@ export function PostEditForm({ isEditFormVisible, setIsEditFormVisible }) {
   async function onSubmit() {
     setOldPost(post)
 
-    // add post title length count to title
     // add error messages to title and content
     // integrate with component if needed
 
-    //client side post validation
-    //set errors if failed
+    const validationResults = validatePost(formData)
+    if (hasErrors(validationResults)) {
+      return
+    }
 
-    // check if image is: null/already exists/new File
-    // set imageFile properly
-    // change updatePost logic accordingly
+    // client side image validation is already done in AttachImageBtn component
 
-    // send image, title, content as data = new FormData to server
-    // create new FormData
-    // append title, content
-    // if (imageFile.status !== 'already exists') append image
-    // send to serwer and await response
+    let imageData = new FormData()
+    if (imageFile) {
+      imageData.append('file', imageFile)
+      imageData.append('imageStatus', 'new')
+    } else if (imageFile === null) {
+      imageData.append('imageStatus', 'delete')
+    } else if (imageFile.status === 'already exists') {
+      imageData.append('imageStatus', 'no change')
+    } else {
+      console.error('Error sending image')
+      setResponse({ state: 'error', message: 'Error sending image' })
+      return
+    }
 
-    // on serwer send image to R2 bucket first
-    // if response success => update Post object in DB
+    const postData = { title: formData.title, content: formData.content }
 
-    const response = await updatePost(post._id, formData)
+    const response = await updatePost(post._id, postData, imageData)
     setResponse(response)
 
     optimisticUpdate()
@@ -104,14 +111,29 @@ export function PostEditForm({ isEditFormVisible, setIsEditFormVisible }) {
             <h3 className="post-edit-form-label ml-2 mt-4 text-md text-gray-800 ">
               title:
             </h3>
-            <div className="change-border-on-child-focus p-1 bg-gray-50 border border-slate-300 rounded-md">
-              <textarea
-                className="post-title-input w-full h-6 bg-gray-50 resize-none border-none focus:outline-none"
-                id="title"
-                name="title"
-                value={formData.title}
-                onChange={handleInputChange}
-              />
+            <textarea
+              className={`post-title-input w-full h-8 bg-gray-50 resize-none border-none focus:outline-none ring-1 py-1 px-2 rounded-md ${
+                fieldValidity.title.message.length > 0
+                  ? 'ring-red-400 focus:ring-red-500'
+                  : 'ring-slate-300 focus:ring-blue-400'
+              }`}
+              id="title"
+              name="title"
+              value={formData.title}
+              onChange={handleInputChange}
+            />
+            <div className="post-title-feedback flex flex-row justify-between">
+              <label className="post-title-error text-xs text-red-500">
+                {fieldValidity.title.message.length > 0 &&
+                  fieldValidity.title.message.join(' ')}
+              </label>
+              <div
+                className={`post-title-charcount px-2 text-xs ${
+                  formData.title.length <= 40 ? 'text-gray-600' : 'text-red-500'
+                }`}
+              >
+                {formData.title.length}/40
+              </div>
             </div>
             <h3 className="post-edit-form-label ml-2 mt-4 text-md text-gray-800 ">
               content:
