@@ -15,6 +15,7 @@ import { toast, setToast, returnToast } from './toasts/ToastUtils'
 import { hasErrors } from './security/hasErrors'
 import validateImageFileServer from './security/validateImageFileServer'
 import { NextResponse } from 'next/server'
+import { cookies } from 'next/headers'
 
 export async function createPost(inputTitle, inputContent, uuid, hasImage) {
   const session = await getServerSession(authOptions)
@@ -60,7 +61,6 @@ export async function createPost(inputTitle, inputContent, uuid, hasImage) {
 }
 
 export async function updatePost(postId, formData, imageData) {
-  console.log('Running updatePost server action...')
   const session = await getServerSession(authOptions)
   if (!session) redirect('/login')
 
@@ -96,14 +96,29 @@ export async function updatePost(postId, formData, imageData) {
     if (!results.type || !results.size) {
       return returnToast('error', 'Failed to update post')
     }
+
+    const cookieStorage = cookies()
+    const sessionToken = cookieStorage.get('next-auth.session-token')
+    const csrfToken = cookieStorage.get('next-auth.csrf-token')
+    const callbackUrl = cookieStorage.get('next-auth.callback-url')
+
+    const cookieHeader = [
+      `next-auth.session-token=${sessionToken.value}`,
+      `next-auth.csrf-token=${csrfToken.value}`,
+      `next-auth.callback-url=${callbackUrl.value}`,
+    ].join('; ')
+
     const baseUrl = process.env.NEXT_PUBLIC_APP_URL
     const imageUpdate = await fetch(`${baseUrl}/api/images/${postId}.webp`, {
       method: 'PUT',
       body: imageData,
-      cache: 'no-store',
+      headers: {
+        Cookie: cookieHeader,
+      },
     })
 
     if (imageUpdate.status === 401) {
+      //!!!! change request.url, request is not here =]
       return NextResponse.redirect(new URL('/login', request.url))
     }
 

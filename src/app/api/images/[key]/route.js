@@ -7,7 +7,7 @@ import { getServerSession } from 'next-auth'
 import { authOptions } from '@/app/api/auth/[...nextauth]/authOptions'
 // pamars has following data: {key: 'fileName.ext'}
 
-//!!!! dodaj caching by nie pobierać w kółko tego samego obrazu
+//!!!! dodaj caching do GET by nie pobierać w kółko tego samego obrazu
 //!!!! dodaj rate limiting
 
 export async function GET(request, { params }) {
@@ -36,16 +36,14 @@ export async function GET(request, { params }) {
 }
 
 export async function PUT(request, { params }) {
-  const token = request.headers.get('Authorization')?.split(' ')[1]
-  if (!token) {
-    console.log('!!! inside redirect')
+  const session = await getServerSession(authOptions)
+  if (!session) {
     return NextResponse.json({ error: 'Not authorized' }, { status: 401 })
   }
 
   const { key } = params
-  console.log('!!! image key:', key)
   //!!!! make sure that key from params is not abused by user: check if it matches UUID.webp pattern, also check if UUID matches postId && userId === session.userId
-  //!!! if implementing above make sure that admin can update his post that don't fallow UUID pattern
+  //!!!! if implementing above make sure that admin can update his post that don't fallow UUID pattern
 
   try {
     const formData = await request.formData()

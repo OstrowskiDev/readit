@@ -14,7 +14,6 @@ async function connectToDatabase() {
 }
 
 async function getPost(postId) {
-  console.log(`fetching post ${postId} from database...`)
   const res = await fetch(`${apiUrl}/api/posts/post/${postId}`, {
     cache: 'no-store',
   })
@@ -24,7 +23,6 @@ async function getPost(postId) {
 }
 
 async function getPostData(postId) {
-  console.log(`fetching post ${postId} from database...`)
   const res = await fetch(`${apiUrl}/api/posts/post/${postId}`, {
     cache: 'no-store',
   })
