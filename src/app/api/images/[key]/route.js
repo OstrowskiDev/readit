@@ -5,7 +5,7 @@ import { fileTypeFromBuffer } from 'file-type'
 import sharp from 'sharp'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/app/api/auth/[...nextauth]/authOptions'
-// pamars {key: 'fileName.ext'}
+// pamars has following data: {key: 'fileName.ext'}
 
 //!!!! dodaj caching by nie pobierać w kółko tego samego obrazu
 //!!!! dodaj rate limiting
@@ -36,8 +36,8 @@ export async function GET(request, { params }) {
 }
 
 export async function PUT(request, { params }) {
-  const session = await getServerSession(authOptions)
-  if (!session) {
+  const token = request.headers.get('Authorization')?.split(' ')[1]
+  if (!token) {
     console.log('!!! inside redirect')
     return NextResponse.json({ error: 'Not authorized' }, { status: 401 })
   }
