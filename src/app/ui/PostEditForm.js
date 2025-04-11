@@ -5,22 +5,33 @@ import { EditFormBtns } from './buttons/EditFormBtns'
 import { usePostContext } from '../lib/context/PostContextProvider'
 import { updatePost } from '../lib/actions'
 import { useToastContext } from '../lib/toasts/ToastProvider'
+import { validatePost } from '../lib/security/validatePost'
 
 export function PostEditForm({ isEditFormVisible, setIsEditFormVisible }) {
-  const { post, setPost } = usePostContext()
+  const validationObject = {
+    title: { message: [] },
+    content: { message: [] },
+  }
+  const [fieldValidity, setFieldValidity] = useState(validationObject)
   const { toastFunctions: toast } = useToastContext()
+  const { post, setPost } = usePostContext()
   const [response, setResponse] = useState(null)
   const [oldPost, setOldPost] = useState(post)
+  const [imageFile, setImageFile] = useState(null)
   const [formData, setFormData] = useState({
     title: post.title,
     content: post.content,
   })
-  const [imageFile, setImageFile] = useState(null)
+
+  useEffect(() => {
+    const results = validatePost(formData)
+    setFieldValidity(results)
+  }, [formData])
 
   useEffect(() => {
     if (post.has_image)
       setImageFile({ status: 'already exists', name: 'current image.webp' })
-  })
+  }, [])
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
@@ -45,8 +56,30 @@ export function PostEditForm({ isEditFormVisible, setIsEditFormVisible }) {
 
   async function onSubmit() {
     setOldPost(post)
+
+    // add post title length count to title
+    // add error messages to title and content
+    // integrate with component if needed
+
+    //client side post validation
+    //set errors if failed
+
+    // check if image is: null/already exists/new File
+    // set imageFile properly
+    // change updatePost logic accordingly
+
+    // send image, title, content as data = new FormData to server
+    // create new FormData
+    // append title, content
+    // if (imageFile.status !== 'already exists') append image
+    // send to serwer and await response
+
+    // on serwer send image to R2 bucket first
+    // if response success => update Post object in DB
+
     const response = await updatePost(post._id, formData)
     setResponse(response)
+
     optimisticUpdate()
     setIsEditFormVisible(false)
   }
@@ -63,10 +96,13 @@ export function PostEditForm({ isEditFormVisible, setIsEditFormVisible }) {
   return (
     <>
       {isEditFormVisible && (
-        <div className="post-edit-form pb-4 my-2 border-t border-b border-gray-300">
+        <div className="post-edit-form px-4 pb-4 my-6 border rounded-md border-gray-300 bg-gray-200">
           <form>
+            <h2 className="post-edit-header mt-6 ml-1 text-xl font-semibold ">
+              Edit post:
+            </h2>
             <h3 className="post-edit-form-label ml-2 mt-4 text-md text-gray-800 ">
-              edit post title:
+              title:
             </h3>
             <div className="change-border-on-child-focus p-1 bg-gray-50 border border-slate-300 rounded-md">
               <textarea
@@ -78,7 +114,7 @@ export function PostEditForm({ isEditFormVisible, setIsEditFormVisible }) {
               />
             </div>
             <h3 className="post-edit-form-label ml-2 mt-4 text-md text-gray-800 ">
-              edit post content:
+              content:
             </h3>
             <div className="change-border-on-child-focus p-2 mb-4 bg-gray-50 border border-slate-300 rounded-md">
               <textarea
