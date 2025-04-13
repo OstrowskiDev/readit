@@ -5,13 +5,24 @@ import { fileTypeFromBuffer } from 'file-type'
 import sharp from 'sharp'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/app/api/auth/[...nextauth]/authOptions'
-// pamars has following data: {key: 'fileName.ext'}
+import { validateKey } from '@/app/lib/security/validateKey'
+import { isUserPostAuthor } from '@/app/lib/security/isUserPostAuthor'
+
+/**
+ * This route expects `params.key` in the format: 'postId.webp'.
+ * - For user posts, the post ID must be a UUID.
+ * - For admin posts, the post ID may also use kebab-case format.
+ */
 
 //!!!! dodaj caching do GET by nie pobierać w kółko tego samego obrazu
 //!!!! dodaj rate limiting
 
 export async function GET(request, { params }) {
   const { key } = params
+  if (!validateKey(key)) {
+    return NextResponse.json({ error: 'Invalid req data.' }, { status: 400 })
+  }
+
   try {
     const data = await s3
       .getObject({
@@ -27,9 +38,9 @@ export async function GET(request, { params }) {
       },
     })
   } catch (error) {
-    console.error('unexpected error in image get API route', error)
+    console.error('Unexpected error in image get API route.', error)
     return NextResponse.json(
-      { error: 'Error retrieving file' },
+      { error: 'Error retrieving file.' },
       { status: 500 },
     )
   }
@@ -38,32 +49,39 @@ export async function GET(request, { params }) {
 export async function PUT(request, { params }) {
   const session = await getServerSession(authOptions)
   if (!session) {
-    return NextResponse.json({ error: 'Not authorized' }, { status: 401 })
+    return NextResponse.json({ error: 'Not authorized.' }, { status: 401 })
   }
 
   const { key } = params
-  //!!!! make sure that key from params is not abused by user: check if it matches UUID.webp pattern, also check if UUID matches postId && userId === session.userId
-  //!!!! if implementing above make sure that admin can update his post that don't fallow UUID pattern
+  if (!validateKey(key)) {
+    return NextResponse.json({ error: 'Invalid req data.' }, { status: 400 })
+  }
+
+  const postId = getPostId(key)
+  const isAuthor = await isUserPostAuthor(session, postId)
+  if (!isAuthor) {
+    return NextResponse.json({ error: 'Not authorized.' }, { status: 403 })
+  }
 
   try {
     const formData = await request.formData()
     const file = formData.get('file')
 
     if (!file || !key) {
-      return NextResponse.json({ error: 'Missing req data' }, { status: 400 })
+      return NextResponse.json({ error: 'Missing req data.' }, { status: 400 })
     }
 
     const validationResult = await validateImageFileServer(file)
 
     if (!validationResult.type) {
       return NextResponse.json(
-        { error: 'File type not allowed' },
+        { error: 'File type not allowed.' },
         { status: 415 },
       )
     }
 
     if (!validationResult.size) {
-      return NextResponse.json({ error: 'File too large' }, { status: 413 })
+      return NextResponse.json({ error: 'File too large.' }, { status: 413 })
     }
 
     const arrayBuffer = await file.arrayBuffer()
@@ -91,23 +109,31 @@ export async function PUT(request, { params }) {
       { status: 200 },
     )
   } catch (error) {
-    console.error('Unexpected error in image upload API route', error)
-    return NextResponse.json({ error: 'Error uploading file' }, { status: 500 })
+    console.error('Unexpected error in image upload API route.', error)
+    return NextResponse.json(
+      { error: 'Error uploading file.' },
+      { status: 500 },
+    )
   }
 }
 
 export async function DELETE(request, { params }) {
   const session = await getServerSession(authOptions)
   if (!session) {
-    return NextResponse.redirect(new URL('/login', request.url))
+    return NextResponse.json({ error: 'Not authorized.' }, { status: 401 })
   }
-
-  //!!!! dodaj sprawdzenie czy dany post faktycznie należy do zalogowanego użytkownika
 
   try {
     const { key } = params
-    if (!key) {
-      return NextResponse.json({ error: 'Missing req data.' }, { status: 400 })
+
+    if (!validateKey(key)) {
+      return NextResponse.json({ error: 'Invalid req data.' }, { status: 400 })
+    }
+
+    const postId = getPostId(key)
+    const isAuthor = await isUserPostAuthor(session, postId)
+    if (!isAuthor) {
+      return NextResponse.json({ error: 'Not authorized.' }, { status: 403 })
     }
 
     await s3
@@ -118,11 +144,16 @@ export async function DELETE(request, { params }) {
       .promise()
 
     return NextResponse.json(
-      { message: 'File deleted successfully', fileName },
+      { message: 'File deleted successfully:', key },
       { status: 200 },
     )
   } catch (error) {
-    console.error('Unexpected error in image delete API route', error)
-    return NextResponse.json({ error: 'Error deleting file' }, { status: 500 })
+    console.error('Unexpected error in image delete API route.', error)
+    return NextResponse.json({ error: 'Error deleting file.' }, { status: 500 })
   }
+}
+
+function getPostId(key) {
+  const postId = key.slice(0, -'.webp'.length)
+  return postId
 }
