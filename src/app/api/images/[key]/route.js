@@ -6,7 +6,7 @@ import sharp from 'sharp'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/app/api/auth/[...nextauth]/authOptions'
 import { validateKey } from '@/app/lib/security/validateKey'
-import { isUserPostAuthor } from '@/app/lib/security/isUserPostAuthor'
+import { isUserAuthorizedToPost } from '@/app/lib/security/isUserAuthorizedToPost'
 
 /**
  * This route expects `params.key` in the format: 'postId.webp'.
@@ -58,8 +58,8 @@ export async function PUT(request, { params }) {
   }
 
   const postId = getPostId(key)
-  const isAuthor = await isUserPostAuthor(session, postId)
-  if (!isAuthor) {
+  const isAuthorized = await isUserAuthorizedToPost(session, postId)
+  if (!isAuthorized) {
     return NextResponse.json({ error: 'Not authorized.' }, { status: 403 })
   }
 
@@ -131,8 +131,9 @@ export async function DELETE(request, { params }) {
     }
 
     const postId = getPostId(key)
-    const isAuthor = await isUserPostAuthor(session, postId)
-    if (!isAuthor) {
+
+    const isAuthorized = await isUserAuthorizedToPost(session, postId)
+    if (!isAuthorized) {
       return NextResponse.json({ error: 'Not authorized.' }, { status: 403 })
     }
 

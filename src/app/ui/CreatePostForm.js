@@ -89,10 +89,8 @@ export function CreatePostForm({
         (sortBy === 'popularity' && sortOrder === 'ascending') ||
         (sortBy === 'activity' && sortOrder === 'ascending')
       ) {
-        console.log('case one')
         setPosts([newPost, ...posts])
       } else {
-        console.log('case two')
         setPosts([...posts, newPost])
       }
     } else {
@@ -125,11 +123,11 @@ export function CreatePostForm({
       const imageData = new FormData()
       imageData.append('file', imageFile)
 
-      const sendImageRes = await fetch(`api/images/${_id}.webp`, {
+      const createImageResponse = await fetch(`api/images/${newPostId}.webp`, {
         method: 'PUT',
         body: imageData,
       })
-      if (sendImageRes.status !== 200) {
+      if (createImageResponse.status !== 200) {
         setResponse({ state: 'error', message: 'Failed to upload image.' })
         return
       }
