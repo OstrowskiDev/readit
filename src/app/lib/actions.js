@@ -16,6 +16,7 @@ import { hasErrors } from './security/hasErrors'
 import validateImageFileServer from './security/validateImageFileServer'
 import { NextResponse } from 'next/server'
 import { cookies } from 'next/headers'
+import { getAuthCookies } from './security/getAuthCookies'
 
 export async function createPost(inputTitle, inputContent, uuid, hasImage) {
   const session = await getServerSession(authOptions)
@@ -79,6 +80,8 @@ export async function updatePost(postId, formData, imageData) {
     return returnToast('error', 'Failed to update post')
   }
 
+  // text data validation
+
   const validationResults = validatePost(formData)
   if (hasErrors(validationResults)) {
     console.error('Post update data failed validation')
@@ -88,27 +91,19 @@ export async function updatePost(postId, formData, imageData) {
   const title = validationResults.title.sanitized
   const content = validationResults.content.sanitized
 
+  // post image file handling
+
   const imageStatus = imageData.get('imageStatus')
   const file = imageData.get('file')
+  const cookieStorage = cookies()
+  const cookieHeader = getAuthCookies(cookieStorage)
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL
 
   if (imageStatus === 'new') {
     const results = await validateImageFileServer(file)
     if (!results.type || !results.size) {
       return returnToast('error', 'Failed to update post')
     }
-
-    const cookieStorage = cookies()
-    const sessionToken = cookieStorage.get('next-auth.session-token')
-    const csrfToken = cookieStorage.get('next-auth.csrf-token')
-    const callbackUrl = cookieStorage.get('next-auth.callback-url')
-
-    const cookieHeader = [
-      `next-auth.session-token=${sessionToken.value}`,
-      `next-auth.csrf-token=${csrfToken.value}`,
-      `next-auth.callback-url=${callbackUrl.value}`,
-    ].join('; ')
-
-    const baseUrl = process.env.NEXT_PUBLIC_APP_URL
     const imageUpdate = await fetch(`${baseUrl}/api/images/${postId}.webp`, {
       method: 'PUT',
       body: imageData,
@@ -118,8 +113,7 @@ export async function updatePost(postId, formData, imageData) {
     })
 
     if (imageUpdate.status === 401) {
-      //!!!! change request.url, request is not here =]
-      return NextResponse.redirect(new URL('/login', request.url))
+      return NextResponse.redirect(new URL(`${baseUrl}/login`))
     }
 
     if (imageUpdate.status !== 200) {
@@ -130,6 +124,27 @@ export async function updatePost(postId, formData, imageData) {
       return returnToast('error', 'Failed to update post')
     }
   }
+
+  if (imageStatus === 'delete') {
+    const imageUpdate = await fetch(`${baseUrl}/api/images/${postId}.webp`, {
+      method: 'DELETE',
+      headers: {
+        Cookie: cookieHeader,
+      },
+    })
+    if (imageUpdate.status === 401) {
+      return NextResponse.redirect(new URL(`${baseUrl}/login`))
+    }
+    if (imageUpdate.status !== 200) {
+      console.error(
+        'Failed to delete image in R2 bucket, status:',
+        imageUpdate.status,
+      )
+      return returnToast('error', 'Failed to update post')
+    }
+  }
+
+  // Post mongoDB document update
 
   const hasImage = imageStatus !== 'delete' ? true : false
   const imageExtension = imageStatus !== 'delete' ? 'webp' : ''
@@ -149,7 +164,7 @@ export async function updatePost(postId, formData, imageData) {
       console.log('Post updated successfully')
       setToast('success', 'Post updated successfully!')
     } else {
-      console.log('Post not found or not updated')
+      console.error('Post not found or not updated')
       setToast('error', 'Failed to update post')
     }
   } catch (error) {
@@ -160,6 +175,7 @@ export async function updatePost(postId, formData, imageData) {
 }
 
 export async function deletePost(postId) {
+  // !!!! add image deletion logic for case when post had image
   if (!isUUID(postId) && !allowedPostIds.includes(postId)) {
     console.error('Invalid postId in deletePost func')
     return returnToast('error', 'Failed to delete post')
