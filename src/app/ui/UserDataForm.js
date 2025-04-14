@@ -1,7 +1,7 @@
-import { useState } from 'react'
-import { ProfileFormButtons } from './ProfileFormButtons'
-import { updateUserData } from '../lib/actions'
 import { useSession } from 'next-auth/react'
+import { useState } from 'react'
+import { updateUserData } from '../lib/actions/utils'
+import { ProfileFormButtons } from './ProfileFormButtons'
 
 export function UserDataForm({
   userData,

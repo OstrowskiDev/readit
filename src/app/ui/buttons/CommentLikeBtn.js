@@ -1,6 +1,6 @@
 'use client'
 
-import { handleLikeClick } from '@/app/lib/actions'
+import { handleLikeClick } from '@/app/lib/actions/likes'
 import { LikeIco } from '../icons/LikeIco'
 import { LikeIcoActive } from '../icons/LikeIcoActive'
 import { useCommentContext } from '@/app/lib/context/CommentContextProvider'

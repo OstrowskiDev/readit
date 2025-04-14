@@ -1,13 +1,13 @@
 'use client'
 
-import { handleDislikeClick } from '@/app/lib/actions'
+import { handleDislikeClick } from '@/app/lib/actions/likes'
+import { usePostContext } from '@/app/lib/context/PostContextProvider'
+import { useToastContext } from '@/app/lib/toasts/ToastProvider'
+import { useSession } from 'next-auth/react'
+import { usePathname } from 'next/navigation'
+import { useEffect, useState } from 'react'
 import { DislikeIco } from '../icons/DislikeIco'
 import { DislikeIcoActive } from '../icons/DislikeIcoActive'
-import { usePostContext } from '@/app/lib/context/PostContextProvider'
-import { useSession } from 'next-auth/react'
-import { useEffect, useState } from 'react'
-import { usePathname } from 'next/navigation'
-import { useToastContext } from '@/app/lib/toasts/ToastProvider'
 
 export function PostDislikeBtn({ styles }) {
   const { post, setPost, setPosts, postId, postDislikes } = usePostContext()

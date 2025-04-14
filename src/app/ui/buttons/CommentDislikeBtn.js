@@ -1,12 +1,12 @@
 'use client'
 
-import { handleDislikeClick } from '@/app/lib/actions'
-import { DislikeIco } from '../icons/DislikeIco'
-import { DislikeIcoActive } from '../icons/DislikeIcoActive'
+import { handleDislikeClick } from '@/app/lib/actions/likes'
 import { useCommentContext } from '@/app/lib/context/CommentContextProvider'
+import { useToastContext } from '@/app/lib/toasts/ToastProvider'
 import { useSession } from 'next-auth/react'
 import { useEffect, useState } from 'react'
-import { useToastContext } from '@/app/lib/toasts/ToastProvider'
+import { DislikeIco } from '../icons/DislikeIco'
+import { DislikeIcoActive } from '../icons/DislikeIcoActive'
 
 export function CommentDislikeBtn({ styles }) {
   const { comment, commentId, comments, setComments } = useCommentContext()

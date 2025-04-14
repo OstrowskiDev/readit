@@ -1,12 +1,12 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { EditFormBtns } from './buttons/EditFormBtns'
+import { updatePost } from '../lib/actions/post'
 import { usePostContext } from '../lib/context/PostContextProvider'
-import { updatePost } from '../lib/actions'
-import { useToastContext } from '../lib/toasts/ToastProvider'
-import { validatePost } from '../lib/security/validatePost'
 import { hasErrors } from '../lib/security/hasErrors'
+import { validatePost } from '../lib/security/validatePost'
+import { useToastContext } from '../lib/toasts/ToastProvider'
+import { EditFormBtns } from './buttons/EditFormBtns'
 
 export function PostEditForm({ isEditFormVisible, setIsEditFormVisible }) {
   const validationObject = {
@@ -69,13 +69,13 @@ export function PostEditForm({ isEditFormVisible, setIsEditFormVisible }) {
     // client side image validation is already done in AttachImageBtn component
 
     let imageData = new FormData()
-    if (imageFile) {
+    if (imageFile?.status === 'already exists') {
+      imageData.append('imageStatus', 'no change')
+    } else if (imageFile) {
       imageData.append('file', imageFile)
       imageData.append('imageStatus', 'new')
     } else if (imageFile === null) {
       imageData.append('imageStatus', 'delete')
-    } else if (imageFile.status === 'already exists') {
-      imageData.append('imageStatus', 'no change')
     } else {
       console.error('Error sending image')
       setResponse({ state: 'error', message: 'Error sending image' })

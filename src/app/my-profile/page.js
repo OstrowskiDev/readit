@@ -1,15 +1,15 @@
 'use client'
 
-import React, { useEffect, useRef, useState } from 'react'
-import { getUserPrivate } from '../lib/db'
 import { signIn, useSession } from 'next-auth/react'
-import { countUserComments, countUserPosts } from '../lib/actions'
-import { ProfileSettings } from '../ui/ProfileSettings'
+import { useEffect, useRef, useState } from 'react'
+import { countUserComments, countUserPosts } from '../lib/actions/utils'
+import { getUserPrivate } from '../lib/db'
+import { ProfileAbout } from '../ui/ProfileAbout'
 import { ProfileHeader } from '../ui/ProfileHeader'
 import { ProfileMyData } from '../ui/ProfileMyData'
-import { ProfileAbout } from '../ui/ProfileAbout'
-import { MyProfileShimmer } from '../ui/loaders/MyProfileShimmer'
+import { ProfileSettings } from '../ui/ProfileSettings'
 import { Loader } from '../ui/loaders/Loader'
+import { MyProfileShimmer } from '../ui/loaders/MyProfileShimmer'
 
 export default function MyProfile() {
   const [userData, setUserData] = useState(null)

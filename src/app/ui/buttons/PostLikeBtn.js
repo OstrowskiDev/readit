@@ -1,13 +1,13 @@
 'use client'
 
-import { handleLikeClick } from '@/app/lib/actions'
+import { handleLikeClick } from '@/app/lib/actions/likes'
+import { usePostContext } from '@/app/lib/context/PostContextProvider'
+import { useToastContext } from '@/app/lib/toasts/ToastProvider'
+import { signIn, useSession } from 'next-auth/react'
+import { usePathname } from 'next/navigation'
+import { useEffect, useState } from 'react'
 import { LikeIco } from '../icons/LikeIco'
 import { LikeIcoActive } from '../icons/LikeIcoActive'
-import { usePostContext } from '@/app/lib/context/PostContextProvider'
-import { signIn, useSession } from 'next-auth/react'
-import { useEffect, useState } from 'react'
-import { usePathname } from 'next/navigation'
-import { useToastContext } from '@/app/lib/toasts/ToastProvider'
 
 export function PostLikeBtn({ styles }) {
   const { post, setPost, setPosts, postId, postLikes } = usePostContext()

@@ -87,7 +87,7 @@ export default function PostPage({ params }) {
       >
         <div className="post-page w-full flex flex-col justify-center md:px-4 mt-1 md:my-8 md:mx-auto">
           <div
-            className={`post-card-container max-w-[800px] mx-auto md:shadow-center-md rounded-md ${
+            className={`post-card-container max-w-[800px] w-full mx-auto md:shadow-center-md rounded-md ${
               deleted ? 'hidden' : ''
             }`}
           >

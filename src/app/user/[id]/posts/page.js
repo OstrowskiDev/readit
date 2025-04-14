@@ -1,6 +1,6 @@
 'use client'
 
-import { countUserComments, countUserPosts } from '@/app/lib/actions'
+import { countUserComments, countUserPosts } from '@/app/lib/actions/utils'
 import { getUser } from '@/app/lib/db'
 import PostsPage from '@/app/posts/page'
 import { ProfilePreview } from '@/app/ui/ProfilePreview'

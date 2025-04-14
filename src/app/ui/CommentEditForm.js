@@ -1,9 +1,9 @@
 'use client'
 
-import { updateComment } from '@/app/lib/actions'
+import { updateComment } from '@/app/lib/actions/comment'
+import { cloneDeep } from 'lodash'
 import { useEffect, useState } from 'react'
 import { useCommentContext } from '../lib/context/CommentContextProvider'
-import { cloneDeep } from 'lodash'
 import { useToastContext } from '../lib/toasts/ToastProvider'
 
 export function CommentEditForm() {

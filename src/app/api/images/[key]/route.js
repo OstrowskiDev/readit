@@ -1,12 +1,12 @@
-import s3 from '@/app/lib/cloudflare-sdk/s3'
-import { NextResponse } from 'next/server'
-import validateImageFileServer from '@/app/lib/security/validateImageFileServer'
-import { fileTypeFromBuffer } from 'file-type'
-import sharp from 'sharp'
-import { getServerSession } from 'next-auth'
 import { authOptions } from '@/app/api/auth/[...nextauth]/authOptions'
-import { validateKey } from '@/app/lib/security/validateKey'
+import s3 from '@/app/lib/cloudflare-sdk/s3'
 import { isUserAuthorizedToPost } from '@/app/lib/security/isUserAuthorizedToPost'
+import validateImageFileServer from '@/app/lib/security/validateImageFileServer'
+import { validateKey } from '@/app/lib/security/validateKey'
+import { fileTypeFromBuffer } from 'file-type'
+import { getServerSession } from 'next-auth'
+import { NextResponse } from 'next/server'
+import sharp from 'sharp'
 
 /**
  * This route expects `params.key` in the format: 'postId.webp'.

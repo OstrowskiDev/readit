@@ -1,13 +1,13 @@
 'use client'
 
-import { createPost } from '@/app/lib/actions'
-import { useEffect, useState } from 'react'
-import { ReplyFormBtns } from './buttons/ReplyFromBtns'
+import { createPost } from '@/app/lib/actions/post'
 import { signIn, useSession } from 'next-auth/react'
+import { useEffect, useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
-import { useToastContext } from '../lib/toasts/ToastProvider'
-import { validatePost } from '../lib/security/validatePost'
 import { hasErrors } from '../lib/security/hasErrors'
+import { validatePost } from '../lib/security/validatePost'
+import { useToastContext } from '../lib/toasts/ToastProvider'
+import { CreatePostFormBtns } from './buttons/CreatePostFormBtns'
 
 export function CreatePostForm({
   isCreateFormVis,
@@ -202,7 +202,7 @@ export function CreatePostForm({
               value={formData.content}
               onChange={onInputChange}
             />
-            <ReplyFormBtns
+            <CreatePostFormBtns
               onCancelClick={onCancelClick}
               onSubmit={onSubmit}
               imageFile={imageFile}

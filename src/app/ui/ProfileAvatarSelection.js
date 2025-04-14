@@ -1,11 +1,11 @@
 'use client'
 
-import { useState } from 'react'
-import Avatar, { getAvatarColors } from '../lib/avatars/Avatar'
-import { ProfileFormButtons } from './ProfileFormButtons'
-import { avatarSeeds, avatarColors } from '../lib/avatars/avatarProps'
-import { updateUserData } from '../lib/actions'
 import { useSession } from 'next-auth/react'
+import { useState } from 'react'
+import { updateUserData } from '../lib/actions/utils'
+import Avatar, { getAvatarColors } from '../lib/avatars/Avatar'
+import { avatarColors, avatarSeeds } from '../lib/avatars/avatarProps'
+import { ProfileFormButtons } from './ProfileFormButtons'
 
 export function ProfileAvatarSelection({
   userData,

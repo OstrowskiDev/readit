@@ -1,14 +1,14 @@
 'use client'
 
-import React, { use, useEffect } from 'react'
-import { countUserComments, countUserPosts } from '../lib/actions'
-import Avatar from '../lib/avatars/Avatar'
 import { cloneDeep } from 'lodash'
+import { useRouter } from 'next/navigation'
+import { useEffect } from 'react'
+import { countUserComments, countUserPosts } from '../lib/actions/utils'
+import Avatar from '../lib/avatars/Avatar'
+import { useAuthorsContext } from '../lib/context/AuthorsDataProvider'
+import { AccountCreationDate } from './AccountCreationDate'
 import { FollowBtn } from './buttons/FollowBtn'
 import { MessageBtn } from './buttons/MessageBtn'
-import { useRouter } from 'next/navigation'
-import { AccountCreationDate } from './AccountCreationDate'
-import { useAuthorsContext } from '../lib/context/AuthorsDataProvider'
 
 export default function UserInfobox({
   author,
