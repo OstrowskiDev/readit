@@ -30,7 +30,6 @@ export async function GET(request, { params }) {
         Key: key,
       })
       .promise()
-
     return new NextResponse(data.Body, {
       status: 200,
       headers: {
@@ -66,7 +65,6 @@ export async function PUT(request, { params }) {
   try {
     const formData = await request.formData()
     const file = formData.get('file')
-
     if (!file || !key) {
       return NextResponse.json({ error: 'Missing req data.' }, { status: 400 })
     }

@@ -175,7 +175,9 @@ export async function updatePost(postId, formData, imageData) {
 }
 
 export async function deletePost(postId) {
-  // !!!! add image deletion logic for case when post had image
+  const session = await getServerSession(authOptions)
+  if (!session) redirect('/login')
+
   if (!isUUID(postId) && !allowedPostIds.includes(postId)) {
     console.error('Invalid postId in deletePost func')
     return returnToast('error', 'Failed to delete post')
@@ -188,9 +190,34 @@ export async function deletePost(postId) {
       console.error('Post not found')
       return returnToast('error', 'Failed to delete post')
     }
+
+    if (session.user.id !== post.user_id) {
+      console.error("User session ID doesn't match post author ID.")
+      return returnToast('error', 'Failed to delete post')
+    }
+
     if (post.comments && post.comments.length > 0) {
       console.error('Post with comments cannot be deleted')
       return returnToast('error', 'Post with comments cannot be deleted')
+    }
+
+    if (post.has_image) {
+      const cookieStorage = cookies()
+      const cookieHeader = getAuthCookies(cookieStorage)
+      const baseId = process.env.NEXT_PUBLIC_APP_URL
+      const deleteImage = await fetch(`${baseId}/api/images/${postId}.webp`, {
+        method: 'DELETE',
+        headers: {
+          cookie: cookieHeader,
+        },
+      })
+      if (deleteImage.status !== 200) {
+        console.error(
+          'Error deleting image in R2 bucket, response:',
+          deleteImage,
+        )
+        return returnToast('error', 'Failed to delete post')
+      }
     }
 
     const deletedPost = await Post.findByIdAndDelete(postId)

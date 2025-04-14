@@ -24,7 +24,7 @@ export function ReplyFormBtns({
         type="button"
         onClick={onSubmit}
       >
-        Comment
+        Create
       </button>
     </div>
   )
