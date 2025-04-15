@@ -1,6 +1,6 @@
 'use client'
 
-import { handleDislikeClick } from '@/app/lib/actions/likes'
+import { handleCommentLike } from '@/app/lib/actions/likes'
 import { useCommentContext } from '@/app/lib/context/CommentContextProvider'
 import { useToastContext } from '@/app/lib/toasts/ToastProvider'
 import { useSession } from 'next-auth/react'
@@ -35,7 +35,7 @@ export function CommentDislikeBtn({ styles }) {
   async function onClick(event) {
     event.preventDefault()
     handleCommentOptimistically()
-    const serverResponse = await handleDislikeClick(commentId, collection)
+    const serverResponse = await handleCommentLike(commentId, 'dislike')
     setResponse(serverResponse)
   }
 

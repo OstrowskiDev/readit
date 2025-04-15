@@ -1,6 +1,6 @@
 'use client'
 
-import { handleDislikeClick } from '@/app/lib/actions/likes'
+import { handlePostLike } from '@/app/lib/actions/likes'
 import { usePostContext } from '@/app/lib/context/PostContextProvider'
 import { useToastContext } from '@/app/lib/toasts/ToastProvider'
 import { useSession } from 'next-auth/react'
@@ -21,7 +21,6 @@ export function PostDislikeBtn({ styles }) {
   const { toastFunctions: toast } = useToastContext()
   const userId = session?.user?.id
   const isAlreadyDisliked = postDislikes?.includes(userId)
-  const collection = 'posts'
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
@@ -37,7 +36,7 @@ export function PostDislikeBtn({ styles }) {
   async function onClick(event) {
     event.preventDefault()
     handlePostOptimistically()
-    const serverResponse = await handleDislikeClick(postId, collection)
+    const serverResponse = await handlePostLike(postId, 'dislike')
     setResponse(serverResponse)
   }
 

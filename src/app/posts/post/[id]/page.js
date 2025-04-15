@@ -113,7 +113,7 @@ export default function PostPage({ params }) {
 
               {/* Post image */}
               {post.has_image && (
-                <div className="post-image-container relative aspect-[16/9] w-full mb-6 overflow-hidden bg-gray-200">
+                <div className="post-image-container relative aspect-[16/9] w-full mb-6 overflow-hidden rounded-md bg-gray-200">
                   {imageIsLoading && (
                     <div className="post-image-container flex justify-center  aspect-[16/9] w-full bg-gray-200 rounded-md relative">
                       <ImageShimmerAnimated />

@@ -1,6 +1,6 @@
 'use client'
 
-import { handleLikeClick } from '@/app/lib/actions/likes'
+import { handleCommentLike } from '@/app/lib/actions/likes'
 import { LikeIco } from '../icons/LikeIco'
 import { LikeIcoActive } from '../icons/LikeIcoActive'
 import { useCommentContext } from '@/app/lib/context/CommentContextProvider'
@@ -19,7 +19,6 @@ export function CommentLikeBtn({ styles }) {
   const { data: session } = useSession()
   const userId = session?.user?.id
   const isAlreadyLiked = comment.likes?.includes(userId)
-  const collection = 'comments'
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
@@ -36,7 +35,7 @@ export function CommentLikeBtn({ styles }) {
     event.preventDefault()
     if (!session) return signIn()
     handleCommentOptimistically()
-    const serverResponse = await handleLikeClick(commentId, collection)
+    const serverResponse = await handleCommentLike(commentId, 'like')
     setResponse(serverResponse)
   }
 

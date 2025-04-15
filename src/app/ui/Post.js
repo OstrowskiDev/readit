@@ -60,7 +60,7 @@ export function Post({
 
               {/* Post body */}
               {hasImage ? (
-                <div className="post-image-container relative aspect-[16/9] w-full overflow-hidden bg-gray-200">
+                <div className="post-image-container relative aspect-[16/9] w-full overflow-hidden rounded-md bg-gray-200">
                   {isLoading && (
                     <div className="post-image-container flex justify-center  aspect-[16/9] w-full bg-gray-200 rounded-md relative">
                       <ImageShimmerAnimated />

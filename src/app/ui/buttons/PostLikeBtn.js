@@ -1,6 +1,6 @@
 'use client'
 
-import { handleLikeClick } from '@/app/lib/actions/likes'
+import { handlePostLike } from '@/app/lib/actions/likes'
 import { usePostContext } from '@/app/lib/context/PostContextProvider'
 import { useToastContext } from '@/app/lib/toasts/ToastProvider'
 import { signIn, useSession } from 'next-auth/react'
@@ -22,7 +22,6 @@ export function PostLikeBtn({ styles }) {
 
   const userId = session?.user?.id
   const isAlreadyLiked = postLikes?.includes(userId)
-  const collection = 'posts'
 
   useEffect(() => {
     if (response?.state === 'success') {
@@ -38,7 +37,7 @@ export function PostLikeBtn({ styles }) {
     event.preventDefault()
     if (!session) return signIn()
     handlePostOptimistically()
-    const serverResponse = await handleLikeClick(postId, collection)
+    const serverResponse = await handlePostLike(postId, 'like')
     setResponse(serverResponse)
   }
 
