@@ -79,7 +79,7 @@ export function Post({
                     src={`/api/images/${postId}.${imageExtension}`}
                     alt=""
                     aria-hidden="true"
-                    className="post-image-blur absolute inset-0 h-full w-full object-cover scale-110 blur-md brightness-75"
+                    className="post-image-blur absolute inset-0 h-full w-full object-cover scale-110 blur-md brightness-65"
                   />
                 </div>
               ) : (

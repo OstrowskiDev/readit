@@ -113,7 +113,7 @@ export default function PostPage({ params }) {
 
               {/* Post image */}
               {post.has_image && (
-                <div className="post-image-container aspect-[16/9] w-full  mb-6 bg-gray-200">
+                <div className="post-image-container relative aspect-[16/9] w-full mb-6 overflow-hidden bg-gray-200">
                   {imageIsLoading && (
                     <div className="post-image-container flex justify-center  aspect-[16/9] w-full bg-gray-200 rounded-md relative">
                       <ImageShimmerAnimated />
@@ -121,11 +121,18 @@ export default function PostPage({ params }) {
                   )}
 
                   <img
-                    className="post-image"
+                    className="post-image relative z-10  h-full w-full object-contain"
                     src={`/api/images/${postId}.${post.image_extension}`}
                     alt="post image"
                     onLoad={() => setImageIsLoading(false)}
                     onError={() => setImageIsLoading(false)}
+                  />
+
+                  <img
+                    className="post-image-blur absolute inset-0 h-full w-full object-cover scale-110 blur-md brightness-65"
+                    src={`/api/images/${postId}.${post.image_extension}`}
+                    alt=""
+                    aria-hidden="true"
                   />
                 </div>
               )}
