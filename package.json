@@ -28,8 +28,11 @@
     "node-loader": "^2.1.0",
     "react": "^18",
     "react-dom": "^18",
+    "react-markdown": "^10.1.0",
+    "react-quill": "^2.0.0",
     "sanitize-html": "^2.14.0",
     "sharp": "^0.32.6",
+    "turndown": "^7.2.0",
     "use-debounce": "^10.0.0",
     "uuid": "^9.0.1",
     "validator": "^13.11.0"
