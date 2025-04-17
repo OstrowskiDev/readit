@@ -109,6 +109,65 @@ html {
   transform: translateY(0);
 }
 
+/* Markdown elements styling*/
+.markdown h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+  font-weight: bold;
+}
+
+.markdown h2 {
+  font-size: 1.5em;
+  margin: 0.75em 0;
+  font-weight: bold;
+}
+
+.markdown h3 {
+  font-size: 1.17em;
+  margin: 0.83em 0;
+  font-weight: bold;
+}
+
+.markdown h4 {
+  font-size: 1em;
+  margin: 1.12em 0;
+  font-weight: bold;
+}
+
+.markdown h5 {
+  font-size: 0.83em;
+  margin: 1.5em 0;
+  font-weight: bold;
+}
+
+.markdown h6 {
+  font-size: 0.75em;
+  margin: 1.67em 0;
+  font-weight: bold;
+}
+
+.markdown ul {
+  display: block;
+  list-style-type: disc;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  padding-inline-start: 40px;
+}
+
+.markdown ol {
+  display: block;
+  list-style-type: decimal;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  padding-inline-start: 40px;
+}
+
+.markdown li {
+  display: list-item;
+  text-align: match-parent;
+}
+
+
 /* Tailwind classes: */
 
 .nav-button {
