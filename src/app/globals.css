@@ -167,6 +167,17 @@ html {
   text-align: match-parent;
 }
 
+.markdown .spoiler {
+  background-color: black;
+  color: transparent;
+  transition: color 0.2s;
+  cursor: pointer;
+}
+
+.markdown .spoiler:hover {
+  color: white;
+}
+
 
 /* Tailwind classes: */
 
