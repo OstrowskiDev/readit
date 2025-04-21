@@ -8,11 +8,7 @@ import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import testMarkdown from './markdown'
 import rehypeSanitize from 'rehype-sanitize'
-import { defaultSchema } from 'hast-util-sanitize'
 import rehypeRaw from 'rehype-raw'
-
-// use rehype and rehype-sanitize
-// create customized schema for rehype-sanitize as a whitelist
 
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false })
 
@@ -27,14 +23,37 @@ const modules = {
 }
 
 const customSchema = {
-  ...defaultSchema,
-  tagNames: [...(defaultSchema.tagNames || []), 'spoiler'],
+  tagNames: [
+    'h1',
+    'h2',
+    'br',
+    'hr',
+    'a',
+    'strong',
+    'em',
+    'del',
+    'code',
+    'p',
+    'sup',
+    'ul',
+    'li',
+    'ol',
+    'blockquote',
+    'pre',
+    'spoiler',
+    'table',
+    'tbody',
+    'td',
+    'th',
+    'thead',
+    'tfoot',
+    'tr',
+  ],
   attributes: {
-    ...(defaultSchema.attributes || {}),
+    a: ['href'],
     spoiler: ['className'],
   },
 }
-console.log('🚀 ~ customSchema:', customSchema)
 
 export default function EditorPage() {
   const [html, setHtml] = useState('')
@@ -96,9 +115,8 @@ export default function EditorPage() {
       <div>
         <h2 className="text-xl font-semibold mt-8">Markdown Preview</h2>
         <div className="markdown prose prose-neutral max-w-none bg-white p-4 rounded">
-          <div className="text-preview">{preprocessMarkdown(testMarkdown)}</div>
           <ReactMarkdown
-            // remarkPlugins={[remarkGfm]}
+            remarkPlugins={[remarkGfm]}
             rehypePlugins={[rehypeRaw, [rehypeSanitize, customSchema]]}
           >
             {preprocessMarkdown(testMarkdown)}

@@ -10,7 +10,6 @@ a to >!spoiler którego nie widać!<.
 **Pogrubienie**  
 *Kursywa*  
 ~~Przekreślenie~~  
-__Podkreślenie__ (nieobsługiwane natywnie w Markdown)  
 \`Kod inline\`
 
 [Link](https://example.com)
@@ -32,9 +31,11 @@ __Podkreślenie__ (nieobsługiwane natywnie w Markdown)
 console.log('Kod blokowy');
 \`\`\`
 
+
 | Kolumna 1 | Kolumna 2 |
 |-----------|-----------|
 | A         | B         |
+| C         | D         |
 `
 
 export default testMarkdown
