@@ -1,4 +1,3 @@
-// app/editor/page.jsx
 'use client'
 
 import { useState } from 'react'
@@ -8,6 +7,12 @@ import TurndownService from 'turndown'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import testMarkdown from './markdown'
+import rehypeSanitize from 'rehype-sanitize'
+import { defaultSchema } from 'hast-util-sanitize'
+import rehypeRaw from 'rehype-raw'
+
+// use rehype and rehype-sanitize
+// create customized schema for rehype-sanitize as a whitelist
 
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false })
 
@@ -20,6 +25,16 @@ const modules = {
     ['clean'],
   ],
 }
+
+const customSchema = {
+  ...defaultSchema,
+  tagNames: [...(defaultSchema.tagNames || []), 'spoiler'],
+  attributes: {
+    ...(defaultSchema.attributes || {}),
+    spoiler: ['className'],
+  },
+}
+console.log('🚀 ~ customSchema:', customSchema)
 
 export default function EditorPage() {
   const [html, setHtml] = useState('')
@@ -41,6 +56,15 @@ export default function EditorPage() {
   })
 
   const markdown = turndownService.turndown(html)
+
+  function preprocessMarkdown(md) {
+    return md
+      .replace(/\^\((.*?)\)/g, (_, content) => `<sup>${content}</sup>`)
+      .replace(
+        />!(.*?)!</g,
+        (_, content) => `<spoiler class="spoiler">${content}</spoiler>`,
+      )
+  }
 
   return (
     <div className="p-6 space-y-6 max-w-4xl mx-auto">
@@ -72,11 +96,12 @@ export default function EditorPage() {
       <div>
         <h2 className="text-xl font-semibold mt-8">Markdown Preview</h2>
         <div className="markdown prose prose-neutral max-w-none bg-white p-4 rounded">
-          <ReactMarkdown remarkPlugins={[remarkGfm]}>
-            {testMarkdown}
-          </ReactMarkdown>
-          <ReactMarkdown remarkPlugins={[remarkGfm]}>
-            {testMarkdown}
+          <div className="text-preview">{preprocessMarkdown(testMarkdown)}</div>
+          <ReactMarkdown
+            // remarkPlugins={[remarkGfm]}
+            rehypePlugins={[rehypeRaw, [rehypeSanitize, customSchema]]}
+          >
+            {preprocessMarkdown(testMarkdown)}
           </ReactMarkdown>
         </div>
       </div>

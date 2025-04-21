@@ -3,6 +3,10 @@ const testMarkdown = `
 
 ## Nagłówek 2
 
+To jest ^(indeks górny), 
+
+a to >!spoiler którego nie widać!<.
+
 **Pogrubienie**  
 *Kursywa*  
 ~~Przekreślenie~~  
