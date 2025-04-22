@@ -1,7 +1,8 @@
 'use client'
 
-import dynamic from 'next/dynamic'
-import { useEffect, useState } from 'react'
+import customSchema from '@/app/lib/rehype-sanitize/customSchema'
+import QuillEditor from '@/app/ui/tekst-editor/QuillEditor'
+import { useState } from 'react'
 import ReactMarkdown from 'react-markdown'
 import 'react-quill/dist/quill.snow.css'
 import rehypeRaw from 'rehype-raw'
@@ -9,33 +10,9 @@ import rehypeSanitize from 'rehype-sanitize'
 import remarkGfm from 'remark-gfm'
 import TurndownService from 'turndown'
 import testMarkdown from './markdown'
-import customSchema from '@/app/lib/rehype-sanitize/customSchema'
-
-const ReactQuill = dynamic(() => import('react-quill'), { ssr: false })
-const Quill = dynamic(() => import('quill'), { ssr: false })
-
-const modules = {
-  toolbar: [
-    [{ header: [2, false] }],
-    ['bold', 'italic', 'strike', { script: 'super' }],
-    [{ list: 'ordered' }, { list: 'bullet' }],
-    ['link', 'blockquote', 'code'],
-    ['clean'],
-  ],
-}
 
 export default function EditorPage() {
-  const [html, setHtml] = useState('')
-
-  useEffect(() => {
-    if (Quill.import) {
-      const Parchment = Quill.import('parchment')
-      const Del = new Parchment.Attributor.Class('del', 'del', {
-        scope: Parchment.Scope.INLINE,
-      })
-      Quill.register(Del)
-    }
-  }, [Quill])
+  const [editorHtml, setEditorHtml] = useState('')
 
   const turndownService = new TurndownService({
     headingStyle: 'atx',
@@ -53,7 +30,7 @@ export default function EditorPage() {
     replacement: (content) => `>!${content}!<`,
   })
 
-  const markdown = turndownService.turndown(html)
+  const markdown = turndownService.turndown(editorHtml)
 
   function preprocessMarkdown(md) {
     return md
@@ -65,24 +42,8 @@ export default function EditorPage() {
   }
 
   return (
-    <div className="p-6 space-y-6 max-w-4xl mx-auto">
-      <h1 className="text-2xl font-bold">Markdown Editor</h1>
-
-      <div>
-        <ReactQuill
-          value={html}
-          onChange={setHtml}
-          modules={modules}
-          className="bg-white"
-        />
-      </div>
-
-      <div>
-        <h2 className="text-xl font-semibold mt-8">Generated HTML</h2>
-        <div className="border p-4 rounded bg-gray-50 whitespace-pre-wrap">
-          <div dangerouslySetInnerHTML={{ __html: html }} />
-        </div>
-      </div>
+    <div className="p-6 max-w-[640px] w-full mx-auto">
+      <QuillEditor editorHtml={editorHtml} setEditorHtml={setEditorHtml} />
 
       <div>
         <h2 className="text-xl font-semibold mt-8">Converted Markdown</h2>
