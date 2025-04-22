@@ -1,62 +1,41 @@
 'use client'
 
-import { useState } from 'react'
 import dynamic from 'next/dynamic'
-import 'react-quill/dist/quill.snow.css'
-import TurndownService from 'turndown'
+import { useEffect, useState } from 'react'
 import ReactMarkdown from 'react-markdown'
-import remarkGfm from 'remark-gfm'
-import testMarkdown from './markdown'
-import rehypeSanitize from 'rehype-sanitize'
+import 'react-quill/dist/quill.snow.css'
 import rehypeRaw from 'rehype-raw'
+import rehypeSanitize from 'rehype-sanitize'
+import remarkGfm from 'remark-gfm'
+import TurndownService from 'turndown'
+import testMarkdown from './markdown'
+import customSchema from '@/app/lib/rehype-sanitize/customSchema'
 
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false })
+const Quill = dynamic(() => import('quill'), { ssr: false })
 
 const modules = {
   toolbar: [
-    [{ header: [1, 2, false] }],
-    ['bold', 'italic', 'underline'],
+    [{ header: [2, false] }],
+    ['bold', 'italic', 'strike', { script: 'super' }],
     [{ list: 'ordered' }, { list: 'bullet' }],
-    ['link'],
+    ['link', 'blockquote', 'code'],
     ['clean'],
   ],
 }
 
-const customSchema = {
-  tagNames: [
-    'h1',
-    'h2',
-    'br',
-    'hr',
-    'a',
-    'strong',
-    'em',
-    'del',
-    'code',
-    'p',
-    'sup',
-    'ul',
-    'li',
-    'ol',
-    'blockquote',
-    'pre',
-    'spoiler',
-    'table',
-    'tbody',
-    'td',
-    'th',
-    'thead',
-    'tfoot',
-    'tr',
-  ],
-  attributes: {
-    a: ['href'],
-    spoiler: ['className'],
-  },
-}
-
 export default function EditorPage() {
   const [html, setHtml] = useState('')
+
+  useEffect(() => {
+    if (Quill.import) {
+      const Parchment = Quill.import('parchment')
+      const Del = new Parchment.Attributor.Class('del', 'del', {
+        scope: Parchment.Scope.INLINE,
+      })
+      Quill.register(Del)
+    }
+  }, [Quill])
 
   const turndownService = new TurndownService({
     headingStyle: 'atx',
