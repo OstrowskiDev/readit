@@ -9,10 +9,11 @@ import rehypeRaw from 'rehype-raw'
 import rehypeSanitize from 'rehype-sanitize'
 import remarkGfm from 'remark-gfm'
 import TurndownService from 'turndown'
-import testMarkdown from './markdown'
+import testMarkdownString from './testMarkdownString'
+import testHtmlString from './testHtmlString'
 
 export default function EditorPage() {
-  const [editorHtml, setEditorHtml] = useState('')
+  const [editorHtml, setEditorHtml] = useState(testHtmlString)
 
   const turndownService = new TurndownService({
     headingStyle: 'atx',
@@ -59,7 +60,7 @@ export default function EditorPage() {
             remarkPlugins={[remarkGfm]}
             rehypePlugins={[rehypeRaw, [rehypeSanitize, customSchema]]}
           >
-            {preprocessMarkdown(testMarkdown)}
+            {preprocessMarkdown(testMarkdownString)}
           </ReactMarkdown>
         </div>
       </div>

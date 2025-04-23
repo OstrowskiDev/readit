@@ -1,4 +1,4 @@
-const testMarkdown = `
+const testMarkdownString = `
 # Nagłówek 1
 
 ## Nagłówek 2
@@ -38,4 +38,4 @@ console.log('Kod blokowy');
 | C         | D         |
 `
 
-export default testMarkdown
+export default testMarkdownString
