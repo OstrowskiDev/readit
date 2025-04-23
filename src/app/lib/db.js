@@ -13,6 +13,8 @@ async function connectToDatabase() {
   }
 }
 
+//!!!! change res.json to NextResponse
+
 async function getPost(postId) {
   const res = await fetch(`${apiUrl}/api/posts/post/${postId}`, {
     cache: 'no-store',
