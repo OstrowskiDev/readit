@@ -1,6 +1,9 @@
 'use client'
 
 import customSchema from '@/app/lib/rehype-sanitize/customSchema'
+import parseHtmlToMarkdown from '@/app/lib/text-editor/parseHtmlToMarkdown'
+import testHtmlString from '@/app/lib/text-editor/testHtmlString'
+import testMarkdownString from '@/app/lib/text-editor/testMarkdownString'
 import QuillEditor from '@/app/ui/tekst-editor/QuillEditor'
 import { useState } from 'react'
 import ReactMarkdown from 'react-markdown'
@@ -8,30 +11,10 @@ import 'react-quill/dist/quill.snow.css'
 import rehypeRaw from 'rehype-raw'
 import rehypeSanitize from 'rehype-sanitize'
 import remarkGfm from 'remark-gfm'
-import TurndownService from 'turndown'
-import testMarkdownString from './testMarkdownString'
-import testHtmlString from './testHtmlString'
 
-export default function EditorPage() {
+export default function TekstEditor() {
   const [editorHtml, setEditorHtml] = useState(testHtmlString)
-
-  const turndownService = new TurndownService({
-    headingStyle: 'atx',
-    bulletListMarker: '-',
-  })
-
-  turndownService.addRule('superscript', {
-    filter: 'sup',
-    replacement: (content) => `^(${content})`,
-  })
-
-  turndownService.addRule('spoiler', {
-    filter: (node) =>
-      node.nodeName === 'SPAN' && node.classList.contains('spoiler'),
-    replacement: (content) => `>!${content}!<`,
-  })
-
-  const markdown = turndownService.turndown(editorHtml)
+  const markdown = parseHtmlToMarkdown(editorHtml)
 
   function preprocessMarkdown(md) {
     return md
