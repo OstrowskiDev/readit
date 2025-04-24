@@ -1,37 +1,21 @@
 'use client'
 
-import dynamic from 'next/dynamic'
-import { useEffect, useRef } from 'react'
-import 'react-quill/dist/quill.snow.css'
+/***************************************************/
+/*  Ensure this component is not server-rendered   */
+/*  Quill instances can only run on clientent      */
+/*  Below imports have Quill instances             */
+/****************************************************/
+import '@/app/lib/react-quill/customIcons.js'
 import '@/app/lib/react-quill/spoilerBlot.js'
+/***************************************************/
+
+import dynamic from 'next/dynamic'
+import 'react-quill/dist/quill.snow.css'
 import QuillCustomToolbar from './QuillCustomToolbar'
 
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false })
 
 export default function QuillEditor({ htmlString, setHtmlString }) {
-  const quillRef = useRef(null)
-
-  useEffect(() => {
-    if (!quillRef.current) return
-
-    const quillInstance = quillRef.current.getEditor()
-
-    const insertSpoiler = () => {
-      const selection = quillInstance.getSelection()
-      if (selection && selection.length > 0) {
-        quillInstance.formatText(
-          selection.index,
-          selection.length,
-          'spoiler',
-          true,
-        )
-      }
-    }
-
-    const toolbar = quillInstance.getModule('toolbar')
-    toolbar.addHandler('insertSpoiler', insertSpoiler)
-  }, [])
-
   const modules = {
     toolbar: {
       container: '#toolbar',
