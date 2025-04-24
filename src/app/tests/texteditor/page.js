@@ -4,13 +4,17 @@ import customSchema from '@/app/lib/rehype-sanitize/customSchema'
 import parseHtmlToMarkdown from '@/app/lib/text-editor/parseHtmlToMarkdown'
 import testHtmlString from '@/app/lib/text-editor/testHtmlString'
 import testMarkdownString from '@/app/lib/text-editor/testMarkdownString'
-import QuillEditor from '@/app/ui/tekst-editor/QuillEditor'
+import dynamic from 'next/dynamic'
 import { useState } from 'react'
 import ReactMarkdown from 'react-markdown'
 import 'react-quill/dist/quill.snow.css'
 import rehypeRaw from 'rehype-raw'
 import rehypeSanitize from 'rehype-sanitize'
 import remarkGfm from 'remark-gfm'
+
+const QuillEditor = dynamic(() => import('@/app/ui/tekst-editor/QuillEditor'), {
+  ssr: false,
+})
 
 export default function TekstEditor() {
   const [htmlString, setHtmlString] = useState(testHtmlString)
