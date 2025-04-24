@@ -53,8 +53,8 @@ export default function QuillEditor({ editorHtml, setEditorHtml }) {
   ]
 
   return (
-    <div className="max-w-3xl mx-auto space-y-6">
-      <h1 className="text-2xl font-bold">Quill Editor</h1>
+    <div className="quill-editor-container max-w-3xl mx-auto space-y-6">
+      <h1 className="quill-editor-header text-2xl font-bold">Quill Editor</h1>
 
       <QuillCustomToolbar />
 
@@ -66,13 +66,13 @@ export default function QuillEditor({ editorHtml, setEditorHtml }) {
         theme="snow"
       />
 
-      <div className="mt-8 border p-4 rounded bg-gray-50">
-        <h2 className="font-semibold">String HTML:</h2>
+      <div className="quill-editor mt-8 border p-4 rounded bg-gray-50">
+        <h2 className="quill-editor font-semibold">String HTML:</h2>
         {editorHtml}
       </div>
 
-      <div className="mt-8 border p-4 rounded bg-gray-50">
-        <h2 className="font-semibold">Wygenerowany HTML:</h2>
+      <div className="quill-editor mt-8 border p-4 rounded bg-gray-50">
+        <h2 className="quill-editor font-semibold">Wygenerowany HTML:</h2>
         <div dangerouslySetInnerHTML={{ __html: editorHtml }} />
       </div>
     </div>
