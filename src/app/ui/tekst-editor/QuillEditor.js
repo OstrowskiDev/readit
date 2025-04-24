@@ -8,7 +8,7 @@ import QuillCustomToolbar from './QuillCustomToolbar'
 
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false })
 
-export default function QuillEditor({ editorHtml, setEditorHtml }) {
+export default function QuillEditor({ htmlString, setHtmlString }) {
   const quillRef = useRef(null)
 
   useEffect(() => {
@@ -53,27 +53,25 @@ export default function QuillEditor({ editorHtml, setEditorHtml }) {
   ]
 
   return (
-    <div className="quill-editor-container max-w-3xl mx-auto space-y-6">
-      <h1 className="quill-editor-header text-2xl font-bold">Quill Editor</h1>
-
-      <QuillCustomToolbar />
-
-      <ReactQuill
-        value={editorHtml}
-        onChange={setEditorHtml}
-        modules={modules}
-        formats={formats}
-        theme="snow"
-      />
-
+    <div className="quill-container max-w-3xl mx-auto">
+      <h1 className="quill-header text-2xl font-bold">Quill Editor</h1>
+      <div className="quill-editor-container px-4 py-3 border border-gray-400 rounded-md">
+        <QuillCustomToolbar />
+        <ReactQuill
+          value={htmlString}
+          onChange={setHtmlString}
+          modules={modules}
+          formats={formats}
+          theme="snow"
+        />
+      </div>
       <div className="quill-editor mt-8 border p-4 rounded bg-gray-50">
         <h2 className="quill-editor font-semibold">String HTML:</h2>
-        {editorHtml}
+        {htmlString}
       </div>
-
       <div className="quill-editor mt-8 border p-4 rounded bg-gray-50">
         <h2 className="quill-editor font-semibold">Wygenerowany HTML:</h2>
-        <div dangerouslySetInnerHTML={{ __html: editorHtml }} />
+        <div dangerouslySetInnerHTML={{ __html: htmlString }} />
       </div>
     </div>
   )

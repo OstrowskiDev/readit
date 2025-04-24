@@ -13,8 +13,8 @@ import rehypeSanitize from 'rehype-sanitize'
 import remarkGfm from 'remark-gfm'
 
 export default function TekstEditor() {
-  const [editorHtml, setEditorHtml] = useState(testHtmlString)
-  const markdown = parseHtmlToMarkdown(editorHtml)
+  const [htmlString, setHtmlString] = useState(testHtmlString)
+  const markdown = parseHtmlToMarkdown(htmlString)
 
   function preprocessMarkdown(md) {
     return md
@@ -27,7 +27,7 @@ export default function TekstEditor() {
 
   return (
     <div className="p-6 max-w-[640px] w-full mx-auto">
-      <QuillEditor editorHtml={editorHtml} setEditorHtml={setEditorHtml} />
+      <QuillEditor htmlString={htmlString} setHtmlString={setHtmlString} />
 
       <div>
         <h2 className="text-xl font-semibold mt-8">Converted Markdown</h2>
