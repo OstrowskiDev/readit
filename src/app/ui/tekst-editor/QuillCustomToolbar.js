@@ -25,9 +25,7 @@ export default function QuillCustomToolbar() {
         <button className="ql-blockquote" />
         <button className="ql-code" />
         <button className="ql-clean" />
-        <button className="ql-spoiler">
-          <SpoilerButton />
-        </button>
+        <SpoilerButton />
       </div>
     </div>
   )

@@ -1,3 +1,9 @@
+import SpoilerIco from '../icons/SpoilerIco'
+
 export default function SpoilerButton() {
-  return <span className="spoiler-icon">🚫</span>
+  return (
+    <button className="ql-spoiler">
+      <SpoilerIco />
+    </button>
+  )
 }
