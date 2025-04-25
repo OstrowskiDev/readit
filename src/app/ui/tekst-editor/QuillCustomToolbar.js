@@ -11,14 +11,14 @@ export default function QuillCustomToolbar() {
         <button className="ql-header" value="2" />
       </div>
 
-      <div className="ql-separator mx-1 w-[1px] mt-[1px] bg-gray-300"></div>
+      <div className="ql-separator border-l border-gray-300 h-full"></div>
 
       <div className="toolbar-group flex gap-1">
         <button className="ql-list" value="ordered" />
         <button className="ql-list" value="bullet" />
       </div>
 
-      <div className="ql-separator mx-1 w-[1px] mt-[1px] bg-gray-300"></div>
+      <div className="ql-separator border-l border-gray-300 h-full"></div>
 
       <div className="toolbar-group flex gap-1">
         <button className="ql-link" />
