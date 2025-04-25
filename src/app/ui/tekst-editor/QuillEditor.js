@@ -12,10 +12,12 @@ import '@/app/lib/react-quill/spoilerBlot.js'
 import dynamic from 'next/dynamic'
 import 'react-quill/dist/quill.snow.css'
 import QuillCustomToolbar from './QuillCustomToolbar'
+import { useTextEditorContext } from '@/app/lib/context/TextEditorProvider'
 
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false })
 
-export default function QuillEditor({ htmlString, setHtmlString }) {
+export default function QuillEditor() {
+  const { htmlString, setHtmlString } = useTextEditorContext()
   const modules = {
     toolbar: {
       container: '#toolbar',

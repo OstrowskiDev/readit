@@ -1,20 +1,26 @@
 'use client'
 
+import { useTextEnditorContext } from '@/app/lib/context/TextEditorProvider'
 import parseHtmlToMarkdown from '@/app/lib/text-editor/parseHtmlToMarkdown'
+import { useEffect } from 'react'
 
-export function MarkdownEditor({ editorHtml, setEditorHtml }) {
-  const [markdown, setMarkdown] = useState(() =>
-    parseHtmlToMarkdown(editorHtml),
-  )
+export function MarkdownEditor() {
+  const { htmlString, markdownString, setMarkdownString } =
+    useTextEnditorContext()
+
+  useEffect(() => {
+    const newMarkdown = parseHtmlToMarkdown(htmlString)
+    setMarkdownString(newMarkdown)
+  }, [])
 
   return (
     <div className="markdown-editor-container">
       <input
         className="markdown-editor-input"
         type="text"
-        name="markdown"
-        id="markdown"
-        value={markdown}
+        name="markdownString"
+        id="markdownString"
+        value={markdownString}
         onChange={onInputChange}
         required
       ></input>
