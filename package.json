@@ -20,6 +20,7 @@
     "file-type": "^20.4.1",
     "isomorphic-dompurify": "^2.22.0",
     "lodash": "^4.17.21",
+    "markdown-it": "^14.1.0",
     "mongo-sanitize": "^1.1.0",
     "mongodb": "^6.3.0",
     "mongoose": "^8.12.1",
