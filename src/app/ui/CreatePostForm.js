@@ -105,8 +105,13 @@ export function CreatePostForm({
     setPosts(oldPosts)
   }
 
-  function onInputChange(event) {
-    setFormData({ ...formData, [event.target.name]: event.target.value })
+  function onInputChange(e) {
+    const htmlString = !e.target ? e : null
+    if (htmlString) {
+      setFormData({ topic: formData.topic, content: htmlString })
+    } else {
+      setFormData({ topic: e.target.value, content: formData.content })
+    }
   }
 
   async function onSubmit() {
