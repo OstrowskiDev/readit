@@ -2,7 +2,7 @@
 
 import { TextEditorProvider } from '@/app/lib/context/TextEditorProvider'
 import customSchema from '@/app/lib/rehype-sanitize/customSchema'
-import parseHtmlToMarkdown from '@/app/lib/text-editor/parseHtmlToMarkdown'
+import { parseHtmlToMarkdown } from '@/app/lib/text-editor/parseHtmlToMarkdown'
 import testHtmlString from '@/app/lib/text-editor/testHtmlString'
 import testMarkdownString from '@/app/lib/text-editor/testMarkdownString'
 import { MarkdownEditor } from '@/app/ui/tekst-editor/MarkdownEditor'

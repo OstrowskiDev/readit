@@ -13,7 +13,8 @@ import dynamic from 'next/dynamic'
 import 'react-quill/dist/quill.snow.css'
 import QuillCustomToolbar from './QuillCustomToolbar'
 import { useTextEditorContext } from '@/app/lib/context/TextEditorProvider'
-import { parseHtmlToMarkdown } from '@/app/lib/text-editor/parseHtmlToMarkdown'
+import testMarkdownString from '@/app/lib/text-editor/testMarkdownString'
+import { parseMarkdownToHtml } from '@/app/lib/text-editor/parseMarkdownToHtml'
 
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false })
 
@@ -62,9 +63,9 @@ export default function QuillEditor() {
       </div>
       <div className="quill-editor mt-8 border p-4 rounded bg-gray-50">
         <h2 className="quill-editor font-semibold">
-          Parsowanie Markdown na HTML string:
+          Parsowanie Markdown do HTML string:
         </h2>
-        {parseHtmlToMarkdown(htmlString)}
+        {parseMarkdownToHtml(testMarkdownString)}
       </div>
     </div>
   )
