@@ -16,7 +16,7 @@ turndownService.addRule('spoiler', {
   replacement: (content) => `>!${content}!<`,
 })
 
-export default function parseHtmlToMarkdown(editorHtml) {
+export function parseHtmlToMarkdown(editorHtml) {
   if (!editorHtml) return ''
   const markdownString = turndownService.turndown(editorHtml)
 
