@@ -7,6 +7,7 @@
 /***************************************************/
 import '@/app/lib/react-quill/customIcons.js'
 import '@/app/lib/react-quill/spoilerBlot.js'
+import '@/app/lib/react-quill/crossedBlot.js'
 /***************************************************/
 
 import dynamic from 'next/dynamic'
@@ -24,11 +25,14 @@ export default function QuillEditor() {
     },
   }
 
+  // changes in formats:
+  // instead of Quills strike that creates s, custom crossed blot creates del
+  // added custom spoiler blot
   const formats = [
     'header',
     'bold',
     'italic',
-    'strike',
+    'crossed',
     'script',
     'list',
     'link',
