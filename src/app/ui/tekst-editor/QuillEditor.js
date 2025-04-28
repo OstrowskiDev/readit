@@ -4,7 +4,7 @@
 /*  Ensure this component is not server-rendered   */
 /*  Quill instances can only run on clientent      */
 /*  Below imports have Quill instances             */
-/****************************************************/
+/***************************************************/
 import '@/app/lib/react-quill/customIcons.js'
 import '@/app/lib/react-quill/spoilerBlot.js'
 /***************************************************/
@@ -13,8 +13,6 @@ import dynamic from 'next/dynamic'
 import 'react-quill/dist/quill.snow.css'
 import QuillCustomToolbar from './QuillCustomToolbar'
 import { useTextEditorContext } from '@/app/lib/context/TextEditorProvider'
-import testMarkdownString from '@/app/lib/text-editor/testMarkdownString'
-import { parseMarkdownToHtml } from '@/app/lib/text-editor/parseMarkdownToHtml'
 
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false })
 
@@ -41,8 +39,7 @@ export default function QuillEditor() {
   ]
 
   return (
-    <div className="quill-container max-w-3xl mx-auto">
-      <h1 className="quill-header text-2xl font-bold">Quill Editor</h1>
+    <div className="quill-container max-w-[800px] mx-auto">
       <div className="quill-editor-container px-4 py-3 border border-gray-400 rounded-md">
         <QuillCustomToolbar />
         <ReactQuill
@@ -52,20 +49,6 @@ export default function QuillEditor() {
           formats={formats}
           theme="snow"
         />
-      </div>
-      <div className="quill-editor mt-8 border p-4 rounded bg-gray-50">
-        <h2 className="quill-editor font-semibold">String HTML:</h2>
-        {htmlString}
-      </div>
-      <div className="quill-editor mt-8 border p-4 rounded bg-gray-50">
-        <h2 className="quill-editor font-semibold">Wygenerowany HTML:</h2>
-        <div dangerouslySetInnerHTML={{ __html: htmlString }} />
-      </div>
-      <div className="quill-editor mt-8 border p-4 rounded bg-gray-50">
-        <h2 className="quill-editor font-semibold">
-          Parsowanie Markdown do HTML string:
-        </h2>
-        {parseMarkdownToHtml(testMarkdownString)}
       </div>
     </div>
   )
