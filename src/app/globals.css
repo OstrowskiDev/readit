@@ -258,7 +258,6 @@ html {
 .ql-toolbar button:hover {
   background-color: #e5e7eb !important;
   border-radius: 50% !important;
-  /* box-shadow: 0 0 0 5px #e5e7eb; */
 }
 
 /* Tailwind classes: */

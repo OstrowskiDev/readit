@@ -35,27 +35,6 @@ function subscriptPlugin(markdown) {
   })
 }
 
-// state represents parsed document as JS object that represents HTML tree
-// state.tokens: tokens represents structure of the document,
-// they are JS objects that represent parts of html tags
-// token.type represents parts of html tag structure:
-// type === paragraph_open represents paragraph opening tag <p>
-// type === inline represents text and inline formating inside tags
-// type === paragraph_close represents paragraph closing tag </p>
-
-// state.src: oryginal document
-// state.env: optional env
-
-// token.type - określa rodzaj tokena (nazwa typu HTML-owej struktury)
-// token.tag - nazwa tagu HTML powiązanego z tym tokenem (np. 'p', 'strong', 'em', itd.)
-// token.block - czy token jest blokowy (true/false) (UWAGA: tylko niektóre parsery ustawiają .block, MarkdownIt to robi)
-// token.children - jeśli token.type === 'inline', dzieci reprezentujące tekst i formatowanie inline
-// token.content - treść tekstowa tokena (dla inline text)
-// token.attrs - atrybuty HTML w formie tablicy [[name, value], ...] (np. [['href', 'https://...']])
-
-// String.prototype.replace(pattern, (match, p1, p2, ..., offset, inputString) => {})
-// p1, p2 and so on are groups found in ( ) by regex, so in this case just one group p1
-
 function spoilerPlugin(markdown) {
   const pattern = />!(.*?)!</g
   markdown.core.ruler.push('spoiler', function (state) {
@@ -72,3 +51,24 @@ function spoilerPlugin(markdown) {
     })
   })
 }
+
+// state represents the parsed document as a JS object that mirrors the HTML tree structure
+// state.tokens: tokens represent the document structure,
+// they are JS objects representing parts of HTML tags
+// token.type represents parts of an HTML tag structure:
+// type === paragraph_open represents the opening paragraph tag <p>
+// type === inline represents text and inline formatting inside tags
+// type === paragraph_close represents the closing paragraph tag </p>
+
+// state.src: the original document
+// state.env: optional environment object
+
+// token.type – specifies the type of token (the name of the HTML-like structure)
+// token.tag – the name of the HTML tag associated with this token (e.g., 'p', 'strong', 'em', etc.)
+// token.block – whether the token is block-level (true/false) (NOTE: only some parsers set .block, MarkdownIt does)
+// token.children – if token.type === 'inline', the children representing text and inline formatting
+// token.content – the textual content of the token (for inline text)
+// token.attrs – HTML attributes in the form of an array [[name, value], ...] (e.g., [['href', 'https://...']])
+
+// String.prototype.replace(pattern, (match, p1, p2, ..., offset, inputString) => {})
+// p1, p2, etc., are the groups captured by ( ) in the regex, so in this case just one group p1

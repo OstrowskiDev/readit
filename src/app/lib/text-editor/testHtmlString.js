@@ -1,6 +1,5 @@
 const testHtmlString = `
-<h1>Nagłówek 1</h1>
-<h2>Nagłówek 2</h2>
+<h2>Nagłówek</h2>
 <p>To jest <sup>indeks górny</sup>,</p>
 <p>a to <spoiler class="spoiler">spoiler którego nie widać</spoiler>.</p>
 <p><strong>Pogrubienie</strong><br>
