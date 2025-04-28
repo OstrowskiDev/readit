@@ -10,6 +10,7 @@ export function TextEditorProvider({
   setHtmlString,
   markdownString,
   setMarkdownString,
+  onInputChange,
 }) {
   return (
     <TextEditorContext.Provider
@@ -20,6 +21,7 @@ export function TextEditorProvider({
         setHtmlString,
         markdownString,
         setMarkdownString,
+        onInputChange,
       }}
     >
       {children}

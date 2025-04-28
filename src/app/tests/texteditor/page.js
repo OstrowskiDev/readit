@@ -18,12 +18,16 @@ const QuillEditor = dynamic(() => import('@/app/ui/tekst-editor/QuillEditor'), {
   ssr: false,
 })
 
+// !!!! need to pass { onInputChange } as a prop to TextEditor component when used outside of app/tests/texteditor route
+
 export default function TekstEditor() {
   const [htmlString, setHtmlString] = useState(testHtmlString)
   const [markdownString, setMarkdownString] = useState('')
   const [toggleEditor, setToggleEditor] = useState('formated_text_editor')
-  //!!!! delete after development:
-  const markdownForDevelopment = parseHtmlToMarkdown(htmlString)
+
+  function onInputChange() {
+    console.log('not passed from root partent yet')
+  }
 
   return (
     <TextEditorProvider
@@ -33,6 +37,7 @@ export default function TekstEditor() {
       setMarkdownString={setMarkdownString}
       toggleEditor={toggleEditor}
       setToggleEditor={setToggleEditor}
+      onInputChange={onInputChange}
     >
       <div className="text-editor-container p-6 max-w-[640px] w-full mx-auto">
         {toggleEditor === 'formated_text_editor' ? (
@@ -40,37 +45,7 @@ export default function TekstEditor() {
         ) : (
           <MarkdownEditor />
         )}
-
-        {/* development previews below */}
-        {/* !!!! also delete after development !!!! */}
-        <div>
-          <h2 className="text-xl font-semibold mt-8">Converted Markdown</h2>
-          <pre className="bg-gray-100 p-4 rounded overflow-auto text-sm">
-            {markdownForDevelopment}
-          </pre>
-        </div>
-
-        <div>
-          <h2 className="text-xl font-semibold mt-8">Markdown Preview</h2>
-          <div className="markdown prose prose-neutral max-w-none bg-white p-4 rounded">
-            <ReactMarkdown
-              remarkPlugins={[remarkGfm]}
-              rehypePlugins={[rehypeRaw, [rehypeSanitize, customSchema]]}
-            >
-              {preprocessMarkdown(testMarkdownString)}
-            </ReactMarkdown>
-          </div>
-        </div>
       </div>
     </TextEditorProvider>
   )
-}
-
-function preprocessMarkdown(md) {
-  return md
-    .replace(/\^\((.*?)\)/g, (_, content) => `<sup>${content}</sup>`)
-    .replace(
-      />!(.*?)!</g,
-      (_, content) => `<spoiler class="spoiler">${content}</spoiler>`,
-    )
 }
