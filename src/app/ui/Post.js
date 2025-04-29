@@ -7,6 +7,7 @@ import { PostHeader } from './PostHeader'
 import { UserInfoboxLoader } from './loaders/UserInfoboxLoader'
 import useMouseHover from '../lib/hooks/useMouseHover'
 import { ImageShimmerAnimated } from './loaders/ImageShimmerAnimated'
+import { PostContent } from './PostContent'
 const LazyUserInfobox = lazy(() => import('./UserInfobox.js'))
 
 export function Post({
@@ -83,9 +84,7 @@ export function Post({
                   />
                 </div>
               ) : (
-                <pre className="post-content mb-2 font-sans whitespace-pre-wrap below-md:line-clamp-5 below-md:overflow-hidden below-md:overflow-ellipsis ">
-                  {post.content}
-                </pre>
+                <PostContent content={post.content} />
               )}
 
               {/* Post footer */}
