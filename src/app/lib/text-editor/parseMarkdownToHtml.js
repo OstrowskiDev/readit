@@ -1,4 +1,5 @@
 import MarkdownIt from 'markdown-it'
+import { spoilerPlugin } from './markdownInPlugins/markdownItSpoilerPlugin'
 
 const markdownParser = MarkdownIt()
 
@@ -7,6 +8,13 @@ markdownParser.renderer.rules.heading_open = function (tokens, idx) {
 }
 markdownParser.renderer.rules.heading_close = function (tokens, idx) {
   return '</h2>'
+}
+
+markdownParser.renderer.rules.s_open = function () {
+  return '<del>'
+}
+markdownParser.renderer.rules.s_close = function () {
+  return '</del>'
 }
 
 markdownParser.use(subscriptPlugin)
@@ -27,24 +35,7 @@ function subscriptPlugin(markdown) {
         if (token.type === 'text' && pattern.test(token.content)) {
           token.content = token.content.replace(
             pattern,
-            (match, p1) => `<sub>${p1}</sub>`,
-          )
-        }
-      })
-    })
-  })
-}
-
-function spoilerPlugin(markdown) {
-  const pattern = />!(.*?)!</g
-  markdown.core.ruler.push('spoiler', function (state) {
-    state.tokens.forEach((topLevelToken) => {
-      if (topLevelToken.type !== 'inline') return
-      topLevelToken.children.forEach((token) => {
-        if (token.type === 'text' && pattern.test(token.content)) {
-          token.content = token.content.replace(
-            pattern,
-            (match, p1) => `<spoiler class="spoiler">${p1}</spoiler>`,
+            (match, p1) => `<sup>${p1}</sup>`,
           )
         }
       })

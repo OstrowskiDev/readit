@@ -10,10 +10,16 @@ turndownService.addRule('superscript', {
   filter: 'sup',
   replacement: (content) => `^(${content})`,
 })
+
 turndownService.addRule('spoiler', {
   filter: (node) =>
-    node.nodeName === 'SPAN' && node.classList.contains('spoiler'),
+    node.nodeName === 'SPOILER' && node.classList.contains('ql-spoiler'),
   replacement: (content) => `>!${content}!<`,
+})
+
+turndownService.addRule('strikethrough', {
+  filter: 'del',
+  replacement: (content) => `~~${content}~~`,
 })
 
 export function parseHtmlToMarkdown(editorHtml) {

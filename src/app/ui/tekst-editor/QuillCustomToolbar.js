@@ -1,3 +1,4 @@
+import CrossedButton from './CrossedButton'
 import SpoilerButton from './SpoilerButton'
 import { ToggleEditorTypeBtn } from './ToggleEditorTypeBtn'
 
@@ -8,7 +9,7 @@ export default function QuillCustomToolbar() {
         <div className="toolbar-group flex gap-1">
           <button className="ql-bold" />
           <button className="ql-italic" />
-          <button className="ql-strike" />
+          <CrossedButton />
           <button className="ql-script" value="super" />
           <button className="ql-header" value="2" />
         </div>
