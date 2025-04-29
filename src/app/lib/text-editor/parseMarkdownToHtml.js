@@ -1,7 +1,8 @@
 import MarkdownIt from 'markdown-it'
-import { spoilerPlugin } from './markdownInPlugins/markdownItSpoilerPlugin'
+import { spoilerPlugin } from './markdownInPlugins/spoilerPlugin'
+import { supscriptPlugin } from './markdownInPlugins/supscriptPlugin'
 
-const markdownParser = MarkdownIt()
+const markdownParser = MarkdownIt({ html: false })
 
 markdownParser.renderer.rules.heading_open = function (tokens, idx) {
   return '<h2>'
@@ -17,30 +18,11 @@ markdownParser.renderer.rules.s_close = function () {
   return '</del>'
 }
 
-markdownParser.use(subscriptPlugin)
+markdownParser.use(supscriptPlugin)
 markdownParser.use(spoilerPlugin)
 
 export function parseMarkdownToHtml(markdownString) {
   return markdownParser.render(markdownString)
-}
-
-function subscriptPlugin(markdown) {
-  const pattern = /\^\((.*?)\)/g
-
-  markdown.core.ruler.push('subscript', function (state) {
-    state.tokens.forEach((topLevelToken) => {
-      if (topLevelToken.type !== 'inline') return
-
-      topLevelToken.children.forEach((token) => {
-        if (token.type === 'text' && pattern.test(token.content)) {
-          token.content = token.content.replace(
-            pattern,
-            (match, p1) => `<sup>${p1}</sup>`,
-          )
-        }
-      })
-    })
-  })
 }
 
 // state represents the parsed document as a JS object that mirrors the HTML tree structure
