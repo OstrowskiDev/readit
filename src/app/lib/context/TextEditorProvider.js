@@ -4,24 +4,16 @@ const TextEditorContext = createContext()
 
 export function TextEditorProvider({
   children,
-  toggleEditor,
-  setToggleEditor,
-  htmlString,
-  setHtmlString,
-  markdownString,
-  setMarkdownString,
-  onInputChange,
+  formData,
+  setFormData,
+  onContentChange,
 }) {
   return (
     <TextEditorContext.Provider
       value={{
-        toggleEditor,
-        setToggleEditor,
-        htmlString,
-        setHtmlString,
-        markdownString,
-        setMarkdownString,
-        onInputChange,
+        formData,
+        setFormData,
+        onContentChange,
       }}
     >
       {children}

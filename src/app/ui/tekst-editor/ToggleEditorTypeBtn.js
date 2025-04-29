@@ -3,30 +3,29 @@ import { parseHtmlToMarkdown } from '@/app/lib/text-editor/parseHtmlToMarkdown'
 import { parseMarkdownToHtml } from '@/app/lib/text-editor/parseMarkdownToHtml'
 
 export function ToggleEditorTypeBtn() {
-  const {
-    toggleEditor,
-    setToggleEditor,
-    htmlString,
-    setHtmlString,
-    markdownString,
-    setMarkdownString,
-  } = useTextEditorContext()
+  const { formData, setFormData } = useTextEditorContext()
 
   function handleToggleEditor() {
-    if (toggleEditor === 'formated_text_editor') {
-      const newMarkdownString = parseHtmlToMarkdown(htmlString)
-      setMarkdownString(newMarkdownString)
-      setToggleEditor('markdown_editor')
-    } else if (toggleEditor === 'markdown_editor') {
-      const newHtmlString = parseMarkdownToHtml(markdownString)
-      setHtmlString(newHtmlString)
-      setToggleEditor('formated_text_editor')
+    if (formData.toggleEditor === 'formated_text_editor') {
+      const newMarkdownString = parseHtmlToMarkdown(formData.content)
+      setFormData({
+        ...formData,
+        toggleEditor: 'markdown_editor',
+        markdown: newMarkdownString,
+      })
+    } else if (formData.toggleEditor === 'markdown_editor') {
+      const newHtmlString = parseMarkdownToHtml(formData.markdown)
+      setFormData({
+        ...formData,
+        toggleEditor: 'formated_text_editor',
+        content: newHtmlString,
+      })
     } else {
-      console.error('Invalid toggleEditor value:', toggleEditor)
+      console.error('Invalid toggleEditor value:', formData.toggleEditor)
     }
   }
 
-  const isMarkdown = toggleEditor === 'markdown_editor'
+  const isMarkdown = formData.toggleEditor === 'markdown_editor'
 
   return (
     <button

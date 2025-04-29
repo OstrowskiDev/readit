@@ -18,16 +18,13 @@ import { useTextEditorContext } from '@/app/lib/context/TextEditorProvider'
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false })
 
 export default function QuillEditor() {
-  const { htmlString, setHtmlString } = useTextEditorContext()
+  const { onContentChange, formData } = useTextEditorContext()
   const modules = {
     toolbar: {
       container: '#toolbar',
     },
   }
 
-  // changes in formats:
-  // instead of Quills strike that creates s, custom crossed blot creates del
-  // added custom spoiler blot
   const formats = [
     'header',
     'bold',
@@ -43,12 +40,12 @@ export default function QuillEditor() {
   ]
 
   return (
-    <div className="quill-container max-w-[800px] mx-auto">
-      <div className="quill-editor-container px-4 py-3 border border-gray-400 rounded-md">
+    <div className="quill-container">
+      <div className="quill-editor-container min-h-[300px] px-4 py-3 rounded-md">
         <QuillCustomToolbar />
         <ReactQuill
-          value={htmlString}
-          onChange={setHtmlString}
+          value={formData?.content}
+          onChange={onContentChange}
           modules={modules}
           formats={formats}
           theme="snow"

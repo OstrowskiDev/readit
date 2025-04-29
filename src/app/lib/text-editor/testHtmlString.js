@@ -27,14 +27,5 @@ const testHtmlString = `
 </blockquote>
 <pre><code class="language-js">console.log('Kod blokowy');
 </code></pre>
-<table>
-<thead>
-<tr><th>Kolumna 1</th><th>Kolumna 2</th></tr>
-</thead>
-<tbody>
-<tr><td>A</td><td>B</td></tr>
-<tr><td>C</td><td>D</td></tr>
-</tbody>
-</table>
 `
 export default testHtmlString

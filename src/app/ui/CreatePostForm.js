@@ -8,6 +8,8 @@ import { hasErrors } from '../lib/security/hasErrors'
 import { validatePost } from '../lib/security/validatePost'
 import { useToastContext } from '../lib/toasts/ToastProvider'
 import { CreatePostFormBtns } from './buttons/CreatePostFormBtns'
+import TextEditor from './tekst-editor/TextEditor'
+import { parseMarkdownToHtml } from '../lib/text-editor/parseMarkdownToHtml'
 
 export function CreatePostForm({
   isCreateFormVis,
@@ -20,7 +22,12 @@ export function CreatePostForm({
     content: { message: [] },
   }
 
-  const [formData, setFormData] = useState({ title: '', content: '' })
+  const [formData, setFormData] = useState({
+    title: '',
+    content: '',
+    markdown: '',
+    toggleEditor: 'formated_text_editor',
+  })
   const [imageFile, setImageFile] = useState(null)
   const [wasSubmitted, setWasSubmitted] = useState(false)
   const [fieldValidity, setFieldValidity] = useState(validationObject)
@@ -105,18 +112,36 @@ export function CreatePostForm({
     setPosts(oldPosts)
   }
 
+  function onTitleChange(event) {
+    setFormData({ ...formData, title: event.target.value })
+  }
+
+  function onContentChange(string) {
+    console.log('content change triggered! string:', string)
+    setFormData({ ...formData, content: string })
+  }
+
   function onInputChange(e) {
+    console.log('on input chagne triggered')
+
     const htmlString = !e.target ? e : null
     if (htmlString) {
-      setFormData({ topic: formData.topic, content: htmlString })
+      console.log('adding html string to content')
+      setFormData({ ...formData, content: htmlString })
     } else {
-      setFormData({ topic: e.target.value, content: formData.content })
+      console.log('adding html string to content')
+      setFormData({ ...formData, title: e.target.value })
     }
   }
 
   async function onSubmit() {
     if (!session) return signIn()
     setWasSubmitted(true)
+
+    if (formData.toggleEditor === 'markdown_editor') {
+      const newHtmlString = parseMarkdownToHtml(formData.markdown)
+      setFormData({ ...formData, content: newHtmlString })
+    }
 
     if (hasErrors(fieldValidity)) return
     // client side image validation  is done in AttachFileBtn component during attachment attempt
@@ -175,7 +200,7 @@ export function CreatePostForm({
               name="title"
               placeholder="Type post title here"
               value={formData.title}
-              onChange={onInputChange}
+              onChange={onTitleChange}
             />
             <div className="post-title-feedback flex flex-row justify-between">
               <label className="post-title-error text-xs text-red-500">
@@ -193,20 +218,27 @@ export function CreatePostForm({
             </div>
           </div>
           <div
-            className={`post-content-container p-2 mt-2 bg-gray-50 rounded-md ring-1 ${
+            className={`post-content-container pr-1 pb-4 mt-2 bg-gray-50 rounded-md ring-1 ${
               wasSubmitted && fieldValidity.content.message.length > 0
                 ? 'ring-red-400 focus-within:ring-red-500'
                 : 'ring-slate-300 focus-within:ring-blue-400'
             }`}
           >
-            <textarea
+            {/* <textarea
               className="post-content-input w-full h-32 border-none focus:outline-none bg-gray-50"
               id="content"
               name="content"
               placeholder="Type post content here"
               value={formData.content}
               onChange={onInputChange}
+            /> */}
+
+            <TextEditor
+              onContentChange={onContentChange}
+              formData={formData}
+              setFormData={setFormData}
             />
+
             <CreatePostFormBtns
               onCancelClick={onCancelClick}
               onSubmit={onSubmit}
