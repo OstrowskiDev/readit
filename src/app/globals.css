@@ -109,97 +109,91 @@ html {
   transform: translateY(0);
 }
 
-/* Markdown elements styling */
-.markdown h1 {
-  font-size: 2em;
-  margin: 0.67em 0;
-  font-weight: bold;
+/***** Rendered HTML Elements Styles *****/
+/* React Quill WYGIWYS Visual Overwrites */
+
+.render-html h2 {
+  font-size: 1.25em !important;
+  margin: 0.6em 0 !important;
+  font-weight: bold !important;
 }
 
-.markdown h2 {
-  font-size: 1.5em;
-  margin: 0.75em 0;
-  font-weight: bold;
+.render-html p {
+  font-size: 1em !important;
+  margin-top: 0.5em !important;
+  margin-bottom: 0.5em !important;
+  line-height: 1.6 !important;
 }
 
-.markdown ul,
-.markdown ol {
-  margin: 1em 0;
-  padding-left: 40px;
+.render-html ul,
+.render-html ol {
+  margin: 1em 0 !important;
+  padding-left: 40px !important;
+  list-style-position: outside !important;
 }
 
-.markdown li {
-  display: list-item;
+.render-html li {
+  display: list-item !important;
+  margin-bottom: 0.25em !important;
 }
 
-.markdown blockquote {
-  margin: 1em 0;
-  padding-left: 1em;
-  border-left: 4px solid #ddd;
-  color: #555;
+.render-html ul {
+  list-style-type: disc !important;
 }
 
-.markdown pre {
-  background-color: #f5f5f5;
-  border-radius: 4px;
-  padding: 1em;
-  overflow-x: auto;
-  white-space: pre-wrap;
+.render-html ol {
+  list-style-type: decimal !important;
 }
 
-.markdown code {
-  background-color: #f5f5f5;
-  border-radius: 4px;
-  padding: 0.2em 0.4em;
-  font-size: 0.9em;
-  word-break: break-word;
+.render-html blockquote {
+  margin: 1em 0 !important;
+  padding-left: 1em !important;
+  border-left: 4px solid #ddd !important;
+  color: #555 !important;
 }
 
-.markdown a {
-  color: #1d4ed8; /* blue-600 */
-  text-decoration: none;
+.render-html pre {
+  background-color: #f5f5f5 !important;
+  border-radius: 4px !important;
+  padding: 1em !important;
+  overflow-x: auto !important;
+  white-space: pre-wrap !important;
 }
 
-.markdown a:hover {
-  text-decoration: underline;
+.render-html code {
+  background-color: #f5f5f5 !important;
+  border-radius: 4px !important;
+  padding: 0.2em 0.4em !important;
+  font-size: 0.9em !important;
+  word-break: break-word !important;
 }
 
-.markdown .spoiler, {
+.render-html a {
+  color: #1d4ed8 !important; /* blue-600 */
+  text-decoration: none !important;
+}
+
+.render-html a:hover {
+  text-decoration: underline !important;
+}
+mark.spoiler {
   background-color: #3b82f6; /* blue-500 */
   color: transparent;
   transition: color 0.2s;
   cursor: pointer;
 }
 
-.markdown .spoiler:hover {
+mark.spoiler:hover {
   color: white;
 }
 
-.markdown table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 1em;
-}
-
-.markdown th,
-.markdown td {
-  padding: 0.5em;
-  border: 1px solid #ddd;
-  text-align: left;
-}
-
-.markdown th {
-  background-color: #f0f0f0;
-  font-weight: bold;
-}
-
-.markdown .inline-code {
+.render-html .inline-code {
   background-color: #f5f5f5;
   padding: 0.2em 0.4em;
   border-radius: 4px;
 }
 
-.markdown hr {
+.render-html hr {
   border: 0;
   border-top: 2px solid #ddd;
   margin: 1em 0;
@@ -207,6 +201,16 @@ html {
 
 
 /* React Quill Overwrites */
+
+.ql-editor p {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  line-height: 1.6;
+}
+
+div.ql-editor {
+  padding-left: 0px !important;
+}
 
 .ql-editor {
   font-size: 1rem !important; 
@@ -221,21 +225,9 @@ html {
   padding: 0px 15px 10px 15px !important;
 }
 
-
-.ql-editor .ql-spoiler {
-  background-color: #3b82f6; /* blue-500 */
-  color: transparent;
-  transition: color 0.2s;
-  cursor: pointer;
-}
-
-.ql-editor .ql-spoiler:hover {
-  color: white;
-}
-
 .ql-toolbar {
   border: none !important;
-  padding: 0px 0px 20px 0px !important;
+  padding: 0px 0px 6px 0px !important;
 }
 
 .ql-toolbar > * {

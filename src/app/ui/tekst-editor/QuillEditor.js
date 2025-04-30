@@ -41,7 +41,7 @@ export default function QuillEditor() {
 
   return (
     <div className="quill-container">
-      <div className="quill-editor-container min-h-[300px] px-4 py-3 rounded-md">
+      <div className="quill-editor-container render-html min-h-[300px] px-4 py-3 rounded-md">
         <QuillCustomToolbar />
         <ReactQuill
           value={formData?.content}
