@@ -42,13 +42,18 @@ export function Post({
           setDeleted={setDeleted}
         >
           <div className={`relative w-full ${deleted ? 'hidden' : ''}`}>
-            <a
-              href={`/posts/post/${postId}`}
+            <div
               className="post-container flex flex-col justify-between
               py-2 md:py-1 px-4 md:my-2 md:rounded-md md:shadow-center-md
               border-t md:border-2 border-gray-300 md:border-white hover:border-blue-300
               md:hover:shadow-center-lg hover:cursor-pointer hover:outline-red-50"
             >
+              {/* Post Anchor */}
+              <a
+                className="absolute inset-0"
+                href={`/posts/post/${postId}`}
+              ></a>
+
               {/* Post header */}
               <PostHeader author={post.authorData} />
 
@@ -95,7 +100,7 @@ export function Post({
                 postDislikes={post.dislikes}
                 enableCommentBtn={enableCommentBtn}
               />
-            </a>
+            </div>
             {/* user infobox on hover */}
             <Suspense fallback={<UserInfoboxLoader />}>
               {isUserHovered && (
@@ -112,3 +117,15 @@ export function Post({
     </>
   )
 }
+
+;<a
+  data-ks-id="t3_1ka9pj0"
+  slot="full-post-link"
+  class="absolute inset-0"
+  href="/r/VintageStory/comments/1ka9pj0/i_really_love_world_generation_in_this_game/"
+  target="_self"
+>
+  <faceplate-screen-reader-content>
+    I really love world generation in this game sometimes.
+  </faceplate-screen-reader-content>
+</a>
