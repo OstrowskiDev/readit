@@ -1,14 +1,14 @@
 'use client'
 
-import { Suspense, lazy, useState } from 'react'
+import { useState } from 'react'
 import { PostFooter } from './PostFooter'
 import { PostContextProvider } from '../lib/context/PostContextProvider'
 import { PostHeader } from './PostHeader'
-import { UserInfoboxLoader } from './loaders/UserInfoboxLoader'
 import useMouseHover from '../lib/hooks/useMouseHover'
-import { ImageShimmerAnimated } from './loaders/ImageShimmerAnimated'
-import { PostContent } from './PostContent'
-const LazyUserInfobox = lazy(() => import('./UserInfobox.js'))
+import { UserInfoboxWrapper } from './UserInfoboxWrapper'
+import { PostAnchor } from './PostAnchor'
+import { PostTitle } from './PostTitle'
+import { PostBody } from './PostBody'
 
 export function Post({
   postId,
@@ -23,7 +23,6 @@ export function Post({
 }) {
   const { isUserHovered, handleMouseEnter, handleMouseLeave } = useMouseHover()
   const [deleted, setDeleted] = useState(false)
-  const [isLoading, setIsLoading] = useState(true)
 
   return (
     <>
@@ -48,51 +47,15 @@ export function Post({
               border-t md:border-2 border-gray-300 md:border-white hover:border-blue-300
               md:hover:shadow-center-lg hover:cursor-pointer hover:outline-red-50"
             >
-              {/* Post Anchor */}
-              <a
-                className="absolute inset-0"
-                href={`/posts/post/${postId}`}
-              ></a>
-
-              {/* Post header */}
+              <PostAnchor postId={postId} />
               <PostHeader author={post.authorData} />
-
-              {/* Post title */}
-              <div className="post-title-container flex justify-between py-2">
-                <h2 className="post-title text-xl font-semibold">
-                  {post.title}
-                </h2>
-              </div>
-
-              {/* Post body */}
-              {hasImage ? (
-                <div className="post-image-container relative aspect-[16/9] w-full overflow-hidden rounded-md bg-gray-200">
-                  {isLoading && (
-                    <div className="post-image-container flex justify-center  aspect-[16/9] w-full bg-gray-200 rounded-md relative">
-                      <ImageShimmerAnimated />
-                    </div>
-                  )}
-
-                  <img
-                    className="post-image relative z-10  h-full w-full object-contain"
-                    src={`/api/images/${postId}.${imageExtension}`}
-                    alt="post image"
-                    onLoad={() => setIsLoading(false)}
-                    onError={() => setIsLoading(false)}
-                  />
-
-                  <img
-                    src={`/api/images/${postId}.${imageExtension}`}
-                    alt=""
-                    aria-hidden="true"
-                    className="post-image-blur absolute inset-0 h-full w-full object-cover scale-110 blur-md brightness-65"
-                  />
-                </div>
-              ) : (
-                <PostContent content={post.content} />
-              )}
-
-              {/* Post footer */}
+              <PostTitle title={post.title} />
+              <PostBody
+                hasImage={hasImage}
+                postId={postId}
+                imageExtension={imageExtension}
+                content={post.content}
+              />
               <PostFooter
                 postId={postId}
                 commentNo={post.commentsCount}
@@ -101,31 +64,16 @@ export function Post({
                 enableCommentBtn={enableCommentBtn}
               />
             </div>
-            {/* user infobox on hover */}
-            <Suspense fallback={<UserInfoboxLoader />}>
-              {isUserHovered && (
-                <LazyUserInfobox
-                  author={post.authorData}
-                  handleMouseEnter={handleMouseEnter}
-                  handleMouseLeave={handleMouseLeave}
-                />
-              )}
-            </Suspense>
+
+            <UserInfoboxWrapper
+              authorData={post.authorData}
+              handleMouseEnter={handleMouseEnter}
+              handleMouseLeave={handleMouseLeave}
+              isUserHovered={isUserHovered}
+            />
           </div>
         </PostContextProvider>
       )}
     </>
   )
 }
-
-;<a
-  data-ks-id="t3_1ka9pj0"
-  slot="full-post-link"
-  class="absolute inset-0"
-  href="/r/VintageStory/comments/1ka9pj0/i_really_love_world_generation_in_this_game/"
-  target="_self"
->
-  <faceplate-screen-reader-content>
-    I really love world generation in this game sometimes.
-  </faceplate-screen-reader-content>
-</a>
