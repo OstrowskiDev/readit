@@ -5,11 +5,11 @@ import { signIn, useSession } from 'next-auth/react'
 import { useEffect, useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 import { hasErrors } from '../lib/security/hasErrors'
-import { validatePost } from '../lib/security/validatePost'
+import { validatePost, validationObject } from '../lib/security/validatePost'
+import { parseMarkdownToHtml } from '../lib/text-editor/parseMarkdownToHtml'
 import { useToastContext } from '../lib/toasts/ToastProvider'
 import { CreatePostFormBtns } from './buttons/CreatePostFormBtns'
 import TextEditor from './tekst-editor/TextEditor'
-import { parseMarkdownToHtml } from '../lib/text-editor/parseMarkdownToHtml'
 
 export function CreatePostForm({
   isCreateFormVis,
@@ -17,17 +17,14 @@ export function CreatePostForm({
   posts,
   setPosts,
 }) {
-  const validationObject = {
-    title: { message: [] },
-    content: { message: [] },
-  }
-
-  const [formData, setFormData] = useState({
+  const initialFormData = {
     title: '',
     content: '',
     markdown: '',
     toggleEditor: 'formated_text_editor',
-  })
+  }
+
+  const [formData, setFormData] = useState(initialFormData)
   const [imageFile, setImageFile] = useState(null)
   const [wasSubmitted, setWasSubmitted] = useState(false)
   const [fieldValidity, setFieldValidity] = useState(validationObject)
@@ -117,21 +114,7 @@ export function CreatePostForm({
   }
 
   function onContentChange(string) {
-    console.log('content change triggered! string:', string)
     setFormData({ ...formData, content: string })
-  }
-
-  function onInputChange(e) {
-    console.log('on input chagne triggered')
-
-    const htmlString = !e.target ? e : null
-    if (htmlString) {
-      console.log('adding html string to content')
-      setFormData({ ...formData, content: htmlString })
-    } else {
-      console.log('adding html string to content')
-      setFormData({ ...formData, title: e.target.value })
-    }
   }
 
   async function onSubmit() {
@@ -173,8 +156,9 @@ export function CreatePostForm({
     setResponse(serverResponse)
     if (serverResponse.state !== 'success') return
     setIsCreateFormVis(!isCreateFormVis)
-    setFormData({ title: '', content: '' })
+    setFormData(initialFormData)
     setImageFile(null)
+    setWasSubmitted(false)
   }
 
   function onCancelClick() {
@@ -224,15 +208,6 @@ export function CreatePostForm({
                 : 'ring-slate-300 focus-within:ring-blue-400'
             }`}
           >
-            {/* <textarea
-              className="post-content-input w-full h-32 border-none focus:outline-none bg-gray-50"
-              id="content"
-              name="content"
-              placeholder="Type post content here"
-              value={formData.content}
-              onChange={onInputChange}
-            /> */}
-
             <TextEditor
               onContentChange={onContentChange}
               formData={formData}
