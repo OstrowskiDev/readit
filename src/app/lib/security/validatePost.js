@@ -1,6 +1,11 @@
 import validator from 'validator'
 import { validateField } from './validationUtils'
 //!!!! add post title and content validation, make it same as that one in mongoose schema
+export const validationObject = {
+  title: { message: [] },
+  content: { message: [] },
+}
+
 export function validatePost(formData) {
   const validationResults = {
     title: { message: [], sanitized: '' },

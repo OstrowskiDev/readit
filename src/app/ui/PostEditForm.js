@@ -4,15 +4,12 @@ import { useEffect, useState } from 'react'
 import { updatePost } from '../lib/actions/post'
 import { usePostContext } from '../lib/context/PostContextProvider'
 import { hasErrors } from '../lib/security/hasErrors'
-import { validatePost } from '../lib/security/validatePost'
+import { validatePost, validationObject } from '../lib/security/validatePost'
 import { useToastContext } from '../lib/toasts/ToastProvider'
 import { EditFormBtns } from './buttons/EditFormBtns'
+import TextEditor from './tekst-editor/TextEditor'
 
 export function PostEditForm({ isEditFormVisible, setIsEditFormVisible }) {
-  const validationObject = {
-    title: { message: [] },
-    content: { message: [] },
-  }
   const [fieldValidity, setFieldValidity] = useState(validationObject)
   const { toastFunctions: toast } = useToastContext()
   const { post, setPost } = usePostContext()
@@ -22,6 +19,8 @@ export function PostEditForm({ isEditFormVisible, setIsEditFormVisible }) {
   const [formData, setFormData] = useState({
     title: post.title,
     content: post.content,
+    markdown: '',
+    toggleEditor: 'formated_text_editor',
   })
 
   useEffect(() => {
@@ -45,6 +44,14 @@ export function PostEditForm({ isEditFormVisible, setIsEditFormVisible }) {
     }
   }, [response])
 
+  function onTitleChange(event) {
+    setFormData({ ...formData, title: event.target.value })
+  }
+
+  function onContentChange(string) {
+    setFormData({ ...formData, content: string })
+  }
+
   function handleInputChange(event) {
     const { name, value } = event.target
     setFormData((prevState) => ({ ...prevState, [name]: value }))
@@ -66,7 +73,7 @@ export function PostEditForm({ isEditFormVisible, setIsEditFormVisible }) {
       return
     }
 
-    // client side image validation is already done in AttachImageBtn component
+    // client side image validation is done in AttachImageBtn component
 
     let imageData = new FormData()
     if (imageFile?.status === 'already exists') {
@@ -120,7 +127,7 @@ export function PostEditForm({ isEditFormVisible, setIsEditFormVisible }) {
               id="title"
               name="title"
               value={formData.title}
-              onChange={handleInputChange}
+              onChange={onTitleChange}
             />
             <div className="post-title-feedback flex flex-row justify-between">
               <label className="post-title-error text-xs text-red-500">
@@ -138,13 +145,12 @@ export function PostEditForm({ isEditFormVisible, setIsEditFormVisible }) {
             <h3 className="post-edit-form-label ml-2 mt-4 text-md text-gray-800 ">
               content:
             </h3>
+
             <div className="change-border-on-child-focus p-2 mb-4 bg-gray-50 border border-slate-300 rounded-md">
-              <textarea
-                className="post-content-input w-full h-32 border-none focus:outline-none bg-gray-50"
-                id="content"
-                name="content"
-                value={formData.content}
-                onChange={handleInputChange}
+              <TextEditor
+                onContentChange={onContentChange}
+                formData={formData}
+                setFormData={setFormData}
               />
             </div>
             <EditFormBtns

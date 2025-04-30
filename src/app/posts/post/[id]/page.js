@@ -1,26 +1,25 @@
 'use client'
 
-import { getPostCommentsData, getPostData } from '@/app/lib/db'
-import { Comment } from '@/app/ui/Comment'
-import { PostFooter } from '@/app/ui/PostFooter'
-import { Suspense, lazy, useEffect, useState } from 'react'
-import { Loader } from '@/app/ui/loaders/Loader'
-import { PostContextProvider } from '@/app/lib/context/PostContextProvider'
-import { PostHeader } from '@/app/ui/PostHeader'
-import { PostCommentShimmer } from '@/app/ui/loaders/PostCommentShimmer'
-import useMouseHover from '@/app/lib/hooks/useMouseHover'
-import { UserInfoboxLoader } from '@/app/ui/loaders/UserInfoboxLoader'
-import { PostEditForm } from '@/app/ui/PostEditForm'
 import { AuthorsDataProvider } from '@/app/lib/context/AuthorsDataProvider'
-import { ImageShimmerAnimated } from '@/app/ui/loaders/ImageShimmerAnimated'
-const LazyUserInfobox = lazy(() => import('@/app/ui/UserInfobox.js'))
+import { PostContextProvider } from '@/app/lib/context/PostContextProvider'
+import { getPostCommentsData, getPostData } from '@/app/lib/db'
+import useMouseHover from '@/app/lib/hooks/useMouseHover'
+import { PostCommentSection } from '@/app/ui/PostCommentsSection'
+import { PostContent } from '@/app/ui/PostContent'
+import { PostEditForm } from '@/app/ui/PostEditForm'
+import { PostFooter } from '@/app/ui/PostFooter'
+import { PostHeader } from '@/app/ui/PostHeader'
+import { PostImage } from '@/app/ui/PostImage'
+import { UserInfoboxWrapper } from '@/app/ui/UserInfoboxWrapper'
+import { Loader } from '@/app/ui/loaders/Loader'
+import { PostCommentShimmer } from '@/app/ui/loaders/PostCommentShimmer'
+import { useEffect, useState } from 'react'
 
 export default function PostPage({ params }) {
   const postId = params.id
   const [post, setPost] = useState(null)
   const [comments, setComments] = useState(null)
   const [authorsData, setAuthorsData] = useState([])
-  const [imageIsLoading, setImageIsLoading] = useState(true)
   const [isCommFormVisible, setIsCommFormVisible] = useState(false)
   const [isEditFormVisible, setIsEditFormVisible] = useState(false)
   const [deleted, setDeleted] = useState(false)
@@ -49,7 +48,6 @@ export default function PostPage({ params }) {
       setPost(postData)
       setComments(commentsData)
     }
-
     fetchData()
   }, [])
 
@@ -94,61 +92,33 @@ export default function PostPage({ params }) {
             <div className="post-container relative flex flex-col justify-between w-full pt-4 px-4 md:pb-4">
               {/* Post header */}
               <PostHeader author={post.authorData} />
-              <div className="post-header flex justify-between mb-4">
-                <h2 className="post-title text-2xl pt-4 font-semibold">
+              <div className="post-title-container flex justify-between mb-4">
+                <h2 className="post-title-text text-2xl pt-4 font-semibold">
                   {post.title}
                 </h2>
               </div>
 
-              {/* user infobox on hover */}
-              <Suspense fallback={<UserInfoboxLoader />}>
-                {isUserHovered && (
-                  <LazyUserInfobox
-                    author={post.authorData}
-                    handleMouseEnter={handleMouseEnter}
-                    handleMouseLeave={handleMouseLeave}
-                  />
-                )}
-              </Suspense>
+              <UserInfoboxWrapper
+                authorData={post.authorData}
+                handleMouseEnter={handleMouseEnter}
+                handleMouseLeave={handleMouseLeave}
+                isUserHovered={isUserHovered}
+              />
 
-              {/* Post image */}
               {post.has_image && (
-                <div className="post-image-container relative aspect-[16/9] w-full mb-6 overflow-hidden rounded-md bg-gray-200">
-                  {imageIsLoading && (
-                    <div className="post-image-container flex justify-center  aspect-[16/9] w-full bg-gray-200 rounded-md relative">
-                      <ImageShimmerAnimated />
-                    </div>
-                  )}
-
-                  <img
-                    className="post-image relative z-10  h-full w-full object-contain"
-                    src={`/api/images/${postId}.${post.image_extension}`}
-                    alt="post image"
-                    onLoad={() => setImageIsLoading(false)}
-                    onError={() => setImageIsLoading(false)}
-                  />
-
-                  <img
-                    className="post-image-blur absolute inset-0 h-full w-full object-cover scale-110 blur-md brightness-65"
-                    src={`/api/images/${postId}.${post.image_extension}`}
-                    alt=""
-                    aria-hidden="true"
-                  />
-                </div>
+                <PostImage
+                  postId={postId}
+                  imageExtension={post.image_extension}
+                />
               )}
 
-              {/* Post body */}
-              <pre className="post-content font-sans whitespace-pre-wrap">
-                {post.content}
-              </pre>
+              <PostContent content={post.content} />
 
-              {/* Post edit form */}
               <PostEditForm
                 isEditFormVisible={isEditFormVisible}
                 setIsEditFormVisible={setIsEditFormVisible}
               />
 
-              {/* Post footer */}
               <PostFooter
                 postId={postId}
                 commentNo={comments.length}
@@ -159,33 +129,8 @@ export default function PostPage({ params }) {
                 setIsCommFormVisible={setIsCommFormVisible}
               />
             </div>
-            {/* Comments section */}
-            <div className="post-comments-container md:px-5 md:pb-5 bg-white">
-              {post.comments && (
-                <div className="comments-container below-md:relative">
-                  <h3 className="comments-header text-lg pt-1 below-md:ml-4 font-semibold">
-                    Comments:
-                  </h3>
-                  <div className="comments-list pr-2 pl-7 pb-6 mt-1 bg-gray-100 md:rounded-md">
-                    {post.comments?.map((commentId) => {
-                      const comment = comments.find((c) => c._id === commentId)
-                      return (
-                        <Comment
-                          key={commentId}
-                          comment={comment}
-                          comments={comments}
-                          setComments={setComments}
-                          commentId={commentId}
-                          depth={0}
-                          postId={postId}
-                          renderChildren={true}
-                        />
-                      )
-                    })}
-                  </div>
-                </div>
-              )}
-            </div>
+
+            <PostCommentSection />
           </div>
         </div>
         {deleted && <Loader />}
