@@ -15,7 +15,7 @@ const customSchema = {
     'ol',
     'blockquote',
     'pre',
-    'spoiler',
+    'mark',
     'table',
     'tbody',
     'td',
@@ -26,7 +26,7 @@ const customSchema = {
   ],
   attributes: {
     a: ['href'],
-    spoiler: ['className'],
+    mark: ['className'],
   },
 }
 

@@ -12,10 +12,11 @@ export function spoilerPlugin(markdown) {
       // jeśli jest typu tekst to zostaje sprawdzony czy posiada poszukiwany pattern
       // jeśli nie posiada patternu jest dodawany jako jeden token tekstowy do newChildren
       // jeśli posiada pattern to jest przekształcany na od 3 do 5 nowych tokenów w zależności od przypadu, tokeny są dodawane do newChildren
-      // 1) tekst poprzedzający <spoiler> // token tekstowy
-      // 2) tag otwierajacy <spoiler> // token open spoiler
+      // docelowy format: <mark class='spoiler'>ukryty tekst</mark>
+      // 1) tekst poprzedzający <mark> // token tekstowy
+      // 2) tag otwierajacy <mark> // token open mark
       // 3) zawartość tekstową wewnątrz tagu // token tekstowy
-      // 4) tag zamykający </spoiler> // token close spoiler
+      // 4) tag zamykający </mark> // token close mark
       // 5) tekst znajdujacy się za spoilerem (jeśli istnieje) // token tekstowy
 
       const newChildren = []
@@ -48,8 +49,8 @@ export function spoilerPlugin(markdown) {
           }
 
           // Otwierający tag
-          const spoilerOpen = new state.Token('spoiler_open', 'spoiler', 1)
-          spoilerOpen.attrs = [['class', 'ql-spoiler']]
+          const spoilerOpen = new state.Token('mark_open', 'mark', 1)
+          spoilerOpen.attrs = [['class', 'spoiler']]
           newChildren.push(spoilerOpen)
 
           // Tekst spoilera
@@ -58,7 +59,7 @@ export function spoilerPlugin(markdown) {
           newChildren.push(spoilerContent)
 
           // Zamykający tag
-          const spoilerClose = new state.Token('spoiler_close', 'spoiler', -1)
+          const spoilerClose = new state.Token('mark_close', 'mark', -1)
           newChildren.push(spoilerClose)
 
           lastIndex = matchEnd

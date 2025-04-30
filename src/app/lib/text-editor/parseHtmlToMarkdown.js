@@ -13,7 +13,7 @@ turndownService.addRule('superscript', {
 
 turndownService.addRule('spoiler', {
   filter: (node) =>
-    node.nodeName === 'SPOILER' && node.classList.contains('ql-spoiler'),
+    node.nodeName === 'MARK' && node.classList.contains('spoiler'),
   replacement: (content) => `>!${content}!<`,
 })
 
