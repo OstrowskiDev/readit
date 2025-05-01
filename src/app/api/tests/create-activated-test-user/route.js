@@ -1,7 +1,7 @@
-import { connectToDatabase } from '@/app/lib/db'
-import { hashPassword } from '@/app/lib/security/hashPassword'
+import { connectToDatabase } from '@/lib/db'
+import { hashPassword } from '@/lib/security/hashPassword'
 import { NextResponse } from 'next/server'
-import User from '@/app/lib/models/User'
+import User from '@/lib/models/User'
 
 export async function POST(req) {
   try {

@@ -1,6 +1,6 @@
 'use client'
 
-import { filterPosts } from '@/app/lib/db'
+import { filterPosts } from '@/lib/db'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useState } from 'react'
 import { FilterForm } from './FilterForm'

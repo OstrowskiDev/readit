@@ -1,6 +1,6 @@
 'use client'
 
-import { validateEmail } from '@/app//lib/security/validateEmail'
+import { validateEmail } from '@/lib/security/validateEmail'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import axios from 'axios'

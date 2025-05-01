@@ -1,7 +1,7 @@
-import { usePostContext } from '@/app/lib/context/PostContextProvider'
+import { usePostContext } from '@/lib/context/PostContextProvider'
 import { ShareIco2 } from '../icons/ShareIco2'
 import { useEffect, useState } from 'react'
-import { useToastContext } from '@/app/lib/toasts/ToastProvider'
+import { useToastContext } from '@/lib/toasts/ToastProvider'
 
 export function SharePostBtn() {
   const [response, setResponse] = useState({

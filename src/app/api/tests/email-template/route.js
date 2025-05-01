@@ -1,6 +1,6 @@
 import sgMail from '@sendgrid/mail'
 import { NextResponse } from 'next/server'
-import { generateEmailBody } from '@/app/lib/emails/converted-to-html/ResetPassword'
+import { generateEmailBody } from '@/lib/emails/converted-to-html/ResetPassword'
 
 export async function POST() {
   const nodeEnv = process.env.NODE_ENV || 'production'

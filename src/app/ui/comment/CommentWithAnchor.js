@@ -1,5 +1,5 @@
 import { Comment } from '@/app/ui/comment/Comment'
-import { useMouseHover } from '@app/lib/hooks/useMouseHover'
+import { useMouseHover } from '@lib/hooks/useMouseHover'
 import { Suspense, lazy } from 'react'
 import { UserInfoboxLoader } from './loaders/UserInfoboxLoader'
 

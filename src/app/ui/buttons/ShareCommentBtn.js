@@ -1,5 +1,5 @@
-import { useCommentContext } from '@/app/lib/context/CommentContextProvider'
-import { useToastContext } from '@/app/lib/toasts/ToastProvider'
+import { useCommentContext } from '@/lib/context/CommentContextProvider'
+import { useToastContext } from '@/lib/toasts/ToastProvider'
 import { useEffect, useState } from 'react'
 import { ShareIco2 } from '../icons/ShareIco2'
 

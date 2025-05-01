@@ -1,6 +1,6 @@
-import { addRecoveryToken } from '@/app/lib/actions/user'
-import { validateEmail } from '@/app/lib/security/validateEmail'
-import sendPasswordResetEmail from '@/app/lib/sendgrid/sendPasswordResetEmail'
+import { addRecoveryToken } from '@/lib/actions/user'
+import { validateEmail } from '@/lib/security/validateEmail'
+import sendPasswordResetEmail from '@/lib/sendgrid/sendPasswordResetEmail'
 
 export async function POST(req) {
   try {

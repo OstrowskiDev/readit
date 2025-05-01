@@ -1,6 +1,6 @@
 'use client'
 
-import { filterFavorites } from '@/app/lib/db'
+import { filterFavorites } from '@/lib/db'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { FilterForm } from './FilterForm'
 import { useState } from 'react'

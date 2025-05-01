@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
-import { updateUserData } from '@/app/lib/actions/utils'
-import { validateAbout } from '@/app/lib/security/validateAbout'
+import { updateUserData } from '@/lib/actions/utils'
+import { validateAbout } from '@/lib/security/validateAbout'
 import { ProfileFormButtons } from './ProfileFormButtons'
 
 export function ProfileAboutForm({

@@ -2,7 +2,7 @@
 
 import { signIn, useSession } from 'next-auth/react'
 import { AttachIco } from '../icons/AttachIco'
-import validateImageFileClient from '@/app/lib/security/validateImageFileClient'
+import validateImageFileClient from '@/lib/security/validateImageFileClient'
 
 export function AttachFileBtn({ setImageFile, setResponse }) {
   const { data: session } = useSession()

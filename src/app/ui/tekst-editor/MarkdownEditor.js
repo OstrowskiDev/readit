@@ -1,6 +1,6 @@
 'use client'
 
-import { useTextEditorContext } from '@/app/lib/context/TextEditorProvider'
+import { useTextEditorContext } from '@/lib/context/TextEditorProvider'
 import { ToggleEditorTypeBtn } from './ToggleEditorTypeBtn'
 
 export function MarkdownEditor() {

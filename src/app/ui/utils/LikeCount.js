@@ -1,6 +1,6 @@
 'use client'
 
-import { useCommentContext } from '@/app/lib/context/CommentContextProvider'
+import { useCommentContext } from '@/lib/context/CommentContextProvider'
 
 export function LikeCount() {
   const { comment } = useCommentContext()

@@ -1,9 +1,9 @@
-import { NextResponse } from 'next/server'
-import { connectToDatabase } from '@/app/lib/db'
+import User from '@/lib/models/User'
 import sanitize from 'mongo-sanitize'
+import { NextResponse } from 'next/server'
+import { connectToDatabase } from '@/lib/db'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/app/api/auth/[...nextauth]/authOptions'
-import User from '@/app/lib/models/User'
 
 export async function GET(req, res) {
   // sanitize search parameters:

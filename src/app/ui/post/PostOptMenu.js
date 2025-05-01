@@ -1,7 +1,7 @@
 'use client'
 
-import { usePostContext } from '@/app/lib/context/PostContextProvider'
-import { useToastContext } from '@/app/lib/toasts/ToastProvider'
+import { usePostContext } from '@/lib/context/PostContextProvider'
+import { useToastContext } from '@/lib/toasts/ToastProvider'
 import { FavoritesBtn } from '@/app/ui/buttons/FavoritesBtn'
 import { useSession } from 'next-auth/react'
 import { useEffect, useState } from 'react'

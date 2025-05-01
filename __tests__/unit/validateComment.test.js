@@ -1,4 +1,4 @@
-import { validateCommentContent } from '../../src/app/lib/security/validateComment'
+import { validateCommentContent } from '../../src/lib/security/validateComment'
 
 describe('validateCommentContent', () => {
   test('should return error if content is empty', () => {

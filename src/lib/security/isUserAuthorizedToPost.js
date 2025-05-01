@@ -1,5 +1,5 @@
-import Post from '@/app/lib/models/Post'
-import { connectToDatabase } from '@/app/lib/db'
+import Post from '@/lib/models/Post'
+import { connectToDatabase } from '@/lib/db'
 
 export async function isUserAuthorizedToPost(session, postId) {
   const userId = session?.user?.id

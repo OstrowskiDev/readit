@@ -1,8 +1,8 @@
 'use server'
 
 import { v4 as uuidv4 } from 'uuid'
-import { connectToDatabase } from '@/app/lib/db'
-import User from '@/app/lib/models/User'
+import { connectToDatabase } from '@/lib/db'
+import User from '@/lib/models/User'
 import { validatePasswords } from '../security/validatePasswords'
 import { hashPassword } from '../security/hashPassword'
 import { toast, resetToast, setToast } from '../toasts/ToastUtils'

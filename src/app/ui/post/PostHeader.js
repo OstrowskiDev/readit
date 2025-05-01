@@ -1,7 +1,7 @@
 'use client'
 
-import { Avatar } from '@/app/lib/avatars/Avatar'
-import { usePostContext } from '@/app/lib/context/PostContextProvider'
+import { Avatar } from '@/lib/avatars/Avatar'
+import { usePostContext } from '@/lib/context/PostContextProvider'
 import { TimeAgo } from '@/app/ui/utils/TimeAgo'
 import { useSession } from 'next-auth/react'
 import { useState } from 'react'

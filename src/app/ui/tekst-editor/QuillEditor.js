@@ -5,15 +5,15 @@
 /*  Quill instances can only run on clientent      */
 /*  Below imports have Quill instances             */
 /***************************************************/
-import '@/app/lib/react-quill/customIcons.js'
-import '@/app/lib/react-quill/spoilerBlot.js'
-import '@/app/lib/react-quill/crossedBlot.js'
+import '@/lib/react-quill/customIcons.js'
+import '@/lib/react-quill/spoilerBlot.js'
+import '@/lib/react-quill/crossedBlot.js'
 /***************************************************/
 
 import dynamic from 'next/dynamic'
 import 'react-quill/dist/quill.snow.css'
 import QuillCustomToolbar from './QuillCustomToolbar'
-import { useTextEditorContext } from '@/app/lib/context/TextEditorProvider'
+import { useTextEditorContext } from '@/lib/context/TextEditorProvider'
 
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false })
 

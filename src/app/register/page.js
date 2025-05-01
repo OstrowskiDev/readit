@@ -1,12 +1,12 @@
 'use client'
 
+import { validateSignUp } from '@/lib/security/validateSignUp'
+import { checkEmailAvailability } from '@/lib/actions/user'
+import { hasErrors } from '@/lib/security/hasErrors'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
-import Link from 'next/link'
-import { validateSignUp } from '../lib/security/validateSignUp'
 import axios from 'axios'
-import { checkEmailAvailability } from '../lib/actions/user'
-import { hasErrors } from '../lib/security/hasErrors'
+import Link from 'next/link'
 
 // !!!! do poprawy: podczas rejestracji po naciśnięciu przycisku register pojawia się błąd pod jednym z pól
 

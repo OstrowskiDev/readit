@@ -1,5 +1,5 @@
 import sgMail from '@sendgrid/mail'
-import { generateEmailBody } from '@/app/lib/emails/converted-to-html/ConfirmEmail'
+import { generateEmailBody } from '@/lib/emails/converted-to-html/ConfirmEmail'
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY)
 

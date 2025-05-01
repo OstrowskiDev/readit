@@ -1,7 +1,7 @@
 import {
   handleCommentFavorites,
   handlePostFavorites,
-} from '@/app/lib/actions/favorites'
+} from '@/lib/actions/favorites'
 import StarIco from '../icons/StarIco'
 
 export function FavoritesBtn({

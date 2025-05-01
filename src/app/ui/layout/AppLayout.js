@@ -1,6 +1,6 @@
 'use client'
 
-import { ToastProvider } from '@/app/lib/toasts/ToastProvider'
+import { ToastProvider } from '@/lib/toasts/ToastProvider'
 import NavigationLayout from './NavigationLayout'
 
 export default function AppLayout({ children }) {

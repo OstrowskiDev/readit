@@ -1,12 +1,12 @@
 'use client'
 
-import { handleCommentLike } from '@/app/lib/actions/likes'
+import { handleCommentLike } from '@/lib/actions/likes'
 import { LikeIco } from '../icons/LikeIco'
 import { LikeIcoActive } from '../icons/LikeIcoActive'
-import { useCommentContext } from '@/app/lib/context/CommentContextProvider'
+import { useCommentContext } from '@/lib/context/CommentContextProvider'
 import { signIn, useSession } from 'next-auth/react'
 import { useEffect, useState } from 'react'
-import { useToastContext } from '@/app/lib/toasts/ToastProvider'
+import { useToastContext } from '@/lib/toasts/ToastProvider'
 
 export function CommentLikeBtn({ styles }) {
   const { commentId, comment, comments, setComments } = useCommentContext()

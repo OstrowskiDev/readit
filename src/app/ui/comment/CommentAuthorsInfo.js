@@ -1,5 +1,5 @@
-import { Avatar } from '@/app/lib/avatars/Avatar'
-import { useMouseHover } from '@/app/lib/hooks/useMouseHover'
+import { Avatar } from '@/lib/avatars/Avatar'
+import { useMouseHover } from '@/lib/hooks/useMouseHover'
 import { UserInfoboxLoader } from '../loaders/UserInfoboxLoader'
 import { Suspense, lazy } from 'react'
 import { TimeAgo } from '../utils/TimeAgo'

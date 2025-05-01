@@ -1,6 +1,6 @@
 'use client'
 
-import { TextEditorProvider } from '@/app/lib/context/TextEditorProvider'
+import { TextEditorProvider } from '@/lib/context/TextEditorProvider'
 import { MarkdownEditor } from '@/app/ui/tekst-editor/MarkdownEditor'
 import dynamic from 'next/dynamic'
 import 'react-quill/dist/quill.snow.css'

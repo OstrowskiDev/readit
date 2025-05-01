@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import ResetPasswordEmail from '../../lib/emails/previews/ResetPassword'
+import ResetPasswordEmail from '@/lib/emails/previews/ResetPassword'
 
 export default function MailTemplateConfirmEmail() {
   const router = useRouter()

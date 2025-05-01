@@ -2,8 +2,8 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { signIn, useSession } from 'next-auth/react'
-import { getUserPrivate } from '@/app/lib/db'
-import { countUserComments, countUserPosts } from '@/app/lib/actions/utils'
+import { getUserPrivate } from '@/lib/db'
+import { countUserComments, countUserPosts } from '@/lib/actions/utils'
 import { Loader } from '../ui/loaders/Loader'
 import { MyProfileShimmer } from '../ui/loaders/MyProfileShimmer'
 import { ProfileAbout } from '../ui/profile/ProfileAbout'

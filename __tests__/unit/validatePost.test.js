@@ -1,7 +1,7 @@
 import {
   validatePostTitle,
   validatePostContent,
-} from '../../src/app/lib/security/validatePost'
+} from '../../src/lib/security/validatePost'
 
 describe('validatePostTitle', () => {
   test('should return error if title is empty', () => {

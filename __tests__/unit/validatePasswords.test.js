@@ -1,4 +1,4 @@
-import { validatePasswords } from '../../src/app/lib/security/validatePasswords'
+import { validatePasswords } from '../../src/lib/security/validatePasswords'
 
 describe('validatePasswords func', () => {
   test('should return error message when form fields are empty', () => {

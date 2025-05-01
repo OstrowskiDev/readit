@@ -1,6 +1,6 @@
 'use client'
 
-import { CommentContextProvider } from '@/app/lib/context/CommentContextProvider'
+import { CommentContextProvider } from '@/lib/context/CommentContextProvider'
 import { usePathname } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
 import { CommentAuthorsInfo } from './CommentAuthorsInfo'

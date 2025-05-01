@@ -1,7 +1,7 @@
 'use client'
 
-import { AuthorsDataProvider } from '@/app/lib/context/AuthorsDataProvider'
-import { filterFavorites } from '@/app/lib/db'
+import { AuthorsDataProvider } from '@/lib/context/AuthorsDataProvider'
+import { filterFavorites } from '@/lib/db'
 import { FilterBtn } from '@/app/ui/buttons/FilterBtn'
 import { Comment } from '@/app/ui/comment/Comment'
 import { Loader } from '@/app/ui/loaders/Loader'

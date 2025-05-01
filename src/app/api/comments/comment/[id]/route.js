@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
-import { connectToDatabase } from '@/app/lib/db'
-import Comment from '@/app/lib/models/Comment'
+import { connectToDatabase } from '@/lib/db'
+import Comment from '@/lib/models/Comment'
 import validator from 'validator'
 
 export async function GET(request, { params }) {

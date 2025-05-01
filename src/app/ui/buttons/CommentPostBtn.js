@@ -1,4 +1,4 @@
-import { usePostContext } from '@/app/lib/context/PostContextProvider'
+import { usePostContext } from '@/lib/context/PostContextProvider'
 import { signIn, useSession } from 'next-auth/react'
 import { usePathname, useRouter } from 'next/navigation'
 

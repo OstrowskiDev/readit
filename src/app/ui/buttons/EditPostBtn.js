@@ -1,6 +1,6 @@
 'use client'
 
-import { usePostContext } from '@/app/lib/context/PostContextProvider'
+import { usePostContext } from '@/lib/context/PostContextProvider'
 import { EditIco } from '../icons/EditIco'
 import { usePathname, useRouter } from 'next/navigation'
 

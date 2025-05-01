@@ -1,6 +1,6 @@
-import { activateAccount } from '@/app/lib/actions/user'
-import { connectToDatabase } from '@/app/lib/db'
-import User from '@/app/lib/models/User'
+import { activateAccount } from '@/lib/actions/user'
+import { connectToDatabase } from '@/lib/db'
+import User from '@/lib/models/User'
 
 export async function POST(req) {
   const secret = process.env.TEST_USER_SECRET

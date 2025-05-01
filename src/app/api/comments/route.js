@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
-import { connectToDatabase } from '@/app/lib/db'
-import Comment from '@/app/lib/models/Comment'
+import { connectToDatabase } from '@/lib/db'
+import Comment from '@/lib/models/Comment'
 
 export const GET = async (request) => {
   try {
@@ -9,6 +9,8 @@ export const GET = async (request) => {
 
     return new NextResponse(JSON.stringify(comments), { status: 200 })
   } catch (error) {
-    return new NextResponse('Error in fetching comments' + error, { status: 500 })
+    return new NextResponse('Error in fetching comments' + error, {
+      status: 500,
+    })
   }
 }

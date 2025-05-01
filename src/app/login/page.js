@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react'
 import AlreadySignedIn from '../ui/AlreadySignedIn'
 import Link from 'next/link'
 import { ErrorTriangleIco } from '../ui/icons/ErrorTriangleIco'
-import { validateSignIn } from '../lib/security/validateSignIn'
+import { validateSignIn } from '@/lib/security/validateSignIn'
 
 export default function SignInForm() {
   const router = useRouter()

@@ -1,8 +1,8 @@
-import { usePostContext } from '@/app/lib/context/PostContextProvider'
-import { useToastContext } from '@/app/lib/toasts/ToastProvider'
+import { usePostContext } from '@/lib/context/PostContextProvider'
+import { useToastContext } from '@/lib/toasts/ToastProvider'
 import { usePathname, useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
-import { deletePost } from '../../lib/actions/post'
+import { deletePost } from '@/lib/actions/post'
 import DeleteIco from '../icons/DeleteIco'
 
 export function DeletePostBtn({ postId }) {

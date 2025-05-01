@@ -1,8 +1,8 @@
 import { getServerSession } from 'next-auth'
 import { NextResponse } from 'next/server'
 import { authOptions } from '../../auth/[...nextauth]/authOptions'
-import Post from '@/app/lib/models/Post'
-import { connectToDatabase } from '@/app/lib/db'
+import Post from '@/lib/models/Post'
+import { connectToDatabase } from '@/lib/db'
 
 export async function POST(req) {
   try {

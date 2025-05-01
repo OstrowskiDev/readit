@@ -1,7 +1,7 @@
 import { usePathname } from 'next/navigation'
 import { useRouter } from 'next/navigation'
 import { EditIco } from '../icons/EditIco'
-import { useCommentContext } from '@/app/lib/context/CommentContextProvider'
+import { useCommentContext } from '@/lib/context/CommentContextProvider'
 
 export function EditCommentBtn({
   setIsEditVisible,

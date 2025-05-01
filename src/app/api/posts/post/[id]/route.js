@@ -1,8 +1,8 @@
 import { NextResponse } from 'next/server'
-import { connectToDatabase } from '@/app/lib/db'
-import Post from '@/app/lib/models/Post'
+import { connectToDatabase } from '@/lib/db'
+import Post from '@/lib/models/Post'
 import validator from 'validator'
-import allowedPostIds from '@/app/lib/security/allowedPostIds'
+import allowedPostIds from '@/lib/security/allowedPostIds'
 
 export async function GET(request, { params }) {
   const postId = params.id

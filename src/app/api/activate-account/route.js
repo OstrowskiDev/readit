@@ -1,4 +1,4 @@
-import { activateAccount } from '@/app/lib/actions/user'
+import { activateAccount } from '@/lib/actions/user'
 import { NextResponse } from 'next/server'
 
 export async function GET(req) {

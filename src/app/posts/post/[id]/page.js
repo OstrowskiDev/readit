@@ -1,9 +1,9 @@
 'use client'
 
-import { AuthorsDataProvider } from '@/app/lib/context/AuthorsDataProvider'
-import { PostContextProvider } from '@/app/lib/context/PostContextProvider'
-import { getPostCommentsData, getPostData } from '@/app/lib/db'
-import { useMouseHover } from '@/app/lib/hooks/useMouseHover'
+import { AuthorsDataProvider } from '@/lib/context/AuthorsDataProvider'
+import { PostContextProvider } from '@/lib/context/PostContextProvider'
+import { getPostCommentsData, getPostData } from '@/lib/db'
+import { useMouseHover } from '@/lib/hooks/useMouseHover'
 import { UserInfoboxWrapper } from '@/app/ui/infobox/UserInfoboxWrapper'
 import { Loader } from '@/app/ui/loaders/Loader'
 import { PostCommentShimmer } from '@/app/ui/loaders/PostCommentShimmer'

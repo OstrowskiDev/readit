@@ -1,4 +1,4 @@
-import { useCommentContext } from '@/app/lib/context/CommentContextProvider'
+import { useCommentContext } from '@/lib/context/CommentContextProvider'
 import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
 

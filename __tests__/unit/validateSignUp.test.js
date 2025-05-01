@@ -1,4 +1,4 @@
-import { validateSignUp } from '../../src/app/lib/security/validateSignUp'
+import { validateSignUp } from '../../src/lib/security/validateSignUp'
 
 describe('validateSignUp function', () => {
   test('should return an error when fields are empty', () => {

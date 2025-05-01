@@ -1,6 +1,6 @@
-import { useTextEditorContext } from '@/app/lib/context/TextEditorProvider'
-import { parseHtmlToMarkdown } from '@/app/lib/text-editor/parseHtmlToMarkdown'
-import { parseMarkdownToHtml } from '@/app/lib/text-editor/parseMarkdownToHtml'
+import { useTextEditorContext } from '@/lib/context/TextEditorProvider'
+import { parseHtmlToMarkdown } from '@/lib/text-editor/parseHtmlToMarkdown'
+import { parseMarkdownToHtml } from '@/lib/text-editor/parseMarkdownToHtml'
 
 export function ToggleEditorTypeBtn() {
   const { formData, setFormData } = useTextEditorContext()

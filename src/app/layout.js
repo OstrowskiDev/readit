@@ -1,7 +1,7 @@
 import { Inter } from 'next/font/google'
 import './globals.css'
 import { getServerSession } from 'next-auth'
-import SessionProvider from '@/app/lib/SessionProvider'
+import SessionProvider from '@/lib/SessionProvider'
 import { authOptions } from './api/auth/[...nextauth]/authOptions'
 import AppLayout from './ui/layout/AppLayout'
 

@@ -1,8 +1,8 @@
 'use client'
 
-import { updateUserData } from '@/app/lib/actions/utils'
-import { Avatar, getAvatarColors } from '@/app/lib/avatars/Avatar'
-import { avatarColors, avatarSeeds } from '@/app/lib/avatars/avatarProps'
+import { updateUserData } from '@/lib/actions/utils'
+import { Avatar, getAvatarColors } from '@/lib/avatars/Avatar'
+import { avatarColors, avatarSeeds } from '@/lib/avatars/avatarProps'
 import { ProfileFormButtons } from './ProfileFormButtons'
 import { useSession } from 'next-auth/react'
 import { useState } from 'react'

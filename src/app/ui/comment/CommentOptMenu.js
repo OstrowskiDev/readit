@@ -2,9 +2,9 @@
 
 import { useSession } from 'next-auth/react'
 import { useEffect, useState } from 'react'
-import { deleteComment } from '@/app/lib/actions/comment'
-import { useCommentContext } from '@/app/lib/context/CommentContextProvider'
-import { useToastContext } from '@/app/lib/toasts/ToastProvider'
+import { deleteComment } from '@/lib/actions/comment'
+import { useCommentContext } from '@/lib/context/CommentContextProvider'
+import { useToastContext } from '@/lib/toasts/ToastProvider'
 import { DeleteCommentBtn } from '../buttons/DeleteCommentBtn'
 import { EditCommentBtn } from '../buttons/EditCommentBtn'
 import { FavoritesBtn } from '../buttons/FavoritesBtn'

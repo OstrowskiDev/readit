@@ -1,8 +1,8 @@
 'use client'
 
-import { updateComment } from '@/app/lib/actions/comment'
-import { useCommentContext } from '@/app/lib/context/CommentContextProvider'
-import { useToastContext } from '@/app/lib/toasts/ToastProvider'
+import { updateComment } from '@/lib/actions/comment'
+import { useCommentContext } from '@/lib/context/CommentContextProvider'
+import { useToastContext } from '@/lib/toasts/ToastProvider'
 import { useEffect, useState } from 'react'
 import { cloneDeep } from 'lodash'
 

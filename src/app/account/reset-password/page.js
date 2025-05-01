@@ -2,9 +2,9 @@
 
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
-import { resetPassword } from '@/app/lib/actions/user'
-import { validatePasswords } from '@/app/lib/security/validatePasswords'
-import { hasErrors } from '@/app/lib/security/hasErrors'
+import { resetPassword } from '@/lib/actions/user'
+import { validatePasswords } from '@/lib/security/validatePasswords'
+import { hasErrors } from '@/lib/security/hasErrors'
 
 export default function ResetPassword() {
   const router = useRouter()

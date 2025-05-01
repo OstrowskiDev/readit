@@ -1,8 +1,8 @@
 'use client'
 
-import { createComment } from '@/app/lib/actions/comment'
-import { useCommentContext } from '@/app/lib/context/CommentContextProvider'
-import { useToastContext } from '@/app/lib/toasts/ToastProvider'
+import { createComment } from '@/lib/actions/comment'
+import { useCommentContext } from '@/lib/context/CommentContextProvider'
+import { useToastContext } from '@/lib/toasts/ToastProvider'
 import cloneDeep from 'lodash/cloneDeep'
 import { signIn, useSession } from 'next-auth/react'
 import { useEffect, useState } from 'react'

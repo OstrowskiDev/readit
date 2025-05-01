@@ -1,6 +1,6 @@
 'use client'
 
-import { useCommentContext } from '@/app/lib/context/CommentContextProvider'
+import { useCommentContext } from '@/lib/context/CommentContextProvider'
 import { ReplyIco } from '../icons/ReplyIco'
 import { signIn, useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'

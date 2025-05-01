@@ -1,4 +1,4 @@
-import customSchema from '@/app/lib/rehype-sanitize/customSchema'
+import customSchema from '@/lib/rehype-sanitize/customSchema'
 import ReactMarkdown from 'react-markdown'
 import rehypeRaw from 'rehype-raw'
 import rehypeSanitize from 'rehype-sanitize'

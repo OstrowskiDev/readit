@@ -1,4 +1,4 @@
-import { usePostContext } from '@/app/lib/context/PostContextProvider'
+import { usePostContext } from '@/lib/context/PostContextProvider'
 import { Comment } from '@/app/ui/comment/Comment'
 
 export function PostCommentSection() {

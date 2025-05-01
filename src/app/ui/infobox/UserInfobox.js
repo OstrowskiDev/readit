@@ -1,8 +1,8 @@
 'use client'
 
-import { countUserComments, countUserPosts } from '@/app/lib/actions/utils'
-import { Avatar } from '@/app/lib/avatars/Avatar'
-import { useAuthorsContext } from '@/app/lib/context/AuthorsDataProvider'
+import { countUserComments, countUserPosts } from '@/lib/actions/utils'
+import { Avatar } from '@/lib/avatars/Avatar'
+import { useAuthorsContext } from '@/lib/context/AuthorsDataProvider'
 import { FollowBtn } from '@/app/ui/buttons/FollowBtn'
 import { MessageBtn } from '@/app/ui/buttons/MessageBtn'
 import { AccountCreationDate } from '@/app/ui/infobox/AccountCreationDate'

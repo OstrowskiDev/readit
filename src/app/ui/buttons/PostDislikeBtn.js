@@ -1,8 +1,8 @@
 'use client'
 
-import { handlePostLike } from '@/app/lib/actions/likes'
-import { usePostContext } from '@/app/lib/context/PostContextProvider'
-import { useToastContext } from '@/app/lib/toasts/ToastProvider'
+import { handlePostLike } from '@/lib/actions/likes'
+import { usePostContext } from '@/lib/context/PostContextProvider'
+import { useToastContext } from '@/lib/toasts/ToastProvider'
 import { useSession } from 'next-auth/react'
 import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'

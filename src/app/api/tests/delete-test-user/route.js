@@ -1,4 +1,4 @@
-import { deleteTestUser } from '@/app/lib/actions/user'
+import { deleteTestUser } from '@/lib/actions/user'
 
 export async function DELETE(req) {
   const secret = process.env.TEST_USER_SECRET

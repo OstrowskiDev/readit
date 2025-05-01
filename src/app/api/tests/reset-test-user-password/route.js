@@ -1,4 +1,4 @@
-import { addRecoveryToken } from '@/app/lib/actions/user'
+import { addRecoveryToken } from '@/lib/actions/user'
 
 export async function POST(req) {
   try {

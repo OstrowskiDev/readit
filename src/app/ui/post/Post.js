@@ -1,7 +1,7 @@
 'use client'
 
-import { PostContextProvider } from '@/app/lib/context/PostContextProvider'
-import { useMouseHover } from '@/app/lib/hooks/useMouseHover'
+import { PostContextProvider } from '@/lib/context/PostContextProvider'
+import { useMouseHover } from '@/lib/hooks/useMouseHover'
 import { useState } from 'react'
 import { PostAnchor } from './PostAnchor'
 import { PostBody } from './PostBody'
