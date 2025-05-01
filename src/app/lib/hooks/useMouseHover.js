@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-export default function useMouseHover() {
+export function useMouseHover() {
   const [isUserHovered, setIsUserHovered] = useState(false)
   let onHoverTimeout
   let onHoverOutTimeout

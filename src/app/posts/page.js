@@ -1,16 +1,16 @@
 'use client'
 
-import PostsSearch from '../ui/PostsSearch'
-import CreateBtn from '../ui/buttons/CreateBtn'
-import { filterPosts } from '../lib/db'
-import { Post } from '../ui/Post'
 import { useEffect, useState } from 'react'
-import { CreatePostForm } from '../ui/CreatePostForm'
-import { FilterPostsForm } from '../ui/FilterPostsForm'
+import { AuthorsDataProvider } from '../lib/context/AuthorsDataProvider'
+import { CreateBtn } from '../ui/buttons/CreateBtn'
 import { FilterBtn } from '../ui/buttons/FilterBtn'
 import { Loader } from '../ui/loaders/Loader'
 import { PostShimmer } from '../ui/loaders/PostShimmer'
-import { AuthorsDataProvider } from '../lib/context/AuthorsDataProvider'
+import { CreatePostForm } from '../ui/post/CreatePostForm'
+import { FilterPostsForm } from '../ui/post/FilterPostsForm'
+import { Post } from '../ui/post/Post'
+import { PostsSearch } from '../ui/post/PostsSearch'
+import { filterPosts } from '../lib/db'
 
 export default function PostsPage({
   searchParams,

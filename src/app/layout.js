@@ -3,7 +3,7 @@ import './globals.css'
 import { getServerSession } from 'next-auth'
 import SessionProvider from '@/app/lib/SessionProvider'
 import { authOptions } from './api/auth/[...nextauth]/authOptions'
-import AppLayout from './ui/AppLayout'
+import AppLayout from './ui/layout/AppLayout'
 
 const inter = Inter({ subsets: ['latin'] })
 

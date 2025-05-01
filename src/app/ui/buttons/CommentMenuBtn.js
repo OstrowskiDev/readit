@@ -1,9 +1,9 @@
 'use client'
 
 import { useState } from 'react'
-import { DotsIco } from '../icons/DotsIco'
-import { CommentOptMenu } from '../CommentOptMenu'
 import { signIn, useSession } from 'next-auth/react'
+import { CommentOptMenu } from '../comment/CommentOptMenu'
+import { DotsIco } from '../icons/DotsIco'
 
 export function CommentMenuBtn() {
   const [isMenuVisible, setIsMenuVisible] = useState(false)

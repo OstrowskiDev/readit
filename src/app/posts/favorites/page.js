@@ -1,16 +1,16 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { AuthorsDataProvider } from '@/app/lib/context/AuthorsDataProvider'
 import { filterFavorites } from '@/app/lib/db'
-import PostsSearch from '@/app/ui/PostsSearch'
 import { FilterBtn } from '@/app/ui/buttons/FilterBtn'
-import { Post } from '@/app/ui/Post'
+import { Comment } from '@/app/ui/comment/Comment'
 import { Loader } from '@/app/ui/loaders/Loader'
 import { PostShimmer } from '@/app/ui/loaders/PostShimmer'
-import { Comment } from '@/app/ui/Comment'
-import { FilterFavoritesForm } from '@/app/ui/FilterFavoritesForm'
+import { FilterFavoritesForm } from '@/app/ui/post/FilterFavoritesForm'
+import { Post } from '@/app/ui/post/Post'
+import { PostsSearch } from '@/app/ui/post/PostsSearch'
 import { signIn, useSession } from 'next-auth/react'
-import { AuthorsDataProvider } from '@/app/lib/context/AuthorsDataProvider'
+import { useEffect, useRef, useState } from 'react'
 
 export default function FavoritesPage({ searchParams }) {
   const [posts, setPosts] = useState(null)

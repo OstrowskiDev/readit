@@ -1,6 +1,6 @@
 import { signIn, useSession } from 'next-auth/react'
 
-export default function CreateBtn({ isCreateFormVis, setIsCreateFormVis }) {
+export function CreateBtn({ isCreateFormVis, setIsCreateFormVis }) {
   const { data: session } = useSession()
 
   function onClick() {

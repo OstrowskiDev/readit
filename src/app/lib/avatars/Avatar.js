@@ -1,8 +1,7 @@
 import { createAvatar } from '@dicebear/core'
 import { loreleiNeutral } from '@dicebear/collection'
 
-export default function Avatar({ seed, color, size, border }) {
-  // ++ Consider using Just-in-Time mode for this in the future.
+export function Avatar({ seed, color, size, border }) {
   const { bgColor, borderColor, fillColor } = getAvatarColors(color)
 
   const avatar = createAvatar(loreleiNeutral, {
