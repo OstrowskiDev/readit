@@ -3,9 +3,9 @@
 import { countUserComments, countUserPosts } from '@/lib/actions/utils'
 import { getUser } from '@/lib/db'
 import PostsPage from '@/app/posts/page'
-import { ProfilePreview } from '@/ui/ProfilePreview'
 import { Loader } from '@/ui/loaders/Loader'
 import { UserProfileShimmer } from '@/ui/loaders/UserProfileShimmer'
+import { ProfilePreview } from '@/ui/profile/ProfilePreview'
 import { useEffect, useState } from 'react'
 
 export default function UserProfile({ params, searchParams }) {

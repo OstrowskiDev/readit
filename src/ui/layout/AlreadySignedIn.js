@@ -1,4 +1,4 @@
-export default function AlreadySignedIn() {
+export function AlreadySignedIn() {
   return (
     <div className="min-h-screen w-full bg-white flex justify-center items-center">
       <div className="goodbye-container flex flex-col items-center bg-blue-500 px-8 py-5 rounded-xl shadow-lg">

@@ -1,4 +1,4 @@
-import { Avatar } from '@/lib/avatars/Avatar'
+import { Avatar } from '@/services/dicebear/Avatar'
 import { AccountCreationDate } from '@/ui/infobox/AccountCreationDate'
 
 export function ProfilePreview({ userData }) {

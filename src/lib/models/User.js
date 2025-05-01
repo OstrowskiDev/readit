@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 import validator from 'validator'
-import { avatarSeeds, avatarColors } from '../avatars/avatarProps'
+import { avatarSeeds, avatarColors } from '@/services/dicebear/avatarProps'
 
 const usersSchema = new mongoose.Schema(
   {

@@ -1,7 +1,7 @@
 'use client'
 
 import { countUserComments, countUserPosts } from '@/lib/actions/utils'
-import { Avatar } from '@/lib/avatars/Avatar'
+import { Avatar } from '@/services/dicebear/Avatar'
 import { useAuthorsContext } from '@/lib/context/AuthorsDataProvider'
 import { FollowBtn } from '@/ui/buttons/FollowBtn'
 import { MessageBtn } from '@/ui/buttons/MessageBtn'

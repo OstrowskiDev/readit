@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { useSession } from 'next-auth/react'
-import { Avatar } from '@/lib/avatars/Avatar'
+import { Avatar } from '@/services/dicebear/Avatar'
 
 export function MobileAvatar() {
   const [userData, setUserData] = useState(null)

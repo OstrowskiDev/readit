@@ -1,6 +1,6 @@
 'use client'
 
-import { Avatar } from '@/lib/avatars/Avatar'
+import { Avatar } from '@/services/dicebear/Avatar'
 import { usePostContext } from '@/lib/context/PostContextProvider'
 import { TimeAgo } from '@/ui/utils/TimeAgo'
 import { useSession } from 'next-auth/react'

@@ -1,4 +1,4 @@
-import { Avatar } from '@/lib/avatars/Avatar'
+import { Avatar } from '@/services/dicebear/Avatar'
 import { useMouseHover } from '@/lib/hooks/useMouseHover'
 import { UserInfoboxLoader } from '../loaders/UserInfoboxLoader'
 import { Suspense, lazy } from 'react'
