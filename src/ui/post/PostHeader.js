@@ -22,10 +22,10 @@ export function PostHeader({ author }) {
   return (
     <>
       {post && author && (
-        <div className="header-container relative right-0 flex items-center">
+        <div className="header-container relative right-0 flex items-center ">
           {/* authors avatar */}
           <div
-            className="header-avatar-container min-w-8 min-h-8 hover:cursor-pointer"
+            className="header-avatar-container min-w-8 min-h-8 hover:cursor-pointer z-20"
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
           >
@@ -37,7 +37,7 @@ export function PostHeader({ author }) {
             />
           </div>
 
-          <div className="flex below-xs:flex-col">
+          <div className="flex below-xs:flex-col z-20">
             {/* authors name */}
             <p
               className="header-author ml-2 font-bold below-xs:leading-tight text-blue-900 text-15 hover:cursor-pointer"
@@ -56,7 +56,7 @@ export function PostHeader({ author }) {
           </div>
 
           {/* top right buttons */}
-          <div className="post-top-btns ml-auto flex">
+          <div className="post-top-btns ml-auto flex z-20">
             {isPostAuthor && <DeletePostBtn postId={postId} />}
             {isPostAuthor && <EditPostBtn postId={postId} />}
             <PostMenuBtn

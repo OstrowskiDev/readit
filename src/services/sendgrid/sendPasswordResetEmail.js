@@ -1,5 +1,5 @@
 import sgMail from '@sendgrid/mail'
-import { generateEmailBody } from '../emails/converted-to-html/ResetPassword'
+import { generateEmailBody } from '@/lib/emails/converted-to-html/ResetPassword'
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY)
 

@@ -40,7 +40,7 @@ export function SharePostBtn() {
   }
 
   return (
-    <div className="btn-container ">
+    <div className="btn-container z-20">
       <button
         className="btn-body relative flex justify-center items-center h-10 px-4 rounded-md bg-gray-200 hover:bg-gray-300"
         onClick={copyToClipboard}
