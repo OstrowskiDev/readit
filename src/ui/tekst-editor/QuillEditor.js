@@ -5,9 +5,9 @@
 /*  Quill instances can only run on clientent      */
 /*  Below imports have Quill instances             */
 /***************************************************/
-import '@/lib/react-quill/customIcons.js'
-import '@/lib/react-quill/spoilerBlot.js'
-import '@/lib/react-quill/crossedBlot.js'
+import '@/services/react-quill/customIcons.js'
+import '@/services/react-quill/spoilerBlot.js'
+import '@/services/react-quill/crossedBlot.js'
 /***************************************************/
 
 import dynamic from 'next/dynamic'

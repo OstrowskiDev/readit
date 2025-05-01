@@ -1,7 +1,7 @@
 import { validateSignUp } from '@/lib/security/validateSignUp'
 import { hashPassword } from '@/lib/security/hashPassword'
 import { createUser } from '@/lib/actions/user'
-import { sendActivationEmail } from '@/lib/sendgrid/sendActivationEmail'
+import { sendActivationEmail } from '@/services/sendgrid/sendActivationEmail'
 import { hasErrors } from '@/lib/security/hasErrors'
 
 export async function POST(req) {
