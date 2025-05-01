@@ -1,5 +1,5 @@
 import { useMouseHover } from '@/lib/hooks/useMouseHover'
-import { Comment } from '@/app/ui/comment/Comment'
+import { Comment } from '@/ui/comment/Comment'
 import { UserInfoboxLoader } from './loaders/UserInfoboxLoader'
 import { Suspense, lazy } from 'react'
 
@@ -14,7 +14,7 @@ export function CommentWithToast({
 }) {
   const avatarMouseHover = useMouseHover()
   const { isUserHovered, handleMouseEnter, handleMouseLeave } = avatarMouseHover
-  const LazyUserInfobox = lazy(() => import('@/app/ui/UserInfobox.js'))
+  const LazyUserInfobox = lazy(() => import('@/ui/UserInfobox.js'))
 
   return (
     <>

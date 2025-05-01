@@ -2,7 +2,7 @@
 
 import { Avatar } from '@/lib/avatars/Avatar'
 import { usePostContext } from '@/lib/context/PostContextProvider'
-import { TimeAgo } from '@/app/ui/utils/TimeAgo'
+import { TimeAgo } from '@/ui/utils/TimeAgo'
 import { useSession } from 'next-auth/react'
 import { useState } from 'react'
 import { PostOptMenu } from './PostOptMenu'

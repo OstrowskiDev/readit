@@ -2,14 +2,14 @@
 
 import { useEffect, useState } from 'react'
 import { AuthorsDataProvider } from '@/lib/context/AuthorsDataProvider'
-import { CreateBtn } from '../ui/buttons/CreateBtn'
-import { FilterBtn } from '../ui/buttons/FilterBtn'
-import { Loader } from '../ui/loaders/Loader'
-import { PostShimmer } from '../ui/loaders/PostShimmer'
-import { CreatePostForm } from '../ui/post/CreatePostForm'
-import { FilterPostsForm } from '../ui/post/FilterPostsForm'
-import { Post } from '../ui/post/Post'
-import { PostsSearch } from '../ui/post/PostsSearch'
+import { CreateBtn } from '@/ui/buttons/CreateBtn'
+import { FilterBtn } from '@/ui/buttons/FilterBtn'
+import { Loader } from '@/ui/loaders/Loader'
+import { PostShimmer } from '@/ui/loaders/PostShimmer'
+import { CreatePostForm } from '@/ui/post/CreatePostForm'
+import { FilterPostsForm } from '@/ui/post/FilterPostsForm'
+import { Post } from '@/ui/post/Post'
+import { PostsSearch } from '@/ui/post/PostsSearch'
 import { filterPosts } from '@/lib/db'
 
 export default function PostsPage({

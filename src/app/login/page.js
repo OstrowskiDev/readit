@@ -3,9 +3,9 @@
 import { signIn, useSession } from 'next-auth/react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
-import AlreadySignedIn from '../ui/AlreadySignedIn'
+import AlreadySignedIn from '@/ui/AlreadySignedIn'
 import Link from 'next/link'
-import { ErrorTriangleIco } from '../ui/icons/ErrorTriangleIco'
+import { ErrorTriangleIco } from '@/ui/icons/ErrorTriangleIco'
 import { validateSignIn } from '@/lib/security/validateSignIn'
 
 export default function SignInForm() {

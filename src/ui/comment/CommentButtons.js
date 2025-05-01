@@ -1,8 +1,8 @@
 'use client'
 
-import { ReplyBtn } from '@/app/ui/buttons/ReplyBtn'
-import { ShareCommentBtn } from '@/app/ui/buttons/ShareCommentBtn'
-import { LikeCount } from '@/app/ui/utils/LikeCount'
+import { ReplyBtn } from '@/ui/buttons/ReplyBtn'
+import { ShareCommentBtn } from '@/ui/buttons/ShareCommentBtn'
+import { LikeCount } from '@/ui/utils/LikeCount'
 import { CommentDislikeBtn } from '../buttons/CommentDislikeBtn'
 import { CommentLikeBtn } from '../buttons/CommentLikeBtn'
 import { CommentMenuBtn } from '../buttons/CommentMenuBtn'

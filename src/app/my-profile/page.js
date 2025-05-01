@@ -4,12 +4,12 @@ import { useEffect, useRef, useState } from 'react'
 import { signIn, useSession } from 'next-auth/react'
 import { getUserPrivate } from '@/lib/db'
 import { countUserComments, countUserPosts } from '@/lib/actions/utils'
-import { Loader } from '../ui/loaders/Loader'
-import { MyProfileShimmer } from '../ui/loaders/MyProfileShimmer'
-import { ProfileAbout } from '../ui/profile/ProfileAbout'
-import { ProfileHeader } from '../ui/profile/ProfileHeader'
-import { ProfileMyData } from '../ui/profile/ProfileMyData'
-import { ProfileSettings } from '../ui/profile/ProfileSettings'
+import { Loader } from '@/ui/loaders/Loader'
+import { MyProfileShimmer } from '@/ui/loaders/MyProfileShimmer'
+import { ProfileAbout } from '@/ui/profile/ProfileAbout'
+import { ProfileHeader } from '@/ui/profile/ProfileHeader'
+import { ProfileMyData } from '@/ui/profile/ProfileMyData'
+import { ProfileSettings } from '@/ui/profile/ProfileSettings'
 
 export default function MyProfile() {
   const [userData, setUserData] = useState(null)

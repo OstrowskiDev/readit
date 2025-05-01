@@ -1,5 +1,5 @@
 import { env } from 'process'
-import SmileyFaceIco from '@/app/ui/icons/SmileyFaceIco'
+import SmileyFaceIco from '@/ui/icons/SmileyFaceIco'
 
 export default function ResetPasswordEmail() {
   const urlGitHubRepo = env.URL_GITHUB_PROJECT_REPO

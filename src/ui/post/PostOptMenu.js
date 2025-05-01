@@ -2,7 +2,7 @@
 
 import { usePostContext } from '@/lib/context/PostContextProvider'
 import { useToastContext } from '@/lib/toasts/ToastProvider'
-import { FavoritesBtn } from '@/app/ui/buttons/FavoritesBtn'
+import { FavoritesBtn } from '@/ui/buttons/FavoritesBtn'
 import { useSession } from 'next-auth/react'
 import { useEffect, useState } from 'react'
 

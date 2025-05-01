@@ -1,5 +1,5 @@
 import { usePostContext } from '@/lib/context/PostContextProvider'
-import { Comment } from '@/app/ui/comment/Comment'
+import { Comment } from '@/ui/comment/Comment'
 
 export function PostCommentSection() {
   const { post, postId, comments, setComments } = usePostContext()

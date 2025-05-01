@@ -1,4 +1,4 @@
-import SmileyFaceIco from '@/app/ui/icons/SmileyFaceIco'
+import SmileyFaceIco from '@/ui/icons/SmileyFaceIco'
 
 export function MobileLogo() {
   return (

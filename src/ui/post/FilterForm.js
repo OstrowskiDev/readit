@@ -1,6 +1,6 @@
 'use client'
 
-import { FilterFormBtns } from '@/app/ui/buttons/FilterFormBtns'
+import { FilterFormBtns } from '@/ui/buttons/FilterFormBtns'
 
 export function FilterForm({
   isFilterFormVis,

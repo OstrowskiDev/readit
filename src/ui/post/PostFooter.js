@@ -1,8 +1,8 @@
 'use client'
 
-import { CommentPostBtn } from '@/app/ui/buttons/CommentPostBtn'
-import { SharePostBtn } from '@/app/ui/buttons/SharePostBtn'
-import { CommentsCount } from '@/app/ui/comment/CommentsCount'
+import { CommentPostBtn } from '@/ui/buttons/CommentPostBtn'
+import { SharePostBtn } from '@/ui/buttons/SharePostBtn'
+import { CommentsCount } from '@/ui/comment/CommentsCount'
 import { PostReplyForm } from './PostReplyForm'
 import { PostLikeCount } from './PostLikeCount'
 import { PostDislikeBtn } from '../buttons/PostDislikeBtn'

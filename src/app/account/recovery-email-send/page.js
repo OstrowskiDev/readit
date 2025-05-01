@@ -1,4 +1,4 @@
-import { ActivationSuccessIco } from '@/app/ui/icons/ActivationSuccessIco'
+import { ActivationSuccessIco } from '@/ui/icons/ActivationSuccessIco'
 
 export default function RecoveryEmailSend() {
   return (

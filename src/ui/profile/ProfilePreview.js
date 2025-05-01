@@ -1,5 +1,5 @@
 import { Avatar } from '@/lib/avatars/Avatar'
-import { AccountCreationDate } from '@/app/ui/infobox/AccountCreationDate'
+import { AccountCreationDate } from '@/ui/infobox/AccountCreationDate'
 
 export function ProfilePreview({ userData }) {
   return (

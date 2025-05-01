@@ -1,5 +1,5 @@
 import { env } from 'process'
-import SmileyFaceIco from '@/app/ui/icons/SmileyFaceIco'
+import SmileyFaceIco from '@/ui/icons/SmileyFaceIco'
 
 // Here some info to remember in future about email clients limitations:
 // 1. flex is not supported, only display: flex works

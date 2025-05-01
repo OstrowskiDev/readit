@@ -1,11 +1,11 @@
 'use client'
 
 import { TextEditorProvider } from '@/lib/context/TextEditorProvider'
-import { MarkdownEditor } from '@/app/ui/tekst-editor/MarkdownEditor'
+import { MarkdownEditor } from '@/ui/tekst-editor/MarkdownEditor'
 import dynamic from 'next/dynamic'
 import 'react-quill/dist/quill.snow.css'
 
-const QuillEditor = dynamic(() => import('@/app/ui/tekst-editor/QuillEditor'), {
+const QuillEditor = dynamic(() => import('@/ui/tekst-editor/QuillEditor'), {
   ssr: false,
 })
 

@@ -1,5 +1,5 @@
-import { ErrorIco } from '@/app/ui/icons/ErrorIco'
-import { SuccessIco } from '@/app/ui/icons/SuccessIco'
+import { ErrorIco } from '@/ui/icons/ErrorIco'
+import { SuccessIco } from '@/ui/icons/SuccessIco'
 import React, { useEffect, useRef, useState } from 'react'
 
 export function Toast({ message, state, forceUpdate }) {

@@ -1,6 +1,6 @@
 import { lazy, Suspense } from 'react'
-import { UserInfoboxLoader } from '@/app/ui/loaders/UserInfoboxLoader'
-const LazyUserInfobox = lazy(() => import('@/app/ui/infobox/UserInfobox.js'))
+import { UserInfoboxLoader } from '@/ui/loaders/UserInfoboxLoader'
+const LazyUserInfobox = lazy(() => import('@/ui/infobox/UserInfobox.js'))
 
 export function UserInfoboxWrapper({
   authorData,

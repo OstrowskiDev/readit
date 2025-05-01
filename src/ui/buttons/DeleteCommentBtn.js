@@ -1,6 +1,6 @@
 'use client'
 
-import DeleteIco from '../icons/DeleteIco'
+import { DeleteIco } from '../icons/DeleteIco'
 
 export function DeleteCommentBtn({ onDeleteSubmit }) {
   function SubmitButton() {
