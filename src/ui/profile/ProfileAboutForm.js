@@ -8,7 +8,7 @@ export function ProfileAboutForm({
   setUserData,
   handleAboutFormVisibility,
 }) {
-  const [formState, setFormState] = useState(userData)
+  const [formData, setFormData] = useState(userData)
   const [errorMsg, setErrorMsg] = useState('')
   const [wasSubmited, setWasSubmited] = useState(false)
   const textareaRef = useRef(null)
@@ -20,8 +20,8 @@ export function ProfileAboutForm({
   }, [])
 
   const handleChange = (event) => {
-    setFormState({
-      ...formState,
+    setFormData({
+      ...formData,
       [event.target.name]: event.target.value,
     })
     autoGrow(event.target)
@@ -31,15 +31,15 @@ export function ProfileAboutForm({
     event.preventDefault()
     setWasSubmited(true)
 
-    const validationResults = validateAbout(FormData)
+    const validationResults = validateAbout(formData)
     if (validationResults.errors) {
       setErrorMsg(validationResults.errors)
     } else {
       setErrorMsg('')
     }
 
-    setUserData(formState)
-    updateUserData(formState)
+    setUserData(formData)
+    updateUserData(formData)
     handleAboutFormVisibility()
   }
 
@@ -58,7 +58,7 @@ export function ProfileAboutForm({
         <textarea
           className="input-about w-full px-1 text-md text-gray-900 my-1 bg-gray-100 border border-gray-300 rounded-md"
           name="about"
-          value={formState.about}
+          value={formData.about}
           onChange={handleChange}
           ref={textareaRef}
         />

@@ -2,7 +2,7 @@
 
 import { updateUserData } from '@/lib/actions/utils'
 import { Avatar, getAvatarColors } from '@/services/dicebear/Avatar'
-import { avatarColors, avatarSeeds } from '@/services/dicebear/Avatar'
+import { avatarColors, avatarSeeds } from '@/services/dicebear/avatarProps'
 import { ProfileFormButtons } from './ProfileFormButtons'
 import { useSession } from 'next-auth/react'
 import { useState } from 'react'

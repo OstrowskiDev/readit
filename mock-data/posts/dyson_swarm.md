@@ -1,4 +1,6 @@
-## Dyson Swarm: Harvesting the Power of a Star
+# Dyson Swarm: Harvesting the Power of a Star
+
+## Introduction
 
 In the grand scale of cosmic engineering, few concepts are as awe-inspiring — or as theoretically plausible — as the **Dyson Swarm**. First proposed as a variant of Freeman Dyson's original "Dyson Sphere" concept, the Dyson Swarm presents a more realistic approach to stellar-scale energy collection for advanced civilizations. While building a solid shell around a star remains well beyond our capabilities, constructing a swarm of energy-harvesting satellites orbiting the Sun might one day become reality.
 
