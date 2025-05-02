@@ -23,7 +23,7 @@ const commentSchema = new mongoose.Schema(
     },
     content: {
       type: String,
-      maxLength: 520,
+      maxLength: 1000,
       required: true,
       trim: true,
     },
@@ -40,7 +40,8 @@ const commentSchema = new mongoose.Schema(
       default: undefined,
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 )
 
-export default mongoose.models.Comment || mongoose.model('Comment', commentSchema)
+export default mongoose.models.Comment ||
+  mongoose.model('Comment', commentSchema)
