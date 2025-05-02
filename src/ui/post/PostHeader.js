@@ -25,7 +25,7 @@ export function PostHeader({ author }) {
         <div className="header-container relative right-0 flex items-center ">
           {/* authors avatar */}
           <div
-            className="header-avatar-container min-w-8 min-h-8 hover:cursor-pointer z-20"
+            className="header-avatar-container min-w-8 min-h-8 hover:cursor-pointer z-40"
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
           >

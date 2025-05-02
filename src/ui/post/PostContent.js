@@ -6,7 +6,8 @@ import remarkGfm from 'remark-gfm'
 
 export function PostContent({ content }) {
   return (
-    <div className="post-content render-html mb-2 font-sans whitespace-pre-wrap below-md:line-clamp-5 below-md:overflow-hidden below-md:overflow-ellipsis">
+    <div className="post-content render-html mb-2 max-h-60 overflow-hidden font-sans whitespace-pre-wrap below-md:line-clamp-5 below-md:overflow-hidden below-md:overflow-ellipsis">
+      {/* !!!! remove markdown or html */}
       {/* <div dangerouslySetInnerHTML={{ __html: content }} /> */}
       <ReactMarkdown
         children={content}
