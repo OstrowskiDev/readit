@@ -37,6 +37,7 @@ For each mock data generation (e.g., topic: *Iron Asteroid Mining*), the output 
     "id": "fbd3c3c1-5e99-4e9a-8d4f-3dfde7e45d30",
     "author": "Charlie Brown",
     "createdAt": "2025-05-02T15:20:00.000Z",
+    "topic": "Asteroid Mining DIY",
     "content": "Iron asteroid mining is entering a new era...",
     "replies": [
       {

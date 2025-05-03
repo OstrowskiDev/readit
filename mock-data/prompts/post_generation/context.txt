@@ -1,4 +1,4 @@
-I'm generating mock data for a Reddit-style application with posts and comments, supporting nested comments up to three levels deep (making it four levels total including the original post).
+Mam dla Cb zadanie, potrzebuję byś wygenerował dla mnie mock-data dla aplikacji w stylu Reddita, zawierającej posty i komentarze, obsługującej zagnieżdżone komentarze do trzech poziomów głębokości (co daje łącznie cztery poziomy, wliczając oryginalny post). W kolejnych wiadomościach podam Ci szczegóły, w tym opis settingu, postacie które będą pisać posty/komentarze. Styl. Na końcu także wytyczne dla struktury danych jakie mają być wygenerowane, gotowy?
 
 Theme of the app: space technologies, megastructures, space colonization, and everyday life in the distant future.
 
