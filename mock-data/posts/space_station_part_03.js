@@ -3,8 +3,9 @@ const mock_data = {
     id: '4e725d2b-e5aa-4af3-9101-1cbdacbd841f',
     author: 'Alice Johnson',
     createdAt: '2025-05-03T11:00:00.000Z',
+    title: 'Sentinel Uplink: Eyes on the Unseen',
     content:
-      "🛡️ *Eos Defense Grid: Post-Incident Upgrades*\n\nAfter last week's breach, the Board fast-tracked a full audit of our orbital threat detection. As of 0900 today, we've initiated Phase 1 of Sentinel Array expansion—adding three new high-angle scopes synced to our deep-sky LIDAR net.\n\nBut here's the kicker: the impactor’s vector was logged *outside* our current predictive matrix. We're talking extra-solar velocity with minimal radiation wake. The current filters missed it by classifying it as inert debris.\n\nProposals on the table:\n- Integrate Fiona's spectral filters for isotope anomalies.\n- Deploy low-latency laser interceptors on outer ring towers.\n- Elevate threat assessment for off-pattern orbital vectors.\n\nEngineers and systems ops, feedback welcome. The ring’s only as strong as the eyes watching its edges.",
+      "*Eos Defense Grid: Post-Incident Upgrades*\n\nAfter last week's breach, the Board fast-tracked a full audit of our orbital threat detection. As of 0900 today, we've initiated Phase 1 of Sentinel Array expansion—adding three new high-angle scopes synced to our deep-sky LIDAR net.\n\nBut here's the kicker: the impactor’s vector was logged *outside* our current predictive matrix. We're talking extra-solar velocity with minimal radiation wake. The current filters missed it by classifying it as inert debris.\n\nProposals on the table:\n- Integrate Fiona's spectral filters for isotope anomalies.\n- Deploy low-latency laser interceptors on outer ring towers.\n- Elevate threat assessment for off-pattern orbital vectors.\n\nEngineers and systems ops, feedback welcome. The ring’s only as strong as the eyes watching its edges.",
     replies: [
       {
         id: '7112ab98-d6b7-4290-91cc-d61d69c213a2',

@@ -3,6 +3,7 @@ const mock_data = {
     id: 'c79883aa-46f1-4e26-9a7b-961147b8a79c',
     author: 'Bob Smith',
     createdAt: '2025-05-03T13:00:00Z',
+    title: 'Suborbital Junkyard: Rethinking Recovery in Lunar Launch Mishaps',
     content:
       "**Post-Failure Recovery and Trajectory Constraint Review**\n\nWe’ve now logged three partial mass driver ejections in the past six lunar cycles—two near Tycho Array and one from the Mare Orientale platform. All three resulted in compromised capsules failing to reach stable orbit and entering erratic suborbital drift.\n\nRecovery has been unpredictable. Ground crews are operating beyond safe EVA thresholds, and auto-deorbit packages aren't triggering due to inconsistent telemetry locks at launch.\n\nWe're requesting input on:\n\n- Feasible redundancy for burn package ignition in low-power tumbling capsules\n- Trajectory sandboxing during partial boosts\n- Orbital tow capacity from micro-tug fleets\n\nUnless we resolve this, we're looking at a pattern of lunar debris accumulation with no clear mitigation path.",
   },

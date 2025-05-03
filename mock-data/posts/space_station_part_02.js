@@ -3,6 +3,7 @@ const mock_data = {
     id: '99f3e50d-11d2-4dc1-a042-4723a3557f84',
     author: 'Bob Smith',
     createdAt: '2025-05-03T10:00:00.000Z',
+    title: 'Breach at Eos: When the Shield Fails',
     content:
       "⚠️ *Impact Report: Eos Station Breach, Sector C-5*\n\nWe’re still patching up the ring segment where an interstellar microbody—confirmed by orbital tracebacks to be extra-solar—pierced hull plating and vaporized a third of the mid-level conduit network. Initial shield telemetry read it as debris and let it through. Damage would've been catastrophic if not for the redundancy grid.\n\nThree modules offline, full life support restored after 14 hours. Helios crews working 24/7. Whoever designed the layered flex-matrix in that sector deserves a bonus… and also a better sensor net.\n\nEngineers, operators—anyone else picking up residual EM drift near the impact site?",
     replies: [

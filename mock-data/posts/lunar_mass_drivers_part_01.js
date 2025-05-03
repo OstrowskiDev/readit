@@ -3,6 +3,7 @@ const mock_data = {
     id: 'c8a08b32-843e-4b35-a121-fcae19965d9e',
     author: 'Bob Smith',
     createdAt: '2025-05-02T12:00:00Z',
+    title: 'Steel, Dust and Resonance: Lunar Mass Drivers',
     content:
       '**Mass Drivers on the Moon: Structural Notes from the Assembly Ring**\n\nWith the increasing load demand from lunar regolith transfer to orbital foundries, Helios has greenlit the reactivation and scaling of several mass driver lines across the Lunar equator. Each installation is projected to launch payloads exceeding 15 tons at regular intervals—raising key structural considerations.\n\nLaunch rail stability, vibration damping under cyclical thermal expansion, and radiation shielding for control nodes are currently our biggest bottlenecks. We’re seeing harmonics above spec during twilight transitions, and some support pylons are exhibiting microfracture patterns earlier than expected.\n\nHelios welcomes technical insights from any ops teams currently coordinating nearside driver schedules, particularly on redundancy planning and safe fallback modes during partial power outages.',
   },
