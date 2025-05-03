@@ -4,8 +4,23 @@ const mock_data = {
     author: 'Fiona Wilson',
     createdAt: '2025-05-03T09:00:00Z',
     title: 'Debris at Dawn: The Case for a Unified Lunar Launch Protocol',
-    content:
-      "**Policy Review Request: Autonomous Launch Windows and Regulatory Drift**\n\nAfter the last unexpected debris dispersal incident over Selene Crater, we’re initiating a call for interagency review of the automated launch approval systems governing mass drivers.\n\nWhile autonomy enables throughput, we're increasingly seeing overlapping trajectories and debris vector conflicts—especially between privately scheduled launches and Helios-heavy lift operations. Current orbital clearance checks are lagging by up to 9 minutes in peak hours.\n\nWe propose mandatory harmonization via a shared orbital traffic API with per-launch signoff. Comments are open for technical feasibility, especially for operators running non-standard driver lengths or custom acceleration curves.",
+    content: `
+## Policy Review Request: Autonomous Launch Windows and Regulatory Drift
+
+After the last unexpected **debris dispersal incident** over *Selene Crater*, we’re initiating a call for interagency review of the automated launch approval systems governing **mass drivers**.
+
+While autonomy enables throughput, we're increasingly seeing:
+- overlapping trajectories
+- **debris vector conflicts** — especially between *privately scheduled launches* and **Helios** heavy lift operations
+
+Current orbital clearance checks are **lagging by up to 9 minutes** during peak hours.
+
+We propose:
+- Mandatory harmonization via a shared **orbital traffic API**
+- Per-launch **signoff protocol**
+
+Comments are open for technical feasibility — especially from operators using **non-standard driver lengths** or **custom acceleration curves**.
+`,
   },
   comments: [
     {

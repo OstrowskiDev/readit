@@ -44,14 +44,14 @@ export function validatePost(formData) {
   validateField(
     validationResults,
     'title',
-    () => formData.title.length > 40,
+    () => formData.title.length > 60,
     'Title is too long',
   )
 
   validateField(
     validationResults,
     'content',
-    () => formData.content.length < 40,
+    () => formData.content.length < 60,
     'Post needs to have at least 20 characters.',
   )
 
@@ -65,9 +65,12 @@ export function validatePost(formData) {
   if (validator.isAlphanumeric(formData.title)) {
     validationResults.title.sanitized = formData.title
   } else {
-    //Title sanitization: remove non-alphanumeric characters, excluding space
-    //in below regex space that comes after 0-9 is required to whitelist it
-    const sanitizedTitle = formData.title.replace(/[^a-zA-Z0-9 ]/g, '')
+    //Title sanitization: remove non-alphanumeric characters, excluding space and ,.!?;:'"()[]-_
+    const sanitizedTitle = formData.title.replace(
+      /[^a-zA-Z0-9 ,.!?;:'"()\[\]\-_]/g,
+      '',
+    )
+
     validationResults.title.sanitized = sanitizedTitle
   }
 

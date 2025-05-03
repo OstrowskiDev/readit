@@ -194,10 +194,10 @@ export function CreatePostForm({
               </label>
               <div
                 className={`post-title-charcount px-2 text-xs ${
-                  formData.title.length <= 40 ? 'text-gray-600' : 'text-red-500'
+                  formData.title.length <= 60 ? 'text-gray-600' : 'text-red-500'
                 }`}
               >
-                {formData.title.length}/40
+                {formData.title.length}/60
               </div>
             </div>
           </div>

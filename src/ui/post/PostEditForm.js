@@ -130,10 +130,10 @@ export function PostEditForm({ isEditFormVisible, setIsEditFormVisible }) {
               </label>
               <div
                 className={`post-title-charcount px-2 text-xs ${
-                  formData.title.length <= 40 ? 'text-gray-600' : 'text-red-500'
+                  formData.title.length <= 60 ? 'text-gray-600' : 'text-red-500'
                 }`}
               >
-                {formData.title.length}/40
+                {formData.title.length}/60
               </div>
             </div>
             <h3 className="post-edit-form-label ml-2 mt-4 text-md text-gray-800 ">
