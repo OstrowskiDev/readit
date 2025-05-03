@@ -12,7 +12,7 @@ export function PostContent({ content }) {
   return (
     <div
       className={`post-content render-html mb-2 overflow-hidden font-sans whitespace-pre-wrap below-md:line-clamp-5 below-md:overflow-hidden below-md:overflow-ellipsis ${
-        isOnMainPage ? 'max-h-60' : ''
+        isOnMainPage ? 'fade-bottom max-h-60' : ''
       }`}
     >
       {/* !!!! remove markdown or html */}
