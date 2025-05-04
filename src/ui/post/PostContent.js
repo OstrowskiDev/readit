@@ -18,10 +18,11 @@ export function PostContent({ content }) {
       {/* !!!! remove markdown or html */}
       {/* <div dangerouslySetInnerHTML={{ __html: content }} /> */}
       <ReactMarkdown
-        children={content}
         remarkPlugins={[remarkGfm]}
         rehypePlugins={[rehypeRaw, [rehypeSanitize, customSchema]]}
-      />
+      >
+        {content}
+      </ReactMarkdown>
     </div>
   )
 }
