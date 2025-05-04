@@ -17,6 +17,19 @@ export default function MyProfile() {
   const signingIn = useRef(false)
 
   useEffect(() => {
+    if (!session) {
+      //below code fixes firefox issues with calling signIn() in useEffect
+      //https://github.com/nextauthjs/next-auth/issues/9177
+      if (signingIn.current) return
+      signingIn.current = true
+      signIn()
+      return
+    }
+
+    if (session?.user?.id) {
+      fetchData()
+    }
+
     async function fetchData() {
       const [fetchedData, postsSum, commentsSum] = await Promise.all([
         getUserPrivate(session.user.id),
@@ -28,20 +41,6 @@ export default function MyProfile() {
         postsSum: postsSum,
         commentsSum: commentsSum,
       })
-    }
-
-    if (!session) {
-      //below code to fix firefox issues with calling signIn() in useEffect
-      //reference to github next-auth issue 9177:
-      //https://github.com/nextauthjs/next-auth/issues/9177
-      if (signingIn.current) return
-      signingIn.current = true
-      signIn()
-      return
-    }
-
-    if (session?.user?.id) {
-      fetchData()
     }
   }, [session])
 

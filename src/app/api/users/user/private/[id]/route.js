@@ -1,9 +1,8 @@
 import { NextResponse } from 'next/server'
 import { connectToDatabase } from '@/lib/db'
-import User from '@/lib/models/User'
-import validator from 'validator'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/app/api/auth/[...nextauth]/authOptions'
+import User from '@/lib/models/User'
 
 export async function GET(request, { params }) {
   const userId = params.id

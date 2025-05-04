@@ -23,7 +23,7 @@ export function UserDataForm({
     })
   }
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault()
 
     if (session.status === 'authenticated') {
@@ -32,14 +32,12 @@ export function UserDataForm({
         profession: formData.profession,
         organization: formData.organization,
       })
-      updateUserData({
+      await updateUserData({
         _id: userData._id,
         profession: formData.profession,
         organization: formData.organization,
       })
-      session.update({
-        name: formData.name,
-      })
+
       handleUserDataFormVisibility()
     }
   }
@@ -80,6 +78,7 @@ export function UserDataForm({
         </label>
         <input
           className="input-profession min-w-10 w-full max-w-[330px] px-2 text-md text-gray-900 my-1 bg-gray-100 border border-gray-300 rounded-md"
+          type="text"
           name="profession"
           value={formData.profession}
           onChange={handleChange}
@@ -92,6 +91,7 @@ export function UserDataForm({
         </label>
         <input
           className="input-organization min-w-10 w-full max-w-[330px] px-2 text-md text-gray-900 my-1 bg-gray-100 border border-gray-300 rounded-md"
+          type="text"
           name="organization"
           value={formData.organization}
           onChange={handleChange}
