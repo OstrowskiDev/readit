@@ -5,7 +5,7 @@ import Post from '../models/Post'
 import Comment from '../models/Comment'
 import { connectToDatabase } from '../db'
 import User from '../models/User'
-import { returnToast, setToast, toast } from '../toasts/ToastUtils'
+import { returnToast } from '../toasts/ToastUtils'
 
 export async function getCommentsAndAuthors(postId) {
   if (!isUUID(postId)) {
@@ -35,7 +35,6 @@ export async function getCommentsAndAuthors(postId) {
     }
 
     // convert Mongoose document to plain JS object
-    // so it can be passed as props
     const plainComment = comment.toObject()
     comments.push(plainComment)
 
@@ -103,16 +102,20 @@ export async function getUserPostsIds(userId) {
   }
 }
 
-export async function updateUserData(userObj) {
+export async function updateUserData({
+  _id,
+  organization,
+  profession,
+  about,
+  avatar,
+}) {
+  if (typeof _id !== 'string' || !isUUID(_id)) {
+    console.error('Invalid user _id')
+    return returnToast('error', 'Failed to update user data')
+  }
+  // !!!! add server side data validation
+
   try {
-    if (typeof userObj?._id !== 'string' || !isUUID(userObj._id)) {
-      console.error('Invalid userObj_id')
-      return returnToast('error', 'Failed to update user data')
-    }
-
-    // !!!! add server side data validation
-
-    const { _id, organization, profession, about, avatar } = userObj
     await connectToDatabase()
     const user = await User.findById(_id)
 
@@ -129,16 +132,15 @@ export async function updateUserData(userObj) {
 
     if (updatedUser) {
       console.log('User updated successfully')
-      setToast('success', 'User data updated successfully!')
+      return returnToast('success', 'User data updated successfully!')
     } else {
       console.log(
         'Unexpected error: User.save() did not return a saved document or throw an error',
       )
-      setToast('error', 'Failed to update user data!')
+      return returnToast('error', 'Failed to update user data!')
     }
   } catch (error) {
     console.error('Error updating user:', error)
-    setToast('error', 'Failed to update user data!')
+    return returnToast('error', 'Failed to update user data!')
   }
-  return toast
 }

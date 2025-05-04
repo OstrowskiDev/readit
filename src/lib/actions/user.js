@@ -5,7 +5,7 @@ import { connectToDatabase } from '@/lib/db'
 import User from '@/lib/models/User'
 import { validatePasswords } from '../security/validatePasswords'
 import { hashPassword } from '../security/hashPassword'
-import { toast, resetToast, setToast } from '../toasts/ToastUtils'
+import { toast, resetToast, setToast, returnToast } from '../toasts/ToastUtils'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/app/api/auth/[...nextauth]/authOptions'
 import { hasErrors } from '../security/hasErrors'
@@ -94,31 +94,26 @@ export async function resetPassword({
   recoveryToken,
 }) {
   try {
-    resetToast()
     const toastErrorMessage =
       'Password reset failed. Please request a new one recovery link.'
 
     if (!password || !repeatPassword || !recoveryToken) {
       console.error('Missing data in resetPassword func call')
-      setToast('error', toastErrorMessage)
-      return toast
+      return returnToast('error', toastErrorMessage)
     }
     const validationResults = validatePasswords({ password, repeatPassword })
     if (hasErrors(validationResults)) {
       console.error('Password validation failed')
-      setToast('error', toastErrorMessage)
-      return toast
+      return returnToast('error', toastErrorMessage)
     }
     await connectToDatabase()
     const userAccount = await User.findOne({ recovery_token: recoveryToken })
     if (!userAccount) {
       console.error('User account not found for provided reset token')
-      setToast('error', toastErrorMessage)
-      return toast
+      return returnToast('error', toastErrorMessage)
     }
     if (userAccount.recovery_token_expires_at < new Date()) {
-      setToast('error', toastErrorMessage)
-      return toast
+      return returnToast('error', toastErrorMessage)
     }
     const hashedPassword = await hashPassword(password, 10)
     userAccount.password = hashedPassword
@@ -126,30 +121,26 @@ export async function resetPassword({
     userAccount.recovery_token_expires_at = null
     userAccount.status = 'ok'
     await userAccount.save()
-    setToast('success', 'Password reset successful')
-    return toast
+    return returnToast('success', 'Password reset successful')
   } catch (error) {
     console.error('Error during password reset:', error)
-    setToast('error', toastErrorMessage)
-    return toast
+    return returnToast('error', toastErrorMessage)
   }
 }
 
 export async function changePassword({ password, repeatPassword }) {
   try {
-    resetToast()
     const toastErrorMessage = 'Failed to change password'
 
     const session = await getServerSession(authOptions)
     if (!session) {
       console.error('Unauthorized')
-      setToast('error', toastErrorMessage)
+      return returnToast('error', toastErrorMessage)
     }
 
     if (!password || !repeatPassword) {
       console.error('Missing data in changePassword func call')
-      setToast('error', toastErrorMessage)
-      return toast
+      return returnToast('error', toastErrorMessage)
     }
     const validationResults = validatePasswords({ password, repeatPassword })
     const hasErrors = Object.values(validationResults).some(
@@ -157,27 +148,23 @@ export async function changePassword({ password, repeatPassword }) {
     )
     if (hasErrors) {
       console.error('Password validation failed')
-      setToast('error', toastErrorMessage)
-      return toast
+      return returnToast('error', toastErrorMessage)
     }
     await connectToDatabase()
     const userId = session.user.id
     const user = await User.findOne({ _id: userId })
     if (!user) {
       console.error('User account not found for provided user _id:', { userId })
-      setToast('error', toastErrorMessage)
-      return toast
+      return returnToast('error', toastErrorMessage)
     }
 
     const hashedPassword = await hashPassword(password, 10)
     user.password = hashedPassword
     await user.save()
-    setToast('success', 'Password reset successful')
-    return toast
+    return returnToast('success', 'Password reset successful')
   } catch (error) {
     console.error('Error during password reset:', error)
-    setToast('error', toastErrorMessage)
-    return toast
+    return returnToast('error', toastErrorMessage)
   }
 }
 
@@ -238,7 +225,6 @@ export async function checkEmailAvailability(email) {
 
 export async function deleteTestUser() {
   const testUserEmail = process.env.TEST_USER_EMAIL
-  console.log('test user email:', testUserEmail)
   try {
     await connectToDatabase()
 

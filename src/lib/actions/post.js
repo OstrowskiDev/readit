@@ -97,7 +97,6 @@ export async function updatePost(postId, formData, imageData) {
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL
 
   if (imageStatus === 'new') {
-    console.log('🚀 ~ updatePost ~ imageStatus:', imageStatus)
     const results = await validateImageFileServer(file)
     if (!results.type || !results.size) {
       return returnToast('error', 'Failed to update post')
@@ -160,16 +159,15 @@ export async function updatePost(postId, formData, imageData) {
 
     if (result.modifiedCount === 1) {
       console.log('Post updated successfully')
-      setToast('success', 'Post updated successfully!')
+      return returnToast('success', 'Post updated successfully!')
     } else {
       console.error('Post not found or not updated')
-      setToast('error', 'Failed to update post')
+      return returnToast('error', 'Failed to update post')
     }
   } catch (error) {
     console.error('Error updating post:', error)
-    setToast('error', 'Failed to update post')
+    return returnToast('error', 'Failed to update post')
   }
-  return toast
 }
 
 export async function deletePost(postId) {
@@ -221,13 +219,12 @@ export async function deletePost(postId) {
     const deletedPost = await Post.findByIdAndDelete(postId)
     if (!deletedPost) {
       console.error('Post not found')
-      setToast('error', 'Failed to delete post')
+      return returnToast('error', 'Failed to delete post')
     }
     console.log('Post deleted successfully')
-    setToast('success', 'Post deleted successfully!')
+    return returnToast('success', 'Post deleted successfully!')
   } catch (error) {
     console.error('Error deleting post:', error)
-    setToast('error', 'Failed to delete post')
+    return returnToast('error', 'Failed to delete post')
   }
-  return toast
 }

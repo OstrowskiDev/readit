@@ -116,7 +116,6 @@ export async function deleteComment(commentId) {
 
     //update parent children list
     try {
-      await connectToDatabase()
       const result =
         parentType === 'comment'
           ? await Comment.updateOne(

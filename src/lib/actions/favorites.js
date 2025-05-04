@@ -36,7 +36,7 @@ export async function handlePostFavorites(postId) {
         { _id: userId },
         { $push: { favorites: newFavorite } },
       )
-      setToast('success', 'post added to favorites')
+      setToast('success', 'Post added to favorites')
     } else {
       updateResults = await User.updateOne(
         { _id: userId },
