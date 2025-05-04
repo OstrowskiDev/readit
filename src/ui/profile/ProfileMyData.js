@@ -4,18 +4,18 @@ import { UserDataForm } from './UserDataForm'
 import { EditIco } from '../icons/EditIco'
 
 export function ProfileMyData({ userData, setUserData }) {
-  const [editData, setEditData] = useState(false)
+  const [toggleEdit, setToggleEdit] = useState(false)
   const [editDataHeight, setEditDataHeight] = useState(180)
 
   function handleUserDataFormVisibility() {
-    if (editData === false) {
+    if (toggleEdit === false) {
       setEditDataHeight(244)
       setTimeout(() => {
-        setEditData((prevValue) => !prevValue)
+        setToggleEdit((prevValue) => !prevValue)
       }, 500)
     } else {
       setEditDataHeight(180)
-      setEditData((prevValue) => !prevValue)
+      setToggleEdit((prevValue) => !prevValue)
     }
   }
 
@@ -28,7 +28,7 @@ export function ProfileMyData({ userData, setUserData }) {
         <h3 className="profile-label-my-data text-lg font-semibold text-gray-800 mb-2">
           My data:
         </h3>
-        {editData ? (
+        {toggleEdit ? (
           <UserDataForm
             userData={userData}
             setUserData={setUserData}

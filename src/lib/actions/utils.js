@@ -104,11 +104,15 @@ export async function getUserPostsIds(userId) {
 }
 
 export async function updateUserData(userObj) {
-  if (!isUUID(userObj._id)) throw new Error('Invalid user id')
-
   try {
-    const { _id, address, phone, about, avatar } = userObj
+    if (typeof userObj?._id !== 'string' || !isUUID(userObj._id)) {
+      console.error('Invalid userObj_id')
+      return returnToast('error', 'Failed to update user data')
+    }
 
+    // !!!! add server side data validation
+
+    const { _id, organization, profession, about, avatar } = userObj
     await connectToDatabase()
     const user = await User.findById(_id)
 
@@ -117,11 +121,10 @@ export async function updateUserData(userObj) {
       return returnToast('error', 'Failed to update user data')
     }
 
-    user.address = address ?? user.address
-    user.phone = phone ?? user.phone
+    user.organization = organization ?? user.organization
+    user.profession = profession ?? user.profession
     user.about = about ?? user.about
     user.avatar = avatar ?? user.avatar
-
     const updatedUser = await user.save()
 
     if (updatedUser) {

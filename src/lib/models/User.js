@@ -46,13 +46,13 @@ const usersSchema = new mongoose.Schema(
         return validator.isEmail(value)
       },
     },
-    address: {
+    profession: {
       type: String,
-      maxlength: 100,
+      maxlength: 30,
     },
-    phone: {
+    organization: {
       type: String,
-      maxlength: 20,
+      maxlength: 40,
     },
     about: {
       type: String,
