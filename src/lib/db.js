@@ -2,10 +2,13 @@ import mongoose from 'mongoose'
 
 const uri = process.env.DB_CONNECT
 const apiUrl = process.env.NEXT_PUBLIC_APP_URL
+let isConnected = 0
 
 async function connectToDatabase() {
+  if (isConnected) return
   try {
-    await mongoose.connect(uri)
+    const db = await mongoose.connect(uri)
+    isConnected = db.connections[0].readyState // 1 when connected, 0 when not
     console.log('Connected to MongoDB')
   } catch (error) {
     console.error(error)
