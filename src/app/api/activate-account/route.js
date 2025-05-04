@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic'
+
 import { activateAccount } from '@/lib/actions/user'
 import { NextResponse } from 'next/server'
 
