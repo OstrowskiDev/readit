@@ -1,12 +1,14 @@
 import { useState } from 'react'
 import { EditIco } from '../icons/EditIco'
 import { ProfileAboutForm } from './ProfileAboutForm'
+import { useMyProfileContext } from '@/lib/context/MyProfileProvider'
 
-export function ProfileAbout({ userData, setUserData }) {
+export function ProfileAbout() {
+  const { userData } = useMyProfileContext()
   const [editAbout, setEditAbout] = useState(false)
   const [buttonsHeight, setButtonsHeight] = useState('0px')
 
-  function handleAboutFormVisibility() {
+  function toggleAboutForm() {
     if (editAbout === false) {
       setTimeout(() => {
         setButtonsHeight('60px')
@@ -29,11 +31,7 @@ export function ProfileAbout({ userData, setUserData }) {
         About me:
       </h3>
       {editAbout ? (
-        <ProfileAboutForm
-          userData={userData}
-          setUserData={setUserData}
-          handleAboutFormVisibility={handleAboutFormVisibility}
-        />
+        <ProfileAboutForm toggleAboutForm={toggleAboutForm} />
       ) : (
         <>
           <p className="profile-about pb-2 pr-[10px]">{userData.about}</p>
@@ -46,7 +44,7 @@ export function ProfileAbout({ userData, setUserData }) {
 
       <div
         className="about-edit-btn absolute top-2 right-1 p-2 w-10 h-10 hover:bg-gray-200 hover:cursor-pointer rounded-md"
-        onClick={handleAboutFormVisibility}
+        onClick={toggleAboutForm}
       >
         <EditIco />
       </div>

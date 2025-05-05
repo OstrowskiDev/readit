@@ -3,7 +3,7 @@ import { EditIco } from '../icons/EditIco'
 import { ProfilePreview } from './ProfilePreview'
 import { ProfileAvatarSelection } from './ProfileAvatarSelection'
 
-export function ProfileHeader({ userData, setUserData }) {
+export function ProfileHeader({ userData }) {
   const [editAvatar, setEditAvatar] = useState(false)
   const [isCollapsed, setIsCollapsed] = useState(false)
 
@@ -38,13 +38,9 @@ export function ProfileHeader({ userData, setUserData }) {
         </h3>
         <div className="profile-separator border-t"></div>
         {editAvatar ? (
-          <ProfileAvatarSelection
-            userData={userData}
-            setUserData={setUserData}
-            handleAvatarEdit={handleAvatarEdit}
-          />
+          <ProfileAvatarSelection handleAvatarEdit={handleAvatarEdit} />
         ) : (
-          <ProfilePreview userData={userData} />
+          <ProfilePreview />
         )}
       </div>
     </>

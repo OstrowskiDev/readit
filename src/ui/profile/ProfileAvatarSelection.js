@@ -3,19 +3,17 @@
 import { updateUserData } from '@/lib/actions/utils'
 import { Avatar, getAvatarColors } from '@/services/dicebear/Avatar'
 import { avatarColors, avatarSeeds } from '@/services/dicebear/avatarProps'
+import { useMyProfileContext } from '@/lib/context/MyProfileProvider'
 import { ProfileFormButtons } from './ProfileFormButtons'
 import { useSession } from 'next-auth/react'
 import { useState } from 'react'
 
-export function ProfileAvatarSelection({
-  userData,
-  setUserData,
-  handleAvatarEdit,
-}) {
+export function ProfileAvatarSelection({ handleAvatarEdit }) {
+  const { userData, setUserData, setResponse } = useMyProfileContext()
   const [selectedAvatar, setSelectedAvatar] = useState(userData.avatar)
   const { status, update } = useSession()
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault()
 
     if (status === 'authenticated') {
@@ -23,10 +21,12 @@ export function ProfileAvatarSelection({
         ...userData,
         avatar: selectedAvatar,
       })
-      updateUserData({
+      const results = await updateUserData({
         ...userData,
         avatar: selectedAvatar,
       })
+      if (results) setResponse(results)
+
       update({
         avatar: {
           seed: selectedAvatar.seed,

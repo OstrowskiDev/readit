@@ -2,12 +2,10 @@ import { useEffect, useRef, useState } from 'react'
 import { updateUserData } from '@/lib/actions/utils'
 import { validateAbout } from '@/lib/security/validateAbout'
 import { ProfileFormButtons } from './ProfileFormButtons'
+import { useMyProfileContext } from '@/lib/context/MyProfileProvider'
 
-export function ProfileAboutForm({
-  userData,
-  setUserData,
-  handleAboutFormVisibility,
-}) {
+export function ProfileAboutForm({ toggleAboutForm }) {
+  const { userData, setUserData, setResponse } = useMyProfileContext()
   const [formData, setFormData] = useState(userData)
   const [errorMsg, setErrorMsg] = useState('')
   const [wasSubmited, setWasSubmited] = useState(false)
@@ -27,7 +25,7 @@ export function ProfileAboutForm({
     autoGrow(event.target)
   }
 
-  const handleSubmit = (event) => {
+  async function handleSubmit(event) {
     event.preventDefault()
     setWasSubmited(true)
 
@@ -39,12 +37,13 @@ export function ProfileAboutForm({
     }
 
     setUserData(formData)
-    updateUserData(formData)
-    handleAboutFormVisibility()
+    const response = await updateUserData(formData)
+    if (response) setResponse(response)
+    toggleAboutForm()
   }
 
   const handleCancel = () => {
-    handleAboutFormVisibility()
+    toggleAboutForm()
   }
 
   const autoGrow = (element) => {

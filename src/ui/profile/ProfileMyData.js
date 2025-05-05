@@ -3,11 +3,11 @@ import { MyProfileUserData } from './MyProfileUserData'
 import { UserDataForm } from './UserDataForm'
 import { EditIco } from '../icons/EditIco'
 
-export function ProfileMyData({ userData, setUserData }) {
+export function ProfileMyData() {
   const [toggleEdit, setToggleEdit] = useState(false)
   const [editDataHeight, setEditDataHeight] = useState(180)
 
-  function handleUserDataFormVisibility() {
+  function toggleUserDataForm() {
     if (toggleEdit === false) {
       setEditDataHeight(244)
       setTimeout(() => {
@@ -29,18 +29,14 @@ export function ProfileMyData({ userData, setUserData }) {
           My data:
         </h3>
         {toggleEdit ? (
-          <UserDataForm
-            userData={userData}
-            setUserData={setUserData}
-            handleUserDataFormVisibility={handleUserDataFormVisibility}
-          />
+          <UserDataForm toggleUserDataForm={toggleUserDataForm} />
         ) : (
-          <MyProfileUserData userData={userData} />
+          <MyProfileUserData />
         )}
 
         <div
           className="my-data-edit-btn absolute top-2 right-1 p-2 w-10 h-10 hover:bg-gray-200 hover:cursor-pointer rounded-md"
-          onClick={handleUserDataFormVisibility}
+          onClick={toggleUserDataForm}
         >
           <EditIco />
         </div>

@@ -1,4 +1,7 @@
-export function MyProfileUserData({ userData }) {
+import { useMyProfileContext } from '@/lib/context/MyProfileProvider'
+
+export function MyProfileUserData() {
+  const { userData } = useMyProfileContext()
   return (
     <div className="user-data-container">
       <div className="user-data-name flex items-center">

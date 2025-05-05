@@ -2,12 +2,10 @@ import { useSession } from 'next-auth/react'
 import { useState } from 'react'
 import { ProfileFormButtons } from './ProfileFormButtons'
 import { updateUserData } from '@/lib/actions/utils'
+import { useMyProfileContext } from '@/lib/context/MyProfileProvider'
 
-export function UserDataForm({
-  userData,
-  setUserData,
-  handleUserDataFormVisibility,
-}) {
+export function UserDataForm({ toggleUserDataForm }) {
+  const { userData, setUserData, setResponse } = useMyProfileContext()
   const [formData, setFormData] = useState({
     name: userData.name,
     email: userData.email,
@@ -32,18 +30,18 @@ export function UserDataForm({
         profession: formData.profession,
         organization: formData.organization,
       })
-      await updateUserData({
+      const response = await updateUserData({
         _id: userData._id,
         profession: formData.profession,
         organization: formData.organization,
       })
-
-      handleUserDataFormVisibility()
+      if (response) setResponse(response)
+      toggleUserDataForm()
     }
   }
 
   function handleCancel() {
-    handleUserDataFormVisibility()
+    toggleUserDataForm()
   }
 
   return (

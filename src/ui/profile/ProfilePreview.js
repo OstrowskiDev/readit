@@ -1,7 +1,9 @@
+import { useMyProfileContext } from '@/lib/context/MyProfileProvider'
 import { Avatar } from '@/services/dicebear/Avatar'
 import { AccountCreationDate } from '@/ui/infobox/AccountCreationDate'
 
-export function ProfilePreview({ userData }) {
+export function ProfilePreview() {
+  const { userData } = useMyProfileContext()
   return (
     <>
       <div className="profile-avatar-name flex items-center pt-4 md:mb-4 border-gray-200">

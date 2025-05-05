@@ -1,5 +1,3 @@
-'use client'
-
 import { CommentContextProvider } from './CommentContextProvider'
 
 export function CommentBtnsContextWrapper({
