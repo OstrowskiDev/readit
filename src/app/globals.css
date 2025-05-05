@@ -98,15 +98,16 @@ html {
 /* Toast styles below: */
 .toast {
   transition: transform 0.5s;
-  transform: translateY(160px);
+  transform: translateX(-50%) translateY(160px);
+  left: 50%;
 }
 
 .toast.start {
-  transform: translateY(-5px);
+  transform: translateX(-50%) translateY(-5px);
 }
 
 .toast.show {
-  transform: translateY(0);
+  transform: translateX(-50%) translateY(0);
 }
 
 /* Post card body text fade */

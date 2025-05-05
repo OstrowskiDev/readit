@@ -26,7 +26,7 @@ export function Toast({ message, state, forceUpdate }) {
 
   return (
     <div
-      className={`toast fixed w-full ml-[120px] below-md:ml-[0px] bottom-0 transform ${moveToastClass} z-50`}
+      className={`toast fixed ml-[120px] below-md:ml-[0px] bottom-0 transform ${moveToastClass} z-50`}
     >
       <div
         className={`toast-container flex items-center w-80 h-[74px] mx-auto p-4 mb-16 font-semibold border-2 rounded-xl ${containerStateClasses(
