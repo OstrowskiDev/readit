@@ -18,7 +18,7 @@ export function AuthorsInfo({
     return (
       <>
         <div
-          className="header-avatar-container min-w-12 min-h-12 hover:cursor-pointer z-20"
+          className="header-avatar-container hover:cursor-pointer z-20"
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
         >

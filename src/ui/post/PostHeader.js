@@ -8,6 +8,7 @@ import { DeletePostBtn } from '../buttons/DeletePostBtn'
 import { EditPostBtn } from '../buttons/EditPostBtn'
 import { PostMenuBtn } from '../buttons/PostMenuBtn'
 import { AuthorsInfo } from '../common/AuthorsInfo'
+import { usePathname } from 'next/navigation'
 
 export function PostHeader({ author }) {
   const { data: session } = useSession()
@@ -15,9 +16,10 @@ export function PostHeader({ author }) {
   const [isPostMenuVis, setIsPostMenuVis] = useState(false)
 
   const userId = post?.user_id
-  const isDeleted = author?.deleted
   const sessionUserId = session?.user.id
   const isPostAuthor = userId === sessionUserId
+  const pathname = usePathname()
+  const isOnMainPage = pathname.endsWith('/posts')
 
   return (
     <>
@@ -25,8 +27,8 @@ export function PostHeader({ author }) {
         <div className="header-container relative right-0 flex items-center ">
           {/* authors avatar */}
           <AuthorsInfo
-            size={48}
-            border={2}
+            size={isOnMainPage ? 32 : 48}
+            border={isOnMainPage ? 1 : 2}
             document={post}
             handleMouseEnter={handleMouseEnter}
             handleMouseLeave={handleMouseLeave}
