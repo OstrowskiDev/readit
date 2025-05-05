@@ -5,7 +5,6 @@ import { PostContextProvider } from '@/lib/context/PostContextProvider'
 import { getPostCommentsData, getPostData } from '@/lib/db'
 import { useMouseHover } from '@/lib/hooks/useMouseHover'
 import { UserInfoboxWrapper } from '@/ui/infobox/UserInfoboxWrapper'
-import { Loader } from '@/ui/loaders/Loader'
 import { PostCommentShimmer } from '@/ui/loaders/PostCommentShimmer'
 import { PostCommentSection } from '@/ui/post/PostCommentsSection'
 import { PostContent } from '@/ui/post/PostContent'
@@ -14,6 +13,7 @@ import { PostFooter } from '@/ui/post/PostFooter'
 import { PostHeader } from '@/ui/post/PostHeader'
 import { PostImage } from '@/ui/post/PostImage'
 import { useEffect, useState } from 'react'
+import { Loader } from '@/ui/loaders/Loader'
 
 export default function PostPage({ params }) {
   const postId = params.id

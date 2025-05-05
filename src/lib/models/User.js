@@ -81,7 +81,12 @@ const usersSchema = new mongoose.Schema(
         },
       ],
     },
+    deleted: {
+      type: Boolean,
+      default: false,
+    },
   },
+
   { timestamps: true },
 )
 
