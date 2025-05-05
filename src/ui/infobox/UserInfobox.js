@@ -42,64 +42,58 @@ export default function UserInfobox({
   const postsSum = userData?.postsSum
   const commentsSum = userData?.commentsSum
 
-  function InfoboxBody() {
-    return (
-      <>
-        {userData && (
-          <div className="infobox-event-handler">
-            <div className="avatar-name-date-container flex">
-              <div className="avatar-container w-20 h-20">
-                <Avatar
-                  seed={author.avatar.seed}
-                  color={author.avatar.color}
-                  size={80}
-                  border={3}
-                />
-              </div>
-
-              <div className="name-date-container flex flex-col ml-4">
-                <div
-                  onClick={() => router.push(`/user/${author._id}/posts`)}
-                  className="name text-gray-950 text-20 font-semibold hover:cursor-pointer hover:underline"
-                >
-                  {author.name}
-                </div>
-                <AccountCreationDate accountCreatedAt={accountCreatedAt} />
-              </div>
-            </div>
-
-            <div className="posts-comments-numbers-container mt-4 flex">
-              <div className="posts-number">
-                <p className="posts-number text-gray-950 text-18 font-semibold ">
-                  {postsSum}
-                </p>
-                <p className=" text-gray-600 text-15">Posts Created</p>
-              </div>
-              <div className="comments-number ml-4">
-                <p className="text-gray-950 text-18 font-semibold">
-                  {commentsSum}
-                </p>
-                <p className="text-gray-600 text-15">Comment Created</p>
-              </div>
-            </div>
-
-            <div className="buttons-container mt-4 flex">
-              <FollowBtn />
-              <MessageBtn />
-            </div>
-          </div>
-        )}
-      </>
-    )
-  }
-
   return (
     <div
-      className="infobox-container absolute top-16 left-3 w-[350px] h-[260px] z-40 p-8 bg-white rounded-3xl drop-shadow-2xl hover:cursor-default"
+      className="infobox-container absolute z-40 top-16 left-3 w-[350px] h-[260px] p-8 bg-white rounded-3xl drop-shadow-2xl hover:cursor-default"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      <InfoboxBody />
+      {userData && (
+        <div className="infobox-event-handler relative z-20">
+          <div className="infobox-avatar-name-date-container flex">
+            <div className="infobox-avatar-container w-20 h-20">
+              <Avatar
+                seed={author.avatar.seed}
+                color={author.avatar.color}
+                size={80}
+                border={3}
+              />
+            </div>
+
+            <div className="infobox-name-date-container flex flex-col ml-4">
+              <div
+                onClick={() => router.push(`/user/${author._id}/posts`)}
+                className="name text-gray-950 text-20 font-semibold hover:cursor-pointer hover:underline"
+              >
+                {author.name}
+              </div>
+              <AccountCreationDate accountCreatedAt={accountCreatedAt} />
+            </div>
+          </div>
+
+          <div className="infobox-posts-comments-numbers-container mt-4 flex">
+            <div className="infobox-posts-number">
+              <p className="infobox-posts-number text-gray-950 text-18 font-semibold ">
+                {postsSum}
+              </p>
+              <p className=" text-gray-600 text-15">Posts Created</p>
+            </div>
+            <div className="infobox-comments-number-container ml-4">
+              <p className="infobox-comments-number text-gray-950 text-18 font-semibold">
+                {commentsSum}
+              </p>
+              <p className="infobox-comments-text text-gray-600 text-15">
+                Comment Created
+              </p>
+            </div>
+          </div>
+
+          <div className="infobox-buttons-container mt-4 flex">
+            <FollowBtn />
+            <MessageBtn />
+          </div>
+        </div>
+      )}
     </div>
   )
 }
