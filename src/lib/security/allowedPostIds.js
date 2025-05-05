@@ -1,2 +1,7 @@
-const allowedPostIds = ['about', 'credits', 'cypress-test-post']
+const allowedPostIds = [
+  'about',
+  'credits',
+  'privacy_policy',
+  'cypress-test-post',
+]
 export default allowedPostIds
