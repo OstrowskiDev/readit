@@ -3,16 +3,17 @@ import { passwordRegex } from './passwordRegex'
 import { validateField } from './validationUtils'
 
 export function validateSignUp(formData) {
-  const { fullName, name, email, password } = formData
+  const { fullName, name, email, password, privacyPolicy } = formData
 
   const validationResults = {
     name: { message: [] },
     email: { message: [] },
     password: { message: [] },
+    privacyPolicy: { message: [] },
     fullName: { message: [] }, //honeypot field
   }
 
-  const fieldRequired = ['name', 'email', 'password']
+  const fieldRequired = ['name', 'email', 'password', 'privacyPolicy']
   for (const field of fieldRequired) {
     validateField(
       validationResults,

@@ -9,12 +9,14 @@ import axios from 'axios'
 import Link from 'next/link'
 
 // !!!! do poprawy: podczas rejestracji po naciśnięciu przycisku register pojawia się błąd pod jednym z pól
+// !!!! add custom checkbox icon in free time
 
 export default function RegisterForm() {
   const initialFormData = {
     name: '',
     email: '',
     password: '',
+    privacyPolicy: false,
     fullName: '', // honeypot field
   }
 
@@ -22,6 +24,7 @@ export default function RegisterForm() {
     name: { message: [] },
     email: { message: [] },
     password: { message: [] },
+    privacyPolicy: { message: [] },
   }
 
   const [formData, setFormData] = useState(initialFormData)
@@ -46,7 +49,11 @@ export default function RegisterForm() {
   }, [formData.email])
 
   function onInputChange(event) {
-    setFormData({ ...formData, [event.target.name]: event.target.value })
+    if (event.target.name === 'privacyPolicy') {
+      setFormData({ ...formData, [event.target.name]: event.target.checked })
+    } else {
+      setFormData({ ...formData, [event.target.name]: event.target.value })
+    }
   }
 
   async function handleSubmit(event) {
@@ -161,6 +168,38 @@ export default function RegisterForm() {
               {fieldValidity.password.message.length > 0 &&
                 submitAttempted &&
                 fieldValidity.password.message.join(' ')}
+            </label>
+          </div>
+          <div className="register-policy flex flex-col mt-6">
+            <div className="register-policy-wrapper flex">
+              <label
+                className="register-policy-label w-44 ml-4 text-sm text-white block mb-1"
+                htmlFor="privacyPolicy"
+              >
+                {'I have read and agree to the '}
+                <a
+                  className="register-policy-anchor font-bold"
+                  href="/posts/post/privacy_policy"
+                  target="_blank"
+                >
+                  Privacy Policy
+                </a>
+              </label>
+              <input
+                className={`register-policy-input w-6 ml-4 mr-6`}
+                id="privacyPolicy"
+                type="checkbox"
+                name="privacyPolicy"
+                checked={formData.privacyPolicy}
+                onChange={onInputChange}
+                required
+              />
+            </div>
+
+            <label className="register-policy-error mt-1 ml-4 text-xs text-red-200">
+              {fieldValidity.privacyPolicy.message.length > 0 &&
+                submitAttempted &&
+                fieldValidity.privacyPolicy.message.join(' ')}
             </label>
           </div>
           {/* Honeypot field */}
