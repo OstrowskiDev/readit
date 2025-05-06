@@ -273,11 +273,13 @@ export async function deleteAccount({ password, confirmation }) {
 
     const isMatch = await bcrypt.compare(password, user.password)
     if (!isMatch) return returnToast('error', 'Incorrect password!')
+    const fakeUniqueEmail = `deleted_${user._id}@example.com`
 
     user.deleted = true
     user.is_active = false
     user.name = 'deleted user'
-    user.email = null
+    user.email = fakeUniqueEmail
+    user.password = 'deleted'
     user.about = ''
     user.organization = ''
     user.profession = ''

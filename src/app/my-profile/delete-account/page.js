@@ -64,7 +64,7 @@ export default function DeleteAccount() {
         confirmation: formData.confirmation,
       })
       if (results.state === 'success') {
-        signOut({ callbackUrl: '/my-profile/account-deleted' })
+        signOut({ callbackUrl: '/account/deleted' })
       } else {
         setResponse(results)
       }
