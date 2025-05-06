@@ -39,6 +39,9 @@ next-env.d.ts
 TodoList.js
 TodoList.md
 
+# temporary files
+__temporary__
+
 # logs from PaaS:
 secretLogs.txt
 

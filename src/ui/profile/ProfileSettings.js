@@ -11,6 +11,14 @@ export function ProfileSettings() {
             Change Password
           </a>
         </li>
+        <li>
+          <a
+            href="/my-profile/delete-account"
+            className="text-blue-500 hover:text-blue-700 transition-colors duration-200"
+          >
+            Delete Account
+          </a>
+        </li>
       </ul>
     </div>
   )
