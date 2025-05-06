@@ -1,11 +1,12 @@
 'use server'
 
+import bcrypt from 'bcrypt'
+import User from '@/lib/models/User'
 import { v4 as uuidv4 } from 'uuid'
 import { connectToDatabase } from '@/lib/db'
-import User from '@/lib/models/User'
 import { validatePasswords } from '../security/validatePasswords'
 import { hashPassword } from '../security/hashPassword'
-import { toast, resetToast, setToast, returnToast } from '../toasts/ToastUtils'
+import { returnToast } from '../toasts/ToastUtils'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/app/api/auth/[...nextauth]/authOptions'
 import { hasErrors } from '../security/hasErrors'
@@ -240,5 +241,53 @@ export async function deleteTestUser() {
   } catch (error) {
     console.error('Error deleting test user:', error)
     return { state: 'error' }
+  }
+}
+
+export async function deleteAccount({ password, confirmation }) {
+  const toastErrorMessage = 'Failed to delete account'
+
+  try {
+    const session = await getServerSession(authOptions)
+    if (!session) return returnToast('error', toastErrorMessage)
+    console.log('passed session')
+
+    if (typeof password !== 'string' || typeof confirmation !== 'string')
+      return returnToast('error', toastErrorMessage)
+
+    console.log('passed type check')
+
+    if (!password || !confirmation)
+      return returnToast('error', toastErrorMessage)
+
+    console.log('passed falsy values')
+
+    if (confirmation !== 'DELETE')
+      return returnToast('error', toastErrorMessage)
+
+    console.log('passed DELETE')
+
+    await connectToDatabase()
+    const user = await User.findById(session.user.id)
+    if (!user) return returnToast('error', toastErrorMessage)
+
+    const isMatch = await bcrypt.compare(password, user.password)
+    if (!isMatch) return returnToast('error', 'Incorrect password!')
+
+    user.deleted = true
+    user.is_active = false
+    user.name = 'deleted user'
+    user.email = null
+    user.about = ''
+    user.organization = ''
+    user.profession = ''
+    user.favorites = []
+
+    await user.save()
+    return returnToast('success', 'User deleted succesfully')
+    // on client, handle state: 'success'
+  } catch (error) {
+    console.error('Error during account deletion:', error)
+    return returnToast('error', toastErrorMessage)
   }
 }
