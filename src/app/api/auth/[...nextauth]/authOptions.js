@@ -54,6 +54,10 @@ export const authOptions = {
         const user = await getUserByEmail(credentials.email)
         if (!user) return null
 
+        if (user.is_active === false) {
+          throw new Error('AccountInactive')
+        }
+
         if (user.status === 'locked') {
           throw new Error('AccountBlocked')
         }

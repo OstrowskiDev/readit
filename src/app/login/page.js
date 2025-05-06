@@ -21,6 +21,8 @@ export default function SignInForm() {
     if (!error) return null
     if (error === 'CredentialsSignin') {
       return 'Invalid email or password. Please try again.'
+    } else if (error === 'AccountInactive') {
+      return 'Your account needs to be activated, check your inbox for activation email.'
     } else if (error === 'AccountBlocked') {
       return 'Your account was blocked due to too many failed login attempts. Reset password to regain access.'
     } else {
