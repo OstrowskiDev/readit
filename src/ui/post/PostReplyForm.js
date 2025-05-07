@@ -8,6 +8,7 @@ import cloneDeep from 'lodash/cloneDeep'
 import { signIn, useSession } from 'next-auth/react'
 import { useEffect, useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
+import { TextEditor } from '../tekst-editor/TextEditor'
 
 export function PostReplyForm({ isCommFormVisible, setIsCommFormVisible }) {
   const [input, setInput] = useState('')
@@ -15,6 +16,7 @@ export function PostReplyForm({ isCommFormVisible, setIsCommFormVisible }) {
   const userId = session?.user?.id
   const { comments, setComments, postId, post, setPost } = usePostContext()
   const { toastFunctions: toast } = useToastContext()
+  const [toggleTextEditor, setToggleTextEditor] = useState(false)
 
   const parentId = postId
 
@@ -53,6 +55,10 @@ export function PostReplyForm({ isCommFormVisible, setIsCommFormVisible }) {
 
   function onCancelClick() {
     setIsCommFormVisible(!isCommFormVisible)
+  }
+
+  function handleEditorToggle() {
+    setToggleTextEditor(!toggleTextEditor)
   }
 
   function optimisticUpdate(newCommentId) {
@@ -106,15 +112,24 @@ export function PostReplyForm({ isCommFormVisible, setIsCommFormVisible }) {
       {isCommFormVisible && (
         <div className="post-reply-form change-border-on-child-focus p-2 ml-4 mr-1 my-1 bg-white border border-slate-300 rounded-lg">
           <form>
-            <textarea
-              id="content"
-              name="content"
-              className="post-reply-input w-full h-32 border-none focus:outline-none"
-              placeholder="Add your comment"
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
+            {toggleTextEditor ? (
+              <TextEditor /> // this component needs formData, setFormData, onContentChange to function, laso formData now needs: formData.markdown, formData.toggleEditor, formData.content(?)
+            ) : (
+              <textarea
+                id="content"
+                name="content"
+                className="post-reply-input w-full h-32 border-none focus:outline-none"
+                placeholder="Add your comment"
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+              />
+            )}
+
+            <ReplyFormBtns
+              onCancelClick={onCancelClick}
+              onSubmit={onSubmit}
+              handleEditorToggle={handleEditorToggle}
             />
-            <ReplyFormBtns onCancelClick={onCancelClick} onSubmit={onSubmit} />
           </form>
         </div>
       )}
