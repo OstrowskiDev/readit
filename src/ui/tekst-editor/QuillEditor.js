@@ -18,7 +18,8 @@ import { useTextEditorContext } from '@/lib/context/TextEditorProvider'
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false })
 
 export default function QuillEditor() {
-  const { onContentChange, formData } = useTextEditorContext()
+  const { onContentChange, formData, editorHeight } = useTextEditorContext()
+  console.log('🚀 ~ QuillEditor ~ editorHeight:', editorHeight)
   const modules = {
     toolbar: {
       container: '#toolbar',
@@ -41,7 +42,10 @@ export default function QuillEditor() {
 
   return (
     <div className="quill-container">
-      <div className="quill-editor-container render-html min-h-[300px] px-4 py-3 rounded-md">
+      <div
+        className="quill-editor-container render-html px-4 py-3 rounded-md"
+        style={{ minHeight: `${editorHeight}px` }}
+      >
         <QuillCustomToolbar />
         <ReactQuill
           value={formData?.content}

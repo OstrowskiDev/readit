@@ -4,7 +4,7 @@ import { useTextEditorContext } from '@/lib/context/TextEditorProvider'
 import { ToggleEditorTypeBtn } from './ToggleEditorTypeBtn'
 
 export function MarkdownEditor() {
-  const { formData, setFormData } = useTextEditorContext()
+  const { formData, setFormData, editorHeight } = useTextEditorContext()
 
   function onMarkdownChange(event) {
     setFormData({ ...formData, markdown: event.target.value })
@@ -17,7 +17,8 @@ export function MarkdownEditor() {
           <ToggleEditorTypeBtn />
         </div>
         <textarea
-          className="markdown-editor-input w-full min-h-[240px] h-full px-3 py-2 border-none focus:outline-none bg-gray-50"
+          className="markdown-editor-input w-full h-full px-3 py-2 border-none focus:outline-none bg-gray-50 "
+          style={{ minHeight: `${editorHeight - 58}px` }}
           type="text"
           name="markdownString"
           id="markdownString"

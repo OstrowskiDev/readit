@@ -7,6 +7,7 @@ export function TextEditorProvider({
   formData,
   setFormData,
   onContentChange,
+  editorHeight,
 }) {
   return (
     <TextEditorContext.Provider
@@ -14,6 +15,7 @@ export function TextEditorProvider({
         formData,
         setFormData,
         onContentChange,
+        editorHeight,
       }}
     >
       {children}

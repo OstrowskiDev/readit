@@ -209,6 +209,7 @@ export function CreatePostForm({
             }`}
           >
             <TextEditor
+              editorHeight={300}
               onContentChange={onContentChange}
               formData={formData}
               setFormData={setFormData}

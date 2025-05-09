@@ -9,9 +9,15 @@ const QuillEditor = dynamic(() => import('@/ui/tekst-editor/QuillEditor'), {
   ssr: false,
 })
 
-export function TextEditor({ formData, setFormData, onContentChange }) {
+export function TextEditor({
+  formData,
+  setFormData,
+  onContentChange,
+  editorHeight,
+}) {
   return (
     <TextEditorProvider
+      editorHeight={editorHeight}
       formData={formData}
       setFormData={setFormData}
       onContentChange={onContentChange}

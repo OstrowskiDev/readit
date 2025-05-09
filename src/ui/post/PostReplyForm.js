@@ -9,12 +9,18 @@ import { signIn, useSession } from 'next-auth/react'
 import { useEffect, useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 import { TextEditor } from '../tekst-editor/TextEditor'
+import { parseMarkdownToHtml } from '@/lib/text-editor/parseMarkdownToHtml'
 
 export function PostReplyForm({ isCommFormVisible, setIsCommFormVisible }) {
-  const [input, setInput] = useState('')
   const { data: session } = useSession()
   const userId = session?.user?.id
   const { comments, setComments, postId, post, setPost } = usePostContext()
+  const initialFormData = {
+    content: '',
+    markdown: '',
+    toggleEditor: 'formated_text_editor',
+  }
+  const [formData, setFormData] = useState(initialFormData)
   const { toastFunctions: toast } = useToastContext()
   const [toggleTextEditor, setToggleTextEditor] = useState(false)
 
@@ -36,21 +42,35 @@ export function PostReplyForm({ isCommFormVisible, setIsCommFormVisible }) {
     }
   }, [response])
 
+  function onContentChange(e) {
+    if (!e.target) {
+      setFormData({ ...formData, content: e })
+    } else {
+      setFormData({ ...formData, content: e.target.value })
+    }
+  }
+
   async function onSubmit() {
     const parentType = 'post'
     if (!session) return signIn()
+
+    if (formData.toggleEditor === 'markdown_editor') {
+      const newHtmlString = parseMarkdownToHtml(formData.markdown)
+      setFormData({ ...formData, content: newHtmlString })
+    }
+
     const newCommentId = uuidv4().toString()
     optimisticUpdate(newCommentId)
     const serverResponse = await createComment(
       parentId,
       parentType,
-      input,
+      formData.content,
       newCommentId,
     )
 
     setResponse(serverResponse)
     setIsCommFormVisible(!isCommFormVisible)
-    setInput('')
+    setFormData(initialFormData)
   }
 
   function onCancelClick() {
@@ -58,6 +78,10 @@ export function PostReplyForm({ isCommFormVisible, setIsCommFormVisible }) {
   }
 
   function handleEditorToggle() {
+    if (formData.toggleEditor === 'markdown_editor') {
+      const newHtmlString = parseMarkdownToHtml(formData.markdown)
+      setFormData({ ...formData, content: newHtmlString })
+    }
     setToggleTextEditor(!toggleTextEditor)
   }
 
@@ -69,7 +93,7 @@ export function PostReplyForm({ isCommFormVisible, setIsCommFormVisible }) {
         type: 'post',
         _id: parentId,
       },
-      content: input,
+      content: formData.content,
       replies: [],
       likes: [],
       dislikes: [],
@@ -113,15 +137,21 @@ export function PostReplyForm({ isCommFormVisible, setIsCommFormVisible }) {
         <div className="post-reply-form change-border-on-child-focus p-2 ml-4 mr-1 my-1 bg-white border border-slate-300 rounded-lg">
           <form>
             {toggleTextEditor ? (
-              <TextEditor /> // this component needs formData, setFormData, onContentChange to function, laso formData now needs: formData.markdown, formData.toggleEditor, formData.content(?)
+              <TextEditor
+                editorHeight={162}
+                onContentChange={onContentChange}
+                formData={formData}
+                setFormData={setFormData}
+              />
             ) : (
               <textarea
                 id="content"
                 name="content"
-                className="post-reply-input w-full h-32 border-none focus:outline-none"
+                className="post-reply-content w-full h-40 border-none focus:outline-none"
                 placeholder="Add your comment"
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
+                value={formData.content}
+                onChange={onContentChange}
+                required
               />
             )}
 
