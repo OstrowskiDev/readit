@@ -1,11 +1,13 @@
 'use client'
 
-import { createComment } from '@/lib/actions/comment'
+import { ToggleTextEditorBtn } from '../buttons/ToggleTextEditorBtn'
 import { useCommentContext } from '@/lib/context/CommentContextProvider'
 import { useToastContext } from '@/lib/toasts/ToastProvider'
-import cloneDeep from 'lodash/cloneDeep'
+import { createComment } from '@/lib/actions/comment'
+import { TextEditor } from '../tekst-editor/TextEditor'
 import { signIn, useSession } from 'next-auth/react'
 import { useEffect, useState } from 'react'
+import cloneDeep from 'lodash/cloneDeep'
 import { v4 as uuidv4 } from 'uuid'
 
 export function CommentReplyForm({ parentType }) {
@@ -17,7 +19,13 @@ export function CommentReplyForm({ parentType }) {
     setComments,
   } = useCommentContext()
 
-  const [input, setInput] = useState('')
+  const initialFormData = {
+    content: '',
+    markdown: '',
+    toggleEditor: 'formated_text_editor',
+  }
+  const [formData, setFormData] = useState(initialFormData)
+  const [toggleTextEditor, setToggleTextEditor] = useState(false)
   const { data: session } = useSession()
   const { toastFunctions: toast } = useToastContext()
   const parentId = commentId
@@ -57,6 +65,14 @@ export function CommentReplyForm({ parentType }) {
     setComments(oldComments)
   }
 
+  function onContentChange(e) {
+    if (!e.target) {
+      setFormData({ ...formData, content: e })
+    } else {
+      setFormData({ ...formData, content: e.target.value })
+    }
+  }
+
   async function onSubmit() {
     if (!session) return signIn()
     const newCommentId = uuidv4().toString()
@@ -64,12 +80,24 @@ export function CommentReplyForm({ parentType }) {
     const serverResponse = await createComment(
       parentId,
       parentType,
-      input,
+      formData.content,
       newCommentId,
     )
     setResponse(serverResponse)
     setIsReplyFormVis(!isReplyFormVis)
-    setInput('')
+    setFormData(initialFormData)
+  }
+
+  function handleEditorToggle() {
+    console.log(
+      '🚀 ~ handleEditorToggle ~ formData.toggleEditor:',
+      formData.toggleEditor,
+    )
+    if (formData.toggleEditor === 'markdown_editor') {
+      const newHtmlString = parseMarkdownToHtml(formData.markdown)
+      setFormData({ ...formData, content: newHtmlString })
+    }
+    setToggleTextEditor(!toggleTextEditor)
   }
 
   function optimisticUpdate(newCommentId) {
@@ -87,7 +115,7 @@ export function CommentReplyForm({ parentType }) {
           seed: session.user.avatar.seed,
         },
       },
-      content: input,
+      content: formData.content,
       replies: [],
       likes: [],
       dislikes: [],
@@ -130,16 +158,27 @@ export function CommentReplyForm({ parentType }) {
       {isReplyFormVis && (
         <div className="comment-reply-form change-border-on-child-focus p-2 ml-4 mr-1 my-1 bg-white border border-slate-300 rounded-lg">
           <form>
-            <textarea
-              id="content"
-              name="content"
-              className="comment-reply-input w-full border-none focus:outline-none"
-              placeholder="Add yor comment"
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-            />
+            {toggleTextEditor ? (
+              <TextEditor
+                editorHeight={162}
+                onContentChange={onContentChange}
+                formData={formData}
+                setFormData={setFormData}
+              />
+            ) : (
+              <textarea
+                id="content"
+                name="content"
+                className="comment-reply-content min-h-40 w-full border-none focus:outline-none"
+                placeholder="Add yor comment"
+                value={formData.content}
+                onChange={onContentChange}
+              />
+            )}
+
             <div className="comment-reply-btns flex justify-end">
               <CancelButton />
+              <ToggleTextEditorBtn handleEditorToggle={handleEditorToggle} />
               <SubmitButton />
             </div>
           </form>

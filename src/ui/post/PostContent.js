@@ -15,8 +15,6 @@ export function PostContent({ content }) {
         isOnMainPage ? 'fade-bottom max-h-60' : ''
       }`}
     >
-      {/* !!!! remove markdown or html */}
-      {/* <div dangerouslySetInnerHTML={{ __html: content }} /> */}
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
         rehypePlugins={[rehypeRaw, [rehypeSanitize, customSchema]]}

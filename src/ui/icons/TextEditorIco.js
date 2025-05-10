@@ -8,7 +8,6 @@ export function TextEditorIco({ color, size }) {
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
-      class="lucide lucide-letter-text-icon lucide-letter-text"
     >
       <path d="M15 12h6" />
       <path d="M15 6h6" />

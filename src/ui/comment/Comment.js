@@ -7,6 +7,12 @@ import { CommentAuthorsInfo } from './CommentAuthorsInfo'
 import { CommentButtons } from './CommentButtons'
 import { DrawConnections } from '../post/DrawConnections'
 
+import customSchema from '@/services/rehype-sanitize/customSchema'
+import ReactMarkdown from 'react-markdown'
+import rehypeRaw from 'rehype-raw'
+import rehypeSanitize from 'rehype-sanitize'
+import remarkGfm from 'remark-gfm'
+
 export function Comment({
   comment,
   comments,
@@ -115,9 +121,12 @@ export function Comment({
                   : { width: `calc(100% + 22px)` }
               }
             >
-              <pre className="comment-body mt-1 font-sans whitespace-pre-wrap">
+              <ReactMarkdown
+                remarkPlugins={[remarkGfm]}
+                rehypePlugins={[rehypeRaw, [rehypeSanitize, customSchema]]}
+              >
                 {comment.content}
-              </pre>
+              </ReactMarkdown>
             </div>
 
             {/* comment buttons */}

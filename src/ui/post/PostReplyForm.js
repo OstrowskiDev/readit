@@ -2,14 +2,14 @@
 
 import { createComment } from '@/lib/actions/comment'
 import { usePostContext } from '@/lib/context/PostContextProvider'
+import { parseMarkdownToHtml } from '@/lib/text-editor/parseMarkdownToHtml'
 import { useToastContext } from '@/lib/toasts/ToastProvider'
 import { ReplyFormBtns } from '@/ui/buttons/ReplyFromBtns'
+import { TextEditor } from '@/ui/tekst-editor/TextEditor'
 import cloneDeep from 'lodash/cloneDeep'
 import { signIn, useSession } from 'next-auth/react'
 import { useEffect, useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
-import { TextEditor } from '../tekst-editor/TextEditor'
-import { parseMarkdownToHtml } from '@/lib/text-editor/parseMarkdownToHtml'
 
 export function PostReplyForm({ isCommFormVisible, setIsCommFormVisible }) {
   const { data: session } = useSession()
