@@ -19,7 +19,6 @@ const ReactQuill = dynamic(() => import('react-quill'), { ssr: false })
 
 export default function QuillEditor() {
   const { onContentChange, formData, editorHeight } = useTextEditorContext()
-  console.log('🚀 ~ QuillEditor ~ editorHeight:', editorHeight)
   const modules = {
     toolbar: {
       container: '#toolbar',
