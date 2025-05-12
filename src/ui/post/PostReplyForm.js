@@ -136,24 +136,13 @@ export function PostReplyForm({ isCommFormVisible, setIsCommFormVisible }) {
       {isCommFormVisible && (
         <div className="post-reply-form change-border-on-child-focus p-2 ml-4 mr-1 my-1 bg-white border border-slate-300 rounded-lg">
           <form>
-            {toggleTextEditor ? (
-              <TextEditor
-                editorHeight={162}
-                onContentChange={onContentChange}
-                formData={formData}
-                setFormData={setFormData}
-              />
-            ) : (
-              <textarea
-                id="content"
-                name="content"
-                className="post-reply-content w-full h-40 border-none focus:outline-none"
-                placeholder="Add your comment"
-                value={formData.content}
-                onChange={onContentChange}
-                required
-              />
-            )}
+            <TextEditor
+              editorHeight={162}
+              onContentChange={onContentChange}
+              formData={formData}
+              setFormData={setFormData}
+              toggleTextEditor={toggleTextEditor}
+            />
 
             <ReplyFormBtns
               onCancelClick={onCancelClick}

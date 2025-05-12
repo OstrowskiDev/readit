@@ -28,6 +28,7 @@ export function CreatePostForm({
   const [imageFile, setImageFile] = useState(null)
   const [wasSubmitted, setWasSubmitted] = useState(false)
   const [fieldValidity, setFieldValidity] = useState(validationObject)
+  const [toggleTextEditor, setToggleTextEditor] = useState(true)
   const { data: session } = useSession()
   const { toastFunctions: toast } = useToastContext()
 
@@ -213,6 +214,7 @@ export function CreatePostForm({
               onContentChange={onContentChange}
               formData={formData}
               setFormData={setFormData}
+              toggleTextEditor={toggleTextEditor}
             />
 
             <CreatePostFormBtns
