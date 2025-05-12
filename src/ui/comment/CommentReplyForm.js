@@ -89,10 +89,6 @@ export function CommentReplyForm({ parentType }) {
   }
 
   function handleEditorToggle() {
-    console.log(
-      '🚀 ~ handleEditorToggle ~ formData.toggleEditor:',
-      formData.toggleEditor,
-    )
     if (formData.toggleEditor === 'markdown_editor') {
       const newHtmlString = parseMarkdownToHtml(formData.markdown)
       setFormData({ ...formData, content: newHtmlString })
@@ -158,24 +154,13 @@ export function CommentReplyForm({ parentType }) {
       {isReplyFormVis && (
         <div className="comment-reply-form change-border-on-child-focus p-2 ml-4 mr-1 my-1 bg-white border border-slate-300 rounded-lg">
           <form>
-            {toggleTextEditor ? (
-              <TextEditor
-                editorHeight={162}
-                onContentChange={onContentChange}
-                formData={formData}
-                setFormData={setFormData}
-              />
-            ) : (
-              <textarea
-                id="content"
-                name="content"
-                className="comment-reply-content min-h-40 w-full border-none focus:outline-none"
-                placeholder="Add yor comment"
-                value={formData.content}
-                onChange={onContentChange}
-              />
-            )}
-
+            <TextEditor
+              editorHeight={162}
+              onContentChange={onContentChange}
+              formData={formData}
+              setFormData={setFormData}
+              toggleTextEditor={toggleTextEditor}
+            />
             <div className="comment-reply-btns flex justify-end">
               <CancelButton />
               <ToggleTextEditorBtn handleEditorToggle={handleEditorToggle} />

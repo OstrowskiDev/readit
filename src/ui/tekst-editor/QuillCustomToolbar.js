@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import CrossedButton from './CrossedButton'
 import SpoilerButton from './SpoilerButton'
 import { ToggleEditorTypeBtn } from './ToggleEditorTypeBtn'
+import { useTextEditorContext } from '@/lib/context/TextEditorProvider'
 
 export default function QuillCustomToolbar() {
   const [toggleMenu, setToggleMenu] = useState({ display: 'none' })
@@ -23,6 +24,7 @@ export default function QuillCustomToolbar() {
 
   const containerRef = useRef(null)
   const [toolbarItems, setToolbarItems] = useState(items)
+  const { toggleTextEditor } = useTextEditorContext()
 
   useEffect(() => {
     const resizeObserver = new ResizeObserver(handleWidthChange)
@@ -79,17 +81,17 @@ export default function QuillCustomToolbar() {
   }
 
   return (
-    <div className="toolbar-container flex" ref={containerRef}>
-      <div className="ql-toolbar relative flex gap-2" id="toolbar">
+    <div
+      className="toolbar-container flex"
+      ref={containerRef}
+      style={{ display: toggleTextEditor ? 'flex' : 'none' }}
+    >
+      <div className="ql-toolbar relative gap-2" id="toolbar">
         <div className="toolbar-group flex gap-1">
           {toolbarItems.map((item, i) => renderButton(item, 'toolbar', i))}
 
           {isToggleMenuBtnVisible && (
-            <button
-              className="px-2 py-1 bg-gray-300"
-              type="button"
-              onClick={onClick}
-            >
+            <button className="px-2 py-1" type="button" onClick={onClick}>
               ...
             </button>
           )}
