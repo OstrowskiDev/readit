@@ -89,10 +89,6 @@ export function CommentReplyForm({ parentType }) {
   }
 
   function handleEditorToggle() {
-    if (formData.toggleEditor === 'markdown_editor') {
-      const newHtmlString = parseMarkdownToHtml(formData.markdown)
-      setFormData({ ...formData, content: newHtmlString })
-    }
     setToggleTextEditor(!toggleTextEditor)
   }
 
