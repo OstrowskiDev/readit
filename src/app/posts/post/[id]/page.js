@@ -23,6 +23,7 @@ export default function PostPage({ params }) {
   const [isCommFormVisible, setIsCommFormVisible] = useState(false)
   const [isEditFormVisible, setIsEditFormVisible] = useState(false)
   const [deleted, setDeleted] = useState(false)
+  const [triggerRebuild, setTriggerRebuild] = useState(0)
 
   const { isUserHovered, handleMouseEnter, handleMouseLeave } = useMouseHover()
 
@@ -82,6 +83,8 @@ export default function PostPage({ params }) {
         handleMouseEnter={handleMouseEnter}
         handleMouseLeave={handleMouseLeave}
         setIsEditFormVisible={setIsEditFormVisible}
+        triggerRebuild={triggerRebuild}
+        setTriggerRebuild={setTriggerRebuild}
       >
         <div className="post-page w-full flex flex-col justify-center md:px-4 mt-1 md:my-8 md:mx-auto">
           <div

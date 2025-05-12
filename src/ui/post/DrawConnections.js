@@ -1,11 +1,14 @@
 import { useCommentContext } from '@/lib/context/CommentContextProvider'
+import { usePostContext } from '@/lib/context/PostContextProvider'
 import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
 export function DrawConnections({ contentRef, commentRef }) {
   const [contentHeight, setContentHeight] = useState(0)
   const [commentHeight, setCommentHeight] = useState(0)
-  const { comment, comments } = useCommentContext()
+  const [formHeight, setFormHeight] = useState(0)
+  const { triggerRebuild } = usePostContext()
+  const { comment, comments, formRef } = useCommentContext()
   const pathname = usePathname()
 
   useEffect(() => {
@@ -16,17 +19,18 @@ export function DrawConnections({ contentRef, commentRef }) {
       if (commentRef.current) {
         setCommentHeight(commentRef.current.offsetHeight)
       }
+      if (formRef?.current) {
+        setFormHeight(formRef?.current?.offsetHeight)
+      }
     }
-
     updateHeight()
     window.addEventListener('resize', updateHeight)
     return () => window.removeEventListener('resize', updateHeight)
-  }, [contentRef, commentRef])
+  }, [contentRef, commentRef, formRef, triggerRebuild])
 
   if (!pathname.includes('/posts/post/')) {
     return null
   }
-
   if (!comment || !comments) {
     return null
   }
@@ -64,7 +68,7 @@ export function DrawConnections({ contentRef, commentRef }) {
             <div
               className="line-to-child absolute w-[2px] top-[48px] left-[1px] bg-gray-300 "
               style={{
-                height: `${contentHeight + 49}px`,
+                height: `${contentHeight + formHeight + 52}px`,
               }}
             ></div>
           </>

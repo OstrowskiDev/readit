@@ -23,7 +23,6 @@ export function Comment({
   renderChildren,
 }) {
   const [deleteOptimistically, setDeleteOptimistically] = useState(false)
-  const [toggleCollapse, setToggleCollapse] = useState(false)
   const [isReplyFormVis, setIsReplyFormVis] = useState(false)
   const [isEditVisible, setIsEditVisible] = useState(false)
   const [targetCommentId, setTargetCommentId] = useState(null)
@@ -36,6 +35,7 @@ export function Comment({
 
   const contentRef = useRef()
   const commentRef = useRef()
+  const formRef = useRef()
 
   useEffect(() => {
     const commentElementId = window.location.hash.substring(1)
@@ -77,6 +77,7 @@ export function Comment({
       setIsReplyFormVis={setIsReplyFormVis}
       isEditVisible={isEditVisible}
       setIsEditVisible={setIsEditVisible}
+      formRef={formRef}
     >
       <div
         className="comment-container relative pt-4 px-2"
@@ -88,19 +89,11 @@ export function Comment({
         }}
       >
         {/* comment accordion element */}
-        <DrawConnections contentRef={contentRef} commentRef={commentRef} />
-
-        {/* !!!! update collapse element to work with DrawConnections component */}
-        {/* <div
-          className="comment-collapse-element comment-vertical-line absolute left-[4px] top-14 w-3"
-          onClick={() => setToggleCollapse((prevValue) => !prevValue)}
-        >
-          {toggleCollapse && (
-            <div className="comment-collapse-icon absolute flex justify-center items-center w-5 h-5 top-8 left-[-4px] bg-gray-100 border border-gray-400 rounded-full text-gray-400">
-              <p className="pb-[2px]">+</p>
-            </div>
-          )}
-        </div> */}
+        <DrawConnections
+          contentRef={contentRef}
+          commentRef={commentRef}
+          formRef={formRef}
+        />
 
         <div ref={commentRef} className="comment-main-content-container">
           {/* authors avatar, user name, comment time, edit time */}
@@ -130,11 +123,11 @@ export function Comment({
             </div>
 
             {/* comment buttons */}
-            <CommentButtons style={adjustOutsideTree} />
+            <CommentButtons style={adjustOutsideTree} formRef={formRef} />
           </div>
 
           {/* comment replies */}
-          {!toggleCollapse && renderChildren && (
+          {renderChildren && (
             <div className="comment-replies ml-[20px]">
               {comment.replies.map((replyId) => {
                 const reply = comments.find((c) => c._id === replyId)

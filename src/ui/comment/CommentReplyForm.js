@@ -9,6 +9,7 @@ import { signIn, useSession } from 'next-auth/react'
 import { useEffect, useState } from 'react'
 import cloneDeep from 'lodash/cloneDeep'
 import { v4 as uuidv4 } from 'uuid'
+import { usePostContext } from '@/lib/context/PostContextProvider'
 
 export function CommentReplyForm({ parentType }) {
   const {
@@ -17,6 +18,7 @@ export function CommentReplyForm({ parentType }) {
     commentId,
     comments,
     setComments,
+    formRef,
   } = useCommentContext()
 
   const initialFormData = {
@@ -27,6 +29,7 @@ export function CommentReplyForm({ parentType }) {
   const [formData, setFormData] = useState(initialFormData)
   const [toggleTextEditor, setToggleTextEditor] = useState(false)
   const { data: session } = useSession()
+  const { setTriggerRebuild } = usePostContext()
   const { toastFunctions: toast } = useToastContext()
   const parentId = commentId
 
@@ -133,12 +136,17 @@ export function CommentReplyForm({ parentType }) {
     )
   }
 
+  function onCancelClick() {
+    setIsReplyFormVis(!isReplyFormVis)
+    setTriggerRebuild((counter) => counter + 1)
+  }
+
   function CancelButton() {
     return (
       <button
         className="comment-reply-cancel-btn btn-gray py-1 px-2 mt-1"
         type="button"
-        onClick={() => setIsReplyFormVis(!isReplyFormVis)}
+        onClick={onCancelClick}
       >
         Cancel
       </button>
@@ -146,7 +154,7 @@ export function CommentReplyForm({ parentType }) {
   }
 
   return (
-    <>
+    <div className="comment-reply-form-wrapper" ref={formRef}>
       {isReplyFormVis && (
         <div className="comment-reply-form change-border-on-child-focus p-2 ml-4 mr-1 my-1 bg-white border border-slate-300 rounded-lg">
           <form>
@@ -165,6 +173,6 @@ export function CommentReplyForm({ parentType }) {
           </form>
         </div>
       )}
-    </>
+    </div>
   )
 }

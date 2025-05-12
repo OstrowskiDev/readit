@@ -61,13 +61,13 @@ export default function QuillCustomToolbar() {
 
   function renderButton(item, location = 'toolbar', key) {
     const shouldShow = item.location === location ? 'block' : 'none'
-    const commonProps = { key, display: shouldShow }
+    const commonProps = { display: shouldShow }
 
     switch (item.class) {
       case 'crossed':
-        return <CrossedButton {...commonProps} />
+        return <CrossedButton {...commonProps} key={key} />
       case 'spoiler':
-        return <SpoilerButton {...commonProps} />
+        return <SpoilerButton {...commonProps} key={key} />
       default:
         return (
           <button

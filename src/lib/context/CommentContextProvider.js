@@ -14,6 +14,7 @@ export function CommentContextProvider({
   setIsReplyFormVis,
   isEditVisible,
   setIsEditVisible,
+  formRef,
 }) {
   return (
     <CommentContext.Provider
@@ -28,6 +29,7 @@ export function CommentContextProvider({
         setComments,
         postId,
         setDeleteOptimistically,
+        formRef,
       }}
     >
       {children}

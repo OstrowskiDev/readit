@@ -5,11 +5,13 @@ import { ReplyIco } from '../icons/ReplyIco'
 import { signIn, useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { usePathname } from 'next/navigation'
+import { usePostContext } from '@/lib/context/PostContextProvider'
 
 export function ReplyBtn() {
   const router = useRouter()
   const pathname = usePathname()
   const { data: session } = useSession()
+  const { setTriggerRebuild } = usePostContext()
   const { comment, isReplyFormVis, setIsReplyFormVis } = useCommentContext()
 
   function handleClick(event) {
@@ -20,6 +22,7 @@ export function ReplyBtn() {
       return
     }
     session ? setIsReplyFormVis(!isReplyFormVis) : signIn()
+    setTriggerRebuild((counter) => counter + 1)
   }
   return (
     <button
