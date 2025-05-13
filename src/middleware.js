@@ -17,18 +17,46 @@ import { RateLimiterMemory } from 'rate-limiter-flexible'
 
 // protection for REGISTER route (60 registration per hour? registration requires email confirmation so being strict here is not necessarly needed)
 
+// 1. Global protection from DDOS at 1k / mintue
+const limiterGlobalDDOS = new RateLimiterMemory({
+  points: 5000,
+  duration: 60,
+})
+
+// 2. protection from burst at 50 req/sec
+const limiterBurstIP = new RateLimiterMemory({
+  points: 50,
+  duration: 1,
+})
+
+// 3. login route protection based on IP
+// note: emails are already protected against brute force attacks
+// five failed login attempts will result in account lockdown
+// !!!! check if path is correct
+const limiterLoginIP = new RateLimiterMemory({
+  points: 5,
+  duration: 60 * 1,
+})
+
+// 4. GET requests for images 500/hour
+const limiterImages = new RateLimiterMemory({
+  points: 500,
+  duration: 60 * 60,
+})
+
+// 5. Limit PUT, POST, DELETE req per User
+const limiterPerUser = new RateLimiterMemory({
+  points: 600,
+  duration: 60 * 60,
+})
+
 export async function middleware(request) {
   const { pathname } = request.nextUrl
   const method = request.method
   const forwarded = request.headers.get('x-forwarded-for')
-  const ip = forwarded ? forwarded.split(',')[0] : request.ip || 'unknown'
+  const ip = forwarded ? forwarded.split(',')[0] : request.ip || undefined
 
   // 1. Global protection from DDOS at 1k / mintue
-  const limiterGlobalDDOS = new RateLimiterMemory({
-    points: 5000,
-    duration: 60,
-  })
-
   try {
     const res = await limiterGlobalDDOS.consume('global')
     console.log(`[Global_Anon] Remaining: ${res.remainingPoints}`)
@@ -39,29 +67,18 @@ export async function middleware(request) {
   }
 
   // 2. protection from burst at 50 req/sec
-  const limiterBurstIP = new RateLimiterMemory({
-    points: 50,
-    duration: 1,
-  })
-
-  try {
-    const res = await limiterBurstIP.consume('burst')
-    console.log(`[Burst_Global] ${ip} - Remaining: ${res.remainingPoints}`)
-  } catch {
-    return new NextResponse('Too many requests in short time', {
-      status: 429,
-    })
+  if (ip) {
+    try {
+      const res = await limiterBurstIP.consume(ip)
+      console.log(`[Burst_Global] ${ip} - Remaining: ${res.remainingPoints}`)
+    } catch {
+      return new NextResponse('Too many requests in short time', {
+        status: 429,
+      })
+    }
   }
 
   // 3. login route protection based on IP
-  // note: emails are already protected against brute force attacks
-  // five failed login attempts will result in account lockdown
-  // !!!! check is path correct
-  const limiterLoginIP = new RateLimiterMemory({
-    points: 5,
-    duration: 60 * 1,
-  })
-
   if (ip) {
     if (pathname.startsWith('/api/auth/login') && method === 'POST') {
       try {
@@ -74,11 +91,6 @@ export async function middleware(request) {
   }
 
   // 4. GET requests for images 500/hour
-  const limiterImages = new RateLimiterMemory({
-    points: 500,
-    duration: 60 * 60,
-  })
-
   if (pathname.startsWith('/api/images') && method === 'GET') {
     try {
       const res = await limiterImages.consume(ip)
@@ -88,12 +100,7 @@ export async function middleware(request) {
     }
   }
 
-  // 4. Limit PUT, POST, DELETE req per User
-  const limiterPerUser = new RateLimiterMemory({
-    points: 600,
-    duration: 60 * 60,
-  })
-
+  // 5. Limit PUT, POST, DELETE req per User
   if (method === 'PUT' || method === 'POST' || method === 'DELETE') {
     const token = await getToken({
       req: request,
