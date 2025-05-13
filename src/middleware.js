@@ -1,4 +1,4 @@
-export { default } from 'next-auth/middleware'
+// export { default } from 'next-auth/middleware'
 
 // !!!! dodaj nagłówek CSP do wszystkich odpowiedzi:
 // const response = NextResponse.next();
@@ -9,4 +9,113 @@ export { default } from 'next-auth/middleware'
 // return response
 
 // muszę także zmienić config matcher
-export const config = { matcher: ['/posts/create/:path*'] }
+// export const config = { matcher: ['/posts/create/:path*'] }
+
+import { NextResponse } from 'next/server'
+import { getToken } from 'next-auth/jwt'
+import { RateLimiterMemory } from 'rate-limiter-flexible'
+
+// protection for REGISTER route (60 registration per hour? registration requires email confirmation so being strict here is not necessarly needed)
+
+export async function middleware(request) {
+  const { pathname } = request.nextUrl
+  const method = request.method
+  const forwarded = request.headers.get('x-forwarded-for')
+  const ip = forwarded ? forwarded.split(',')[0] : request.ip || 'unknown'
+
+  // 1. Global protection from DDOS at 1k / mintue
+  const limiterGlobalDDOS = new RateLimiterMemory({
+    points: 5000,
+    duration: 60,
+  })
+
+  try {
+    const res = await limiterGlobalDDOS.consume('global')
+    console.log(`[Global_Anon] Remaining: ${res.remainingPoints}`)
+  } catch {
+    return new NextResponse('Too many requests', {
+      status: 429,
+    })
+  }
+
+  // 2. protection from burst at 50 req/sec
+  const limiterBurstIP = new RateLimiterMemory({
+    points: 50,
+    duration: 1,
+  })
+
+  try {
+    const res = await limiterBurstIP.consume('burst')
+    console.log(`[Burst_Global] ${ip} - Remaining: ${res.remainingPoints}`)
+  } catch {
+    return new NextResponse('Too many requests in short time', {
+      status: 429,
+    })
+  }
+
+  // 3. login route protection based on IP
+  // note: emails are already protected against brute force attacks
+  // five failed login attempts will result in account lockdown
+  // !!!! check is path correct
+  const limiterLoginIP = new RateLimiterMemory({
+    points: 5,
+    duration: 60 * 1,
+  })
+
+  if (ip) {
+    if (pathname.startsWith('/api/auth/login') && method === 'POST') {
+      try {
+        const res = await limiterLoginIP.consume(ip)
+        console.log(`[LoginIP] ${ip} - Remaining: ${res.remainingPoints}`)
+      } catch {
+        return new NextResponse('Too many login attempts', { status: 429 })
+      }
+    }
+  }
+
+  // 4. GET requests for images 500/hour
+  const limiterImages = new RateLimiterMemory({
+    points: 500,
+    duration: 60 * 60,
+  })
+
+  if (pathname.startsWith('/api/images') && method === 'GET') {
+    try {
+      const res = await limiterImages.consume(ip)
+      console.log(`[ImageGET] ${ip} - Remaining: ${res.remainingPoints}`)
+    } catch {
+      return new NextResponse('Too many image requests', { status: 429 })
+    }
+  }
+
+  // 4. Limit PUT, POST, DELETE req per User
+  const limiterPerUser = new RateLimiterMemory({
+    points: 600,
+    duration: 60 * 60,
+  })
+
+  if (method === 'PUT' || method === 'POST' || method === 'DELETE') {
+    const token = await getToken({
+      req: request,
+      secret: process.env.NEXTAUTH_SECRET,
+    })
+
+    if (token?.email) {
+      const email = token.email
+      try {
+        const res = await limiterPerUser.consume(email)
+        console.log(`[User] ${email} - Remaining: ${res.remainingPoints}`)
+      } catch {
+        return new NextResponse('Too many actions from this user', {
+          status: 429,
+        })
+      }
+    }
+  }
+
+  return NextResponse.next()
+}
+
+export const config = {
+  matcher: ['/:path*'],
+}
