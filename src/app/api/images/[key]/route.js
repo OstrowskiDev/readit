@@ -14,9 +14,6 @@ import sharp from 'sharp'
  * - For admin posts, the post ID may also use kebab-case format.
  */
 
-//!!!! dodaj caching do GET by nie pobierać w kółko tego samego obrazu
-//!!!! dodaj rate limiting
-
 export async function GET(request, { params }) {
   const { key } = params
   if (!validateKey(key)) {
@@ -34,6 +31,7 @@ export async function GET(request, { params }) {
       status: 200,
       headers: {
         'Content-Type': data.ContentType,
+        'Cache-Control': 'public, max-age=600',
       },
     })
   } catch (error) {

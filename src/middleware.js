@@ -92,7 +92,7 @@ export async function middleware(request) {
     }
   }
 
-  // 4. GET requests for images 500/hour
+  // 4. GET requests for images
   if (pathname.startsWith('/api/images') && method === 'GET') {
     try {
       const res = await limiterImages.consume(ip)
