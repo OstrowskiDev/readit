@@ -38,9 +38,11 @@ const limiterLoginIP = new RateLimiterMemory({
   duration: 60 * 1,
 })
 
-// 4. GET requests for images 500/hour
+// 4. GET requests for images 200/hour
+// Cloudflare free limit is 100k/month
+// this gives on average 139/hour
 const limiterImages = new RateLimiterMemory({
-  points: 500,
+  points: 139,
   duration: 60 * 60,
 })
 
