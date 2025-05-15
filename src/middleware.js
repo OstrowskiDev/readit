@@ -60,8 +60,7 @@ export async function middleware(request) {
 
   // 1. Global protection from DDOS at 1k / mintue
   try {
-    const res = await limiterGlobalDDOS.consume('global')
-    console.log(`[Global_Anon] Remaining: ${res.remainingPoints}`)
+    await limiterGlobalDDOS.consume('global')
   } catch {
     return new NextResponse('Too many requests', {
       status: 429,
@@ -71,8 +70,7 @@ export async function middleware(request) {
   // 2. protection from burst at 50 req/sec
   if (ip) {
     try {
-      const res = await limiterBurstIP.consume(ip)
-      console.log(`[Burst_Global] ${ip} - Remaining: ${res.remainingPoints}`)
+      await limiterBurstIP.consume(ip)
     } catch {
       return new NextResponse('Too many requests in short time', {
         status: 429,
