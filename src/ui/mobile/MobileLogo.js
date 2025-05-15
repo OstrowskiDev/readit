@@ -1,4 +1,4 @@
-import SmileyFaceIco from '@/ui/icons/SmileyFaceIco'
+import { LogoIco } from '../icons/LogoIco'
 
 export function MobileLogo() {
   return (
@@ -6,7 +6,7 @@ export function MobileLogo() {
       className="mobile-logo w-10 h-10 mt-4 mx-2 flex justify-center items-center"
       href="/posts"
     >
-      <SmileyFaceIco />
+      <LogoIco />
     </a>
   )
 }

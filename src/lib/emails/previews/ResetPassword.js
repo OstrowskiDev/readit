@@ -1,5 +1,5 @@
 import { env } from 'process'
-import SmileyFaceIco from '@/ui/icons/SmileyFaceIco'
+import { LogoIco } from '@/ui/icons/LogoIco'
 
 export default function ResetPasswordEmail() {
   const urlGitHubRepo = env.URL_GITHUB_PROJECT_REPO
@@ -16,7 +16,7 @@ export default function ResetPasswordEmail() {
             <tr>
               <td align="center">
                 <div className="email-header-ico w-12 h-12 ml-2 border-white">
-                  <SmileyFaceIco />
+                  <LogoIco />
                 </div>
               </td>
               <td align="center">
