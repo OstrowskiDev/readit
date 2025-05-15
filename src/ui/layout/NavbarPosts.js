@@ -8,7 +8,7 @@ export function NavbarPosts() {
   return (
     <div className="flex flex-col w-full rounded-md bg-white  shadow-md">
       <p
-        className="p-3 hover:cursor-pointer hover:bg-blue-100 rounded-t-md select-none"
+        className="btn-orbitron p-3 hover:cursor-pointer hover:bg-blue-100 rounded-t-md select-none"
         onClick={() => setToggleCollapse((prevVal) => !prevVal)}
       >
         Posts
@@ -16,17 +16,20 @@ export function NavbarPosts() {
       {toggleCollapse && (
         <div className="flex flex-col">
           <div className="separator h-[2px] bg-gray-200"></div>
-          <a href="/posts" className="nav-sub-button pl-6">
+          <a href="/posts" className="nav-sub-button btn-orbitron pl-6">
             Recent
           </a>
           <div className="separator h-[2px] bg-gray-200"></div>
-          <a href="/posts/favorites" className="nav-sub-button pl-6">
+          <a
+            href="/posts/favorites"
+            className="nav-sub-button btn-orbitron pl-6"
+          >
             Favorites
           </a>
           <div className="separator h-[2px] bg-gray-200"></div>
           <a
             href="/posts/my-posts"
-            className="nav-sub-button pl-6 rounded-b-lg"
+            className="nav-sub-button btn-orbitron pl-6 rounded-b-lg"
           >
             My posts
           </a>

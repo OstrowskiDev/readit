@@ -6,7 +6,7 @@ export function ProfileSettings() {
         <li>
           <a
             href="/my-profile/change-password"
-            className="text-blue-500 hover:text-blue-700 transition-colors duration-200"
+            className="anchor-color transition-colors duration-200"
           >
             Change Password
           </a>
@@ -14,7 +14,7 @@ export function ProfileSettings() {
         <li>
           <a
             href="/my-profile/delete-account"
-            className="text-blue-500 hover:text-blue-700 transition-colors duration-200"
+            className="anchor-color transition-colors duration-200"
           >
             Delete Account
           </a>

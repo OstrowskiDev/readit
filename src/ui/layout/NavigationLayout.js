@@ -35,13 +35,19 @@ export default function NavigationLayout() {
         <nav className="desktop-navigation-container flex below-md:hidden items-center w-full h-full flex-col mt-2">
           <div className="desktop-navigation-anchors flex md:flex-col w-full h-full space-y-2">
             <NavbarPosts />
-            <a href="/my-profile" className="nav-button pl-4">
+            <a href="/my-profile" className="nav-button btn-orbitron pl-4">
               My profile
             </a>
-            <a href="/posts/post/about" className="nav-button pl-4">
+            <a
+              href="/posts/post/about"
+              className="nav-button btn-orbitron pl-4"
+            >
               About
             </a>
-            <a href="/posts/post/credits" className="nav-button pl-4">
+            <a
+              href="/posts/post/credits"
+              className="nav-button btn-orbitron pl-4"
+            >
               Credits
             </a>
             <div className="bg-white h-auto rounded-md grow shadow-md"></div>

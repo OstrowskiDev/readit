@@ -33,7 +33,7 @@ export function AuthorsInfo({
         <div className="header-name flex below-xs:flex-col z-20">
           {/* authors name */}
           <p
-            className="header-author ml-2 font-bold below-xs:leading-tight text-blue-900 text-15 hover:cursor-pointer"
+            className="header-author anchor-color font-orbitron-bold ml-2 below-xs:leading-tight text-15 hover:cursor-pointer"
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
           >
