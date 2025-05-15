@@ -1,0 +1,5 @@
+prompt 1:
+A detailed and atmospheric scene of various artificial satellites and metallic objects gently orbiting the Moon, with Earth visible in the distant background. The objects appear aged and weathered, floating peacefully in space, illuminated by soft moonlight. A sense of quiet and solitude dominates the composition, emphasizing the vastness of space.
+
+prompt 4:
+A detailed and atmospheric scene of various scattered space debires orbiting the Moon. The objects appear aged and weathered, floating in space, illuminated by soft moonlight. A sense of quiet and solitude dominates the composition, emphasizing the vastness of space.
