@@ -8,9 +8,13 @@ export function PostLikeCount({ postLikes, postDislikes }) {
   return (
     <>
       {score >= 0 ? (
-        <p className="post-like-count m-0 font-bold text-gray-900">{score}</p>
+        <p className="post-like-count font-orbitron-bold m-0 font-bold">
+          {score}
+        </p>
       ) : (
-        <p className="post-like-count m-0 font-bold text-red-900">{score}</p>
+        <p className="post-like-count font-orbitron-bold m-0 font-bold text-red-900">
+          {score}
+        </p>
       )}
     </>
   )

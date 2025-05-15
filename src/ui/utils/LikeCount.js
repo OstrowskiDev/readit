@@ -11,11 +11,11 @@ export function LikeCount() {
   return (
     <>
       {popularity >= 0 ? (
-        <p className="comment-like-count m-0 font-bold text-gray-900">
+        <p className="comment-like-count font-orbitron-bold m-0">
           {popularity}
         </p>
       ) : (
-        <p className="comment-like-count m-0 font-bold text-red-900">
+        <p className="comment-like-count font-orbitron-bold m-0 text-red-900">
           {popularity}
         </p>
       )}

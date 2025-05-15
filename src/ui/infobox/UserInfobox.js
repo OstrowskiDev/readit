@@ -63,7 +63,7 @@ export default function UserInfobox({
             <div className="infobox-name-date-container flex flex-col ml-4">
               <div
                 onClick={() => router.push(`/user/${author._id}/posts`)}
-                className="name text-gray-950 text-20 font-semibold hover:cursor-pointer hover:underline"
+                className="name font-orbitron-bold text-20 hover:cursor-pointer hover:underline"
               >
                 {author.name}
               </div>
@@ -73,22 +73,24 @@ export default function UserInfobox({
 
           <div className="infobox-posts-comments-numbers-container mt-4 flex">
             <div className="infobox-posts-number">
-              <p className="infobox-posts-number text-gray-950 text-18 font-semibold ">
+              <p className="infobox-posts-number font-orbitron text-18 font-semibold">
                 {postsSum}
               </p>
-              <p className=" text-gray-600 text-15">Posts Created</p>
+              <p className="infobox-comments-text text-12 font-orbitron text-gray-600">
+                Posts Created
+              </p>
             </div>
             <div className="infobox-comments-number-container ml-4">
-              <p className="infobox-comments-number text-gray-950 text-18 font-semibold">
+              <p className="infobox-comments-number font-orbitron text-18 font-semibold">
                 {commentsSum}
               </p>
-              <p className="infobox-comments-text text-gray-600 text-15">
+              <p className="infobox-comments-text text-12 font-orbitron text-gray-600">
                 Comment Created
               </p>
             </div>
           </div>
 
-          <div className="infobox-buttons-container mt-4 flex">
+          <div className="infobox-buttons-container mt-5 flex">
             <FollowBtn />
             <MessageBtn />
           </div>

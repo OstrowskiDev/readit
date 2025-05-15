@@ -24,7 +24,7 @@ export function PostMenuBtn({ setIsPostMenuVis }) {
       <button
         onClick={handleClick}
         type="button"
-        className="w-[36px] p-[7px] flex justify-center items-center"
+        className="w-[36px] p-[5px] flex justify-center items-center"
       >
         <DotsIco />
       </button>
