@@ -5,7 +5,6 @@ export function CommentBtnsContextWrapper({
   comment,
   commentId,
   postId,
-  setDeleteOptimistically,
   comments,
   setComments,
 }) {
@@ -14,7 +13,6 @@ export function CommentBtnsContextWrapper({
       comment={comment}
       commentId={commentId}
       postId={postId}
-      setDeleteOptimistically={setDeleteOptimistically}
       comments={comments}
       setComments={setComments}
     >
