@@ -30,11 +30,12 @@ button, .btn-orbitron {
   letter-spacing: 0.03em;
   font-weight: 700;
 }
+
 a, .anchor-color {
   color: #ea580c;
 }
 
-a, .anchor-color:hover {
+a:hover, .anchor-color:hover {
   color: #c2410c;
 }
 

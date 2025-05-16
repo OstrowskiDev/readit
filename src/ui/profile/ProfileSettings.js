@@ -1,12 +1,14 @@
 export function ProfileSettings() {
   return (
     <div className="profile-settings border-t border-gray-200 mt-4 pt-4">
-      <h3 className="text-lg font-semibold text-gray-800 mb-2">Settings:</h3>
+      <h3 className="profile-settings-title text-lg font-semibold text-gray-800 mb-2">
+        Settings:
+      </h3>
       <ul className="space-y-2">
         <li>
           <a
             href="/my-profile/change-password"
-            className="anchor-color transition-colors duration-200"
+            className="anchor-color font-orbitron text-14"
           >
             Change Password
           </a>
@@ -14,7 +16,7 @@ export function ProfileSettings() {
         <li>
           <a
             href="/my-profile/delete-account"
-            className="anchor-color transition-colors duration-200"
+            className="anchor-color font-orbitron text-14"
           >
             Delete Account
           </a>

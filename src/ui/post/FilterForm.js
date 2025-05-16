@@ -23,9 +23,9 @@ export function FilterForm({
     <>
       {isFilterFormVis && (
         <div className="filter-posts-form px-2 py-2 md:py-4 md:mb-2 md:rounded-lg md:shadow-center-md below-md:border-t ">
-          <form className="grid grid-cols-1 2col-filter:grid-cols-2 gap-2">
+          <form className="filter-form font-orbitron text-14 grid grid-cols-1 2col-filter:grid-cols-2 gap-2">
             <div className="filter-title-container flex px-4">
-              <p className="filter-title-label w-[90px]">title:</p>
+              <p className="filter-title-label w-[100px]">title:</p>
               <textarea
                 className="filter-title-input w-full h-7 px-2 bg-gray-50 resize-none border border-slate-300 rounded-md
                 focus:border-slate-500 focus:outline-none"
@@ -44,7 +44,7 @@ export function FilterForm({
             </div>
             <div className="filter-author-container flex px-4">
               <p
-                className={`filter-author-label w-[90px] ${
+                className={`filter-author-label w-[100px] ${
                   disableFilteringByAuthor && 'text-gray-400'
                 }`}
               >
@@ -71,7 +71,7 @@ export function FilterForm({
               />
             </div>
             <div className="filter-content-container flex px-4">
-              <p className="filter-content-label w-[90px]">content:</p>
+              <p className="filter-content-label w-[100px]">content:</p>
               <textarea
                 className="filter-content-input w-full h-7 px-2 bg-gray-50 resize-none border border-slate-300 rounded-md
                 focus:border-slate-500 focus:outline-none"
@@ -89,7 +89,7 @@ export function FilterForm({
               />
             </div>
             <div className="filter-sort-by-container flex px-4">
-              <p className="filter-sort-by-label w-[90px]">sort by:</p>
+              <p className="filter-sort-by-label w-[100px]">sort by:</p>
               <select
                 className="filter-sort-by-input w-full h-7 px-2 bg-gray-50 border border-slate-300 rounded-md
                 focus:border-slate-500 focus:outline-none"
@@ -107,7 +107,7 @@ export function FilterForm({
               </select>
             </div>
             <div className="filter-sort-order-container flex px-4">
-              <p className="filter-sort-order-label w-[90px]">order:</p>
+              <p className="filter-sort-order-label w-[100px]">order:</p>
               <select
                 className="filter-sort-order-input w-full h-7 px-2 bg-gray-50 border border-slate-300 rounded-md
                 focus:border-slate-500 focus:outline-none"
