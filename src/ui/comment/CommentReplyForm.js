@@ -89,6 +89,7 @@ export function CommentReplyForm({ parentType }) {
     setResponse(serverResponse)
     setIsReplyFormVis(!isReplyFormVis)
     setFormData(initialFormData)
+    setTriggerRebuild((counter) => counter + 1)
   }
 
   function handleEditorToggle() {

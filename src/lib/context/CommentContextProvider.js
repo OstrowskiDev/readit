@@ -7,7 +7,6 @@ export function CommentContextProvider({
   comment,
   commentId,
   postId,
-  setDeleteOptimistically,
   comments,
   setComments,
   isReplyFormVis,
@@ -28,7 +27,6 @@ export function CommentContextProvider({
         comments,
         setComments,
         postId,
-        setDeleteOptimistically,
         formRef,
       }}
     >

@@ -22,7 +22,6 @@ export function Comment({
   postId,
   renderChildren,
 }) {
-  const [deleteOptimistically, setDeleteOptimistically] = useState(false)
   const [isReplyFormVis, setIsReplyFormVis] = useState(false)
   const [isEditVisible, setIsEditVisible] = useState(false)
   const [targetCommentId, setTargetCommentId] = useState(null)
@@ -70,7 +69,6 @@ export function Comment({
       comment={comment}
       commentId={commentId}
       postId={rootPostId}
-      setDeleteOptimistically={setDeleteOptimistically}
       comments={comments}
       setComments={setComments}
       isReplyFormVis={isReplyFormVis}
@@ -84,8 +82,6 @@ export function Comment({
         id={commentId}
         style={{
           marginLeft: depth === 0 ? 0 : 8,
-
-          display: deleteOptimistically ? 'none' : 'block',
         }}
       >
         {/* comment accordion element */}
