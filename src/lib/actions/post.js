@@ -82,7 +82,6 @@ export async function updatePost(postId, formData, imageData) {
   const validationResults = validatePost(formData)
   if (hasErrors(validationResults)) {
     console.error('Post update data failed validation')
-    console.log('🚀 ~ updatePost ~ baseUrl:', baseUrl)
     return returnToast('error', 'Failed to update post')
   }
 
@@ -93,27 +92,12 @@ export async function updatePost(postId, formData, imageData) {
 
   const imageStatus = imageData.get('imageStatus')
   const file = imageData.get('file')
-  console.log('typeof file:', typeof file)
-  console.log('file instanceof File:', file instanceof File)
-  console.log('file keys:', file && Object.keys(file))
-  console.log('imageStatus from imageData:', imageStatus)
-  console.log('file from imageData:', file)
   const cookieStorage = cookies()
-  console.log('🚀 ~ updatePost ~ cookieStorage:', cookieStorage)
   const cookieHeader = getAuthCookies(cookieStorage)
-  console.log('🚀 ~ updatePost ~ cookieHeader:', cookieHeader)
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL
 
   if (imageStatus === 'new') {
-    console.log(
-      "🚀 ~ updatePost ~ imageStatus === 'new':",
-      imageStatus === 'new',
-    )
     const results = await validateImageFileServer(file)
-    console.log('🚀 ~ updatePost ~ file:', file)
-    console.log('🚀 ~ updatePost ~ results:', results)
-    console.log('🚀 ~ updatePost ~ results.type:', results?.type)
-    console.log('🚀 ~ updatePost ~ results.size:', results?.size)
     if (!results.type || !results.size) {
       return returnToast('error', 'Failed to update post')
     }
@@ -124,9 +108,6 @@ export async function updatePost(postId, formData, imageData) {
         Cookie: cookieHeader,
       },
     })
-    console.log('🚀 ~ updatePost ~ imageUpdate:', imageUpdate)
-    console.log('🚀 ~ updatePost ~ imageUpdate.status:', imageUpdate.status)
-
     if (imageUpdate.status === 401) {
       return NextResponse.redirect(new URL(`${baseUrl}/login`))
     }
@@ -141,10 +122,6 @@ export async function updatePost(postId, formData, imageData) {
   }
 
   if (imageStatus === 'delete') {
-    console.log(
-      "🚀 ~ updatePost ~ imageStatus === 'delete':",
-      imageStatus === 'delete',
-    )
     const imageUpdate = await fetch(`${baseUrl}/api/images/${postId}.webp`, {
       method: 'DELETE',
       headers: {
@@ -166,10 +143,7 @@ export async function updatePost(postId, formData, imageData) {
   // Post mongoDB document update
 
   const hasImage = imageStatus !== 'delete' ? true : false
-  console.log('🚀 ~ updatePost ~ hasImage:', hasImage)
   const imageExtension = imageStatus !== 'delete' ? 'webp' : ''
-  console.log('🚀 ~ updatePost ~ imageExtension:', imageExtension)
-
   const updatedData = new Post({
     title: title,
     content: content,
@@ -180,10 +154,7 @@ export async function updatePost(postId, formData, imageData) {
   try {
     await connectToDatabase()
     const result = await Post.updateOne({ _id: postId }, { $set: updatedData })
-    console.log('🚀 ~ updatePost ~ result:', result)
-
     if (result.modifiedCount === 1) {
-      console.log('Post updated successfully')
       return returnToast('success', 'Post updated successfully!')
     } else {
       console.error('Post not found or not updated')
@@ -246,7 +217,6 @@ export async function deletePost(postId) {
       console.error('Post not found')
       return returnToast('error', 'Failed to delete post')
     }
-    console.log('Post deleted successfully')
     return returnToast('success', 'Post deleted successfully!')
   } catch (error) {
     console.error('Error deleting post:', error)
