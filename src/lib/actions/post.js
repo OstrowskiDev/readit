@@ -82,6 +82,7 @@ export async function updatePost(postId, formData, imageData) {
   const validationResults = validatePost(formData)
   if (hasErrors(validationResults)) {
     console.error('Post update data failed validation')
+    console.log('🚀 ~ updatePost ~ baseUrl:', baseUrl)
     return returnToast('error', 'Failed to update post')
   }
 
@@ -98,10 +99,16 @@ export async function updatePost(postId, formData, imageData) {
   console.log('imageStatus from imageData:', imageStatus)
   console.log('file from imageData:', file)
   const cookieStorage = cookies()
+  console.log('🚀 ~ updatePost ~ cookieStorage:', cookieStorage)
   const cookieHeader = getAuthCookies(cookieStorage)
+  console.log('🚀 ~ updatePost ~ cookieHeader:', cookieHeader)
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL
 
   if (imageStatus === 'new') {
+    console.log(
+      "🚀 ~ updatePost ~ imageStatus === 'new':",
+      imageStatus === 'new',
+    )
     const results = await validateImageFileServer(file)
     console.log('🚀 ~ updatePost ~ file:', file)
     console.log('🚀 ~ updatePost ~ results:', results)
@@ -134,6 +141,10 @@ export async function updatePost(postId, formData, imageData) {
   }
 
   if (imageStatus === 'delete') {
+    console.log(
+      "🚀 ~ updatePost ~ imageStatus === 'delete':",
+      imageStatus === 'delete',
+    )
     const imageUpdate = await fetch(`${baseUrl}/api/images/${postId}.webp`, {
       method: 'DELETE',
       headers: {
@@ -155,7 +166,9 @@ export async function updatePost(postId, formData, imageData) {
   // Post mongoDB document update
 
   const hasImage = imageStatus !== 'delete' ? true : false
+  console.log('🚀 ~ updatePost ~ hasImage:', hasImage)
   const imageExtension = imageStatus !== 'delete' ? 'webp' : ''
+  console.log('🚀 ~ updatePost ~ imageExtension:', imageExtension)
 
   const updatedData = new Post({
     title: title,
@@ -167,6 +180,7 @@ export async function updatePost(postId, formData, imageData) {
   try {
     await connectToDatabase()
     const result = await Post.updateOne({ _id: postId }, { $set: updatedData })
+    console.log('🚀 ~ updatePost ~ result:', result)
 
     if (result.modifiedCount === 1) {
       console.log('Post updated successfully')
