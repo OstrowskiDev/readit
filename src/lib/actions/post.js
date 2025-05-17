@@ -92,6 +92,9 @@ export async function updatePost(postId, formData, imageData) {
 
   const imageStatus = imageData.get('imageStatus')
   const file = imageData.get('file')
+  console.log('typeof file:', typeof file)
+  console.log('file instanceof File:', file instanceof File)
+  console.log('file keys:', file && Object.keys(file))
   console.log('imageStatus from imageData:', imageStatus)
   console.log('file from imageData:', file)
   const cookieStorage = cookies()
@@ -100,6 +103,10 @@ export async function updatePost(postId, formData, imageData) {
 
   if (imageStatus === 'new') {
     const results = await validateImageFileServer(file)
+    console.log('🚀 ~ updatePost ~ file:', file)
+    console.log('🚀 ~ updatePost ~ results:', results)
+    console.log('🚀 ~ updatePost ~ results.type:', results?.type)
+    console.log('🚀 ~ updatePost ~ results.size:', results?.size)
     if (!results.type || !results.size) {
       return returnToast('error', 'Failed to update post')
     }
@@ -110,6 +117,8 @@ export async function updatePost(postId, formData, imageData) {
         Cookie: cookieHeader,
       },
     })
+    console.log('🚀 ~ updatePost ~ imageUpdate:', imageUpdate)
+    console.log('🚀 ~ updatePost ~ imageUpdate.status:', imageUpdate.status)
 
     if (imageUpdate.status === 401) {
       return NextResponse.redirect(new URL(`${baseUrl}/login`))
