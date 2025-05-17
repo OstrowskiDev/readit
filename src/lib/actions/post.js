@@ -92,6 +92,8 @@ export async function updatePost(postId, formData, imageData) {
 
   const imageStatus = imageData.get('imageStatus')
   const file = imageData.get('file')
+  console.log('imageStatus from imageData:', imageStatus)
+  console.log('file from imageData:', file)
   const cookieStorage = cookies()
   const cookieHeader = getAuthCookies(cookieStorage)
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL
