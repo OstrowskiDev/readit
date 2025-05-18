@@ -19,14 +19,14 @@ export function AuthBtn() {
       {session ? (
         <button
           onClick={handleSighOut}
-          className="nav-button sign-out-button py-4"
+          className="nav-button sign-out-button btn-color-hover py-4"
         >
           Sign out
         </button>
       ) : (
         <button
           onClick={handleSignIn}
-          className="nav-button sign-in-button py-4"
+          className="nav-button sign-in-button btn-color-hover py-4"
         >
           Sign in
         </button>

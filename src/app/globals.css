@@ -35,7 +35,7 @@ a, .anchor-color {
   color: #ea580c;
 }
 
-a:hover, .anchor-color:hover {
+a:hover, .anchor-color:hover, .btn-color-hover:hover {
   color: #c2410c;
 }
 
