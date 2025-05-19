@@ -123,6 +123,7 @@ export default function PostsPage({
                   enableCommentBtn={true}
                   hasImage={post.has_image}
                   imageExtension={post.image_extension}
+                  tempImageUrl={post.temp_image_url}
                 />
               ))}
             </div>

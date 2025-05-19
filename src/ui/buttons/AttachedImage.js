@@ -1,8 +1,18 @@
 'use client'
 
-export function AttachedImage({ imageFile, setImageFile }) {
+export function AttachedImage({
+  hasImage = false,
+  imageFile,
+  setImageFile,
+  imageAction,
+  setImageAction,
+}) {
+  const fallbackValues = { name: 'current_image', size: null }
+  const renderedImage = imageFile || fallbackValues
+
   async function handleClick(event) {
     event.preventDefault()
+    setImageAction('delete')
     setImageFile(null)
   }
 
@@ -14,18 +24,18 @@ export function AttachedImage({ imageFile, setImageFile }) {
   }
 
   function fileSize(fileSize) {
-    const imageSize = `(${Math.ceil(imageFile.size / 1024)}K)`
+    const imageSize = `(${Math.ceil(renderedImage.size / 1024)}K)`
     if (fileSize) return imageSize
     return ''
   }
 
   return (
     <>
-      {imageFile && (
+      {((hasImage && imageAction !== 'delete') || imageAction === 'update') && (
         <div className="attached-image-box btn-blue flex flex-row h-8 px-2 pt-[6px] ml-2 mt-1 mr-2 text-sm">
           <p className="attached-image-info text-gray-100 cursor-default">{`${shortFileName(
-            imageFile.name,
-          )} ${fileSize(imageFile.size)}`}</p>
+            renderedImage.name,
+          )} ${fileSize(renderedImage.size)}`}</p>
           <button
             className="attached-image-disattach ml-2 px-1 mb-2 text-white cursor-pointer"
             onClick={handleClick}

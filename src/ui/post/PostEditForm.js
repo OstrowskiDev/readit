@@ -16,6 +16,8 @@ export function PostEditForm({ isEditFormVisible, setIsEditFormVisible }) {
   const [response, setResponse] = useState(null)
   const [oldPost, setOldPost] = useState(post)
   const [imageFile, setImageFile] = useState(null)
+  const [imageAction, setImageAction] = useState('no_change')
+  const [tempImageUrl, setTempImageUrl] = useState(null)
   const [formData, setFormData] = useState({
     title: post.title,
     content: post.content,
@@ -29,9 +31,14 @@ export function PostEditForm({ isEditFormVisible, setIsEditFormVisible }) {
   }, [formData])
 
   useEffect(() => {
-    if (post.has_image)
-      setImageFile({ status: 'already exists', name: 'current image.webp' })
-  }, [])
+    if (!imageFile) return
+    const url = URL.createObjectURL(imageFile)
+    setTempImageUrl(url)
+
+    return () => {
+      URL.revokeObjectURL(url)
+    }
+  }, [imageFile])
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
@@ -60,9 +67,7 @@ export function PostEditForm({ isEditFormVisible, setIsEditFormVisible }) {
   async function onSubmit() {
     setOldPost(post)
 
-    // add error messages to title and content
-    // integrate with component if needed
-
+    // !!!! add error messages to title and content
     const validationResults = validatePost(formData)
     if (hasErrors(validationResults)) {
       return
@@ -70,12 +75,12 @@ export function PostEditForm({ isEditFormVisible, setIsEditFormVisible }) {
 
     // client side image validation is done in AttachImageBtn component
     let imageData = new FormData()
-    if (imageFile?.status === 'already exists') {
-      imageData.append('imageStatus', 'no change')
-    } else if (imageFile) {
+    if (imageAction === 'no_chagne') {
+      imageData.append('imageStatus', 'no_change')
+    } else if (imageAction === 'update') {
       imageData.append('file', imageFile)
-      imageData.append('imageStatus', 'new')
-    } else if (imageFile === null) {
+      imageData.append('imageStatus', 'update')
+    } else if (imageAction === 'delete') {
       imageData.append('imageStatus', 'delete')
     } else {
       console.error('Error sending image')
@@ -93,8 +98,24 @@ export function PostEditForm({ isEditFormVisible, setIsEditFormVisible }) {
   }
 
   function optimisticUpdate() {
-    const newPost = { ...post, ...formData }
-    setPost(newPost)
+    if (imageAction === 'update') {
+      const newPost = {
+        ...post,
+        ...formData,
+        has_image: true,
+        temp_image_url: tempImageUrl,
+      }
+      setPost(newPost)
+    }
+    if (imageAction === 'delete') {
+      const newPost = {
+        ...post,
+        ...formData,
+        has_image: false,
+        temp_image_url: null,
+      }
+      setPost(newPost)
+    }
   }
 
   function handleOptimisticError() {
@@ -153,6 +174,9 @@ export function PostEditForm({ isEditFormVisible, setIsEditFormVisible }) {
               setResponse={setResponse}
               imageFile={imageFile}
               setImageFile={setImageFile}
+              imageAction={imageAction}
+              setImageAction={setImageAction}
+              hasImage={post?.has_image}
             />
           </form>
         </div>

@@ -7,10 +7,17 @@ export function CreatePostFormBtns({
   imageFile,
   setImageFile,
   setResponse,
+  imageAction,
+  setImageAction,
 }) {
   return (
     <div className="post-reply-btns flex justify-end">
-      <AttachedImage imageFile={imageFile} setImageFile={setImageFile} />
+      <AttachedImage
+        imageFile={imageFile}
+        setImageFile={setImageFile}
+        imageAction={imageAction}
+        setImageAction={setImageAction}
+      />
       <button
         className="post-reply-cancel-btn btn-gray py-1 px-2 mt-1"
         type="button"
@@ -18,7 +25,11 @@ export function CreatePostFormBtns({
       >
         Cancel
       </button>
-      <AttachFileBtn setImageFile={setImageFile} setResponse={setResponse} />
+      <AttachFileBtn
+        setImageFile={setImageFile}
+        setResponse={setResponse}
+        setImageAction={setImageAction}
+      />
       <button
         className="post-reply-submit-btn btn-blue py-1 px-2 mx-2 mt-1"
         type="button"

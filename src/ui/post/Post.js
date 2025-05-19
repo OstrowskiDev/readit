@@ -20,6 +20,7 @@ export function Post({
   enableCommentBtn,
   hasImage = false,
   imageExtension = '',
+  tempImageUrl,
 }) {
   const { isUserHovered, handleMouseEnter, handleMouseLeave } = useMouseHover()
   const [deleted, setDeleted] = useState(false)
@@ -34,6 +35,9 @@ export function Post({
           postId={postId}
           postLikes={post.likes}
           postDislikes={post.dislikes}
+          hasImage={hasImage}
+          imageExtension={imageExtension}
+          tempImageUrl={tempImageUrl}
           authorsData={authorsData}
           setAuthorsData={setAuthorsData}
           handleMouseEnter={handleMouseEnter}
@@ -50,12 +54,7 @@ export function Post({
               <PostAnchor postId={postId} />
               <PostHeader author={post.authorData} />
               <PostTitle title={post.title} />
-              <PostBody
-                hasImage={hasImage}
-                postId={postId}
-                imageExtension={imageExtension}
-                content={post.content}
-              />
+              <PostBody content={post.content} />
               <PostFooter
                 postId={postId}
                 commentNo={post.commentsCount}
