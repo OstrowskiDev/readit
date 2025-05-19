@@ -85,6 +85,8 @@ export default function PostPage({ params }) {
         setIsEditFormVisible={setIsEditFormVisible}
         triggerRebuild={triggerRebuild}
         setTriggerRebuild={setTriggerRebuild}
+        imageExtension={post.image_extension}
+        tempImageUrl={post.temp_image_url}
       >
         <div className="post-page w-full flex flex-col justify-center md:px-4 mt-1 md:my-8 md:mx-auto">
           <div
@@ -108,12 +110,7 @@ export default function PostPage({ params }) {
                 isUserHovered={isUserHovered}
               />
 
-              {post.has_image && (
-                <PostImage
-                  postId={postId}
-                  imageExtension={post.image_extension}
-                />
-              )}
+              {post.has_image && <PostImage />}
 
               <PostContent content={post.content} />
 

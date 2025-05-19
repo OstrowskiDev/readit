@@ -1,8 +1,11 @@
 import { useState } from 'react'
 import { ImageShimmerAnimated } from '../loaders/ImageShimmerAnimated'
+import { usePostContext } from '@/lib/context/PostContextProvider'
 
-export function PostImage({ postId, imageExtension }) {
+export function PostImage() {
   const [isLoading, setIsLoading] = useState(true)
+  const { postId, imageExtension, tempImageUrl } = usePostContext()
+  const imageSrc = tempImageUrl || `/api/images/${postId}.${imageExtension}`
 
   return (
     <div className="post-image-container relative aspect-[16/9] w-full overflow-hidden rounded-md bg-gray-200 z-10">
@@ -14,14 +17,14 @@ export function PostImage({ postId, imageExtension }) {
 
       <img
         className="post-image relative z-10 h-full w-full object-contain"
-        src={`/api/images/${postId}.${imageExtension}`}
+        src={imageSrc}
         alt="post image"
         onLoad={() => setIsLoading(false)}
         onError={() => setIsLoading(false)}
       />
 
       <img
-        src={`/api/images/${postId}.${imageExtension}`}
+        src={imageSrc}
         alt=""
         aria-hidden="true"
         className="post-image-blur absolute inset-0 h-full w-full object-cover scale-110 blur-md brightness-65"

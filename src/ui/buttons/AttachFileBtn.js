@@ -4,7 +4,7 @@ import { signIn, useSession } from 'next-auth/react'
 import { AttachIco } from '../icons/AttachIco'
 import validateImageFileClient from '@/lib/security/validateImageFileClient'
 
-export function AttachFileBtn({ setImageFile, setResponse }) {
+export function AttachFileBtn({ setImageFile, setResponse, setImageAction }) {
   const { data: session } = useSession()
 
   async function handleChange(event) {
@@ -17,6 +17,7 @@ export function AttachFileBtn({ setImageFile, setResponse }) {
         validationResults.size.status === 'success'
       ) {
         setImageFile(file)
+        setImageAction('update')
         setResponse({
           state: 'success',
           message: 'Image attached successfully!',

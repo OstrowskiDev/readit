@@ -21,6 +21,9 @@ export function PostContextProvider({
   setIsEditFormVisible,
   triggerRebuild,
   setTriggerRebuild,
+  hasImage,
+  imageExtension,
+  tempImageUrl,
 }) {
   return (
     <PostContext.Provider
@@ -42,6 +45,9 @@ export function PostContextProvider({
         setIsEditFormVisible,
         triggerRebuild,
         setTriggerRebuild,
+        hasImage,
+        imageExtension,
+        tempImageUrl,
       }}
     >
       {children}

@@ -1,14 +1,8 @@
+import { usePostContext } from '@/lib/context/PostContextProvider'
 import { PostContent } from './PostContent'
 import { PostImage } from './PostImage'
 
-export function PostBody({ hasImage, postId, imageExtension, content }) {
-  return (
-    <>
-      {hasImage ? (
-        <PostImage postId={postId} imageExtension={imageExtension} />
-      ) : (
-        <PostContent content={content} />
-      )}
-    </>
-  )
+export function PostBody({ content }) {
+  const { hasImage } = usePostContext()
+  return <>{hasImage ? <PostImage /> : <PostContent content={content} />}</>
 }

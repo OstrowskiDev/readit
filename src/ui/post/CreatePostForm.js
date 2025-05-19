@@ -26,9 +26,10 @@ export function CreatePostForm({
 
   const [formData, setFormData] = useState(initialFormData)
   const [imageFile, setImageFile] = useState(null)
+  const [tempImageUrl, setTempImageUrl] = useState(null)
+  const [imageAction, setImageAction] = useState('none')
   const [wasSubmitted, setWasSubmitted] = useState(false)
   const [fieldValidity, setFieldValidity] = useState(validationObject)
-  const [toggleTextEditor, setToggleTextEditor] = useState(true)
   const { data: session } = useSession()
   const { toastFunctions: toast } = useToastContext()
 
@@ -44,6 +45,17 @@ export function CreatePostForm({
     setFieldValidity(results)
   }, [formData])
 
+  useEffect(() => {
+    if (!imageFile) return
+    const url = URL.createObjectURL(imageFile)
+    setTempImageUrl(url)
+
+    return () => {
+      URL.revokeObjectURL(url)
+      setTempImageUrl(null)
+    }
+  }, [imageFile])
+
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (response?.state === 'success') {
@@ -56,12 +68,16 @@ export function CreatePostForm({
   }, [response])
 
   function optimisticUpdate(newPostId) {
-    //!!!! optimistically add image?
+    const hasImage = imageAction === 'update' ? true : false
+    const imgaeUrl = imageAction === 'update' ? tempImageUrl : null
+
     const newPost = {
       _id: newPostId,
       user_id: userId,
       title: formData.title,
       content: formData.content,
+      has_image: hasImage,
+      temp_image_url: imgaeUrl,
       comments: [],
       likes: [],
       dislikes: [],
@@ -156,10 +172,11 @@ export function CreatePostForm({
     )
     setResponse(serverResponse)
     if (serverResponse.state !== 'success') return
-    setIsCreateFormVis(!isCreateFormVis)
     setFormData(initialFormData)
     setImageFile(null)
+    setImageAction('none')
     setWasSubmitted(false)
+    setIsCreateFormVis(!isCreateFormVis)
   }
 
   function onCancelClick() {
@@ -214,7 +231,7 @@ export function CreatePostForm({
               onContentChange={onContentChange}
               formData={formData}
               setFormData={setFormData}
-              toggleTextEditor={toggleTextEditor}
+              toggleTextEditor={true}
             />
 
             <CreatePostFormBtns
@@ -223,6 +240,8 @@ export function CreatePostForm({
               imageFile={imageFile}
               setImageFile={setImageFile}
               setResponse={setResponse}
+              imageAction={imageAction}
+              setImageAction={setImageAction}
             />
           </div>
           <label className="post-content-error mb-2 text-xs text-red-500">

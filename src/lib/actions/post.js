@@ -96,7 +96,7 @@ export async function updatePost(postId, formData, imageData) {
   const cookieHeader = getAuthCookies(cookieStorage)
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL
 
-  if (imageStatus === 'new') {
+  if (imageStatus === 'update') {
     const results = await validateImageFileServer(file)
     if (!results.type || !results.size) {
       return returnToast('error', 'Failed to update post')
