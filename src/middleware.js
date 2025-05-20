@@ -32,10 +32,9 @@ const limiterBurstIP = new RateLimiterMemory({
 // 3. login route protection based on IP
 // note: emails are already protected against brute force attacks
 // five failed login attempts will result in account lockdown
-// !!!! check if path is correct
 const limiterLoginIP = new RateLimiterMemory({
-  points: 5,
-  duration: 60 * 1,
+  points: 10,
+  duration: 60 * 10,
 })
 
 // 4. GET requests for images 200/hour
@@ -80,7 +79,10 @@ export async function middleware(request) {
 
   // 3. login route protection based on IP
   if (ip) {
-    if (pathname.startsWith('/api/auth/login') && method === 'POST') {
+    if (
+      pathname.startsWith('/api/auth/callback/credentials') &&
+      method === 'POST'
+    ) {
       try {
         const res = await limiterLoginIP.consume(ip)
         console.log(`[LoginIP] ${ip} - Remaining: ${res.remainingPoints}`)
