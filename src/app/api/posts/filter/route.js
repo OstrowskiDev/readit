@@ -177,6 +177,27 @@ export async function GET(req, res) {
     pipeline.push({ $sort: { [sortField]: sortDirection } })
   }
 
+  // pagination logic:
+  let displayPage = req.nextUrl.searchParams.get('page')
+  const displayPageNum = Number(displayPage)
+  if (Number.isInteger(displayPageNum) && displayPageNum > 0) {
+    displayPage = displayPageNum
+  } else {
+    displayPage = 1
+  }
+
+  let postsPerPage = req.nextUrl.searchParams.get('limit')
+  const postsPerPageNum = Number(postsPerPage)
+  if ([10, 25, 50].includes(postsPerPageNum)) {
+    postsPerPage = postsPerPageNum
+  } else {
+    postsPerPage = 10
+  }
+
+  const skipPosts = (displayPage - 1) * postsPerPage
+  pipeline.push({ $skip: skipPosts })
+  pipeline.push({ $limit: postsPerPage })
+
   // execute aggregation pipeline:
   try {
     await connectToDatabase()
