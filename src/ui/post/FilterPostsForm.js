@@ -1,16 +1,13 @@
 'use client'
 
-import { filterPosts } from '@/lib/db'
-import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useState } from 'react'
 import { FilterForm } from './FilterForm'
+import { usePostsFilter } from '@/lib/hooks/usePostsFilter'
 
 export function FilterPostsForm({
-  setTriggerReset,
-  setPosts,
+  filterOptions,
   isFilterFormVis,
   setIsFilterFormVis,
-  onlyCurrentUserPosts,
   disableFilteringByAuthor,
 }) {
   const [formState, setFormState] = useState({
@@ -21,38 +18,10 @@ export function FilterPostsForm({
     sortOrder: 'descending',
   })
 
-  const { title, content, author, sortBy, sortOrder } = formState
-
-  const searchParams = useSearchParams()
-  const pathname = usePathname()
-  const { replace } = useRouter()
+  const { getFilteredPosts } = usePostsFilter(filterOptions)
 
   async function onSubmit() {
-    let filterData = {
-      title,
-      content,
-      author,
-      sortBy,
-      sortOrder,
-    }
-    const params = new URLSearchParams(searchParams)
-    for (const key in filterData) {
-      if (filterData[key]) {
-        params.set(key, filterData[key])
-      }
-    }
-    if (params.get('fastQuery')) {
-      params.delete('fastQuery')
-    }
-    replace(`${pathname}?${params.toString()}`)
-
-    if (onlyCurrentUserPosts) {
-      filterData = { ...filterData, onlyCurrentUserPosts }
-    }
-
-    const postsData = await filterPosts(filterData)
-    setPosts(postsData)
-    setTriggerReset((prevState) => !prevState)
+    await getFilteredPosts(formState)
   }
 
   return (
