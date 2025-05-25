@@ -11,6 +11,7 @@ import { FilterPostsForm } from '@/ui/post/FilterPostsForm'
 import { Post } from '@/ui/post/Post'
 import { PostsSearch } from '@/ui/post/PostsSearch'
 import { filterPosts } from '@/lib/db'
+import { PaginationBar } from '@/ui/pagination/PaginationBar'
 
 export default function PostsPage({
   searchParams,
@@ -21,6 +22,7 @@ export default function PostsPage({
   disableFilteringByAuthor,
 }) {
   const [posts, setPosts] = useState(null)
+  const [postsCount, setPostsCount] = useState(0)
   const [authorsData, setAuthorsData] = useState([])
   const [isCreateFormVis, setIsCreateFormVis] = useState(false)
   const [isFilterFormVis, setIsFilterFormVis] = useState(false)
@@ -39,8 +41,9 @@ export default function PostsPage({
       if (displayedPostsAuthor) {
         filterData = { ...filterData, displayedPostsAuthor }
       }
-      const postsData = await filterPosts(filterData)
-      setPosts(postsData)
+      const results = await filterPosts(filterData)
+      setPostsCount(results.postsCount)
+      setPosts(results.posts)
     }
     fetchData().then(() => setIsLoading(false))
   }, [])
@@ -58,6 +61,17 @@ export default function PostsPage({
       post.authorData.name.toLowerCase().includes(fastQuery.toLowerCase()) ||
       post.content.toLowerCase().includes(fastQuery.toLowerCase()),
   )
+
+  const filterOptions = {
+    setPosts,
+    setPostsCount,
+    setTriggerReset,
+    onlyCurrentUserPosts,
+  }
+
+  // !!!! for fastQuery to work i would need to extract all posts from DB
+  // const matchingPostsNum = matchingPosts?.length
+
   return (
     <>
       <AuthorsDataProvider
@@ -99,14 +113,17 @@ export default function PostsPage({
           />
           {isFilterFormVis && (
             <FilterPostsForm
-              setTriggerReset={setTriggerReset}
-              setPosts={setPosts}
+              filterOptions={filterOptions}
               isFilterFormVis={isFilterFormVis}
               setIsFilterFormVis={setIsFilterFormVis}
-              onlyCurrentUserPosts={onlyCurrentUserPosts}
               disableFilteringByAuthor={disableFilteringByAuthor}
             />
           )}
+
+          <PaginationBar
+            filterOptions={filterOptions}
+            matchingPostsNum={postsCount}
+          />
 
           {posts && (
             <div className="flex flex-col items-center">
@@ -128,6 +145,11 @@ export default function PostsPage({
               ))}
             </div>
           )}
+
+          <PaginationBar
+            filterOptions={filterOptions}
+            matchingPostsNum={postsCount}
+          />
 
           {isLoading && (
             <>
