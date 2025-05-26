@@ -23,7 +23,7 @@ export default function PostsPage({
 }) {
   const [posts, setPosts] = useState(null)
   const [postsCount, setPostsCount] = useState(0)
-  const [authorsData, setAuthorsData] = useState([])
+  const [authorsData, setAuthorsData] = useState([]) //UserInfobox data storage
   const [isCreateFormVis, setIsCreateFormVis] = useState(false)
   const [isFilterFormVis, setIsFilterFormVis] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
@@ -55,22 +55,12 @@ export default function PostsPage({
     }
   }, [triggerReset])
 
-  const matchingPosts = posts?.filter(
-    (post) =>
-      post.title.toLowerCase().includes(fastQuery.toLowerCase()) ||
-      post.authorData.name.toLowerCase().includes(fastQuery.toLowerCase()) ||
-      post.content.toLowerCase().includes(fastQuery.toLowerCase()),
-  )
-
   const filterOptions = {
     setPosts,
     setPostsCount,
     setTriggerReset,
     onlyCurrentUserPosts,
   }
-
-  // !!!! for fastQuery to work i would need to extract all posts from DB
-  // const matchingPostsNum = matchingPosts?.length
 
   return (
     <>
@@ -86,8 +76,10 @@ export default function PostsPage({
               </h1>
             )}
             <PostsSearch
+              filterOptions={filterOptions}
               triggerReset={triggerReset}
               setTriggerReset={setTriggerReset}
+              fastQuery={fastQuery}
               setFastQuery={setFastQuery}
               isFilterFormVis={isFilterFormVis}
               setIsFilterFormVis={setIsFilterFormVis}
@@ -120,14 +112,11 @@ export default function PostsPage({
             />
           )}
 
-          <PaginationBar
-            filterOptions={filterOptions}
-            matchingPostsNum={postsCount}
-          />
+          <PaginationBar filterOptions={filterOptions} postsNum={postsCount} />
 
           {posts && (
             <div className="flex flex-col items-center">
-              {matchingPosts.map((post) => (
+              {posts.map((post) => (
                 <Post
                   key={post._id}
                   _id={post._id}
@@ -146,10 +135,7 @@ export default function PostsPage({
             </div>
           )}
 
-          <PaginationBar
-            filterOptions={filterOptions}
-            matchingPostsNum={postsCount}
-          />
+          <PaginationBar filterOptions={filterOptions} postsNum={postsCount} />
 
           {isLoading && (
             <>
@@ -160,7 +146,7 @@ export default function PostsPage({
             </>
           )}
 
-          {!isLoading && matchingPosts?.length === 0 && (
+          {!isLoading && posts?.length === 0 && (
             <h2 className="text-xl m-4 italic">No documents found</h2>
           )}
         </div>

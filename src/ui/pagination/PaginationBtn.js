@@ -1,10 +1,10 @@
 import { usePostsFilter } from '@/lib/hooks/usePostsFilter'
 
 export function PaginationBtn({ name, value, filterOptions }) {
-  const { getFilteredPosts } = usePostsFilter(filterOptions)
+  const { applyPagination } = usePostsFilter(filterOptions)
 
   async function handleClick() {
-    await getFilteredPosts({ page: value })
+    await applyPagination(value)
   }
 
   return (

@@ -1,7 +1,7 @@
 import { useSearchParams } from 'next/navigation'
 import { PaginationBtn } from './PaginationBtn'
 
-export function PaginationBar({ matchingPostsNum, filterOptions }) {
+export function PaginationBar({ postsNum, filterOptions }) {
   const searchParams = useSearchParams()
 
   let currentPage = Number(searchParams.get('page'))
@@ -10,7 +10,7 @@ export function PaginationBar({ matchingPostsNum, filterOptions }) {
   let postsPerPage = Number(searchParams.get('limit'))
   if (![10, 25, 50].includes(postsPerPage)) postsPerPage = 10
 
-  const paginationNum = Math.ceil(matchingPostsNum / postsPerPage)
+  const paginationNum = Math.ceil(postsNum / postsPerPage)
 
   if (!postsPerPage) return null
 

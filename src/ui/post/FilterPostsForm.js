@@ -18,10 +18,10 @@ export function FilterPostsForm({
     sortOrder: 'descending',
   })
 
-  const { getFilteredPosts } = usePostsFilter(filterOptions)
+  const { applyFilters } = usePostsFilter(filterOptions)
 
   async function onSubmit() {
-    await getFilteredPosts(formState)
+    await applyFilters(formState)
   }
 
   return (
