@@ -6,7 +6,23 @@ import { getServerSession } from 'next-auth'
 import { authOptions } from '../../auth/[...nextauth]/authOptions'
 
 export async function GET(req, res) {
-  const title = sanitize(req.nextUrl.searchParams.get('title'))
+  // check if data is send from fastQuery or filter:
+  const fastQuery = sanitize(req.nextUrl.searchParams.get('fastQuery'))
+  const useFastQuery = Boolean(fastQuery)
+
+  // pass proper data to title, content and author:
+  const title = useFastQuery
+    ? fastQuery
+    : sanitize(req.nextUrl.searchParams.get('title'))
+
+  const content = useFastQuery
+    ? fastQuery
+    : sanitize(req.nextUrl.searchParams.get('content'))
+
+  const author = useFastQuery
+    ? fastQuery
+    : sanitize(req.nextUrl.searchParams.get('author'))
+
   if (title != null && (typeof title !== 'string' || title.length > 20)) {
     return new NextResponse(
       'Invalid input: Title must be a string of maximum 20 characters',
@@ -14,7 +30,6 @@ export async function GET(req, res) {
     )
   }
 
-  const content = sanitize(req.nextUrl.searchParams.get('content'))
   if (content != null && (typeof content !== 'string' || content.length > 50)) {
     return new NextResponse(
       'Invalid input: Content must be a string of maximum 50 characters',
@@ -22,7 +37,6 @@ export async function GET(req, res) {
     )
   }
 
-  const author = sanitize(req.nextUrl.searchParams.get('author'))
   if (author != null && (typeof author !== 'string' || author.length > 30)) {
     return new NextResponse(
       'Invalid input: Author must be a string of maximum 30 characters',
@@ -66,19 +80,27 @@ export async function GET(req, res) {
     pipeline.push({ $match: { user_id: displayedPostsAuthor } })
   }
 
-  if (title) {
-    pipeline.push({ $match: { title: { $regex: title, $options: 'i' } } })
-  }
-  if (content) {
-    pipeline.push({ $match: { content: { $regex: content, $options: 'i' } } })
-  }
-
-  // create temporary fields for authors name and avatar:
+  // create temporary fields in posts documents to hold authorData:
   pipeline.push({
     $lookup: {
       from: 'users',
-      localField: 'user_id',
-      foreignField: '_id',
+      let: { authorId: '$user_id' },
+      pipeline: [
+        {
+          $match: {
+            $expr: { $eq: ['$_id', '$$authorId'] },
+          },
+        },
+        {
+          $project: {
+            _id: 1,
+            name: 1,
+            avatar: 1,
+            deleted: 1,
+            createdAt: 1,
+          },
+        },
+      ],
       as: 'authorData',
     },
   })
@@ -87,23 +109,22 @@ export async function GET(req, res) {
     $unwind: '$authorData',
   })
 
-  pipeline.push({
-    $project: {
-      'authorData.password': 0,
-      'authorData.address': 0,
-      'authorData.email': 0,
-      'authorData.phone': 0,
-      'authorData.activation_token': 0,
-      'authorData.token_expires_at': 0,
-      'authorData.is_active': 0,
-      'authorData.recovery_token': 0,
-      'authorData.recovery_token_expires_at': 0,
-    },
-  })
+  // create different matching conditions for fastQuery and filter:
+  const conditions = []
 
+  if (title) {
+    conditions.push({ title: { $regex: title, $options: 'i' } })
+  }
+  if (content) {
+    conditions.push({ content: { $regex: content, $options: 'i' } })
+  }
   if (author) {
+    conditions.push({ 'authorData.name': { $regex: author, $options: 'i' } })
+  }
+
+  if (conditions.length > 0) {
     pipeline.push({
-      $match: { 'authorData.name': { $regex: author, $options: 'i' } },
+      $match: useFastQuery ? { $or: conditions } : { $and: conditions },
     })
   }
 
@@ -177,6 +198,9 @@ export async function GET(req, res) {
     pipeline.push({ $sort: { [sortField]: sortDirection } })
   }
 
+  // saving pipeline resutls before using pagination logic:
+  const basePipeline = [...pipeline]
+
   // pagination logic:
   let displayPage = req.nextUrl.searchParams.get('page')
   const displayPageNum = Number(displayPage)
@@ -195,14 +219,32 @@ export async function GET(req, res) {
   }
 
   const skipPosts = (displayPage - 1) * postsPerPage
-  pipeline.push({ $skip: skipPosts })
-  pipeline.push({ $limit: postsPerPage })
+
+  const paginatedPipeline = [
+    ...basePipeline,
+    { $skip: skipPosts },
+    { $limit: postsPerPage },
+  ]
+
+  // merging basic and paginated pipelines for one mongoDB req:
+  const finalPipeline = [
+    {
+      $facet: {
+        posts: paginatedPipeline,
+        postsCount: [...basePipeline, { $count: 'count' }],
+      },
+    },
+  ]
 
   // execute aggregation pipeline:
   try {
     await connectToDatabase()
-    const filteredPosts = await Post.aggregate(pipeline)
-    return new NextResponse(JSON.stringify(filteredPosts), { status: 200 })
+    const results = await Post.aggregate(finalPipeline)
+    const posts = results[0].posts
+    const postsCount = results[0].postsCount[0]?.count || 0
+    return new NextResponse(JSON.stringify({ posts, postsCount }), {
+      status: 200,
+    })
   } catch (error) {
     return new NextResponse('Error in fetching posts' + error, { status: 500 })
   }
