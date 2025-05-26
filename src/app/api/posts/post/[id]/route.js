@@ -24,6 +24,7 @@ export async function GET(request, { params }) {
         },
       },
       { $unwind: '$authorData' },
+      // !!!! change to whitelist
       {
         $project: {
           'authorData.password': 0,

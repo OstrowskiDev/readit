@@ -11,6 +11,10 @@ import { FilterPostsForm } from '@/ui/post/FilterPostsForm'
 import { Post } from '@/ui/post/Post'
 import { PostsSearch } from '@/ui/post/PostsSearch'
 import { filterPosts } from '@/lib/db'
+import { PaginationBar } from '@/ui/pagination/PaginationBar'
+import { Spacer } from '@/ui/common/Spacer'
+import { ResultsPerPage } from '@/ui/pagination/ResultsPerPage'
+import { LimitPerPage } from '@/ui/pagination/LimitPerPage'
 
 export default function PostsPage({
   searchParams,
@@ -21,7 +25,8 @@ export default function PostsPage({
   disableFilteringByAuthor,
 }) {
   const [posts, setPosts] = useState(null)
-  const [authorsData, setAuthorsData] = useState([])
+  const [postsCount, setPostsCount] = useState(0)
+  const [authorsData, setAuthorsData] = useState([]) //UserInfobox data storage
   const [isCreateFormVis, setIsCreateFormVis] = useState(false)
   const [isFilterFormVis, setIsFilterFormVis] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
@@ -39,8 +44,9 @@ export default function PostsPage({
       if (displayedPostsAuthor) {
         filterData = { ...filterData, displayedPostsAuthor }
       }
-      const postsData = await filterPosts(filterData)
-      setPosts(postsData)
+      const results = await filterPosts(filterData)
+      setPostsCount(results.postsCount)
+      setPosts(results.posts)
     }
     fetchData().then(() => setIsLoading(false))
   }, [])
@@ -52,12 +58,12 @@ export default function PostsPage({
     }
   }, [triggerReset])
 
-  const matchingPosts = posts?.filter(
-    (post) =>
-      post.title.toLowerCase().includes(fastQuery.toLowerCase()) ||
-      post.authorData.name.toLowerCase().includes(fastQuery.toLowerCase()) ||
-      post.content.toLowerCase().includes(fastQuery.toLowerCase()),
-  )
+  const filterOptions = {
+    setPosts,
+    setPostsCount,
+    onlyCurrentUserPosts,
+  }
+
   return (
     <>
       <AuthorsDataProvider
@@ -72,8 +78,10 @@ export default function PostsPage({
               </h1>
             )}
             <PostsSearch
+              filterOptions={filterOptions}
               triggerReset={triggerReset}
               setTriggerReset={setTriggerReset}
+              fastQuery={fastQuery}
               setFastQuery={setFastQuery}
               isFilterFormVis={isFilterFormVis}
               setIsFilterFormVis={setIsFilterFormVis}
@@ -99,18 +107,17 @@ export default function PostsPage({
           />
           {isFilterFormVis && (
             <FilterPostsForm
-              setTriggerReset={setTriggerReset}
-              setPosts={setPosts}
+              filterOptions={filterOptions}
+              setFastQuery={setFastQuery}
               isFilterFormVis={isFilterFormVis}
               setIsFilterFormVis={setIsFilterFormVis}
-              onlyCurrentUserPosts={onlyCurrentUserPosts}
               disableFilteringByAuthor={disableFilteringByAuthor}
             />
           )}
 
           {posts && (
             <div className="flex flex-col items-center">
-              {matchingPosts.map((post) => (
+              {posts.map((post) => (
                 <Post
                   key={post._id}
                   _id={post._id}
@@ -129,6 +136,24 @@ export default function PostsPage({
             </div>
           )}
 
+          {posts && (
+            <>
+              <div className="pagination-plus-limit-container flex flex-row justify-between mt-2">
+                <ResultsPerPage
+                  filterOptions={filterOptions}
+                  postsNum={postsCount}
+                />
+                <PaginationBar
+                  filterOptions={filterOptions}
+                  postsNum={postsCount}
+                />
+                <LimitPerPage filterOptions={filterOptions} />
+              </div>
+            </>
+          )}
+
+          {posts && <Spacer height={128} />}
+
           {isLoading && (
             <>
               <Loader />
@@ -138,7 +163,7 @@ export default function PostsPage({
             </>
           )}
 
-          {!isLoading && matchingPosts?.length === 0 && (
+          {!isLoading && posts?.length === 0 && (
             <h2 className="text-xl m-4 italic">No documents found</h2>
           )}
         </div>

@@ -13,6 +13,7 @@ export function FilterFavoritesForm({
   setComments,
   setDocumentOrder,
 }) {
+  // !!!! this component needs to be replaced with reguler FileterForm
   const [formState, setFormState] = useState({
     title: '',
     content: '',

@@ -1,13 +1,27 @@
 'use client'
-import { useSearchParams, usePathname, useRouter } from 'next/navigation'
+import { usePostsFilter } from '@/lib/hooks/usePostsFilter'
+import { useSearchParams } from 'next/navigation'
 import { useEffect, useRef } from 'react'
 import { useDebouncedCallback } from 'use-debounce'
 
-export function PostsSearch({ triggerReset, setTriggerReset, setFastQuery }) {
-  const searchParams = useSearchParams() // reads current URL's query string
-  const pathname = usePathname() // reads current URL's pathname
-  const { replace } = useRouter()
+export function PostsSearch({
+  filterOptions,
+  triggerReset,
+  setTriggerReset,
+  fastQuery,
+  setFastQuery,
+  setIsFilterFormVis,
+}) {
   const inputRef = useRef()
+  const { applyFastQuery } = usePostsFilter(filterOptions)
+  const searchParams = useSearchParams()
+
+  useEffect(() => {
+    const queryString = searchParams.get('fastQuery')
+    if (queryString) {
+      setFastQuery(queryString)
+    }
+  }, [])
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
@@ -17,17 +31,19 @@ export function PostsSearch({ triggerReset, setTriggerReset, setFastQuery }) {
     }
   }, [triggerReset])
 
-  const handleSearch = useDebouncedCallback((term) => {
-    // create variable that stores the current query string
-    const params = new URLSearchParams(searchParams)
-    if (term) {
-      params.set('fastQuery', term)
-    } else {
-      params.delete('fastQuery')
-    }
-    replace(`${pathname}?${params.toString()}`)
-    setFastQuery(term)
-  }, 700)
+  function onFocus() {
+    setIsFilterFormVis(false)
+  }
+
+  function onChange(e) {
+    const queryString = e.target.value
+    setFastQuery(queryString)
+    handleSearch(queryString)
+  }
+
+  const handleSearch = useDebouncedCallback(async (queryString) => {
+    await applyFastQuery(queryString)
+  }, 1000)
 
   return (
     <div className="flex grow-2 below-md:mb-2 mx-2 md:mx-0">
@@ -36,10 +52,9 @@ export function PostsSearch({ triggerReset, setTriggerReset, setFastQuery }) {
         type="text"
         className="input-white w-full h-10 py-2 px-4"
         placeholder="Search for title, content or authors name..."
-        onChange={(e) => {
-          handleSearch(e.target.value)
-        }}
-        defaultValue={searchParams.get('fastQuery')?.toString()}
+        value={fastQuery}
+        onChange={onChange}
+        onFocus={onFocus}
       />
     </div>
   )
