@@ -1,6 +1,6 @@
 import { usePostsFilter } from '@/lib/hooks/usePostsFilter'
 import { useSearchParams } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 export function LimitPerPage({ filterOptions }) {
   const searchParams = useSearchParams()
@@ -8,21 +8,22 @@ export function LimitPerPage({ filterOptions }) {
   let postsPerPage = Number(searchParams.get('limit'))
   if (![10, 25, 50].includes(postsPerPage)) postsPerPage = 10
 
-  const [pageLimit, setPageLimit] = useState(10)
+  const [pageLimit, setPageLimit] = useState(postsPerPage)
   const { applyPageLimit } = usePostsFilter(filterOptions)
 
-  useEffect(() => {
-    if (postsPerPage) setPageLimit(postsPerPage)
-  }, [])
-
   function onChange(e) {
-    setPageLimit(e.target.value)
-    applyPageLimit({ limit: pageLimit })
+    const value = e.target.value
+    setPageLimit(value)
+    applyPageLimit({ limit: value })
   }
 
   return (
     <div className="limit-per-page-container flex justify-left">
-      <select value={pageLimit} onChange={onChange}>
+      <select
+        value={pageLimit}
+        onChange={onChange}
+        className="limit-select px-1 text-center"
+      >
         <option value={10}>10</option>
         <option value={25}>25</option>
         <option value={50}>50</option>
