@@ -108,6 +108,7 @@ export default function PostsPage({
           {isFilterFormVis && (
             <FilterPostsForm
               filterOptions={filterOptions}
+              setFastQuery={setFastQuery}
               isFilterFormVis={isFilterFormVis}
               setIsFilterFormVis={setIsFilterFormVis}
               disableFilteringByAuthor={disableFilteringByAuthor}
@@ -134,19 +135,24 @@ export default function PostsPage({
               ))}
             </div>
           )}
-          <div className="pagination-plus-limit-container flex flex-row justify-between mt-2">
-            <ResultsPerPage
-              filterOptions={filterOptions}
-              postsNum={postsCount}
-            />
-            <PaginationBar
-              filterOptions={filterOptions}
-              postsNum={postsCount}
-            />
-            <LimitPerPage filterOptions={filterOptions} />
-          </div>
 
-          <Spacer height={128} />
+          {posts && (
+            <>
+              <div className="pagination-plus-limit-container flex flex-row justify-between mt-2">
+                <ResultsPerPage
+                  filterOptions={filterOptions}
+                  postsNum={postsCount}
+                />
+                <PaginationBar
+                  filterOptions={filterOptions}
+                  postsNum={postsCount}
+                />
+                <LimitPerPage filterOptions={filterOptions} />
+              </div>
+            </>
+          )}
+
+          {posts && <Spacer height={128} />}
 
           {isLoading && (
             <>

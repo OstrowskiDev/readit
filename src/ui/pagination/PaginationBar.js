@@ -1,6 +1,5 @@
 import { useSearchParams } from 'next/navigation'
 import { PaginationBtn, PaginationDots } from './PaginationBtn'
-import { ResultsPerPage } from './ResultsPerPage'
 
 export function PaginationBar({ postsNum, filterOptions }) {
   const searchParams = useSearchParams()

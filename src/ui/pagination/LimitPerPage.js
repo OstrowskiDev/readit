@@ -14,7 +14,7 @@ export function LimitPerPage({ filterOptions }) {
   function onChange(e) {
     const value = e.target.value
     setPageLimit(value)
-    applyPageLimit({ limit: value })
+    applyPageLimit(value)
   }
 
   return (

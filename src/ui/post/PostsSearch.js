@@ -10,6 +10,7 @@ export function PostsSearch({
   setTriggerReset,
   fastQuery,
   setFastQuery,
+  setIsFilterFormVis,
 }) {
   const inputRef = useRef()
   const { applyFastQuery } = usePostsFilter(filterOptions)
@@ -30,6 +31,10 @@ export function PostsSearch({
     }
   }, [triggerReset])
 
+  function onFocus() {
+    setIsFilterFormVis(false)
+  }
+
   function onChange(e) {
     const queryString = e.target.value
     setFastQuery(queryString)
@@ -49,6 +54,7 @@ export function PostsSearch({
         placeholder="Search for title, content or authors name..."
         value={fastQuery}
         onChange={onChange}
+        onFocus={onFocus}
       />
     </div>
   )

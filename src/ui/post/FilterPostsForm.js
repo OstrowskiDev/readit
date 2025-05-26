@@ -6,6 +6,7 @@ import { usePostsFilter } from '@/lib/hooks/usePostsFilter'
 
 export function FilterPostsForm({
   filterOptions,
+  setFastQuery,
   isFilterFormVis,
   setIsFilterFormVis,
   disableFilteringByAuthor,
@@ -21,6 +22,7 @@ export function FilterPostsForm({
   const { applyFilters } = usePostsFilter(filterOptions)
 
   async function onSubmit() {
+    setFastQuery('')
     await applyFilters(formState)
   }
 
