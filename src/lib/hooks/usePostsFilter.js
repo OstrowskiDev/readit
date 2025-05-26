@@ -4,7 +4,6 @@ import { filterPosts } from '@/lib/db'
 export function usePostsFilter({
   setPosts,
   setPostsCount,
-  setTriggerReset,
   onlyCurrentUserPosts,
 }) {
   const searchParams = useSearchParams()
@@ -80,8 +79,6 @@ export function usePostsFilter({
     const postsData = await filterPosts(filterParams)
     setPosts(postsData.posts)
     setPostsCount(postsData.postsCount)
-    // !!!! check if this is still needed
-    // setTriggerReset((prev) => !prev)
   }
 
   return { applyFastQuery, applyFilters, applyPagination, applyPageLimit }

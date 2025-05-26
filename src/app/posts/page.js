@@ -12,6 +12,9 @@ import { Post } from '@/ui/post/Post'
 import { PostsSearch } from '@/ui/post/PostsSearch'
 import { filterPosts } from '@/lib/db'
 import { PaginationBar } from '@/ui/pagination/PaginationBar'
+import { Spacer } from '@/ui/common/Spacer'
+import { ResultsPerPage } from '@/ui/pagination/ResultsPerPage'
+import { LimitPerPage } from '@/ui/pagination/LimitPerPage'
 
 export default function PostsPage({
   searchParams,
@@ -58,7 +61,6 @@ export default function PostsPage({
   const filterOptions = {
     setPosts,
     setPostsCount,
-    setTriggerReset,
     onlyCurrentUserPosts,
   }
 
@@ -112,8 +114,6 @@ export default function PostsPage({
             />
           )}
 
-          <PaginationBar filterOptions={filterOptions} postsNum={postsCount} />
-
           {posts && (
             <div className="flex flex-col items-center">
               {posts.map((post) => (
@@ -134,8 +134,19 @@ export default function PostsPage({
               ))}
             </div>
           )}
+          <div className="pagination-plus-limit-container flex flex-row justify-between mt-2">
+            <ResultsPerPage
+              filterOptions={filterOptions}
+              postsNum={postsCount}
+            />
+            <PaginationBar
+              filterOptions={filterOptions}
+              postsNum={postsCount}
+            />
+            <LimitPerPage filterOptions={filterOptions} />
+          </div>
 
-          <PaginationBar filterOptions={filterOptions} postsNum={postsCount} />
+          <Spacer height={128} />
 
           {isLoading && (
             <>
