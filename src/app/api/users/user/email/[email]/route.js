@@ -4,6 +4,9 @@ import User from '@/lib/models/User'
 import validator from 'validator'
 
 export async function GET(request, { params }) {
+  // !!!! this route is used with next-auth
+  // !!!! secure it with api-key in next-auth getUserByEmail(email, key)
+  // !!!! check with RESTFull api where to put this endpoint
   const email = params.email
   if (!validator.isEmail(email))
     return new NextResponse('Invalid input: email must be a valid email', {

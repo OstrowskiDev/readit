@@ -6,7 +6,10 @@ import { getServerSession } from 'next-auth'
 import { authOptions } from '@/app/api/auth/[...nextauth]/authOptions'
 
 export async function GET(req, res) {
-  // sanitize search parameters:
+  // !!!! chenge favorites or disable them totally
+  // !!!! i dont need more complication in app logic its big enough
+  // !!!! it should work nearly identical to main posts query
+  // !!!! just with extra setp
 
   const title = sanitize(req.nextUrl.searchParams.get('title'))
   if (title != null && (typeof title !== 'string' || title.length > 20)) {
@@ -230,6 +233,7 @@ export async function GET(req, res) {
   })
 
   // delete sensitive data from authorsData, only _id name and avatar is needed:
+  // !!!! why this uses authorSSSSSSSData not author(no_S)Data ????
   pipeline.push({
     $project: {
       'authorsData._id': 1,

@@ -11,6 +11,7 @@ export function FilterForm({
   setFormState,
   enableActivityFilter,
 }) {
+  // !!!! what is disableFilteringByAuthor ?
   const isFilterDisabled = disableFilteringByAuthor ? true : false
   const handleInputChange = (e) => {
     setFormState({
