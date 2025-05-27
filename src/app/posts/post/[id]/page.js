@@ -2,7 +2,7 @@
 
 import { AuthorsDataProvider } from '@/lib/context/AuthorsDataProvider'
 import { PostContextProvider } from '@/lib/context/PostContextProvider'
-import { getPostCommentsData } from '@/lib/db'
+import { getPostCommentsData } from '@/lib/actions/comment'
 import { useMouseHover } from '@/lib/hooks/useMouseHover'
 import { getPostData } from '@/lib/actions/post'
 import { UserInfoboxWrapper } from '@/ui/infobox/UserInfoboxWrapper'

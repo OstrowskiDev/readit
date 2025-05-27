@@ -1,14 +1,107 @@
 'use server'
 
 import { authOptions } from '@/app/api/auth/[...nextauth]/authOptions'
-import { getServerSession } from 'next-auth'
-import { redirect } from 'next/navigation'
-import { isUUID } from 'validator'
-import { connectToDatabase, getComment } from '../db'
-import Comment from '../models/Comment'
-import Post from '../models/Post'
 import { validateCommentContent } from '../security/validateComment'
 import { returnToast, setToast, toast } from '../toasts/ToastUtils'
+import allowedPostIds from '@/lib/security/allowedPostIds'
+import { connectToDatabase, getComment } from '../db'
+import { getServerSession } from 'next-auth'
+import { redirect } from 'next/navigation'
+import Comment from '../models/Comment'
+import { isUUID } from 'validator'
+import Post from '../models/Post'
+
+export async function getPostCommentsData(postId) {
+  if (!isUUID(postId) && !allowedPostIds.includes(postId)) {
+    console.error('Invalid UUID in getPostCommentsData, UUID:', postId)
+    throw new Error('Post not found')
+  }
+  await connectToDatabase()
+  const posts = await Comment.aggregate([
+    //find all comments that are descendants of the post:
+    {
+      $match: {
+        'parent._id': postId,
+      },
+    },
+    {
+      $addFields: {
+        parentComment: '$$ROOT',
+      },
+    },
+    // get all replies from each parent comment:
+    {
+      $graphLookup: {
+        from: 'comments',
+        startWith: '$_id',
+        connectFromField: '_id',
+        connectToField: 'parent._id',
+        as: 'allReplies',
+      },
+    },
+
+    {
+      $addFields: {
+        allComments: {
+          $concatArrays: ['$allReplies', ['$parentComment']],
+        },
+      },
+    },
+    {
+      $unwind: {
+        path: '$allComments',
+        preserveNullAndEmptyArrays: true,
+      },
+    },
+    {
+      $replaceRoot: {
+        newRoot: '$allComments',
+      },
+    },
+    // count comment likes:
+    {
+      $addFields: {
+        likesCount: { $size: { $ifNull: ['$likes', []] } },
+      },
+    },
+    // count comment disLikes:
+    {
+      $addFields: {
+        disLikesCount: { $size: { $ifNull: ['$disLikes', []] } },
+      },
+    },
+    // count popularity:
+    {
+      $addFields: {
+        popularity: {
+          $subtract: ['$likesCount', '$disLikesCount'],
+        },
+      },
+    },
+    // add author data:
+    {
+      $lookup: {
+        from: 'users',
+        localField: 'user_id',
+        foreignField: '_id',
+        as: 'authorData',
+      },
+    },
+    { $unwind: '$authorData' },
+    // !!!! change to whitelist
+    {
+      $project: {
+        'authorData.password': 0,
+        'authorData.address': 0,
+        'authorData.email': 0,
+        'authorData.phone': 0,
+      },
+    },
+  ])
+
+  if (!posts) return null
+  return posts
+}
 
 export async function createComment(
   parentId,
