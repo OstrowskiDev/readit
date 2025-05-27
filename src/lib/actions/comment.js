@@ -4,12 +4,34 @@ import { authOptions } from '@/app/api/auth/[...nextauth]/authOptions'
 import { validateCommentContent } from '../security/validateComment'
 import { returnToast, setToast, toast } from '../toasts/ToastUtils'
 import allowedPostIds from '@/lib/security/allowedPostIds'
-import { connectToDatabase, getComment } from '../db'
+import { connectToDatabase } from '../db'
 import { getServerSession } from 'next-auth'
 import { redirect } from 'next/navigation'
 import Comment from '../models/Comment'
 import { isUUID } from 'validator'
 import Post from '../models/Post'
+
+export async function getComment(commentId) {
+  if (!isUUID(commentId)) {
+    console.error('Invalid UUID in getComment')
+    return null
+  }
+
+  try {
+    await connectToDatabase()
+    const comment = await Comment.findOne({ _id: commentId }).lean()
+
+    if (!comment) {
+      console.error('Comment not found, commentId:', commentId)
+      return null
+    }
+
+    return comment
+  } catch (error) {
+    console.error('Error in fetching comment:', error)
+    return null
+  }
+}
 
 export async function getPostCommentsData(postId) {
   if (!isUUID(postId) && !allowedPostIds.includes(postId)) {

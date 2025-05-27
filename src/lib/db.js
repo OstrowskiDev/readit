@@ -19,15 +19,8 @@ export async function connectToDatabase() {
 // done: /api/posts/post/[postId]
 // done: api/posts/[Id]/comments   // /api/posts/${postId}/comments
 // done: /api/users/user/${userId}    // /api/users/user/[id]
-// /api/users/user/private/${userId}    // /api/users/user/private/[id]
-
-export async function getComment(commentId) {
-  const res = await fetch(`${apiUrl}/api/comments/comment/${commentId}`, {
-    cache: 'no-store',
-  })
-  if (!res.ok) return null
-  return res.json()
-}
+// done: /api/users/user/private/${userId}    // /api/users/user/private/[id]
+// done: /api/comments/comment/${commentId} // /api/comments/comment/[id]
 
 export async function getData() {
   try {
