@@ -10,6 +10,24 @@ import { returnToast } from '../toasts/ToastUtils'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/app/api/auth/[...nextauth]/authOptions'
 import { hasErrors } from '../security/hasErrors'
+import { isUUID } from 'validator'
+
+export async function getUser(userId) {
+  if (!isUUID(userId)) {
+    console.error('Invalid input: userId must be a valid UUID')
+    return null
+  }
+
+  try {
+    await connectToDatabase()
+    const post = await User.findOne({ _id: userId }).select('-password -email')
+    if (!post) return null
+    return post
+  } catch (error) {
+    console.error('Error in getUser:', error)
+    return null
+  }
+}
 
 export async function createUser({ name, email, hashedPassword }) {
   try {

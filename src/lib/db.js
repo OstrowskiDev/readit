@@ -16,16 +16,9 @@ async function connectToDatabase() {
 
 //!!!! change res.json to NextResponse
 // api routes to check/delete:
-// /api/posts/post/[postId]
-// api/posts/[Id]/comments   // /api/posts/${postId}/comments
-
-async function getUser(userId) {
-  const res = await fetch(`${apiUrl}/api/users/user/${userId}`, {
-    cache: 'no-store',
-  })
-  if (!res.ok) return null
-  return res.json()
-}
+// done: /api/posts/post/[postId]
+// done: api/posts/[Id]/comments   // /api/posts/${postId}/comments
+// done: /api/users/user/${userId}    // /api/users/user/[id]
 
 async function getUserPrivate(userId) {
   const res = await fetch(`${apiUrl}/api/users/user/private/${userId}`, {
@@ -95,7 +88,6 @@ export {
   connectToDatabase,
   filterPosts,
   filterFavorites,
-  getUser,
   getUserPrivate,
   getComment,
   getPosts,

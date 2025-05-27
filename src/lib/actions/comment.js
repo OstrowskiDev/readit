@@ -14,93 +14,99 @@ import Post from '../models/Post'
 export async function getPostCommentsData(postId) {
   if (!isUUID(postId) && !allowedPostIds.includes(postId)) {
     console.error('Invalid UUID in getPostCommentsData, UUID:', postId)
-    throw new Error('Post not found')
+    return []
   }
-  await connectToDatabase()
-  const posts = await Comment.aggregate([
-    //find all comments that are descendants of the post:
-    {
-      $match: {
-        'parent._id': postId,
-      },
-    },
-    {
-      $addFields: {
-        parentComment: '$$ROOT',
-      },
-    },
-    // get all replies from each parent comment:
-    {
-      $graphLookup: {
-        from: 'comments',
-        startWith: '$_id',
-        connectFromField: '_id',
-        connectToField: 'parent._id',
-        as: 'allReplies',
-      },
-    },
 
-    {
-      $addFields: {
-        allComments: {
-          $concatArrays: ['$allReplies', ['$parentComment']],
+  try {
+    await connectToDatabase()
+    const comments = await Comment.aggregate([
+      //find all comments that are descendants of the post:
+      {
+        $match: {
+          'parent._id': postId,
         },
       },
-    },
-    {
-      $unwind: {
-        path: '$allComments',
-        preserveNullAndEmptyArrays: true,
-      },
-    },
-    {
-      $replaceRoot: {
-        newRoot: '$allComments',
-      },
-    },
-    // count comment likes:
-    {
-      $addFields: {
-        likesCount: { $size: { $ifNull: ['$likes', []] } },
-      },
-    },
-    // count comment disLikes:
-    {
-      $addFields: {
-        disLikesCount: { $size: { $ifNull: ['$disLikes', []] } },
-      },
-    },
-    // count popularity:
-    {
-      $addFields: {
-        popularity: {
-          $subtract: ['$likesCount', '$disLikesCount'],
+      {
+        $addFields: {
+          parentComment: '$$ROOT',
         },
       },
-    },
-    // add author data:
-    {
-      $lookup: {
-        from: 'users',
-        localField: 'user_id',
-        foreignField: '_id',
-        as: 'authorData',
+      // get all replies from each parent comment:
+      {
+        $graphLookup: {
+          from: 'comments',
+          startWith: '$_id',
+          connectFromField: '_id',
+          connectToField: 'parent._id',
+          as: 'allReplies',
+        },
       },
-    },
-    { $unwind: '$authorData' },
-    // !!!! change to whitelist
-    {
-      $project: {
-        'authorData.password': 0,
-        'authorData.address': 0,
-        'authorData.email': 0,
-        'authorData.phone': 0,
-      },
-    },
-  ])
 
-  if (!posts) return null
-  return posts
+      {
+        $addFields: {
+          allComments: {
+            $concatArrays: ['$allReplies', ['$parentComment']],
+          },
+        },
+      },
+      {
+        $unwind: {
+          path: '$allComments',
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
+        $replaceRoot: {
+          newRoot: '$allComments',
+        },
+      },
+      // count comment likes:
+      {
+        $addFields: {
+          likesCount: { $size: { $ifNull: ['$likes', []] } },
+        },
+      },
+      // count comment disLikes:
+      {
+        $addFields: {
+          disLikesCount: { $size: { $ifNull: ['$disLikes', []] } },
+        },
+      },
+      // count popularity:
+      {
+        $addFields: {
+          popularity: {
+            $subtract: ['$likesCount', '$disLikesCount'],
+          },
+        },
+      },
+      // add author data:
+      {
+        $lookup: {
+          from: 'users',
+          localField: 'user_id',
+          foreignField: '_id',
+          as: 'authorData',
+        },
+      },
+      { $unwind: '$authorData' },
+      // !!!! change to whitelist
+      {
+        $project: {
+          'authorData.password': 0,
+          'authorData.address': 0,
+          'authorData.email': 0,
+          'authorData.phone': 0,
+        },
+      },
+    ])
+
+    if (!comments || comments.length === 0) return []
+    return comments
+  } catch (error) {
+    console.error('Error in getPostCommentsData:', error)
+    return []
+  }
 }
 
 export async function createComment(

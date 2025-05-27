@@ -14,83 +14,89 @@ import { hasErrors } from '../security/hasErrors'
 import validateImageFileServer from '../security/validateImageFileServer'
 import { validatePost } from '../security/validatePost'
 import { returnToast, setToast, toast } from '../toasts/ToastUtils'
-import validator from 'validator'
 
 export async function getPostData(postId) {
-  if (!validator.isUUID(postId) && !allowedPostIds.includes(postId)) {
+  console.log('🚀 ~ getPostData ~ postId:', postId)
+
+  if (!isUUID(postId) && !allowedPostIds.includes(postId)) {
     console.error('Invalid UUID in getPostData, UUID:', postId)
-    throw new Error('Post not found')
+    return null
   }
-  await connectToDatabase()
-  const post = await Post.aggregate([
-    { $match: { _id: postId } },
-    {
-      $lookup: {
-        from: 'users',
-        localField: 'user_id',
-        foreignField: '_id',
-        as: 'authorData',
-      },
-    },
-    { $unwind: '$authorData' },
-    // !!!! change to whitelist
-    {
-      $project: {
-        'authorData.password': 0,
-        'authorData.address': 0,
-        'authorData.email': 0,
-        'authorData.phone': 0,
-      },
-    },
-    // get total number of replies for each post:
-    {
-      $graphLookup: {
-        from: 'comments',
-        startWith: '$comments',
-        connectFromField: '_id',
-        connectToField: 'parent._id',
-        as: 'allReplies',
-      },
-    },
-    // calc total number of comments for each post:
-    {
-      $addFields: {
-        commentsCount: {
-          $add: [
-            { $size: { $ifNull: ['$allReplies', []] } },
-            { $size: { $ifNull: ['$comments', []] } },
-          ],
+
+  try {
+    await connectToDatabase()
+    const post = await Post.aggregate([
+      { $match: { _id: postId } },
+      {
+        $lookup: {
+          from: 'users',
+          localField: 'user_id',
+          foreignField: '_id',
+          as: 'authorData',
         },
       },
-    },
-    // delete allReplies field after it done its job:
-    {
-      $project: {
-        allReplies: 0,
+      { $unwind: '$authorData' },
+      // !!!! change to whitelist
+      {
+        $project: {
+          'authorData.password': 0,
+          'authorData.address': 0,
+          'authorData.email': 0,
+          'authorData.phone': 0,
+        },
       },
-    },
-    // calc total number of likes for each post:
-    {
-      $addFields: {
-        likesCount: { $size: { $ifNull: ['$likes', []] } },
+      // get total number of replies for each post:
+      {
+        $graphLookup: {
+          from: 'comments',
+          startWith: '$comments',
+          connectFromField: '_id',
+          connectToField: 'parent._id',
+          as: 'allReplies',
+        },
       },
-    },
-    // calc total number of dislikes for each post:
-    {
-      $addFields: {
-        dislikesCount: { $size: { $ifNull: ['$dislikes', []] } },
+      // calc total number of comments for each post:
+      {
+        $addFields: {
+          commentsCount: {
+            $add: [
+              { $size: { $ifNull: ['$allReplies', []] } },
+              { $size: { $ifNull: ['$comments', []] } },
+            ],
+          },
+        },
       },
-    },
-    // subtract dislikes from likes to calculate popularity:
-    {
-      $addFields: {
-        popularity: { $subtract: ['$likesCount', '$dislikesCount'] },
+      // delete allReplies field after it done its job:
+      {
+        $project: {
+          allReplies: 0,
+        },
       },
-    },
-  ])
+      // calc total number of likes for each post:
+      {
+        $addFields: {
+          likesCount: { $size: { $ifNull: ['$likes', []] } },
+        },
+      },
+      // calc total number of dislikes for each post:
+      {
+        $addFields: {
+          dislikesCount: { $size: { $ifNull: ['$dislikes', []] } },
+        },
+      },
+      // subtract dislikes from likes to calculate popularity:
+      {
+        $addFields: {
+          popularity: { $subtract: ['$likesCount', '$dislikesCount'] },
+        },
+      },
+    ])
 
-  if (!post) return null
-  return post
+    if (!post || post.length === 0) return null
+    return post[0]
+  } catch (error) {
+    console.error('Error in getPostData:', error)
+  }
 }
 
 export async function createPost(inputTitle, inputContent, uuid, hasImage) {
