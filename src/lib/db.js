@@ -66,14 +66,6 @@ async function getComment(commentId) {
   return res.json()
 }
 
-async function getUserByEmail(email) {
-  const res = await fetch(`${apiUrl}/api/users/user/email/${email}`, {
-    cache: 'no-store',
-  })
-  if (!res.ok) return null
-  return res.json()
-}
-
 async function getData() {
   try {
     const fetchedData = await Promise.all([getPosts(), getUsers()])
@@ -135,5 +127,4 @@ export {
   getPosts,
   getUsers,
   getData,
-  getUserByEmail,
 }

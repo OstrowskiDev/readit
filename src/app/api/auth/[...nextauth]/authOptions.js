@@ -1,8 +1,8 @@
-import { getUserByEmail } from '@/lib/db'
 import { handleFailedLogin } from '@/lib/actions/user'
 import { validateSignIn } from '@/lib/security/validateSignIn'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import bcrypt from 'bcrypt'
+import { getUserByEmail } from '@/lib/actions/auth'
 
 export const authOptions = {
   pages: {
