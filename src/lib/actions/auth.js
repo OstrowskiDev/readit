@@ -15,7 +15,6 @@ export async function getUserByEmail(email) {
     const user = await User.findOne({ email: email })
 
     if (!user) return null
-
     return {
       password: user.password,
       is_active: user.is_active,

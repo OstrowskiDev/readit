@@ -20,11 +20,32 @@ export async function getUser(userId) {
 
   try {
     await connectToDatabase()
-    const post = await User.findOne({ _id: userId }).select('-password -email')
-    if (!post) return null
-    return post
+    const user = await User.findOne({ _id: userId })
+      .select('-password -email')
+      .lean()
+    if (!user) return null
+    return user
   } catch (error) {
     console.error('Error in getUser:', error)
+    return null
+  }
+}
+
+export async function getUserPrivate(userId) {
+  const session = await getServerSession(authOptions)
+  const sessionUserId = session.user.id
+  if (userId !== sessionUserId) {
+    console.error("UserId that doesn't match sessionUserId.")
+    return null
+  }
+
+  try {
+    await connectToDatabase()
+    const user = await User.findOne({ _id: userId }).select('-password').lean()
+    if (!user) return null
+    return user
+  } catch (error) {
+    console.error('Error in getUserPrivate:', error)
     return null
   }
 }

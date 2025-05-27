@@ -16,8 +16,6 @@ import { validatePost } from '../security/validatePost'
 import { returnToast, setToast, toast } from '../toasts/ToastUtils'
 
 export async function getPostData(postId) {
-  console.log('🚀 ~ getPostData ~ postId:', postId)
-
   if (!isUUID(postId) && !allowedPostIds.includes(postId)) {
     console.error('Invalid UUID in getPostData, UUID:', postId)
     return null
