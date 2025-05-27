@@ -15,24 +15,8 @@ async function connectToDatabase() {
 }
 
 //!!!! change res.json to NextResponse
-
-async function getPost(postId) {
-  const res = await fetch(`${apiUrl}/api/posts/post/${postId}`, {
-    cache: 'no-store',
-  })
-  if (!res.ok) return null
-  const json = await res.json()
-  return json[0]
-}
-
-async function getPostData(postId) {
-  const res = await fetch(`${apiUrl}/api/posts/post/${postId}`, {
-    cache: 'no-store',
-  })
-  if (!res.ok) return null
-  const json = await res.json()
-  return json[0]
-}
+// api routes to check/delete:
+// /api/posts/post/${postId}
 
 async function getPostCommentsData(postId) {
   const res = await fetch(`${apiUrl}/api/posts/${postId}/comments`, {
@@ -116,8 +100,6 @@ async function getUsers() {
 
 export {
   connectToDatabase,
-  getPost,
-  getPostData,
   getPostCommentsData,
   filterPosts,
   filterFavorites,
