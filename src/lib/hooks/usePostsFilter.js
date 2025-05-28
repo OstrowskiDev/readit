@@ -1,10 +1,11 @@
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
-import { filterPosts } from '@/lib/db'
+import { filterPosts } from '../actions/filter'
 
 export function usePostsFilter({
   setPosts,
   setPostsCount,
-  onlyCurrentUserPosts,
+  showFavorites,
+  forceAuthorName,
 }) {
   const searchParams = useSearchParams()
   const pathname = usePathname()
@@ -27,10 +28,6 @@ export function usePostsFilter({
 
     params.set('page', '1')
 
-    if (onlyCurrentUserPosts) {
-      params.set('onlyCurrentUserPosts', onlyCurrentUserPosts)
-    }
-
     replace(`${pathname}?${params.toString()}`)
     await fetchAndSetPosts(params)
   }
@@ -48,10 +45,6 @@ export function usePostsFilter({
 
     params.delete('fastQuery')
     params.set('page', '1')
-
-    if (onlyCurrentUserPosts) {
-      params.set('onlyCurrentUserPosts', onlyCurrentUserPosts)
-    }
 
     replace(`${pathname}?${params.toString()}`)
     await fetchAndSetPosts(params)
@@ -76,7 +69,11 @@ export function usePostsFilter({
 
   async function fetchAndSetPosts(params) {
     const filterParams = Object.fromEntries(params.entries())
-    const postsData = await filterPosts(filterParams)
+    const postsData = await filterPosts({
+      searchParams: filterParams,
+      forceAuthorName,
+      showFavorites,
+    })
     setPosts(postsData.posts)
     setPostsCount(postsData.postsCount)
   }

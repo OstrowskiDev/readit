@@ -1,9 +1,11 @@
+'use server'
+
 import mongoose from 'mongoose'
 
 const uri = process.env.DB_CONNECT
 const apiUrl = process.env.NEXT_PUBLIC_APP_URL
 
-async function connectToDatabase() {
+export async function connectToDatabase() {
   if (mongoose.connections[0].readyState) return
   try {
     await mongoose.connect(uri)
@@ -14,88 +16,7 @@ async function connectToDatabase() {
   }
 }
 
-//!!!! change res.json to NextResponse
-
-async function getPost(postId) {
-  const res = await fetch(`${apiUrl}/api/posts/post/${postId}`, {
-    cache: 'no-store',
-  })
-  if (!res.ok) return null
-  const json = await res.json()
-  return json[0]
-}
-
-async function getPostData(postId) {
-  const res = await fetch(`${apiUrl}/api/posts/post/${postId}`, {
-    cache: 'no-store',
-  })
-  if (!res.ok) return null
-  const json = await res.json()
-  return json[0]
-}
-
-async function getPostCommentsData(postId) {
-  const res = await fetch(`${apiUrl}/api/posts/${postId}/comments`, {
-    cache: 'no-store',
-  })
-  if (!res.ok) return null
-  return res.json()
-}
-
-async function getUser(userId) {
-  const res = await fetch(`${apiUrl}/api/users/user/${userId}`, {
-    cache: 'no-store',
-  })
-  if (!res.ok) return null
-  return res.json()
-}
-
-async function getUserPrivate(userId) {
-  const res = await fetch(`${apiUrl}/api/users/user/private/${userId}`, {
-    cache: 'no-store',
-  })
-  if (!res.ok) return null
-  return res.json()
-}
-
-async function getComment(commentId) {
-  const res = await fetch(`${apiUrl}/api/comments/comment/${commentId}`, {
-    cache: 'no-store',
-  })
-  if (!res.ok) return null
-  return res.json()
-}
-
-async function getData() {
-  try {
-    const fetchedData = await Promise.all([getPosts(), getUsers()])
-    return fetchedData
-  } catch (error) {
-    console.error('Error fetching posts and/or users:', error)
-    return null
-  }
-}
-
-async function getPosts() {
-  const res = await fetch('${apiUrl}/api/posts', {
-    cache: 'no-store',
-  })
-  if (!res.ok) return null
-  return res.json()
-}
-
-async function filterPosts(params) {
-  const queryString = new URLSearchParams(params).toString()
-
-  const res = await fetch(`/api/posts/filter?${queryString}`, {
-    method: 'GET',
-    cache: 'no-store',
-  })
-  if (!res.ok) return null
-  return res.json()
-}
-
-async function filterFavorites(params) {
+export async function filterFavorites(params) {
   const queryString = new URLSearchParams(params).toString()
 
   const res = await fetch(`/api/posts/favorites/filter?${queryString}`, {
@@ -104,27 +25,4 @@ async function filterFavorites(params) {
   })
   if (!res.ok) return null
   return res.json()
-}
-
-async function getUsers() {
-  const res = await fetch('${apiUrl}/api/users', {
-    cache: 'no-store',
-  })
-  if (!res.ok) return null
-  return res.json()
-}
-
-export {
-  connectToDatabase,
-  getPost,
-  getPostData,
-  getPostCommentsData,
-  filterPosts,
-  filterFavorites,
-  getUser,
-  getUserPrivate,
-  getComment,
-  getPosts,
-  getUsers,
-  getData,
 }

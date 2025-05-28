@@ -1,84 +1,61 @@
-import { NextResponse } from 'next/server'
+'use server'
+
 import { connectToDatabase } from '@/lib/db'
 import Post from '@/lib/models/Post'
 import sanitize from 'mongo-sanitize'
-import { getServerSession } from 'next-auth'
-import { authOptions } from '../../auth/[...nextauth]/authOptions'
 
-export async function GET(req, res) {
+export async function filterPosts({
+  searchParams,
+  showFavorites = false,
+  forceAuthorName = null,
+}) {
+  const emptyResutls = { posts: [], postsCount: 0 }
+
+  // !!!! delete onlyCurrentUserPosts from frontend, and handle it differently (onlyOneUserPosts + perma set author name)
+
+  // !!!! also change displayedPostsAuthor on frontend
+
   // check if data is send from fastQuery or filter:
-  const fastQuery = sanitize(req.nextUrl.searchParams.get('fastQuery'))
+  const fastQuery = sanitize(searchParams.fastQuery)
   const useFastQuery = Boolean(fastQuery)
 
+  // validate forceAuthorName
+  if (typeof forceAuthorName !== 'string' || forceAuthorName.length > 20) {
+    forceAuthorName = null
+  }
+
   // pass proper data to title, content and author:
-  const title = useFastQuery
-    ? fastQuery
-    : sanitize(req.nextUrl.searchParams.get('title'))
+  const title = useFastQuery ? fastQuery : sanitize(searchParams.title)
 
-  const content = useFastQuery
-    ? fastQuery
-    : sanitize(req.nextUrl.searchParams.get('content'))
+  const content = useFastQuery ? fastQuery : sanitize(searchParams.content)
 
-  const author = useFastQuery
-    ? fastQuery
-    : sanitize(req.nextUrl.searchParams.get('author'))
+  const author =
+    forceAuthorName ||
+    (useFastQuery ? fastQuery : sanitize(searchParams.author))
 
   if (title != null && (typeof title !== 'string' || title.length > 20)) {
-    return new NextResponse(
-      'Invalid input: Title must be a string of maximum 20 characters',
-      { status: 400 },
-    )
+    return emptyResutls
   }
 
   if (content != null && (typeof content !== 'string' || content.length > 50)) {
-    return new NextResponse(
-      'Invalid input: Content must be a string of maximum 50 characters',
-      { status: 400 },
-    )
+    return emptyResutls
   }
 
   if (author != null && (typeof author !== 'string' || author.length > 30)) {
-    return new NextResponse(
-      'Invalid input: Author must be a string of maximum 30 characters',
-      { status: 400 },
-    )
+    return emptyResutls
   }
 
-  let sortBy = sanitize(req.nextUrl.searchParams.get('sortBy'))
+  let sortBy = sanitize(searchParams.sortBy)
   if (!['time', 'popularity', 'activity'].includes(sortBy)) {
     sortBy = 'time'
   }
 
-  let sortOrder = sanitize(req.nextUrl.searchParams.get('sortOrder'))
+  let sortOrder = sanitize(searchParams.sortOrder)
   if (!['ascending', 'descending'].includes(sortOrder)) {
     sortOrder = 'descending'
   }
 
-  let onlyCurrentUserPosts = req.nextUrl.searchParams.get(
-    'onlyCurrentUserPosts',
-  )
-  onlyCurrentUserPosts = onlyCurrentUserPosts === 'true' ? true : false
-
-  const displayedPostsAuthor = sanitize(
-    req.nextUrl.searchParams.get('displayedPostsAuthor'),
-  )
-
   let pipeline = []
-
-  if (onlyCurrentUserPosts) {
-    const session = await getServerSession(authOptions)
-    if (session) {
-      pipeline.push({ $match: { user_id: session.user.id } })
-    } else {
-      return new NextResponse('You must be logged in to view your posts', {
-        status: 401,
-      })
-    }
-  }
-
-  if (displayedPostsAuthor) {
-    pipeline.push({ $match: { user_id: displayedPostsAuthor } })
-  }
 
   // create temporary fields in posts documents to hold authorData:
   pipeline.push({
@@ -108,6 +85,17 @@ export async function GET(req, res) {
   pipeline.push({
     $unwind: '$authorData',
   })
+
+  // force only one authors posts:
+  // note `^${...}$` is used to force exact match
+
+  if (forceAuthorName) {
+    pipeline.push({
+      $match: {
+        'authorData.name': { $regex: `^${forceAuthorName}$`, $options: 'i' },
+      },
+    })
+  }
 
   // create different matching conditions for fastQuery and filter:
   const conditions = []
@@ -202,19 +190,13 @@ export async function GET(req, res) {
   const basePipeline = [...pipeline]
 
   // pagination logic:
-  let displayPage = req.nextUrl.searchParams.get('page')
-  const displayPageNum = Number(displayPage)
-  if (Number.isInteger(displayPageNum) && displayPageNum > 0) {
-    displayPage = displayPageNum
-  } else {
+  let displayPage = Number(searchParams?.page)
+  if (!Number.isInteger(displayPage) || displayPage < 1) {
     displayPage = 1
   }
 
-  let postsPerPage = req.nextUrl.searchParams.get('limit')
-  const postsPerPageNum = Number(postsPerPage)
-  if ([10, 25, 50].includes(postsPerPageNum)) {
-    postsPerPage = postsPerPageNum
-  } else {
+  let postsPerPage = Number(searchParams?.limit)
+  if (![10, 25, 50].includes(postsPerPage)) {
     postsPerPage = 10
   }
 
@@ -242,10 +224,9 @@ export async function GET(req, res) {
     const results = await Post.aggregate(finalPipeline)
     const posts = results[0].posts
     const postsCount = results[0].postsCount[0]?.count || 0
-    return new NextResponse(JSON.stringify({ posts, postsCount }), {
-      status: 200,
-    })
+    return { posts, postsCount }
   } catch (error) {
-    return new NextResponse('Error in fetching posts' + error, { status: 500 })
+    console.error('Error in fetching posts', error)
+    return emptyResutls
   }
 }

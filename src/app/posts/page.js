@@ -10,17 +10,17 @@ import { CreatePostForm } from '@/ui/post/CreatePostForm'
 import { FilterPostsForm } from '@/ui/post/FilterPostsForm'
 import { Post } from '@/ui/post/Post'
 import { PostsSearch } from '@/ui/post/PostsSearch'
-import { filterPosts } from '@/lib/db'
 import { PaginationBar } from '@/ui/pagination/PaginationBar'
 import { Spacer } from '@/ui/common/Spacer'
 import { ResultsPerPage } from '@/ui/pagination/ResultsPerPage'
 import { LimitPerPage } from '@/ui/pagination/LimitPerPage'
+import { filterPosts } from '@/lib/actions/filter'
 
 export default function PostsPage({
   searchParams,
   pageTitle,
-  onlyCurrentUserPosts,
-  displayedPostsAuthor,
+  showFavorites,
+  forceAuthorName,
   disableCreateBtn,
   disableFilteringByAuthor,
 }) {
@@ -36,13 +36,13 @@ export default function PostsPage({
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     async function fetchData() {
-      let filterData = searchParams
+      let filterData = { searchParams }
 
-      if (onlyCurrentUserPosts) {
-        filterData = { ...filterData, onlyCurrentUserPosts }
+      if (showFavorites) {
+        filterData.showFavorites = showFavorites
       }
-      if (displayedPostsAuthor) {
-        filterData = { ...filterData, displayedPostsAuthor }
+      if (forceAuthorName) {
+        filterData.forceAuthorName = forceAuthorName
       }
       const results = await filterPosts(filterData)
       setPostsCount(results.postsCount)
@@ -61,7 +61,8 @@ export default function PostsPage({
   const filterOptions = {
     setPosts,
     setPostsCount,
-    onlyCurrentUserPosts,
+    showFavorites,
+    forceAuthorName,
   }
 
   return (

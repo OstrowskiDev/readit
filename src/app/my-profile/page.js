@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { signIn, useSession } from 'next-auth/react'
-import { getUserPrivate } from '@/lib/db'
 import { countUserComments, countUserPosts } from '@/lib/actions/utils'
 import { Loader } from '@/ui/loaders/Loader'
 import { MyProfileShimmer } from '@/ui/loaders/MyProfileShimmer'
@@ -12,6 +11,7 @@ import { ProfileMyData } from '@/ui/profile/ProfileMyData'
 import { ProfileSettings } from '@/ui/profile/ProfileSettings'
 import { useToastContext } from '@/lib/toasts/ToastProvider'
 import { MyProfileProvider } from '@/lib/context/MyProfileProvider'
+import { getUserPrivate } from '@/lib/actions/user'
 
 export default function MyProfile() {
   const [userData, setUserData] = useState(null)
