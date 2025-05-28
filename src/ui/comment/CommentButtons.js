@@ -8,8 +8,14 @@ import { CommentLikeBtn } from '../buttons/CommentLikeBtn'
 import { CommentMenuBtn } from '../buttons/CommentMenuBtn'
 import { CommentEditForm } from './CommentEditForm'
 import { CommentReplyForm } from './CommentReplyForm'
+import { useSession } from 'next-auth/react'
+import { useCommentContext } from '@/lib/context/CommentContextProvider'
 
 export function CommentButtons() {
+  const { comment } = useCommentContext()
+  const { data: session } = useSession()
+  const usersId = session?.user.id
+  const isUsersComment = usersId === comment.user_id
   return (
     <>
       <div className="comment-btns-container flex items-center ml-4">
@@ -24,7 +30,7 @@ export function CommentButtons() {
         />
         <ReplyBtn className="comment-btn-reply" />
         <ShareCommentBtn className="comment-btn-share" />
-        <CommentMenuBtn className="comment-btn-menu" />
+        {isUsersComment && <CommentMenuBtn className="comment-btn-menu" />}
       </div>
       <CommentReplyForm className="comment-reply-form" parentType="comment" />
       <CommentEditForm className="comment-edit-form" />

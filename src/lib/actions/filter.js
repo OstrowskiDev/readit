@@ -1,8 +1,11 @@
 'use server'
 
+import { authOptions } from '@/app/api/auth/[...nextauth]/authOptions'
 import { connectToDatabase } from '@/lib/db'
 import Post from '@/lib/models/Post'
 import sanitize from 'mongo-sanitize'
+import { getServerSession } from 'next-auth'
+import User from '../models/User'
 
 export async function filterPosts({
   searchParams,
@@ -10,10 +13,6 @@ export async function filterPosts({
   forceAuthorName = null,
 }) {
   const emptyResutls = { posts: [], postsCount: 0 }
-
-  // !!!! delete onlyCurrentUserPosts from frontend, and handle it differently (onlyOneUserPosts + perma set author name)
-
-  // !!!! also change displayedPostsAuthor on frontend
 
   // check if data is send from fastQuery or filter:
   const fastQuery = sanitize(searchParams.fastQuery)
@@ -23,6 +22,9 @@ export async function filterPosts({
   if (typeof forceAuthorName !== 'string' || forceAuthorName.length > 20) {
     forceAuthorName = null
   }
+
+  // validate showFavorites
+  if (typeof showFavorites !== 'boolean') showFavorites = false
 
   // pass proper data to title, content and author:
   const title = useFastQuery ? fastQuery : sanitize(searchParams.title)
@@ -86,9 +88,29 @@ export async function filterPosts({
     $unwind: '$authorData',
   })
 
+  // find users favorites:
+  // User.favorites is array of objects {type: 'post', _id: string}
+  if (showFavorites) {
+    const session = await getServerSession(authOptions)
+    if (!session) return emptyResutls
+
+    const user = await User.findById(session.user.id).lean()
+    if (!user || !user?.favorites) return emptyResutls
+    // currently favorites can be type post only,
+    // but check .type for future compatibilty with other favorite.type's.
+    const favoritePostIds = user.favorites
+      .filter((fav) => fav.type === 'post')
+      .map((fav) => fav._id)
+
+    if (!favoritePostIds.length) return emptyResutls
+
+    pipeline.push({
+      $match: { _id: { $in: favoritePostIds } },
+    })
+  }
+
   // force only one authors posts:
   // note `^${...}$` is used to force exact match
-
   if (forceAuthorName) {
     pipeline.push({
       $match: {

@@ -7,7 +7,6 @@ import { useCommentContext } from '@/lib/context/CommentContextProvider'
 import { useToastContext } from '@/lib/toasts/ToastProvider'
 import { DeleteCommentBtn } from '../buttons/DeleteCommentBtn'
 import { EditCommentBtn } from '../buttons/EditCommentBtn'
-import { FavoritesBtn } from '../buttons/FavoritesBtn'
 import { usePostContext } from '@/lib/context/PostContextProvider'
 
 export function CommentOptMenu({ isMenuVisible, setIsMenuVisible }) {
@@ -19,7 +18,6 @@ export function CommentOptMenu({ isMenuVisible, setIsMenuVisible }) {
   const { toastFunctions: toast } = useToastContext()
   const usersId = session?.user.id
   const isUsersComment = usersId === comment.user_id
-  const documentId = commentId
 
   const [response, setResponse] = useState({
     state: null,
@@ -93,14 +91,6 @@ export function CommentOptMenu({ isMenuVisible, setIsMenuVisible }) {
                 onDeleteSubmit={onDeleteSubmit}
               />
             </>
-          )}
-          {session && (
-            <FavoritesBtn
-              type={'comment'}
-              setIsMenuVisible={setIsMenuVisible}
-              setResponse={setResponse}
-              documentId={documentId}
-            />
           )}
         </div>
       )}
