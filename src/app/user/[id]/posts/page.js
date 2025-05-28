@@ -10,7 +10,6 @@ import { getUser } from '@/lib/actions/user'
 
 export default function UserProfile({ params, searchParams }) {
   const [userData, setUserData] = useState(null)
-  const displayedPostsAuthor = params.id
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
@@ -59,7 +58,7 @@ export default function UserProfile({ params, searchParams }) {
               pageTitle={''}
               disableCreateBtn={true}
               disableFilteringByAuthor={true}
-              displayedPostsAuthor={displayedPostsAuthor}
+              forceAuthorName={userData.name}
             />
           </div>
         </>

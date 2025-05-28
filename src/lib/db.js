@@ -15,14 +15,3 @@ export async function connectToDatabase() {
     throw new Error('Error in connecting to mongodb')
   }
 }
-
-export async function filterFavorites(params) {
-  const queryString = new URLSearchParams(params).toString()
-
-  const res = await fetch(`/api/posts/favorites/filter?${queryString}`, {
-    method: 'GET',
-    cache: 'no-store',
-  })
-  if (!res.ok) return null
-  return res.json()
-}
