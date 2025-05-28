@@ -26,7 +26,7 @@ export default function MyPostsPage({ searchParams }) {
           searchParams={searchParams}
           disableCreateBtn={true}
           disableFilteringByAuthor={true}
-          onlyCurrentUserPosts={'true'}
+          forceAuthorName={session.user.name}
           pageTitle={'My Posts'}
         />
       )}

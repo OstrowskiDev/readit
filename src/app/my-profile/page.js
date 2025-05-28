@@ -36,7 +36,6 @@ export default function MyProfile() {
 
     async function fetchData() {
       const [fetchedData, postsSum, commentsSum] = await Promise.all([
-        //!!!! change getUserPrivate import
         getUserPrivate(session.user.id),
         countUserPosts(session.user.id),
         countUserComments(session.user.id),

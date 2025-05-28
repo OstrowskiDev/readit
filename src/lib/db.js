@@ -1,3 +1,5 @@
+'use server'
+
 import mongoose from 'mongoose'
 
 const uri = process.env.DB_CONNECT
@@ -14,56 +16,11 @@ export async function connectToDatabase() {
   }
 }
 
-//!!!! change res.json to NextResponse
-// api routes to check/delete:
-// done: /api/posts/post/[postId]
-// done: api/posts/[Id]/comments   // /api/posts/${postId}/comments
-// done: /api/users/user/${userId}    // /api/users/user/[id]
-// done: /api/users/user/private/${userId}    // /api/users/user/private/[id]
-// done: /api/comments/comment/${commentId} // /api/comments/comment/[id]
-
-export async function getData() {
-  try {
-    const fetchedData = await Promise.all([getPosts(), getUsers()])
-    return fetchedData
-  } catch (error) {
-    console.error('Error fetching posts and/or users:', error)
-    return null
-  }
-}
-
-export async function getPosts() {
-  const res = await fetch('${apiUrl}/api/posts', {
-    cache: 'no-store',
-  })
-  if (!res.ok) return null
-  return res.json()
-}
-
-export async function filterPosts(params) {
-  const queryString = new URLSearchParams(params).toString()
-
-  const res = await fetch(`/api/posts/filter?${queryString}`, {
-    method: 'GET',
-    cache: 'no-store',
-  })
-  if (!res.ok) return null
-  return res.json()
-}
-
 export async function filterFavorites(params) {
   const queryString = new URLSearchParams(params).toString()
 
   const res = await fetch(`/api/posts/favorites/filter?${queryString}`, {
     method: 'GET',
-    cache: 'no-store',
-  })
-  if (!res.ok) return null
-  return res.json()
-}
-
-export async function getUsers() {
-  const res = await fetch('${apiUrl}/api/users', {
     cache: 'no-store',
   })
   if (!res.ok) return null
