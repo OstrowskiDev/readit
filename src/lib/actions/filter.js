@@ -12,7 +12,7 @@ export async function filterPosts({
   showFavorites = false,
   forceAuthorName = null,
 }) {
-  const emptyResutls = { posts: [], postsCount: 0 }
+  const emptyResults = { posts: [], postsCount: 0 }
 
   // check if data is send from fastQuery or filter:
   const fastQuery = sanitize(searchParams.fastQuery)
@@ -36,15 +36,15 @@ export async function filterPosts({
     (useFastQuery ? fastQuery : sanitize(searchParams.author))
 
   if (title != null && (typeof title !== 'string' || title.length > 20)) {
-    return emptyResutls
+    return emptyResults
   }
 
   if (content != null && (typeof content !== 'string' || content.length > 50)) {
-    return emptyResutls
+    return emptyResults
   }
 
   if (author != null && (typeof author !== 'string' || author.length > 30)) {
-    return emptyResutls
+    return emptyResults
   }
 
   let sortBy = sanitize(searchParams.sortBy)
@@ -92,17 +92,17 @@ export async function filterPosts({
   // User.favorites is array of objects {type: 'post', _id: string}
   if (showFavorites) {
     const session = await getServerSession(authOptions)
-    if (!session) return emptyResutls
+    if (!session) return emptyResults
 
     const user = await User.findById(session.user.id).lean()
-    if (!user || !user?.favorites) return emptyResutls
+    if (!user || !user?.favorites) return emptyResults
     // currently favorites can be type post only,
-    // but check .type for future compatibilty with other favorite.type's.
+    // but check .type for future compatibility with other favorite.type's.
     const favoritePostIds = user.favorites
       .filter((fav) => fav.type === 'post')
       .map((fav) => fav._id)
 
-    if (!favoritePostIds.length) return emptyResutls
+    if (!favoritePostIds.length) return emptyResults
 
     pipeline.push({
       $match: { _id: { $in: favoritePostIds } },
@@ -119,7 +119,7 @@ export async function filterPosts({
     })
   }
 
-  // create different matching conditions for fastQuery and filter:
+  // create different matching conditions for fastQuery, filter and forceAuthorName:
   const conditions = []
 
   if (title) {
@@ -132,10 +132,39 @@ export async function filterPosts({
     conditions.push({ 'authorData.name': { $regex: author, $options: 'i' } })
   }
 
-  if (conditions.length > 0) {
-    pipeline.push({
-      $match: useFastQuery ? { $or: conditions } : { $and: conditions },
-    })
+  if (useFastQuery && forceAuthorName) {
+    // (title || content) && author
+    const titleOrContentConditions = []
+    if (title)
+      titleOrContentConditions.push({ title: { $regex: title, $options: 'i' } })
+    if (content)
+      titleOrContentConditions.push({
+        content: { $regex: content, $options: 'i' },
+      })
+    if (titleOrContentConditions.length && author) {
+      pipeline.push({
+        $match: {
+          $and: [
+            { $or: titleOrContentConditions },
+            { 'authorData.name': { $regex: author, $options: 'i' } },
+          ],
+        },
+      })
+    }
+  } else if (useFastQuery) {
+    // (title || content || author)
+    if (conditions.length > 0) {
+      pipeline.push({
+        $match: { $or: conditions },
+      })
+    }
+  } else {
+    // (title && content && author)
+    if (conditions.length > 0) {
+      pipeline.push({
+        $match: { $and: conditions },
+      })
+    }
   }
 
   // create additional fields for sorting
@@ -208,7 +237,7 @@ export async function filterPosts({
     pipeline.push({ $sort: { [sortField]: sortDirection } })
   }
 
-  // saving pipeline resutls before using pagination logic:
+  // saving pipeline results before using pagination logic:
   const basePipeline = [...pipeline]
 
   // pagination logic:
@@ -249,6 +278,6 @@ export async function filterPosts({
     return { posts, postsCount }
   } catch (error) {
     console.error('Error in fetching posts', error)
-    return emptyResutls
+    return emptyResults
   }
 }

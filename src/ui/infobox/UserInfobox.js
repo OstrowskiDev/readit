@@ -62,7 +62,7 @@ export default function UserInfobox({
 
             <div className="infobox-name-date-container flex flex-col ml-4">
               <div
-                onClick={() => router.push(`/user/${author._id}/posts`)}
+                onClick={() => router.push(`/user/${author._id}`)}
                 className="name font-orbitron-bold text-20 hover:cursor-pointer hover:underline"
               >
                 {author.name}
