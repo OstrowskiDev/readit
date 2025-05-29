@@ -2,10 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
+/***************** App Background *****************/
+
+body {
+  background-image: url('/backgrounds/cosmos-blue.jpg'); 
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed; 
+  background-color: #000; 
+}
+
+
 /********************* Fonts *********************/
 
 * {
-  color: #020629;
+  color: #A3F4FF;
 }
 
 body, .font-rubik {
