@@ -3,12 +3,11 @@
 import { countUserComments, countUserPosts } from '@/lib/actions/utils'
 import { Avatar } from '@/services/dicebear/Avatar'
 import { useAuthorsContext } from '@/lib/context/AuthorsDataProvider'
-import { FollowBtn } from '@/ui/buttons/FollowBtn'
-import { MessageBtn } from '@/ui/buttons/MessageBtn'
 import { AccountCreationDate } from '@/ui/infobox/AccountCreationDate'
 import { cloneDeep } from 'lodash'
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
+import { VisitMyProfileBtn } from '../buttons/VisitMyProfileBtn'
 
 export default function UserInfobox({
   author,
@@ -91,8 +90,7 @@ export default function UserInfobox({
           </div>
 
           <div className="infobox-buttons-container mt-5 flex">
-            <FollowBtn />
-            <MessageBtn />
+            <VisitMyProfileBtn authorId={authorId} />
           </div>
         </div>
       )}

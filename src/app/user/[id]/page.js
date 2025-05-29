@@ -34,10 +34,10 @@ export default function UserProfile({ params }) {
   }, [])
 
   return (
-    <div className="profile-main-container mx-auto">
+    <div className="profile-main-container flex flex-col items-center justify-center w-full">
       {userData ? (
         <MyProfileProvider userData={userData}>
-          <div className="users-data-container">
+          <div className="users-data-container max-w-[800px] w-full">
             <h1 className="users-data-header flex flex-col mt-3 md:mt-6 md:mb-2 ml-4 text-xl font-semibold text-gray-800">
               {`${userData.name}'s profile:`}
             </h1>
@@ -60,7 +60,7 @@ export default function UserProfile({ params }) {
               </div>
             </div>
           </div>
-          <div className="posts-wrapper md:max-w-[800px]">
+          <div className="posts-wrapper flex flex-col w-full md:max-w-[800px]">
             <h2 className="posts-header relative md:top-6 ml-4 text-xl font-semibold text-gray-900">
               {`${userData.name}'s posts:`}
             </h2>
@@ -76,7 +76,7 @@ export default function UserProfile({ params }) {
       ) : (
         <>
           <UserProfileShimmer />
-          <div className="loader-position-adjuster mt-8 mr-16">
+          <div className="loader-position-adjuster md:max-w-[768px] w-full mt-8">
             <Loader />
             <PostShimmer />
             <PostShimmer />
