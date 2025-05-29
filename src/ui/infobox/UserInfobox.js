@@ -2,7 +2,7 @@
 
 import { countUserComments, countUserPosts } from '@/lib/actions/utils'
 import { Avatar } from '@/services/dicebear/Avatar'
-import { useAuthorsContext } from '@/lib/context/AuthorsDataProvider'
+import { useInfoboxContext } from '@/lib/context/InfoboxDataProvider'
 import { AccountCreationDate } from '@/ui/infobox/AccountCreationDate'
 import { cloneDeep } from 'lodash'
 import { useRouter } from 'next/navigation'
@@ -14,14 +14,14 @@ export default function UserInfobox({
   handleMouseEnter,
   handleMouseLeave,
 }) {
-  const { authorsData, setAuthorsData } = useAuthorsContext()
+  const { infoboxData, setInfoboxData } = useInfoboxContext()
   const router = useRouter()
   const authorId = author._id
   const accountCreatedAt = author.createdAt
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
-    const dataExists = authorsData?.find((author) => author._id === authorId)
+    const dataExists = infoboxData?.find((author) => author._id === authorId)
     if (!dataExists) {
       const postsSum = countUserPosts(author._id)
       const commentsSum = countUserComments(author._id)
@@ -31,13 +31,13 @@ export default function UserInfobox({
         commentsSum: commentsSum,
         createdAt: accountCreatedAt,
       }
-      const newData = cloneDeep(authorsData)
+      const newData = cloneDeep(infoboxData)
       newData.push(newAuthor)
-      setAuthorsData(newData)
+      setInfoboxData(newData)
     }
   }, [])
 
-  const userData = authorsData?.find((author) => author._id === authorId)
+  const userData = infoboxData?.find((author) => author._id === authorId)
   const postsSum = userData?.postsSum
   const commentsSum = userData?.commentsSum
 

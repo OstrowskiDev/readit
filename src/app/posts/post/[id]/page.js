@@ -1,6 +1,6 @@
 'use client'
 
-import { AuthorsDataProvider } from '@/lib/context/AuthorsDataProvider'
+import { InfoboxDataProvider } from '@/lib/context/InfoboxDataProvider'
 import { PostContextProvider } from '@/lib/context/PostContextProvider'
 import { getPostCommentsData } from '@/lib/actions/comment'
 import { useMouseHover } from '@/lib/hooks/useMouseHover'
@@ -20,7 +20,7 @@ export default function PostPage({ params }) {
   const postId = params.id
   const [post, setPost] = useState(null)
   const [comments, setComments] = useState(null)
-  const [authorsData, setAuthorsData] = useState([])
+  const [infoboxData, setInfoboxData] = useState([])
   const [isCommFormVisible, setIsCommFormVisible] = useState(false)
   const [isEditFormVisible, setIsEditFormVisible] = useState(false)
   const [deleted, setDeleted] = useState(false)
@@ -68,9 +68,9 @@ export default function PostPage({ params }) {
   const postDislikes = post.dislikes
 
   return (
-    <AuthorsDataProvider
-      authorsData={authorsData}
-      setAuthorsData={setAuthorsData}
+    <InfoboxDataProvider
+      infoboxData={infoboxData}
+      setInfoboxData={setInfoboxData}
     >
       <PostContextProvider
         comments={comments}
@@ -136,6 +136,6 @@ export default function PostPage({ params }) {
         </div>
         {deleted && <Loader />}
       </PostContextProvider>
-    </AuthorsDataProvider>
+    </InfoboxDataProvider>
   )
 }

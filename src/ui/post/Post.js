@@ -15,8 +15,8 @@ export function Post({
   post,
   posts,
   setPosts,
-  authorsData,
-  setAuthorsData,
+  infoboxData,
+  setInfoboxData,
   enableCommentBtn,
   hasImage = false,
   imageExtension = '',
@@ -38,8 +38,8 @@ export function Post({
           hasImage={hasImage}
           imageExtension={imageExtension}
           tempImageUrl={tempImageUrl}
-          authorsData={authorsData}
-          setAuthorsData={setAuthorsData}
+          infoboxData={infoboxData}
+          setInfoboxData={setInfoboxData}
           handleMouseEnter={handleMouseEnter}
           handleMouseLeave={handleMouseLeave}
           setDeleted={setDeleted}
