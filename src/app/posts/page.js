@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { AuthorsDataProvider } from '@/lib/context/AuthorsDataProvider'
+import { InfoboxDataProvider } from '@/lib/context/InfoboxDataProvider'
 import { CreateBtn } from '@/ui/buttons/CreateBtn'
 import { FilterBtn } from '@/ui/buttons/FilterBtn'
 import { Loader } from '@/ui/loaders/Loader'
@@ -26,7 +26,7 @@ export default function PostsPage({
 }) {
   const [posts, setPosts] = useState(null)
   const [postsCount, setPostsCount] = useState(0)
-  const [authorsData, setAuthorsData] = useState([]) //UserInfobox data storage
+  const [infoboxData, setInfoboxData] = useState([]) //UserInfobox data storage
   const [isCreateFormVis, setIsCreateFormVis] = useState(false)
   const [isFilterFormVis, setIsFilterFormVis] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
@@ -67,9 +67,9 @@ export default function PostsPage({
 
   return (
     <>
-      <AuthorsDataProvider
-        authorsData={authorsData}
-        setAuthorsData={setAuthorsData}
+      <InfoboxDataProvider
+        infoboxData={infoboxData}
+        setInfoboxData={setInfoboxData}
       >
         <div className="posts-page mx-auto mt-2 md:mt-8 px-0 md:px-4 w-full max-w-[800px]">
           <div className="posts-container flex flex-col xs:flex-row below-xs:mb-2 md:mb-4">
@@ -126,8 +126,8 @@ export default function PostsPage({
                   post={post}
                   posts={posts}
                   setPosts={setPosts}
-                  authorsData={authorsData}
-                  setAuthorsData={setAuthorsData}
+                  infoboxData={infoboxData}
+                  setInfoboxData={setInfoboxData}
                   enableCommentBtn={true}
                   hasImage={post.has_image}
                   imageExtension={post.image_extension}
@@ -168,7 +168,7 @@ export default function PostsPage({
             <h2 className="text-xl m-4 italic">No documents found</h2>
           )}
         </div>
-      </AuthorsDataProvider>
+      </InfoboxDataProvider>
     </>
   )
 }
