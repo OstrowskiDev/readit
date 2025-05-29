@@ -1,10 +1,13 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
 import PostsPage from '../page'
+import { useEffect, useRef } from 'react'
 import { signIn, useSession } from 'next-auth/react'
+import { useSearchParams } from 'next/navigation'
 
-export default function MyPostsPage({ searchParams }) {
+export default function MyPostsPage() {
+  const searchParams = useSearchParams()
+  const searchParamsObj = Object.fromEntries(searchParams.entries())
   const { data: session } = useSession()
   const signingIn = useRef(false)
 
@@ -23,7 +26,7 @@ export default function MyPostsPage({ searchParams }) {
     <>
       {session && (
         <PostsPage
-          searchParams={searchParams}
+          searchParams={searchParamsObj}
           disableCreateBtn={true}
           disableFilteringByAuthor={true}
           forceAuthorName={session.user.name}
