@@ -109,16 +109,6 @@ export async function filterPosts({
     })
   }
 
-  // force only one authors posts:
-  // note `^${...}$` is used to force exact match
-  if (forceAuthorName) {
-    pipeline.push({
-      $match: {
-        'authorData.name': { $regex: `^${forceAuthorName}$`, $options: 'i' },
-      },
-    })
-  }
-
   // create different matching conditions for fastQuery, filter and forceAuthorName:
   const conditions = []
 
@@ -146,7 +136,11 @@ export async function filterPosts({
         $match: {
           $and: [
             { $or: titleOrContentConditions },
-            { 'authorData.name': { $regex: author, $options: 'i' } },
+            // note: `^${...}$` below is used to force exact match
+            // in all other cases partial match is used
+            {
+              'authorData.name': { $regex: `^${forceAuthorName}$` },
+            },
           ],
         },
       })
