@@ -327,10 +327,85 @@ div.ql-editor {
   border-radius: 50% !important;
 }
 
-/* Tailwind classes: */
+/***************************** Tailwind classes: ****************************/
+
+/***************************** Glass components: ****************************/
+
+@layer components {
+  /* Glass tiles */
+  .glass-blue-soft {
+    @apply bg-app-blue-alpha/10 border border-app-blue-alpha/30 backdrop-blur-md rounded-2xl shadow-md;
+  }
+  .glass-blue-strong {
+    @apply bg-app-blue-alpha/20 border border-app-blue-alpha/40 backdrop-blur-md rounded-2xl shadow-lg;
+  }
+  .glass-blue-super {
+    @apply bg-app-blue-alpha/40 border border-app-blue-alpha/60  backdrop-blur-md rounded-2xl shadow-xl;
+  }
+
+  .glass-orange-soft {
+    @apply bg-app-orange-alpha/10 border border-app-orange-alpha/30 backdrop-blur-md rounded-2xl shadow-md;
+  }
+  .glass-orange-strong {
+    @apply bg-app-orange-alpha/20 border border-app-orange-alpha/40 backdrop-blur-md rounded-2xl shadow-lg;
+  }
+  .glass-orange-super {
+    @apply bg-app-orange-alpha/40 border border-app-orange-alpha/60 backdrop-blur-md rounded-2xl shadow-xl;
+  }
+}
+
+  /* Effects: onHover and onActive: */
+  @layer components {
+  .interactive-blue-soft {
+    @apply hover:bg-app-blue-alpha/20 
+           hover:border-app-blue-alpha/40
+           active:bg-app-blue-alpha/30
+           active:border-app-blue-alpha/50;
+  }
+
+  .interactive-blue-strong {
+    @apply hover:bg-app-blue-alpha/30
+           hover:border-app-blue-alpha/50
+           active:bg-app-blue-alpha/40 
+           active:border-app-blue-alpha/60; 
+  }
+
+  .interactive-blue-super {
+    @apply hover:bg-app-blue-alpha/50
+           hover:border-app-blue-alpha/70
+           active:bg-app-blue-alpha/60
+           active:border-app-blue-alpha/80;
+  }
+
+  .interactive-orange-soft {
+    @apply hover:text-app-orange-alpha/70
+           hover:bg-app-orange-alpha/20
+           hover:border-app-orange-alpha/40 
+           active:bg-app-orange-alpha/30
+           active:border-app-orange-alpha/50; 
+  }
+
+  .interactive-orange-strong {
+    @apply hover:text-app-orange-alpha/90
+           hover:bg-app-orange-alpha/30
+           hover:border-app-orange-alpha/50 
+           active:bg-app-orange-alpha/40
+           active:border-app-orange-alpha/60; 
+  }
+
+  .interactive-orange-super {
+    @apply hover:text-app-orange-alpha
+           hover:bg-app-orange-alpha/50
+           hover:border-app-orange-alpha/70 
+           active:bg-app-orange-alpha/60
+           active:border-app-orange-alpha/80; 
+  }
+}
+
+/**************************** Other components: ****************************/
 
 .nav-button {
-  @apply w-full mr-1 md:mr-0 bg-white text-gray-800 py-2 rounded-md hover:bg-blue-100 focus:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200 shadow-md;
+  @apply w-full mr-1 md:mr-0 py-2 text-blue-300 transition-all duration-200 shadow-md;
 }
 
 .mobile-nav-button {
@@ -338,11 +413,7 @@ div.ql-editor {
 }
 
 .nav-sub-button {
-  @apply w-full mr-1 md:mr-0 py-2 
-  border-2 border-gray-50 bg-gray-50 text-gray-800 
-  hover:bg-blue-100 hover:border-blue-100
-  focus:bg-blue-100 focus:border-blue-500
-  transition-all duration-200;
+  @apply w-full mr-1 md:mr-0 py-2 transition-all duration-200;
 }
 
 .nav-gradient {
@@ -383,4 +454,3 @@ div.ql-editor {
 .hover\:shadow-center-lg:hover {
   @apply shadow-[4px_4px_10px_2px_rgba(0,0,0,0.4)]
 }
-
