@@ -16,8 +16,8 @@ body {
 
 /********************* Fonts *********************/
 
-* {
-  color: #A3F4FF;
+h1, h2, h3, h4, h5, h6, p {
+  @apply text-app-lightblue-400
 }
 
 body, .font-rubik {
@@ -167,21 +167,6 @@ html {
 
 .toast.show {
   transform: translateX(-50%) translateY(0);
-}
-
-/* Post card body text fade */
-.fade-bottom {
-  position: relative;
-}
-
-.fade-bottom::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 40px;
-  background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 60%);
 }
 
 /***** Rendered HTML Elements Styles *****/
@@ -334,13 +319,23 @@ div.ql-editor {
 @layer components {
   /* Glass tiles */
   .glass-blue-soft {
-    @apply bg-app-blue-alpha/10 border border-app-blue-alpha/30 backdrop-blur-md rounded-2xl shadow-md;
+    @apply bg-app-blue-alpha/10 btn-border-blue-soft;
   }
   .glass-blue-strong {
-    @apply bg-app-blue-alpha/20 border border-app-blue-alpha/40 backdrop-blur-md rounded-2xl shadow-lg;
+    @apply bg-app-blue-alpha/20 btn-border-blue-strong;
   }
   .glass-blue-super {
-    @apply bg-app-blue-alpha/40 border border-app-blue-alpha/60  backdrop-blur-md rounded-2xl shadow-xl;
+    @apply bg-app-blue-alpha/40 btn-border-blue-super;
+  }
+
+  .btn-border-blue-soft {
+    @apply border border-app-blue-alpha/30 backdrop-blur-md rounded-xl shadow-md;
+  }
+  .btn-border-blue-strong {
+    @apply border border-app-blue-alpha/40 backdrop-blur-md rounded-xl shadow-lg;
+  }
+  .btn-border-blue-super {
+    @apply border border-app-blue-alpha/60 backdrop-blur-md rounded-xl shadow-xl;
   }
 
   .glass-orange-soft {
@@ -352,6 +347,8 @@ div.ql-editor {
   .glass-orange-super {
     @apply bg-app-orange-alpha/40 border border-app-orange-alpha/60 backdrop-blur-md rounded-2xl shadow-xl;
   }
+
+  
 }
 
   /* Effects: onHover and onActive: */
@@ -385,6 +382,11 @@ div.ql-editor {
            active:border-app-orange-alpha/50; 
   }
 
+  .interactive-orange-soft:hover p,
+  .interactive-orange-soft:hover svg {
+    @apply text-app-orange-alpha/70;
+  }
+
   .interactive-orange-strong {
     @apply hover:text-app-orange-alpha/90
            hover:bg-app-orange-alpha/30
@@ -393,12 +395,22 @@ div.ql-editor {
            active:border-app-orange-alpha/60; 
   }
 
+  .interactive-orange-strong:hover p,
+  .interactive-orange-strong:hover svg {
+    @apply text-app-orange-alpha/90;
+  }
+
   .interactive-orange-super {
     @apply hover:text-app-orange-alpha
            hover:bg-app-orange-alpha/50
            hover:border-app-orange-alpha/70 
            active:bg-app-orange-alpha/60
            active:border-app-orange-alpha/80; 
+  }
+
+  .interactive-orange-super:hover p,
+  .interactive-orange-super:hover svg {
+    @apply text-app-orange-alpha;
   }
 }
 
