@@ -21,7 +21,7 @@ export function PostFooter({
       <div className="post-bottom-btns-container flex justify-between items-center py-2">
         <div className="post-bottom-btns-left flex items-center gap-3">
           <CommentsCount commentNo={commentNo} />
-          <div className="post-bottom-btns-likes flex items-center h-10 bg-gray-200 rounded-md">
+          <div className="post-bottom-btns-likes flex items-center h-10 btn-border-blue-soft">
             <PostLikeBtn styles={'w-11 h-10 px-[10px]'} />
             <PostLikeCount postLikes={postLikes} postDislikes={postDislikes} />
             <PostDislikeBtn styles={'w-11 h-10 px-[10px] pt-[3px]'} />
