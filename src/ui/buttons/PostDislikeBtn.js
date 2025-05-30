@@ -70,13 +70,17 @@ export function PostDislikeBtn({ styles }) {
   }
 
   return (
-    <form className="post-dislike-button relative ml-[1px] rounded-md hover:bg-gray-300 z-20">
+    <form className="post-dislike-button relative ml-[1px] interactive-orange-strong rounded-xl border border-app-blue-alpha/0 z-20">
       <button
         className={styles + ' flex justify-center items-center'}
         type="submit"
         onClick={onClick}
       >
-        {isAlreadyDisliked ? <DislikeIcoActive /> : <DislikeIco />}
+        {isAlreadyDisliked ? (
+          <DislikeIcoActive className={'text-app-strongorange-400'} />
+        ) : (
+          <DislikeIco className={'text-app-lightblue-400'} />
+        )}
       </button>
     </form>
   )

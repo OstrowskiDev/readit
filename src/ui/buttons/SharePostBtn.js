@@ -42,15 +42,13 @@ export function SharePostBtn() {
   return (
     <div className="btn-container z-20">
       <button
-        className="btn-body relative flex justify-center items-center h-10 px-4 rounded-md bg-gray-200 hover:bg-gray-300"
+        className="btn-body relative flex justify-center items-center btn-border-blue-soft interactive-orange-strong h-10 px-4 "
         onClick={copyToClipboard}
       >
         <div className="btn-icon-container w-[22px]">
-          <ShareIco2 />
+          <ShareIco2 className="text-app-lightblue-400" />
         </div>
-        <p className="btn-text below-xs:hidden ml-[6px] font-semibold text-gray-500">
-          Share
-        </p>
+        <p className="btn-text below-xs:hidden ml-[6px] font-semibold">Share</p>
       </button>
     </div>
   )
