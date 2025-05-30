@@ -318,6 +318,9 @@ div.ql-editor {
 
 @layer components {
   /* Glass tiles */
+  .glass-blue-weak {
+    @apply bg-app-blue-alpha/5 btn-border-blue-weak;
+  }
   .glass-blue-soft {
     @apply bg-app-blue-alpha/10 btn-border-blue-soft;
   }
@@ -328,6 +331,9 @@ div.ql-editor {
     @apply bg-app-blue-alpha/40 btn-border-blue-super;
   }
 
+  .btn-border-blue-weak {
+    @apply border border-app-blue-alpha/30 rounded-xl shadow-md;
+  }
   .btn-border-blue-soft {
     @apply border border-app-blue-alpha/30 backdrop-blur-md rounded-xl shadow-md;
   }
