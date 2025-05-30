@@ -58,12 +58,12 @@ export function TimeAgo({ createdAt, updatedAt }) {
   return (
     <>
       {createdAt && (
-        <span className="font-orbitron ml-1 mt-[2px] below-xs:leading-none text-gray-600 text-12">
+        <span className="font-orbitron ml-1 mt-[2px] below-xs:leading-none text-app-blue-alpha/50 text-12">
           • {createdAgo}
         </span>
       )}
       {wasEdited && (
-        <span className="font-orbitron below-xs:hidden ml-1 mt-[2px] `below-xs:leading-none text-gray-600 text-12">
+        <span className="font-orbitron below-xs:hidden ml-1 mt-[2px] `below-xs:leading-none text-app-blue-alpha/50 text-12">
           • Edited {editedAgo}
         </span>
       )}

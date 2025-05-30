@@ -332,10 +332,10 @@ div.ql-editor {
     @apply border border-app-blue-alpha/30 backdrop-blur-md rounded-xl shadow-md;
   }
   .btn-border-blue-strong {
-    @apply border border-app-blue-alpha/40 backdrop-blur-md rounded-xl shadow-lg;
+    @apply border border-app-blue-alpha/40 backdrop-blur-xl rounded-xl shadow-lg;
   }
   .btn-border-blue-super {
-    @apply border border-app-blue-alpha/60 backdrop-blur-md rounded-xl shadow-xl;
+    @apply border border-app-blue-alpha/60 backdrop-blur-2xl rounded-xl shadow-xl;
   }
 
   .glass-orange-soft {

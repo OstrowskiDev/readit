@@ -43,7 +43,7 @@ export default function UserInfobox({
 
   return (
     <div
-      className="infobox-container absolute z-40 top-16 left-3 w-[350px] h-[260px] p-8 bg-white rounded-3xl drop-shadow-2xl hover:cursor-default"
+      className="infobox-container absolute z-40 top-16 left-3 btn-border-blue-super w-[350px] h-[260px] p-8 drop-shadow-2xl hover:cursor-default"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
@@ -62,7 +62,7 @@ export default function UserInfobox({
             <div className="infobox-name-date-container flex flex-col ml-4">
               <div
                 onClick={() => router.push(`/user/${author._id}`)}
-                className="name font-orbitron-bold text-20 hover:cursor-pointer hover:underline"
+                className="name font-orbitron-bold text-20 text-app-superorange-alpha hover:cursor-pointer hover:underline"
               >
                 {author.name}
               </div>
@@ -75,7 +75,7 @@ export default function UserInfobox({
               <p className="infobox-posts-number font-orbitron text-18 font-semibold">
                 {postsSum}
               </p>
-              <p className="infobox-comments-text text-12 font-orbitron text-gray-600">
+              <p className="infobox-comments-text text-12 font-orbitron text-app-blue-alpha/50">
                 Posts Created
               </p>
             </div>
@@ -83,7 +83,7 @@ export default function UserInfobox({
               <p className="infobox-comments-number font-orbitron text-18 font-semibold">
                 {commentsSum}
               </p>
-              <p className="infobox-comments-text text-12 font-orbitron text-gray-600">
+              <p className="infobox-comments-text text-12 font-orbitron text-app-blue-alpha/50">
                 Comment Created
               </p>
             </div>

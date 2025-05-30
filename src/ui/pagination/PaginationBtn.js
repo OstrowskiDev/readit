@@ -12,12 +12,12 @@ export function PaginationBtn({
   let btnClass = 'pagination-btn min-w-8 px-2 py-[2px] mx-1 rounded-md border '
   if (active) {
     btnClass +=
-      'border-app-blue-alpha/70 text-app-lightblue-500 glass-blue-strong interactive-blue-strong'
+      'border-app-blue-alpha/70 text-app-blue-alpha glass-blue-strong interactive-blue-strong'
   } else if (disabled) {
     btnClass += 'text-gray-600 border-gray-600'
   } else {
     btnClass +=
-      'interactive-blue-strong border-app-blue-alpha/30 text-app-lightblue-500'
+      'interactive-blue-strong border-app-blue-alpha/50 text-app-blue-alpha/70'
   }
 
   async function handleClick() {

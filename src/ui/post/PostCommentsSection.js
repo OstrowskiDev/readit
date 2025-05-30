@@ -4,7 +4,7 @@ import { Comment } from '@/ui/comment/Comment'
 export function PostCommentSection() {
   const { post, postId, comments, setComments } = usePostContext()
   return (
-    <div className="post-comments-container md:px-5 md:pb-5 bg-white">
+    <div className="post-comments-container md:px-5 md:pb-5">
       {post.comments && (
         <div className="comments-container below-md:relative">
           <h3 className="comments-header text-lg pt-1 below-md:ml-4 font-semibold">
