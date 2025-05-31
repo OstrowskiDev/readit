@@ -21,7 +21,7 @@ export function MarkdownEditor() {
           <ToggleEditorTypeBtn />
         </div>
         <textarea
-          className="markdown-editor-input w-full h-full px-3 py-2 border-none focus:outline-none bg-gray-50 resize-none"
+          className="markdown-editor-input glass-blue-soft text-app-blue-alpha shadow-none bg-blue-950/5 w-full h-full px-3 py-2 border-none focus:outline-none resize-none"
           style={{ minHeight: `${editorHeight - 58}px` }}
           type="text"
           name="markdownString"

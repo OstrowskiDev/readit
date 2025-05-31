@@ -186,17 +186,17 @@ export function CreatePostForm({
   return (
     <>
       <div
-        className={`post-create-form p-4 md:mb-2 rounded-lg md:shadow-center-md ${
+        className={`post-create-form glass-blue-strong p-4 md:mb-2 rounded-lg md:shadow-center-md ${
           isCreateFormVis ? '' : 'hidden'
         }`}
       >
         <form>
           <div className="post-title-container mb-2 ">
             <textarea
-              className={`post-title-input w-full h-8 px-2 py-1  border border-slate-300 rounded-md bg-gray-50 resize-none border-none focus:outline-none ring-1 ${
+              className={`post-title-input glass-blue-soft bg-blue-950/40 w-full h-8 px-2 py-1 rounded-md resize-none border-none focus:outline-none ring-1 ${
                 wasSubmitted && fieldValidity.title.message.length > 0
                   ? 'ring-red-400 focus:ring-red-500'
-                  : 'ring-slate-300 focus:ring-blue-400'
+                  : 'ring-app-blue-alpha/30 focus:ring-app-blue-alpha'
               }`}
               id="title"
               name="title"
@@ -220,10 +220,10 @@ export function CreatePostForm({
             </div>
           </div>
           <div
-            className={`post-content-container pr-1 pb-4 mt-2 bg-gray-50 rounded-md ring-1 ${
+            className={`post-content-container glass-blue-soft bg-blue-950/50 border-0 pr-1 pb-4 mt-2 rounded-md ring-1 ${
               wasSubmitted && fieldValidity.content.message.length > 0
                 ? 'ring-red-400 focus-within:ring-red-500'
-                : 'ring-slate-300 focus-within:ring-blue-400'
+                : 'ring-app-blue-alpha/30 focus-within:ring-app-blue-alpha'
             }`}
           >
             <TextEditor

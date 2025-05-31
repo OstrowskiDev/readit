@@ -297,8 +297,13 @@ div.ql-editor {
 }
 
 .ql-toolbar * {
-  color: #6b7280 !important;
+  color: #A3F4FF;
   stroke: currentColor !important;
+}
+
+.ql-toolbar button:hover svg *,
+.ql-toolbar .dots-btn:hover {
+  color: #FA7D3A !important;
 }
 
 .ql-toolbar button {
@@ -307,10 +312,6 @@ div.ql-editor {
   height: 32px !important;
 }
 
-.ql-toolbar button:hover {
-  background-color: #e5e7eb !important;
-  border-radius: 50% !important;
-}
 
 /***************************** Tailwind classes: ****************************/
 
