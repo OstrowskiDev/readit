@@ -6,7 +6,7 @@ export function UserProfileShimmer() {
       {/* Profile preview: */}
       <div className="shimmer text-profile-label mb-4 mr-auto h-6 w-48"></div>
 
-      <div className="shimmer-profile-container bg-white w-full px-6 pt-3 pb-6 rounded-lg shadow-center-sm">
+      <div className="shimmer-profile-container glass-blue-soft w-full px-6 pt-3 pb-6 rounded-lg shadow-center-sm">
         <div className="shimmer-profile-header-container relative">
           <div className="shimmer-profile-preview-container flex items-center pt-4 mb-4 border-gray-200">
             <div className="shimmer avatar h-20 w-20 rounded-full"></div>

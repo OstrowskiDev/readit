@@ -4,7 +4,7 @@ export function MyProfileShimmer() {
   return (
     <div className="shimmer-main-container flex justify-center items-center mx-auto mt-3 md:mt-8 px-4 md:w-[800px]">
       {/* Profile preview: */}
-      <div className="shimmer-profile-container md:px-6 md:pt-3 pb-6 mmd:rounded-lg md:shadow-center-sm bg-white grow">
+      <div className="shimmer-profile-container md:px-6 md:pt-3 pb-6 mmd:rounded-lg md:shadow-center-sm glass-blue-soft grow">
         <div className="shimmer-profile-header-container relative">
           <div className="shimmer text-header-label h-6 w-36 mt-3 mb-4"></div>
 

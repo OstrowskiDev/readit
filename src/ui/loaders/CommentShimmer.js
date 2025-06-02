@@ -2,7 +2,7 @@ import './shimmerStyles.css'
 
 export function CommentShimmer() {
   return (
-    <div className="comment-shimmer shimmer-border relative flex flex-col justify-between w-full py-1 px-4 my-4 bg-white rounded-md ">
+    <div className="comment-shimmer shimmer-border relative flex flex-col justify-between w-full py-1 px-4 my-4 rounded-md ">
       {/* comment header */}
       <div className="comment-shimmer-header relative right-0 flex items-center mt-3">
         <div className="shimmer avatar absolute h-12 w-12 rounded-full"></div>
