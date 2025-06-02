@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import { ImageShimmerAnimated } from '../loaders/ImageShimmerAnimated'
 import { usePostContext } from '@/lib/context/PostContextProvider'
+import { ImageShimmerBorderless } from '../loaders/ImageShimmerBorderless'
 
 export function PostImage() {
   const [isLoading, setIsLoading] = useState(true)
@@ -10,8 +10,8 @@ export function PostImage() {
   return (
     <div className="post-image-container relative aspect-[16/9] w-full overflow-hidden rounded-md bg-gray-200 z-10">
       {isLoading && (
-        <div className="post-image-container flex justify-center aspect-[16/9] w-full bg-gray-200 rounded-md relative">
-          <ImageShimmerAnimated />
+        <div className="post-image-container flex justify-center aspect-[16/9] w-full glass-blue-soft rounded-md relative">
+          <ImageShimmerBorderless />
         </div>
       )}
 

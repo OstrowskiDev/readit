@@ -18,6 +18,11 @@
   border-radius: 50%;
   margin: -4px 0 0 -4px;
 }
+
+.lds-roller-blue div:after {
+  background: rgb(163, 244, 255)
+}
+
 .lds-roller-white div:after {
   background: rgb(59 130 246);
 }
