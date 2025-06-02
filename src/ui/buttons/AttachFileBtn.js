@@ -38,7 +38,7 @@ export function AttachFileBtn({ setImageFile, setResponse, setImageAction }) {
 
   return (
     <label className="attach-image-btn ">
-      <div className="attach-image-icon btn-blue h-8 w-8 px-2 pt-[6px] ml-2 mt-1 cursor-pointer">
+      <div className="attach-image-icon flex items-center button-orange-strong h-9 w-8 px-2 ml-2 mt-1 cursor-pointer">
         <AttachIco />
       </div>
       <input

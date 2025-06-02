@@ -354,11 +354,87 @@ div.ql-editor {
   .glass-orange-super {
     @apply bg-app-orange-alpha/40 border border-app-orange-alpha/60 backdrop-blur-md rounded-2xl shadow-xl;
   }
-
-  
 }
 
-  /* Effects: onHover and onActive: */
+/******************************** Buttons *******************************/
+
+.input-element {
+  @apply backdrop-blur-md rounded-md;
+  box-shadow: 0 0 40px 5px rgba(0, 0, 0,, 0.3), inset 0 0 40px 5px rgba(0, 0, 0, 0.15);
+  background: rgba(163, 244, 255, 0.05);
+}
+
+.inner-blue-shadow {
+  box-shadow: inset 0 0 30px 5px rgba(0, 0, 0, 0.2);
+}
+
+@layer components {
+  .button-orange-strong {
+    @apply bg-app-orange-alpha/40 border border-app-orange-alpha/60 backdrop-blur-md rounded-md shadow-xl text-app-orange-100;
+    box-shadow: inset 0 0 12px 2px rgba(0,0,0,0.25);
+    background: radial-gradient(ellipse at 50% 100%, 
+      rgba(255, 183, 115, 0.7) 0%, 
+      rgba(255, 183, 115, 0.25) 100%);
+    text-shadow: 2px 2px 3px rgba(0,0,0,0.6);
+  }
+
+  .button-orange-strong:hover {
+    @apply bg-app-orange-alpha/60 border-app-orange-alpha/80 shadow-2xl;
+    box-shadow: 0 4px 24px 4px rgba(255,183,115,0.25), inset 0 0 16px 4px rgba(0,0,0,0.30);
+    background: radial-gradient(ellipse at 50% 80%, 
+      rgba(255, 183, 115, 0.85) 0%, 
+      rgba(255, 183, 115, 0.35) 100%);
+    text-shadow: 3px 3px 6px rgba(0,0,0,0.7);
+  }
+
+  .button-orange-strong:active {
+    @apply bg-app-orange-alpha/10 border-app-orange-alpha/60 shadow-xl text-app-orange-alpha;
+    box-shadow: inset 0 0 5px 4px rgba(255,183,115,0.40);
+    background: radial-gradient(ellipse at 50% 90%, 
+      rgba(255, 183, 115, 0.40) 0%, 
+      rgba(255, 183, 115, 0.20) 100%);
+    text-shadow: none;
+  }
+
+/* !!!! styles for buttons that need to be even 'stronger': * /
+
+  /* .button-orange-strong::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    border-radius: inherit;
+    border-top: 2px solid rgba(255,183,115,0.3);
+    border-bottom: 2px solid rgba(255,183,115,0.8);
+    mask-image: linear-gradient(
+      to right,
+      transparent 0%,
+      black 35%,
+      black 65%,
+      transparent 100%
+    );
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent 0%,
+      black 35%,
+      black 65%,
+      transparent 100%
+    );
+    z-index: 2;
+  }
+
+  .button-orange-strong::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    border-radius: inherit;
+    border: 2px solid rgba(255,183,115,0.4);
+    z-index: 1;
+  } */
+}
+
+/********************* Effects: onHover and onActive: *********************/
   @layer components {
   .interactive-blue-soft {
     @apply hover:bg-app-blue-alpha/20 

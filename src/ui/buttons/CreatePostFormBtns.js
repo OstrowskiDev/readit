@@ -31,7 +31,7 @@ export function CreatePostFormBtns({
         setImageAction={setImageAction}
       />
       <button
-        className="post-reply-submit-btn btn-blue py-1 px-2 mx-2 mt-1"
+        className="post-reply-submit-btn button-orange-strong h-9 px-2 mx-2 mt-1"
         type="button"
         onClick={onSubmit}
       >
