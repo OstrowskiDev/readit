@@ -21,8 +21,6 @@ export function FilterForm({
   const textareaCss =
     ' glass-blue-strong rounded-md text-app-blue-alpha w-full h-7 px-2  resize-none focus:border-app-blue-alpha focus:outline-none'
 
-  const optionsCss = ' glass-blue-strong'
-
   return (
     <>
       {isFilterFormVis && (

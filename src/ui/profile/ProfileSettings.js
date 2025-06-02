@@ -1,7 +1,7 @@
 export function ProfileSettings() {
   return (
-    <div className="profile-settings border-t border-gray-200 mt-4 pt-4">
-      <h3 className="profile-settings-title text-lg font-semibold text-gray-800 mb-2">
+    <div className="profile-settings border-t border-app-blue-alpha/50 mt-4 pt-4">
+      <h3 className="profile-settings-title text-lg font-semibold text-app-blue-alpha mb-2">
         Settings:
       </h3>
       <ul className="space-y-2">

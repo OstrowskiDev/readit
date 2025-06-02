@@ -393,6 +393,18 @@ div.ql-editor {
   .interactive-orange-soft:hover svg {
     @apply text-app-orange-alpha/70;
   }
+  
+  .interactive-orange-text:hover,
+  .interactive-orange-text:hover p,
+  .interactive-orange-text:hover svg {
+    @apply text-app-orange-alpha/70
+  }
+
+  .interactive-orange-text:active,
+  .interactive-orange-text:active p,
+  .interactive-orange-text:active svg {
+    @apply text-app-orange-alpha/90
+  }
 
   .interactive-orange-strong {
     @apply hover:text-app-orange-alpha/90

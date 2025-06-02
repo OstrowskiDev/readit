@@ -24,10 +24,9 @@ export function ProfileAbout() {
       setEditAbout((prevValue) => !prevValue)
     }
   }
-
   return (
-    <div className="profile-about relative mt-4 pt-4 border-t border-gray-200 transition-height">
-      <h3 className="profile-label-about text-lg font-semibold text-gray-800 mb-2">
+    <div className="profile-about relative mt-4 pt-4 border-t border-app-blue-alpha/50 transition-height">
+      <h3 className="profile-label-about text-lg font-semibold text-app-blue-alpha mb-2">
         About me:
       </h3>
       {editAbout ? (
@@ -43,10 +42,10 @@ export function ProfileAbout() {
       )}
 
       <div
-        className="about-edit-btn absolute top-2 right-1 p-2 w-10 h-10 hover:bg-gray-200 hover:cursor-pointer rounded-md"
+        className="about-edit-btn absolute top-2 right-1 interactive-orange-text p-2 w-10 h-10 hover:cursor-pointer"
         onClick={toggleAboutForm}
       >
-        <EditIco />
+        <EditIco className={'text-app-blue-alpha/70'} />
       </div>
     </div>
   )

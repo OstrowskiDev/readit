@@ -52,7 +52,7 @@ export function ProfileAvatarSelection({ handleAvatarEdit }) {
     <div className="avatar-select-container">
       {userData && (
         <>
-          <h4 className="avatar-select-seed-label ml-4 pt-1 font-normal text-lg text-gray-800 border-t border-gray-200">
+          <h4 className="avatar-select-seed-label ml-4 pt-1 font-normal text-lg text-app-blue-alpha border-t border-gray-200">
             select avatar seed:
           </h4>
           <div className="avatar-select-seed flex justify-center flex-wrap  md:ml-l md:mr-4 mb-4">
@@ -80,7 +80,7 @@ export function ProfileAvatarSelection({ handleAvatarEdit }) {
               </div>
             ))}
           </div>
-          <h4 className="avatar-select-color-label ml-4 pt-1 font-normal text-lg text-gray-800">
+          <h4 className="avatar-select-color-label ml-4 pt-1 font-normal text-lg text-app-blue-alpha">
             select avatar color:
           </h4>
           <div className="avatar-select-seed mx-8 flex flex-wrap justify-center">

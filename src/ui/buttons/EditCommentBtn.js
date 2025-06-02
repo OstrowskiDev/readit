@@ -30,7 +30,7 @@ export function EditCommentBtn({
       onClick={onEditClick}
     >
       <div className="menu-opt-edit-ico w-6 m-1 flex justify-center items-center">
-        <EditIco />
+        <EditIco className={'text-app-blue-alpha/70'} />
       </div>
       <p className="menu-opt-edit-text ml-2 text-lg">Edit</p>
     </button>

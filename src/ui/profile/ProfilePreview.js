@@ -26,13 +26,17 @@ export function ProfilePreview() {
           <p className="posts-number font-orbitron-bold text-18">
             {userData.postsSum}
           </p>
-          <p className="font-orbitron text-gray-600 text-14">Posts Created</p>
+          <p className="font-orbitron text-app-blue-alpha/50 text-14">
+            Posts Created
+          </p>
         </div>
         <div className="comments-number ml-4">
           <p className="comments-number font-orbitron-bold text-18 font-semibold">
             {userData.commentsSum}
           </p>
-          <p className="font-orbitron text-gray-600 text-14">Comment Created</p>
+          <p className="font-orbitron text-app-blue-alpha/50 text-14">
+            Comment Created
+          </p>
         </div>
       </div>
     </>
