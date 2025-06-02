@@ -77,7 +77,11 @@ export function CommentDislikeBtn({ styles }) {
         type="submit"
         onClick={onClick}
       >
-        {isAlreadyDisliked ? <DislikeIcoActive /> : <DislikeIco />}
+        {isAlreadyDisliked ? (
+          <DislikeIcoActive className={'text-app-strongorange-400'} />
+        ) : (
+          <DislikeIco className={'text-app-lightblue-400'} />
+        )}
       </button>
     </form>
   )

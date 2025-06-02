@@ -26,15 +26,13 @@ export function ReplyBtn() {
   }
   return (
     <button
-      className="comment-reply-btn flex justify-center items-center ml-[3px] h-11 px-2 rounded-md hover:bg-gray-200"
+      className="comment-reply-btn flex justify-center items-center ml-[3px] h-11 px-2 rounded-md interactive-blue-soft"
       onClick={handleClick}
     >
       <div className="comment-reply-btn-icon w-[22px] mt-[2px]">
-        <ReplyIco />
+        <ReplyIco className="text-app-lightblue-400" />
       </div>
-      <p className="btn-text below-xs:hidden ml-[6px] font-semibold text-gray-500">
-        Reply
-      </p>
+      <p className="btn-text below-xs:hidden ml-[6px] font-semibold">Reply</p>
     </button>
   )
 }

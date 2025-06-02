@@ -157,7 +157,7 @@ export function CommentReplyForm({ parentType }) {
   return (
     <div className="comment-reply-form-wrapper" ref={formRef}>
       {isReplyFormVis && (
-        <div className="comment-reply-form change-border-on-child-focus p-2 ml-4 mr-1 my-1 bg-white border border-slate-300 rounded-lg">
+        <div className="comment-reply-form change-border-on-child-focus p-2 ml-4 mr-1 my-1 btn-border-blue-soft bg-black/10 rounded-lg">
           <form>
             <TextEditor
               editorHeight={162}

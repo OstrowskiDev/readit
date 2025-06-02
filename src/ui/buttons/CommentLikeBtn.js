@@ -76,7 +76,11 @@ export function CommentLikeBtn({ styles }) {
         type="submit"
         onClick={onClick}
       >
-        {isAlreadyLiked ? <LikeIcoActive /> : <LikeIco />}
+        {isAlreadyLiked ? (
+          <LikeIcoActive className={'text-app-strongorange-400'} />
+        ) : (
+          <LikeIco className={'text-app-lightblue-400'} />
+        )}
       </button>
     </form>
   )

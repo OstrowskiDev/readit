@@ -127,7 +127,7 @@ html {
 }
 
 .change-border-on-child-focus:focus-within {
-  border-color: rgb(74, 85, 104);
+  border-color: rgba(163, 244, 255, 0.6);
 }
 
 .border-1 {
