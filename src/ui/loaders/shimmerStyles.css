@@ -19,7 +19,6 @@
   animation-iteration-count: infinite;
   animation-name: shimmer;
   animation-timing-function: linear;
-  background: #f6f7f8;
   background: linear-gradient(to right, var(--shimmer-color-2) 8%, var(--shimmer-color-1) 18%, var(--shimmer-color-2) 33%);
   background-size: 800px 104px;
   position: relative;
@@ -29,7 +28,7 @@
 .shimmer-border-line {
   position: absolute;
   animation: shimmer 1.25s infinite linear;
-  background: linear-gradient(to right, var(--shimmer-color-2) 8%, var(--shimmer-color) 18%, #eeeeee 33%);
+  background: linear-gradient(to right, var(--shimmer-color-2) 8%, var(--shimmer-color-1) 18%, #eeeeee 33%);
 }
 
 .horizontal-top {
@@ -60,36 +59,30 @@
   height: calc(100% - 16px);
 }
 
-// Możesz dodać do shimmerStyles.css
-
-.shimmer-border-circle {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: conic-gradient(
-    var(--shimmer-color-2) 0deg 90deg,
-    transparent 90deg 360deg
-  );
+.shimmer-arc {
+  position: absolute;
+  color: var(--shimmer-color-2);
 }
+
 .top-left {
   top: 4px;
   left: 0px;
+  transform: rotate(180deg);
 }
 
 .top-right {
   top: 4px;
   right: 0px;
-  transform: rotate(90deg);
+  transform: rotate(270deg);
 }
 
 .bottom-right {
   bottom: -4px;
   right: 0px;
-  transform: rotate(180deg);
 }
 
 .bottom-left {
   bottom: -4px;
   left: 0px;
-  transform: rotate(270deg);
+  transform: rotate(90deg);
 }
