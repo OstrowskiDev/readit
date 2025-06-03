@@ -140,7 +140,7 @@ html {
 
 .circle-quarter {
   border-radius: 50%;
-  border-color: rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) rgb(209, 213, 219) rgba(0, 0, 0, 0);
+  border-color: rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) rgb(163, 244, 255) rgba(0, 0, 0, 0);
   transform: rotate(45deg);
 }
 

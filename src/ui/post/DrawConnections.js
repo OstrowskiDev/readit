@@ -53,7 +53,7 @@ export function DrawConnections({ contentRef, commentRef }) {
         {parentIsComment && (
           <>
             <div className="line-to-parent absolute w-[30px] h-[30px] top-[-6px] left-[-35px] border-2 circle-quarter"></div>
-            <div className="line-to-parent absolute w-[2px] h-[30px] top-[-16px] left-[-35px] bg-gray-300 "></div>
+            <div className="line-to-parent absolute w-[2px] h-[30px] top-[-20px] left-[-35px] bg-app-blue-alpha"></div>
           </>
         )}
       </div>
@@ -66,7 +66,7 @@ export function DrawConnections({ contentRef, commentRef }) {
         {hasChildren && (
           <>
             <div
-              className="line-to-child absolute w-[2px] top-[48px] left-[1px] bg-gray-300 "
+              className="line-to-child absolute w-[2px] top-[42px] left-[1px] bg-app-blue-alpha"
               style={{
                 height: `${contentHeight + formHeight + 52}px`,
               }}
@@ -83,7 +83,7 @@ export function DrawConnections({ contentRef, commentRef }) {
         {hasNextSibling() && (
           <>
             <div
-              className="line-to-sibling absolute w-[2px] left-[-35px] bg-gray-300"
+              className="line-to-sibling absolute w-[2px] left-[-35px] bg-app-blue-alpha"
               style={{
                 height: `${commentHeight + 12}px`,
               }}
