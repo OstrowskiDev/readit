@@ -30,7 +30,7 @@ export function ReplyBtn() {
       onClick={handleClick}
     >
       <div className="comment-reply-btn-icon w-[22px] mt-[2px]">
-        <ReplyIco className="text-app-lightblue-400" />
+        <ReplyIco className="text-app-blue-text" />
       </div>
       <p className="btn-text below-xs:hidden ml-[6px] font-semibold">Reply</p>
     </button>

@@ -102,7 +102,7 @@ export default function QuillCustomToolbar() {
         </div>
 
         <div
-          className="toolbar-group toolbar-menu absolute glass-blue-strong right-[-20px] top-full flex-col mt-1 p-2 rounded-md z-50"
+          className="toolbar-group toolbar-menu absolute glass-blue-soft right-[-20px] top-full flex-col mt-1 p-2 rounded-md z-50"
           style={toggleMenu}
         >
           {toolbarItems.map((item, i) => renderButton(item, 'menu', i))}

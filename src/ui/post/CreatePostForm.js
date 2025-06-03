@@ -193,10 +193,10 @@ export function CreatePostForm({
         <form>
           <div className="post-title-container mb-2 ">
             <textarea
-              className={`post-title-input glass-blue-soft app-text-blue w-full h-8 px-2 py-1 rounded-md border-none resize-none focus:outline-none ring-1 ${
+              className={`post-title-input glass-blue-soft text-app-blue-text w-full h-8 px-2 py-1 rounded-md border-none resize-none focus:outline-none ring-1 ${
                 wasSubmitted && fieldValidity.title.message.length > 0
                   ? 'ring-red-400 focus:ring-red-500'
-                  : 'ring-app-blue-alpha/30 hover:ring-app-blue-alpha/70 focus:ring-app-blue-alpha'
+                  : 'ring-app-blue/30 hover:ring-app-blue/70 focus:ring-app-blue'
               }`}
               id="title"
               name="title"
@@ -223,7 +223,7 @@ export function CreatePostForm({
             className={`post-content-container glass-blue-soft pr-1 pb-4 mt-2 rounded-md ring-1 border-none ${
               wasSubmitted && fieldValidity.content.message.length > 0
                 ? 'ring-red-400 focus-within:ring-red-500'
-                : 'ring-app-blue-alpha/30 hover:ring-app-blue-alpha/70 focus-within:ring-app-blue-alpha focus-within:hover:ring-app-blue-alpha'
+                : 'ring-app-blue/30 hover:ring-app-blue/70 focus-within:ring-app-blue focus-within:hover:ring-app-blue'
             }`}
           >
             <TextEditor

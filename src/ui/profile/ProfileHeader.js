@@ -26,17 +26,17 @@ export function ProfileHeader({ userData }) {
           className="avatar-edit-btn absolute top-[-6px] right-1 p-2 w-10 h-10 interactive-orange-text hover:cursor-pointer"
           onClick={handleAvatarEdit}
         >
-          <EditIco className={'text-app-blue/70'} />
+          <EditIco className={'text-app-blue-text/70'} />
         </div>
         <h3
           className={
-            'profile-label-about text-lg py-1 font-semibold app-text-blue mb-1 transition-opacity duration-1000 ' +
+            'profile-label-about text-lg py-1 font-semibold text-app-blue-text mb-1 transition-opacity duration-1000 ' +
             `${isCollapsed ? 'opacity-0' : 'opacity-100'}`
           }
         >
           {!editAvatar ? 'Profile preview:' : 'Create your new avatar:'}
         </h3>
-        <div className="profile-separator border-t border-app-blue-alpha/50"></div>
+        <div className="profile-separator border-t border-app-blue/50"></div>
         {editAvatar ? (
           <ProfileAvatarSelection handleAvatarEdit={handleAvatarEdit} />
         ) : (

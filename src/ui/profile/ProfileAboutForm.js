@@ -55,7 +55,7 @@ export function ProfileAboutForm({ toggleAboutForm }) {
     <form className="form-user-data-container flex flex-col relative left-[-5px] top-[-5px]">
       <div className="form-data-about flex items-center">
         <textarea
-          className="input-about glass-blue-strong w-full px-1 text-md my-1 app-text-blue bg-black/10 focus:border-app-blue-alpha focus:outline-none rounded-md"
+          className="input-about glass-blue-strong w-full px-1 text-md my-1 text-app-blue-text bg-black/10 focus:border-app-blue focus:outline-none rounded-md"
           name="about"
           value={formData.about}
           onChange={handleChange}

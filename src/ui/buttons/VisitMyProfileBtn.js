@@ -13,9 +13,9 @@ export function VisitMyProfileBtn({ authorId }) {
       className="visit-btn-container flex justify-center items-center btn-border-blue-strong interactive-orange-soft w-80 h-10 px-4 "
     >
       <div className="visit-btn-icon-container w-[21px]">
-        <MyPostsIco className={'app-text-blue'} size={21} />
+        <MyPostsIco className={'text-app-blue-text'} size={21} />
       </div>
-      <p className="visit-btn-text ml-[6px] font-semibold app-text-blue">
+      <p className="visit-btn-text ml-[6px] font-semibold text-app-blue-text">
         Visit my profile
       </p>
     </button>

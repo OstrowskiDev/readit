@@ -8,31 +8,31 @@ export function NavbarPosts() {
   return (
     <div className="flex flex-col w-full glass-blue-soft interactive-orange-strong">
       <p
-        className="btn-orbitron px-3 py-2 app-text-blue hover:text-app-orange-alpha/90 hover:cursor-pointer rounded-t-md select-none"
+        className="btn-orbitron px-3 py-2 text-app-blue-text hover:text-app-orange-alpha/90 hover:cursor-pointer rounded-t-md select-none"
         onClick={() => setToggleCollapse((prevVal) => !prevVal)}
       >
         Posts
       </p>
       {toggleCollapse && (
         <div className="flex flex-col">
-          <div className="separator h-[1px] bg-app-blue-alpha/30"></div>
+          <div className="separator h-[1px] bg-app-blue/30"></div>
           <a
             href="/posts"
-            className="nav-sub-button interactive-orange-strong app-text-blue btn-orbitron pl-6"
+            className="nav-sub-button interactive-orange-strong text-app-blue-text btn-orbitron pl-6"
           >
             Recent
           </a>
-          <div className="separator h-[1px] bg-app-blue-alpha/30"></div>
+          <div className="separator h-[1px] bg-app-blue/30"></div>
           <a
             href="/posts/favorites"
-            className="nav-sub-button interactive-orange-strong app-text-blue btn-orbitron pl-6"
+            className="nav-sub-button interactive-orange-strong text-app-blue-text btn-orbitron pl-6"
           >
             Favorites
           </a>
-          <div className="separator h-[1px] bg-app-blue-alpha/30"></div>
+          <div className="separator h-[1px] bg-app-blue/30"></div>
           <a
             href="/posts/my-posts"
-            className="nav-sub-button interactive-orange-strong app-text-blue btn-orbitron pl-6 rounded-b-lg"
+            className="nav-sub-button interactive-orange-strong text-app-blue-text btn-orbitron pl-6 rounded-b-lg"
           >
             My posts
           </a>

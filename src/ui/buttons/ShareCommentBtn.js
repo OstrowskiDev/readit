@@ -47,7 +47,7 @@ export function ShareCommentBtn() {
       >
         <div className="btn-icon-container w-[24px] xs:w-full">
           <div className="comment-share-btn xs:hidden">
-            <ShareIco2 className="text-app-lightblue-400" />
+            <ShareIco2 className="text-app-blue-text" />
           </div>
           <p className="btn-text below-xs:hidden font-semibold text-center">
             Share

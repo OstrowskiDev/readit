@@ -46,7 +46,7 @@ export function SharePostBtn() {
         onClick={copyToClipboard}
       >
         <div className="btn-icon-container w-[22px]">
-          <ShareIco2 className="text-app-lightblue-400" />
+          <ShareIco2 className="text-app-blue-text" />
         </div>
         <p className="btn-text below-xs:hidden ml-[6px] font-semibold">Share</p>
       </button>

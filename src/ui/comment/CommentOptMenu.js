@@ -77,7 +77,7 @@ export function CommentOptMenu({ isMenuVisible, setIsMenuVisible }) {
     <>
       {isMenuVisible && (
         <div
-          className={`menu-container flex flex-col absolute z-40 top-10 right-0 glass-blue-soft border border-x-app-blue-alpha/70 rounded-md`}
+          className={`menu-container flex flex-col absolute z-40 top-10 right-0 glass-blue-soft border border-x-app-blue/70 rounded-md`}
         >
           {isUsersComment && (
             <>

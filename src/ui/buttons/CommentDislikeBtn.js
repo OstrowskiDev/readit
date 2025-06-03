@@ -69,7 +69,7 @@ export function CommentDislikeBtn({ styles }) {
   }
 
   return (
-    <form className="comment-dislike-btn-container ml-[1px] rounded-md hover:bg-gray-200 ">
+    <form className="comment-dislike-btn-container interactive-blue-soft ml-[1px] rounded-md">
       <button
         className={
           'comment-dislike-btn ' + styles + ' flex justify-center items-center'
@@ -80,7 +80,7 @@ export function CommentDislikeBtn({ styles }) {
         {isAlreadyDisliked ? (
           <DislikeIcoActive className={'text-app-strongorange-500'} />
         ) : (
-          <DislikeIco className={'text-app-lightblue-400'} />
+          <DislikeIco className={'text-app-blue-text'} />
         )}
       </button>
     </form>

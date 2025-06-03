@@ -6,7 +6,7 @@ export function PostCommentSection() {
   return (
     <div className="post-comments-container md:px-5 md:pb-5">
       {post.comments?.length > 0 && (
-        <div className="comments-container below-md:relative border-t border-app-blue-alpha/50 pt-2">
+        <div className="comments-container below-md:relative border-t border-app-blue/50 pt-2">
           <h3 className="comments-header text-lg pt-1 below-md:ml-4 font-semibold">
             Comments:
           </h3>

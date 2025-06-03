@@ -51,7 +51,7 @@ export function DeletePostBtn({ postId }) {
         type="submit"
         onClick={onClick}
       >
-        <DeleteIco />
+        <DeleteIco className={'text-app-blue-text'} />
       </button>
     </div>
   )

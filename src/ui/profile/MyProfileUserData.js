@@ -8,7 +8,7 @@ export function MyProfileUserData() {
         <p className="profile-label-user-data min-w-28 w-28 my-[5px] mr-[17px]">
           name:
         </p>
-        <p className="profile-user-data-name text-app-blue/50 max-lines-1">
+        <p className="profile-user-data-name text-app-blue-text/50 max-lines-1">
           {userData.name}
         </p>
       </div>
@@ -16,7 +16,7 @@ export function MyProfileUserData() {
         <p className="profile-label-user-data  min-w-28 w-28 my-[5px] mr-[17px]">
           email:
         </p>
-        <p className="profile-user-data-email text-app-blue/50 max-lines-1">
+        <p className="profile-user-data-email text-app-blue-text/50 max-lines-1">
           {userData.email}
         </p>
       </div>
@@ -24,7 +24,7 @@ export function MyProfileUserData() {
         <p className="profile-label-user-data min-w-28 w-28 my-[5px] mr-[17px]">
           profession:
         </p>
-        <p className="profile-user-data-profession text-app-blue/50 max-lines-1">
+        <p className="profile-user-data-profession text-app-blue-text/50 max-lines-1">
           {userData.profession}
         </p>
       </div>
@@ -33,7 +33,7 @@ export function MyProfileUserData() {
         <p className="profile-label-user-data min-w-28 w-28 my-[5px] mr-[17px]">
           organization:
         </p>
-        <p className="profile-user-data-organization text-app-blue/50 max-lines-1">
+        <p className="profile-user-data-organization text-app-blue-text/50 max-lines-1">
           {userData.organization}
         </p>
       </div>

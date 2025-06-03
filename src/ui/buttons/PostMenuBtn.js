@@ -20,13 +20,13 @@ export function PostMenuBtn({ setIsPostMenuVis }) {
   }
 
   return (
-    <div className="post-menu-btn mt-[2px] rounded-md hover:bg-gray-200">
+    <div className="post-menu-btn interactive-orange-text mt-[2px] rounded-md">
       <button
         onClick={handleClick}
         type="button"
         className="w-[36px] p-[5px] flex justify-center items-center"
       >
-        <DotsIco />
+        <DotsIco className={'text-app-blue-text'} />
       </button>
     </div>
   )

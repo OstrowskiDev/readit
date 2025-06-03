@@ -25,12 +25,12 @@ export function EditCommentBtn({
 
   return (
     <button
-      className="menu-opt-edit-btn flex items-center px-8 py-2  hover:bg-app-blue-alpha/20"
+      className="menu-opt-edit-btn flex items-center px-8 py-2  hover:bg-app-blue/20"
       type="button"
       onClick={onEditClick}
     >
       <div className="menu-opt-edit-ico w-6 m-1 flex justify-center items-center">
-        <EditIco className={'text-app-blue/70'} />
+        <EditIco className={'text-app-blue-text'} />
       </div>
       <p className="menu-opt-edit-text ml-2 text-lg">Edit</p>
     </button>

@@ -43,7 +43,7 @@ export function Toast({ message, state, forceUpdate }) {
             {capitalizeFirstLetter(state) + '!'}
           </p>
           <p
-            className={`toast-text-message leading-tight text-sm text-app-blue/80`}
+            className={`toast-text-message leading-tight text-sm text-app-blue-text/80`}
           >
             {message}
           </p>

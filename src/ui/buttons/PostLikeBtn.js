@@ -70,7 +70,7 @@ export function PostLikeBtn({ styles }) {
   }
 
   return (
-    <form className="post-like-button relative interactive-orange-strong rounded-xl border border-app-blue-alpha/0 z-20">
+    <form className="post-like-button relative interactive-orange-strong rounded-xl border border-app-blue/0 z-20">
       <button
         className={styles + ' flex justify-center items-center'}
         type="submit"
@@ -79,7 +79,7 @@ export function PostLikeBtn({ styles }) {
         {isAlreadyLiked ? (
           <LikeIcoActive className={'text-app-strongorange-500'} />
         ) : (
-          <LikeIco className={'text-app-lightblue-400'} />
+          <LikeIco className={'text-app-blue-text'} />
         )}
       </button>
     </form>

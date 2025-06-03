@@ -31,7 +31,7 @@ export function PostOptMenu({ isPostMenuVis, setIsPostMenuVis }) {
     <>
       {isPostMenuVis && (
         <div
-          className={`menu-container flex flex-col absolute z-10 top-10 right-0  bg-white border border-gray-300 rounded-md`}
+          className={`menu-container flex flex-col absolute z-10 top-10 right-0 glass-blue-soft border border-app-blue/50 rounded-md`}
         >
           {session && (
             <FavoritesBtn

@@ -23,12 +23,12 @@ export function FavoritesBtn({
   }
   return (
     <button
-      className="menu-opt-save-btn flex items-center px-8 py-2 hover:bg-gray-200"
+      className="menu-opt-save-btn interactive-blue-soft flex items-center px-8 py-2"
       type="button"
       onClick={onFavoriteSubmit}
     >
       <div className="menu-opt-save-ico m-1 flex justify-center items-center">
-        <StarIco color={'darkslategray'} size={24} />
+        <StarIco className={'text-app-blue-text'} size={24} />
       </div>
       <p className="menu-opt-save-text ml-2 text-lg">Favorite</p>
     </button>

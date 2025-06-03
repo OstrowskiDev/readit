@@ -29,7 +29,7 @@ export function MobileCollapseMenu() {
         className="favorites mobile-nav-button btn-color-hover"
         href="/posts/favorites"
       >
-        <StarIco color={'rgb(55 65 81)'} size={20} />
+        <StarIco className={'text-app-blue-text'} size={20} />
         <p className="favorites-title ml-3 mt-[3px]">Favorites</p>
       </a>
       <a

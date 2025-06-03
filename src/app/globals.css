@@ -20,8 +20,8 @@ body {
 
 /********************* Fonts *********************/
 
-h1, h2, h3, h4, h5, h6, p {
-  @apply text-app-lightblue-400
+h1, h2, h3, h4, h5, h6, p, ul, li {
+  @apply text-app-blue-text
 }
 
 body, .font-rubik {
@@ -324,7 +324,7 @@ div.ql-editor {
 @layer components {
   /* Glass tiles */
   .glass-blue-weak {
-    @apply bg-app-blue-alpha/5 btn-border-blue-weak;
+    @apply bg-app-blue/5 btn-border-blue-weak;
   }
  .glass-blue-soft {
     @apply btn-border-blue-soft;
@@ -335,23 +335,23 @@ div.ql-editor {
     background-color: rgba(1, 30, 62, 0.3);
   }
   .glass-blue-strong {
-    @apply bg-app-blue-alpha/20 btn-border-blue-strong;
+    @apply bg-app-blue/20 btn-border-blue-strong;
   }
   .glass-blue-super {
-    @apply bg-app-blue-alpha/40 btn-border-blue-super;
+    @apply bg-app-blue/40 btn-border-blue-super;
   }
 
   .btn-border-blue-weak {
-    @apply border border-app-blue-alpha/30 rounded-xl shadow-md;
+    @apply border border-app-blue/30 rounded-xl shadow-md;
   }
   .btn-border-blue-soft {
-    @apply border border-app-blue-alpha/30 backdrop-blur-md rounded-xl shadow-md;
+    @apply border border-app-blue/30 backdrop-blur-md rounded-xl shadow-md;
   }
   .btn-border-blue-strong {
-    @apply border border-app-blue-alpha/40 backdrop-blur-xl rounded-xl shadow-lg;
+    @apply border border-app-blue/40 backdrop-blur-xl rounded-xl shadow-lg;
   }
   .btn-border-blue-super {
-    @apply border border-app-blue-alpha/60 backdrop-blur-2xl rounded-xl shadow-xl;
+    @apply border border-app-blue/60 backdrop-blur-2xl rounded-xl shadow-xl;
   }
 
   .glass-orange-soft {
@@ -481,24 +481,24 @@ div.ql-editor {
 /********************* Effects: onHover and onActive: *********************/
   @layer components {
   .interactive-blue-soft {
-    @apply hover:bg-app-blue-alpha/20 
-           hover:border-app-blue-alpha/40
-           active:bg-app-blue-alpha/30
-           active:border-app-blue-alpha/50;
+    @apply hover:bg-app-blue/20 
+           hover:border-app-blue/40
+           active:bg-app-blue/30
+           active:border-app-blue/50;
   }
 
   .interactive-blue-strong {
-    @apply hover:bg-app-blue-alpha/30
-           hover:border-app-blue-alpha/50
-           active:bg-app-blue-alpha/40 
-           active:border-app-blue-alpha/60; 
+    @apply hover:bg-app-blue/30
+           hover:border-app-blue/50
+           active:bg-app-blue/40 
+           active:border-app-blue/60; 
   }
 
   .interactive-blue-super {
-    @apply hover:bg-app-blue-alpha/50
-           hover:border-app-blue-alpha/70
-           active:bg-app-blue-alpha/60
-           active:border-app-blue-alpha/80;
+    @apply hover:bg-app-blue/50
+           hover:border-app-blue/70
+           active:bg-app-blue/60
+           active:border-app-blue/80;
   }
 
   .interactive-orange-soft {
@@ -556,7 +556,7 @@ div.ql-editor {
 /**************************** Other components: ****************************/
 
 .nav-button {
-  @apply w-full mr-1 md:mr-0 py-2 text-app-blue transition-all duration-200 shadow-md;
+  @apply w-full mr-1 md:mr-0 py-2 text-app-blue-text transition-all duration-200 shadow-md;
 }
 
 .mobile-nav-button {

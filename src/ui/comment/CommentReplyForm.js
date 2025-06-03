@@ -127,13 +127,15 @@ export function CommentReplyForm({ parentType }) {
 
   function SubmitButton() {
     return (
-      <button
-        className="comment-reply-submit-btn btn-blue py-1 px-2 mx-2 mt-1"
-        type="button"
-        onClick={onSubmit}
-      >
-        Comment
-      </button>
+      <div className="wrapper-orange-btn-bg mx-2 mt-1">
+        <button
+          className="comment-reply-submit-btn button-orange-strong h-9 py-1 px-2"
+          type="button"
+          onClick={onSubmit}
+        >
+          Comment
+        </button>
+      </div>
     )
   }
 
@@ -144,13 +146,15 @@ export function CommentReplyForm({ parentType }) {
 
   function CancelButton() {
     return (
-      <button
-        className="comment-reply-cancel-btn btn-gray py-1 px-2 mt-1"
-        type="button"
-        onClick={onCancelClick}
-      >
-        Cancel
-      </button>
+      <div className="wrapper-orange-btn-bg mt-1">
+        <button
+          className="comment-reply-cancel-btn button-silver py-1 px-2"
+          type="button"
+          onClick={onCancelClick}
+        >
+          Cancel
+        </button>
+      </div>
     )
   }
 
