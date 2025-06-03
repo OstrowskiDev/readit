@@ -30,13 +30,15 @@ export function CreatePostFormBtns({
         setResponse={setResponse}
         setImageAction={setImageAction}
       />
-      <button
-        className="post-reply-submit-btn button-orange-strong h-9 px-2 mx-2 mt-1"
-        type="button"
-        onClick={onSubmit}
-      >
-        Create
-      </button>
+      <div className="wrapper-orange-btn-bg mx-2 mt-1">
+        <button
+          className="post-reply-submit-btn button-orange-strong h-9 px-2"
+          type="button"
+          onClick={onSubmit}
+        >
+          Create
+        </button>
+      </div>
     </div>
   )
 }

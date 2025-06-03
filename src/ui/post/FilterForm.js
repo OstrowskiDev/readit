@@ -19,12 +19,12 @@ export function FilterForm({
   }
 
   const textareaCss =
-    ' glass-blue-strong rounded-md text-app-blue-alpha w-full h-7 px-2  resize-none focus:border-app-blue-alpha focus:outline-none'
+    ' glass-blue-soft rounded-md text-app-blue-alpha w-full h-7 px-2  resize-none focus:border-app-blue-alpha focus:outline-none'
 
   return (
     <>
       {isFilterFormVis && (
-        <div className="filter-posts-form glass-blue-strong px-2 py-2 md:pt-6 md:pb-4 md:mb-2 md:rounded-lg md:shadow-center-md below-md:border-t ">
+        <div className="filter-posts-form glass-blue-soft px-2 py-2 md:pt-6 md:pb-4 md:mb-2 md:rounded-lg md:shadow-center-md below-md:border-t ">
           <form className="filter-form font-orbitron text-14 grid grid-cols-1 2col-filter:grid-cols-2 gap-2">
             <div className="filter-title-container flex px-4">
               <p className="filter-title-label w-[100px]">title:</p>

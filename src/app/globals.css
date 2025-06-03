@@ -322,8 +322,13 @@ div.ql-editor {
   .glass-blue-weak {
     @apply bg-app-blue-alpha/5 btn-border-blue-weak;
   }
-  .glass-blue-soft {
-    @apply bg-app-blue-alpha/10 btn-border-blue-soft;
+ .glass-blue-soft {
+    @apply btn-border-blue-soft;
+    background-color: rgba(1, 30, 62, 0.7);
+  }
+ .glass-blue-normal {
+    @apply btn-border-blue-soft;
+    background-color: rgba(1, 30, 62, 0.3);
   }
   .glass-blue-strong {
     @apply bg-app-blue-alpha/20 btn-border-blue-strong;
@@ -366,6 +371,15 @@ div.ql-editor {
 
 .inner-blue-shadow {
   box-shadow: inset 0 0 30px 5px rgba(0, 0, 0, 0.2);
+}
+
+/******************************** Buttons *******************************/
+
+/* this style targets orange button wrappers that cover app background */
+/* so all orange buttons aplhas will yield the same colors */
+.wrapper-orange-btn-bg {
+  background: #01031a; 
+  border-radius: 6px;
 }
 
 @layer components {

@@ -16,13 +16,15 @@ export function FilterFormBtns({
       >
         Cancel
       </button>
-      <button
-        className="filter-options-submit-btn button-orange-strong py-1 h-9 px-3 mx-2 mt-1"
-        type="button"
-        onClick={onSubmit}
-      >
-        Apply filters
-      </button>
+      <div className="wrapper-orange-btn-bg mx-2 mt-1">
+        <button
+          className="filter-options-submit-btn button-orange-strong py-1 h-9 px-3"
+          type="button"
+          onClick={onSubmit}
+        >
+          Apply filters
+        </button>
+      </div>
     </div>
   )
 }
