@@ -2,10 +2,26 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --tw-text-orange: rgb(250, 125, 58); /* zamiast starego #c2410c */
+}
+
+/***************** App Background *****************/
+
+body {
+  background-image: url('/backgrounds/cosmos-blue.jpg'); 
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed; 
+  background-color: #000; 
+}
+
+
 /********************* Fonts *********************/
 
-* {
-  color: #020629;
+h1, h2, h3, h4, h5, h6, p, ul, li {
+  @apply text-app-blue-text
 }
 
 body, .font-rubik {
@@ -36,8 +52,8 @@ a, .anchor-color {
 }
 
 a:hover, .anchor-color:hover, .btn-color-hover:hover, .btn-color-hover:hover p, .btn-color-hover:hover svg path {
-  color: #c2410c;
-  fill: #c2410c;
+  color: var(--tw-text-orange);
+  fill: var(--tw-text-orange);
 }
 
 .text-12 {
@@ -115,7 +131,7 @@ html {
 }
 
 .change-border-on-child-focus:focus-within {
-  border-color: rgb(74, 85, 104);
+  border-color: rgba(163, 244, 255, 0.6);
 }
 
 .border-1 {
@@ -128,7 +144,7 @@ html {
 
 .circle-quarter {
   border-radius: 50%;
-  border-color: rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) rgb(209, 213, 219) rgba(0, 0, 0, 0);
+  border-color: rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) rgb(163, 244, 255) rgba(0, 0, 0, 0);
   transform: rotate(45deg);
 }
 
@@ -155,21 +171,6 @@ html {
 
 .toast.show {
   transform: translateX(-50%) translateY(0);
-}
-
-/* Post card body text fade */
-.fade-bottom {
-  position: relative;
-}
-
-.fade-bottom::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 40px;
-  background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 60%);
 }
 
 /***** Rendered HTML Elements Styles *****/
@@ -300,8 +301,13 @@ div.ql-editor {
 }
 
 .ql-toolbar * {
-  color: #6b7280 !important;
+  color: #A3F4FF;
   stroke: currentColor !important;
+}
+
+.ql-toolbar button:hover svg *,
+.ql-toolbar .dots-btn:hover {
+  color: #FA7D3A !important;
 }
 
 .ql-toolbar button {
@@ -310,15 +316,214 @@ div.ql-editor {
   height: 32px !important;
 }
 
-.ql-toolbar button:hover {
-  background-color: #e5e7eb !important;
-  border-radius: 50% !important;
+
+/***************************** Tailwind classes: ****************************/
+
+/***************************** Glass components: ****************************/
+
+@layer components {
+  /* Glass tiles */
+  .glass-blue-weak {
+    @apply bg-app-blue/5 btn-border-blue-weak;
+  }
+ .glass-blue-soft {
+    @apply btn-border-blue-soft;
+    background-color: rgba(1, 30, 62, 0.7);
+  }
+ .glass-blue-normal {
+    @apply btn-border-blue-soft;
+    background-color: rgba(1, 30, 62, 0.3);
+  }
+  .glass-blue-strong {
+    @apply bg-app-blue/20 btn-border-blue-strong;
+  }
+  .glass-blue-super {
+    @apply bg-app-blue/40 btn-border-blue-super;
+  }
+
+  .btn-border-blue-weak {
+    @apply border border-app-blue/30 rounded-xl shadow-md;
+  }
+  .btn-border-blue-soft {
+    @apply border border-app-blue/30 backdrop-blur-md rounded-xl shadow-md;
+  }
+  .btn-border-blue-strong {
+    @apply border border-app-blue/40 backdrop-blur-xl rounded-xl shadow-lg;
+  }
+  .btn-border-blue-super {
+    @apply border border-app-blue/60 backdrop-blur-2xl rounded-xl shadow-xl;
+  }
+
+  .glass-orange-soft {
+    @apply bg-app-orange-alpha/10 border border-app-orange-alpha/30 backdrop-blur-md rounded-2xl shadow-md;
+  }
+  .glass-orange-strong {
+    @apply bg-app-orange-alpha/20 border border-app-orange-alpha/40 backdrop-blur-md rounded-2xl shadow-lg;
+  }
+  .glass-orange-super {
+    @apply bg-app-orange-alpha/40 border border-app-orange-alpha/60 backdrop-blur-md rounded-2xl shadow-xl;
+  }
 }
 
-/* Tailwind classes: */
+/******************************** Buttons *******************************/
+
+.input-element {
+  @apply backdrop-blur-md rounded-md;
+  box-shadow: 0 0 40px 5px rgba(0, 0, 0,, 0.3), inset 0 0 40px 5px rgba(0, 0, 0, 0.15);
+  background: rgba(163, 244, 255, 0.05);
+}
+
+.inner-blue-shadow {
+  box-shadow: inset 0 0 30px 5px rgba(0, 0, 0, 0.2);
+}
+
+/******************************** Buttons *******************************/
+
+/* this style targets orange button wrappers that cover app background */
+/* so all orange buttons aplhas will yield the same colors */
+.wrapper-orange-btn-bg {
+  background: #01031a; 
+  border-radius: 6px;
+}
+
+@layer components {
+  .button-orange-strong {
+    @apply border border-app-orange-alpha/60 backdrop-blur-md rounded-md shadow-xl text-app-orange-100;
+    box-shadow: inset 0 0 12px 2px rgba(0,0,0,0.25);
+    background: radial-gradient(ellipse at 50% 100%, 
+      rgba(255, 183, 115, 0.7) 0%, 
+      rgba(255, 183, 115, 0.25) 100%);
+    text-shadow: 2px 2px 3px rgba(0,0,0,0.6);
+  }
+
+  .button-orange-strong:hover {
+    @apply border-app-orange-alpha/80 shadow-2xl;
+    box-shadow: 0 4px 24px 4px rgba(255,183,115,0.25), inset 0 0 16px 4px rgba(0,0,0,0.30);
+    background: radial-gradient(ellipse at 50% 80%, 
+      rgba(255, 183, 115, 0.85) 0%, 
+      rgba(255, 183, 115, 0.35) 100%);
+    text-shadow: 3px 3px 6px rgba(0,0,0,0.7);
+  }
+
+  .button-orange-strong:active {
+    @apply bg-app-orange-alpha/10 border-app-orange-alpha/60 shadow-xl text-app-orange-alpha;
+    box-shadow: inset 0 0 5px 4px rgba(255,183,115,0.40);
+    background: radial-gradient(ellipse at 50% 90%, 
+      rgba(255, 183, 115, 0.40) 0%, 
+      rgba(255, 183, 115, 0.20) 100%);
+    text-shadow: none;
+  }
+  
+    .button-silver {
+    @apply border border-gray-500/60 backdrop-blur-md rounded-md shadow-xl text-gray-100;
+    box-shadow: inset 0 0 12px 2px rgba(0,0,0,0.25);
+    background: radial-gradient(ellipse at 50% 100%, 
+      rgba(107, 114, 128, 0.9) 0%, 
+      rgba(107, 114, 128, 0.2) 100%);
+    text-shadow: 2px 2px 3px rgba(0,0,0,0.6);
+  }
+  .button-silver:hover {
+    @apply border-gray-500 shadow-2xl;
+    box-shadow: 0 4px 24px 4px rgba(0,0,0,0.3), inset 0 0 16px 6px rgba(0,0,0,0.4);
+    background: radial-gradient(ellipse at 50% 80%, 
+      rgba(107, 114, 128, 0.8) 0%, 
+      rgba(107, 114, 128, 0.2) 100%);
+    text-shadow: 3px 3px 6px rgba(0,0,0,0.7);
+  }
+  .button-silver:active {
+    @apply border-gray-600 shadow-xl text-gray-950;
+    box-shadow: 0 2px 2px 2px rgba(255,255,255,0.05), inset 0 0 5px 4px rgba(0,0,0,0.2);
+    background: radial-gradient(ellipse at 50% 90%, 
+      rgba(107, 114, 128, 0.7) 0%, 
+      rgba(0, 0, 0, 0.3) 100%);
+    text-shadow: none;
+  }
+}
+
+/********************* Effects: onHover and onActive: *********************/
+  @layer components {
+  .interactive-blue-weak:hover {
+    @apply hover:border-app-blue/60;
+             background-color: rgba(26, 93, 102, 0.2);
+  }
+
+  .interactive-blue-soft {
+    @apply hover:bg-app-blue/20 
+           hover:border-app-blue/40
+           active:bg-app-blue/30
+           active:border-app-blue/50;
+  }
+
+  .interactive-blue-strong {
+    @apply hover:bg-app-blue/30
+           hover:border-app-blue/50
+           active:bg-app-blue/40 
+           active:border-app-blue/60; 
+  }
+
+  .interactive-blue-super {
+    @apply hover:bg-app-blue/50
+           hover:border-app-blue/70
+           active:bg-app-blue/60
+           active:border-app-blue/80;
+  }
+
+  .interactive-orange-soft {
+    @apply hover:text-app-orange-alpha/70
+           hover:bg-app-orange-alpha/20
+           hover:border-app-orange-alpha/40 
+           active:bg-app-orange-alpha/30
+           active:border-app-orange-alpha/50; 
+  }
+
+  .interactive-orange-soft:hover p,
+  .interactive-orange-soft:hover svg {
+    @apply text-app-orange-alpha/70;
+  }
+  
+  .interactive-orange-text:hover,
+  .interactive-orange-text:hover p,
+  .interactive-orange-text:hover svg {
+    @apply text-app-orange-alpha/70
+  }
+
+  .interactive-orange-text:active,
+  .interactive-orange-text:active p,
+  .interactive-orange-text:active svg {
+    @apply text-app-orange-alpha/90
+  }
+
+  .interactive-orange-strong {
+    @apply hover:text-app-orange-alpha/90
+           hover:bg-app-orange-alpha/30
+           hover:border-app-orange-alpha/50 
+           active:bg-app-orange-alpha/40
+           active:border-app-orange-alpha/60; 
+  }
+
+  .interactive-orange-strong:hover p,
+  .interactive-orange-strong:hover svg {
+    @apply text-app-orange-alpha/90;
+  }
+
+  .interactive-orange-super {
+    @apply hover:text-app-orange-alpha
+           hover:bg-app-orange-alpha/50
+           hover:border-app-orange-alpha/70 
+           active:bg-app-orange-alpha/60
+           active:border-app-orange-alpha/80; 
+  }
+
+  .interactive-orange-super:hover p,
+  .interactive-orange-super:hover svg {
+    @apply text-app-orange-alpha;
+  }
+}
+
+/**************************** Other components: ****************************/
 
 .nav-button {
-  @apply w-full mr-1 md:mr-0 bg-white text-gray-800 py-2 rounded-md hover:bg-blue-100 focus:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200 shadow-md;
+  @apply w-full mr-1 md:mr-0 py-2 text-app-blue-text transition-all duration-200 shadow-md;
 }
 
 .mobile-nav-button {
@@ -326,11 +531,7 @@ div.ql-editor {
 }
 
 .nav-sub-button {
-  @apply w-full mr-1 md:mr-0 py-2 
-  border-2 border-gray-50 bg-gray-50 text-gray-800 
-  hover:bg-blue-100 hover:border-blue-100
-  focus:bg-blue-100 focus:border-blue-500
-  transition-all duration-200;
+  @apply w-full mr-1 md:mr-0 py-2 transition-all duration-200;
 }
 
 .nav-gradient {
@@ -371,4 +572,3 @@ div.ql-editor {
 .hover\:shadow-center-lg:hover {
   @apply shadow-[4px_4px_10px_2px_rgba(0,0,0,0.4)]
 }
-

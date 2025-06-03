@@ -9,18 +9,23 @@ export function PaginationBtn({
 }) {
   const { applyPagination } = usePostsFilter(filterOptions)
 
+  let btnClass = 'pagination-btn min-w-8 px-2 py-[2px] mx-1 rounded-md border '
+  if (active) {
+    btnClass +=
+      'border-app-blue/70 text-app-blue-text glass-blue-strong interactive-blue-strong'
+  } else if (disabled) {
+    btnClass += 'text-gray-600 border-gray-600'
+  } else {
+    btnClass +=
+      'interactive-blue-strong border-app-blue/50 text-app-blue-text/70'
+  }
+
   async function handleClick() {
     await applyPagination(value)
   }
 
   return (
-    <button
-      className={`pagination-btn min-w-8 px-2 py-[2px] mx-1 rounded-md border ${
-        active ? 'border-blue-300 bg-blue-200' : 'border-gray-300'
-      } ${disabled ? 'text-gray-400 bg-gray-100' : 'hover:border-blue-400'}`}
-      onClick={handleClick}
-      disabled={disabled}
-    >
+    <button className={btnClass} onClick={handleClick} disabled={disabled}>
       {name}
     </button>
   )

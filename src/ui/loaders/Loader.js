@@ -7,7 +7,7 @@ export function Loader() {
       <div className="fixed top-0 left-0 flex flex-col justify-center items-center w-full h-full z-10">
         <div className="md:ml-[240px]">
           <Spinner />
-          <h1 className="text-blue-500">Loading...</h1>
+          <h1 className="text-app-blue-text">Loading...</h1>
         </div>
       </div>
     </>

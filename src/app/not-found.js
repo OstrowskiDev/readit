@@ -1,7 +1,7 @@
 export default function NotFound() {
   return (
     <div
-      className="w-full bg-white flex justify-center items-center"
+      className="w-full flex justify-center items-center"
       style={{ height: `calc(100vh - 72px)` }}
     >
       <div className="goodbye-container flex flex-col items-center w-full md:w-[480px] px-8 py-5 bg-blue-500 md:rounded-xl shadow-lg">

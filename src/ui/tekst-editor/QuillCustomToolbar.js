@@ -91,14 +91,18 @@ export default function QuillCustomToolbar() {
           {toolbarItems.map((item, i) => renderButton(item, 'toolbar', i))}
 
           {isToggleMenuBtnVisible && (
-            <button className="px-2 py-1" type="button" onClick={onClick}>
+            <button
+              className="dots-btn px-2 py-1"
+              type="button"
+              onClick={onClick}
+            >
               ...
             </button>
           )}
         </div>
 
         <div
-          className="toolbar-group toolbar-menu absolute right-[-20px] top-full flex-col mt-1 bg-white border-2 shadow p-2 rounded-md z-50"
+          className="toolbar-group toolbar-menu absolute glass-blue-soft right-[-20px] top-full flex-col mt-1 p-2 rounded-md z-50"
           style={toggleMenu}
         >
           {toolbarItems.map((item, i) => renderButton(item, 'menu', i))}

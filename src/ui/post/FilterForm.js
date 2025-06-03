@@ -11,8 +11,6 @@ export function FilterForm({
   setFormState,
   enableActivityFilter,
 }) {
-  // !!!! what is disableFilteringByAuthor ?
-  const isFilterDisabled = disableFilteringByAuthor ? true : false
   const handleInputChange = (e) => {
     setFormState({
       ...formState,
@@ -20,16 +18,18 @@ export function FilterForm({
     })
   }
 
+  const textareaCss =
+    ' glass-blue-soft rounded-md text-app-blue-text w-full h-7 px-2  resize-none focus:border-app-blue focus:outline-none'
+
   return (
     <>
       {isFilterFormVis && (
-        <div className="filter-posts-form px-2 py-2 md:py-4 md:mb-2 md:rounded-lg md:shadow-center-md below-md:border-t ">
+        <div className="filter-posts-form glass-blue-soft px-2 py-2 md:pt-6 md:pb-4 md:mb-2 md:rounded-lg md:shadow-center-md below-md:border-t ">
           <form className="filter-form font-orbitron text-14 grid grid-cols-1 2col-filter:grid-cols-2 gap-2">
             <div className="filter-title-container flex px-4">
               <p className="filter-title-label w-[100px]">title:</p>
               <textarea
-                className="filter-title-input w-full h-7 px-2 bg-gray-50 resize-none border border-slate-300 rounded-md
-                focus:border-slate-500 focus:outline-none"
+                className={`filter-title-input ${textareaCss}`}
                 id="title"
                 name="title"
                 placeholder=""
@@ -52,10 +52,9 @@ export function FilterForm({
                 author:
               </p>
               <textarea
-                className={`filter-author-input w-full h-7 px-2 resize-none border rounded-md focus:outline-none ${
-                  disableFilteringByAuthor
-                    ? 'bg-gray-100 border-gray-200 cursor-not-allowed'
-                    : 'bg-gray-50 border-slate-300 focus:border-slate-500'
+                className={`filter-author-input ${textareaCss} ${
+                  disableFilteringByAuthor &&
+                  'bg-gray-100 border-gray-200 cursor-not-allowed'
                 }`}
                 id="author"
                 name="author"
@@ -74,8 +73,7 @@ export function FilterForm({
             <div className="filter-content-container flex px-4">
               <p className="filter-content-label w-[100px]">content:</p>
               <textarea
-                className="filter-content-input w-full h-7 px-2 bg-gray-50 resize-none border border-slate-300 rounded-md
-                focus:border-slate-500 focus:outline-none"
+                className={`filter-content-input ${textareaCss}`}
                 id="content"
                 name="content"
                 placeholder=""
@@ -92,8 +90,7 @@ export function FilterForm({
             <div className="filter-sort-by-container flex px-4">
               <p className="filter-sort-by-label w-[100px]">sort by:</p>
               <select
-                className="filter-sort-by-input w-full h-7 px-2 bg-gray-50 border border-slate-300 rounded-md
-                focus:border-slate-500 focus:outline-none"
+                className={`filter-sort-by-input ${textareaCss}`}
                 id="sortBy"
                 name="sortBy"
                 placeholder=""
@@ -110,8 +107,7 @@ export function FilterForm({
             <div className="filter-sort-order-container flex px-4">
               <p className="filter-sort-order-label w-[100px]">order:</p>
               <select
-                className="filter-sort-order-input w-full h-7 px-2 bg-gray-50 border border-slate-300 rounded-md
-                focus:border-slate-500 focus:outline-none"
+                className={`filter-sort-order-input ${textareaCss}`}
                 id="sortOrder"
                 name="sortOrder"
                 placeholder=""

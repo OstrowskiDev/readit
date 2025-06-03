@@ -4,7 +4,7 @@ import { CommentShimmer } from './CommentShimmer'
 export function PostCommentShimmer() {
   return (
     <div className="relative w-full">
-      <div className="post-shimmer shimmer-border relative flex flex-col justify-between py-1 px-4 my-4 bg-white rounded-md ">
+      <div className="post-shimmer shimmer-border relative flex flex-col justify-between py-1 px-4 my-4 glass-blue-soft rounded-md ">
         {/* Post shimmer border */}
         <div className="shimmer-border-line horizontal-top"></div>
         <div className="shimmer-border-line horizontal-bottom"></div>

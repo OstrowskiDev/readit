@@ -2,12 +2,14 @@ import { TextEditorIco } from '../icons/TextEditorIco'
 
 export function ToggleTextEditorBtn({ handleEditorToggle }) {
   return (
-    <button
-      className="post-reply-text-editor-btn btn-blue w-8 h-8 p-1 ml-2 mt-1"
-      type="button"
-      onClick={handleEditorToggle}
-    >
-      <TextEditorIco color={'white'} />
-    </button>
+    <div className="wrapper-orange-btn-bg ml-2 mt-1">
+      <button
+        className="post-reply-text-editor-btn button-orange-strong w-8 h-9 p-1"
+        type="button"
+        onClick={handleEditorToggle}
+      >
+        <TextEditorIco color={'white'} />
+      </button>
+    </div>
   )
 }

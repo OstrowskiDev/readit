@@ -40,16 +40,16 @@ export function ShareCommentBtn() {
       })
   }
   return (
-    <div className="btn-container mt-[1px] rounded-md hover:bg-gray-200">
+    <div className="btn-container mt-[1px] rounded-md interactive-blue-soft">
       <button
         className="px-2 h-11 w-[44px] xs:w-[80px]"
         onClick={copyToClipboard}
       >
         <div className="btn-icon-container w-[24px] xs:w-full">
           <div className="comment-share-btn xs:hidden">
-            <ShareIco2 />
+            <ShareIco2 className="text-app-blue-text" />
           </div>
-          <p className="btn-text below-xs:hidden font-semibold text-center text-gray-500">
+          <p className="btn-text below-xs:hidden font-semibold text-center">
             Share
           </p>
         </div>

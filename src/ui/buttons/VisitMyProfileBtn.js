@@ -10,12 +10,12 @@ export function VisitMyProfileBtn({ authorId }) {
   return (
     <button
       onClick={onFollowClick}
-      className="visit-btn-container flex justify-center items-center w-80 h-10 px-4 rounded-full bg-blue-600 hover:bg-blue-700"
+      className="visit-btn-container flex justify-center items-center btn-border-blue-strong interactive-orange-soft w-80 h-10 px-4 "
     >
       <div className="visit-btn-icon-container w-[21px]">
-        <MyPostsIco color={'white'} size={21} />
+        <MyPostsIco className={'text-app-blue-text'} size={21} />
       </div>
-      <p className="visit-btn-text ml-[6px] font-semibold text-white">
+      <p className="visit-btn-text ml-[6px] font-semibold text-app-blue-text">
         Visit my profile
       </p>
     </button>

@@ -68,7 +68,7 @@ export function CommentLikeBtn({ styles }) {
   }
 
   return (
-    <form className="comment-like-btn-container rounded-md hover:bg-gray-200">
+    <form className="comment-like-btn-container interactive-blue-soft rounded-md">
       <button
         className={
           'comment-like-btn ' + styles + ' flex justify-center items-center'
@@ -76,7 +76,11 @@ export function CommentLikeBtn({ styles }) {
         type="submit"
         onClick={onClick}
       >
-        {isAlreadyLiked ? <LikeIcoActive /> : <LikeIco />}
+        {isAlreadyLiked ? (
+          <LikeIcoActive className={'text-app-strongorange-500'} />
+        ) : (
+          <LikeIco className={'text-app-blue-text'} />
+        )}
       </button>
     </form>
   )

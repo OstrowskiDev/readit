@@ -22,10 +22,10 @@ export function ProfileMyData() {
   return (
     <>
       <div
-        className="profile-my-data relative transition-height  border-t border-gray-200 mt-4 pt-4"
+        className="profile-my-data relative transition-height mt-4 pt-4 border-t border-app-blue/50"
         style={{ height: `${editDataHeight}px` }}
       >
-        <h3 className="profile-label-my-data text-lg font-semibold text-gray-800 mb-2">
+        <h3 className="profile-label-my-data text-lg font-semibold text-app-blue-text mb-2">
           My data:
         </h3>
         {toggleEdit ? (
@@ -35,10 +35,10 @@ export function ProfileMyData() {
         )}
 
         <div
-          className="my-data-edit-btn absolute top-2 right-1 p-2 w-10 h-10 hover:bg-gray-200 hover:cursor-pointer rounded-md"
+          className="my-data-edit-btn absolute top-2 right-1 interactive-orange-text p-2 w-10 h-10 hover:cursor-pointer"
           onClick={toggleUserDataForm}
         >
-          <EditIco />
+          <EditIco className={'text-app-blue-text'} />
         </div>
       </div>
     </>

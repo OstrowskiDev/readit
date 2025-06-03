@@ -6,12 +6,12 @@ export function DeleteCommentBtn({ onDeleteSubmit }) {
   function SubmitButton() {
     return (
       <button
-        className="menu-opt-delete-btn flex items-center px-8 py-2 hover:bg-gray-200"
+        className="menu-opt-delete-btn flex items-center px-8 py-2 hover:bg-app-blue/20"
         type="submit"
         onClick={onDeleteSubmit}
       >
         <div className="menu-opt-delete-ico w-6 m-1 flex justify-center items-center">
-          <DeleteIco />
+          <DeleteIco className={'text-app-blue-text'} />
         </div>
         <p className="menu-opt-delete-text ml-2 text-lg">Delete</p>
       </button>

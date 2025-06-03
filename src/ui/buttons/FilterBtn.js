@@ -6,7 +6,7 @@ export function FilterBtn({ isFilterFormVis, setIsFilterFormVis }) {
   return (
     <button
       onClick={onFilterClick}
-      className="filter-btn btn-blue below-xs:grow h-10 px-4 md:ml-2 ml-0"
+      className="filter-btn button-orange-strong below-xs:grow h-10 px-4 md:ml-2 ml-0"
     >
       Filter
     </button>

@@ -9,7 +9,7 @@ export function AccountCreationDate({ accountCreatedAt }) {
     })
   }
   return (
-    <p className="date font-orbitron text-12 text-gray-500">
+    <p className="date font-orbitron text-12 text-app-blue-text/50">
       Joined: {createdAt}
     </p>
   )

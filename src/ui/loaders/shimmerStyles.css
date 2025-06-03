@@ -1,6 +1,7 @@
 /* Shimmer styles below: */
 :root {
-  --shimmer-color: #d1d5db; /* Main shimmer color */
+  --shimmer-color-1: #93c5fd;
+  --shimmer-color-2: #bfdbfe;
 }
 
 @keyframes shimmer {
@@ -19,7 +20,7 @@
   animation-name: shimmer;
   animation-timing-function: linear;
   background: #f6f7f8;
-  background: linear-gradient(to right, #eeeeee 8%, var(--shimmer-color) 18%, #eeeeee 33%);
+  background: linear-gradient(to right, var(--shimmer-color-2) 8%, var(--shimmer-color-1) 18%, var(--shimmer-color-2) 33%);
   background-size: 800px 104px;
   position: relative;
 }
@@ -28,7 +29,7 @@
 .shimmer-border-line {
   position: absolute;
   animation: shimmer 1.25s infinite linear;
-  background: linear-gradient(to right, #eeeeee 8%, var(--shimmer-color) 18%, #eeeeee 33%);
+  background: linear-gradient(to right, var(--shimmer-color-2) 8%, var(--shimmer-color) 18%, #eeeeee 33%);
 }
 
 .horizontal-top {
@@ -59,26 +60,17 @@
   height: calc(100% - 16px);
 }
 
+// Możesz dodać do shimmerStyles.css
+
 .shimmer-border-circle {
-  position: absolute;
-  width: 12px;
-  height: 12px;
-  animation: shimmer 1.25s infinite linear;
-  background: #eeeeee;
-  border-radius: 100% 0 0 0;
-}
-
-.shimmer-border-circle::before {
-  content: "";
-  position: absolute;
-  width: 20px; 
-  height: 20px; 
-  background: white;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
-  top: 1px;
-  left: 1px;
+  background: conic-gradient(
+    var(--shimmer-color-2) 0deg 90deg,
+    transparent 90deg 360deg
+  );
 }
-
 .top-left {
   top: 4px;
   left: 0px;

@@ -45,12 +45,7 @@ export function Post({
           setDeleted={setDeleted}
         >
           <div className={`relative w-full ${deleted ? 'hidden' : ''}`}>
-            <div
-              className="post-container flex flex-col justify-between
-              py-2 md:py-1 px-4 md:my-2 md:rounded-md md:shadow-center-md
-              border-t md:border-2 border-gray-300 md:border-white hover:border-blue-300
-              md:hover:shadow-center-lg hover:cursor-pointer hover:outline-red-50"
-            >
+            <div className="post-container glass-blue-soft interactive-blue-weak flex flex-col justify-between py-2 md:py-1 px-4 md:my-2 md:rounded-md md:shadow-center-md border-t md:border md:hover:shadow-center-lg hover:cursor-pointer">
               <PostAnchor postId={postId} />
               <PostHeader author={post.authorData} />
               <PostTitle title={post.title} />
