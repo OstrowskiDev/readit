@@ -8,7 +8,7 @@ export function PostImage() {
   const imageSrc = tempImageUrl || `/api/images/${postId}.${imageExtension}`
 
   return (
-    <div className="post-image-container relative aspect-[16/9] w-full overflow-hidden rounded-md z-10">
+    <div className="post-image-container relative aspect-[16/9] w-full overflow-hidden rounded-md z-0">
       {isLoading && (
         <div className="post-image-container flex justify-center aspect-[16/9] w-full glass-blue-soft rounded-md relative">
           <ImageShimmerBorderless />
@@ -16,7 +16,7 @@ export function PostImage() {
       )}
 
       <img
-        className="post-image relative z-10 h-full w-full object-contain"
+        className="post-image relative z-0 h-full w-full object-contain"
         src={imageSrc}
         alt="post image"
         onLoad={() => setIsLoading(false)}
@@ -27,7 +27,7 @@ export function PostImage() {
         src={imageSrc}
         alt=""
         aria-hidden="true"
-        className="post-image-blur absolute inset-0 h-full w-full object-cover scale-110 blur-md brightness-65"
+        className="post-image-blur absolute z-[-10] inset-0 h-full w-full object-cover scale-110 blur-md brightness-65"
       />
     </div>
   )
