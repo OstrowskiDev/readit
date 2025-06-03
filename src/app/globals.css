@@ -438,48 +438,15 @@ div.ql-editor {
       rgba(0, 0, 0, 0.3) 100%);
     text-shadow: none;
   }
-
-
-/* !!!! styles for buttons that need to be even 'stronger': * /
-
-  /* .button-orange-strong::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    border-radius: inherit;
-    border-top: 2px solid rgba(255,183,115,0.3);
-    border-bottom: 2px solid rgba(255,183,115,0.8);
-    mask-image: linear-gradient(
-      to right,
-      transparent 0%,
-      black 35%,
-      black 65%,
-      transparent 100%
-    );
-    -webkit-mask-image: linear-gradient(
-      to right,
-      transparent 0%,
-      black 35%,
-      black 65%,
-      transparent 100%
-    );
-    z-index: 2;
-  }
-
-  .button-orange-strong::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    border-radius: inherit;
-    border: 2px solid rgba(255,183,115,0.4);
-    z-index: 1;
-  } */
 }
 
 /********************* Effects: onHover and onActive: *********************/
   @layer components {
+  .interactive-blue-weak:hover {
+    @apply hover:border-app-blue/60;
+             background-color: rgba(26, 93, 102, 0.2);
+  }
+
   .interactive-blue-soft {
     @apply hover:bg-app-blue/20 
            hover:border-app-blue/40

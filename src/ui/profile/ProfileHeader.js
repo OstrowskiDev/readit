@@ -26,7 +26,7 @@ export function ProfileHeader({ userData }) {
           className="avatar-edit-btn absolute top-[-6px] right-1 p-2 w-10 h-10 interactive-orange-text hover:cursor-pointer"
           onClick={handleAvatarEdit}
         >
-          <EditIco className={'text-app-blue-text/70'} />
+          <EditIco className={'text-app-blue-text'} />
         </div>
         <h3
           className={

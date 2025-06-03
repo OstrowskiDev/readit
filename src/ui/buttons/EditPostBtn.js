@@ -18,12 +18,12 @@ export function EditPostBtn({ postId }) {
     }
   }
   return (
-    <div className="edit-post-btn mt-[1px]">
+    <div className="edit-post-btn-container mt-[1px]">
       <button
         onClick={onClick}
-        className="w-10 p-2 flex justify-center items-center rounded-md hover:bg-gray-200 "
+        className="edit-post-btn interactive-blue-soft w-10 p-2 flex justify-center items-center rounded-md"
       >
-        <EditIco className={'text-app-blue-text/70'} />
+        <EditIco className={'text-app-blue-text'} />
       </button>
     </div>
   )

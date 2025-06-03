@@ -66,7 +66,7 @@ export function UserDataForm({ toggleUserDataForm }) {
         <label className="label-email text-app-blue-text w-28 mr-2">
           email:
         </label>
-        text-app-blue-text
+
         <input
           className={`input-email ${inactiveInputCss}`}
           name="email"
@@ -76,10 +76,10 @@ export function UserDataForm({ toggleUserDataForm }) {
       </div>
 
       <div className="form-data-profession flex items-center">
-        <label className="label-profession text-app-blue-text-alpha w-28 mr-2">
-          profession:text-app-blue-text
+        <label className="label-profession text-app-blue-text w-28 mr-2">
+          profession:
         </label>
-        text-app-blue-text
+
         <input
           className={`input-profession ${activeInputCss}`}
           type="text"
@@ -90,8 +90,8 @@ export function UserDataForm({ toggleUserDataForm }) {
       </div>
 
       <div className="form-data-organization flex items-center">
-        <label className="label-organization text-app-blue-text-alpha w-28 mr-2">
-          organization:text-app-blue-text
+        <label className="label-organization text-app-blue-text w-28 mr-2">
+          organization:
         </label>
         <input
           className={`input-organization ${activeInputCss}`}

@@ -45,9 +45,9 @@ export function DeletePostBtn({ postId }) {
     }
   }
   return (
-    <div className="delete-post-btn">
+    <div className="delete-post-btn-container">
       <button
-        className="w-[38px] p-2 flex justify-center items-center rounded-md hover:bg-gray-200"
+        className="delete-post-btn interactive-blue-soft w-[38px] p-2 flex justify-center items-center rounded-md"
         type="submit"
         onClick={onClick}
       >

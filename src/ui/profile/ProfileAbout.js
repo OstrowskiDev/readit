@@ -45,7 +45,7 @@ export function ProfileAbout() {
         className="about-edit-btn absolute top-2 right-1 interactive-orange-text p-2 w-10 h-10 hover:cursor-pointer"
         onClick={toggleAboutForm}
       >
-        <EditIco className={'text-app-blue-text/70'} />
+        <EditIco className={'text-app-blue-text'} />
       </div>
     </div>
   )

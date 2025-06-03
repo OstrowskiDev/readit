@@ -20,7 +20,7 @@ export function PostMenuBtn({ setIsPostMenuVis }) {
   }
 
   return (
-    <div className="post-menu-btn interactive-orange-text mt-[2px] rounded-md">
+    <div className="post-menu-btn interactive-blue-soft mt-[2px] rounded-md">
       <button
         onClick={handleClick}
         type="button"
