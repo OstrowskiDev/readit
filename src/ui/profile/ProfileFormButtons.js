@@ -1,21 +1,25 @@
 export function ProfileFormButtons({ handleSubmit, handleCancel }) {
   return (
     <div className="flex justify-center mt-4">
-      <button
-        type="button"
-        onClick={handleCancel}
-        className="form-cancel-button py-[6px] px-4 bg-gray-200 hover:bg-gray-300 text-gray-600 hover:text-gray-700 font-bold rounded ml-4"
-      >
-        Cancel
-      </button>
+      <div className="wrapper-orange-btn-bg">
+        <button
+          type="button"
+          onClick={handleCancel}
+          className="form-cancel-button button-silver h-10 py-[6px] px-4 font-bold text-md"
+        >
+          Cancel
+        </button>
+      </div>
 
-      <button
-        type="submit"
-        onClick={handleSubmit}
-        className="form-submit-btn py-[6px] px-4 ml-4 bg-blue-500 hover:bg-blue-600 text-white font-bold  rounded"
-      >
-        Save changes
-      </button>
+      <div className="wrapper-orange-btn-bg ml-4">
+        <button
+          type="submit"
+          onClick={handleSubmit}
+          className="form-submit-btn button-orange-strong h-10 py-[6px] px-4 font-bold text-md"
+        >
+          Save changes
+        </button>
+      </div>
     </div>
   )
 }

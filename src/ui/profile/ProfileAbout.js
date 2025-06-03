@@ -26,7 +26,7 @@ export function ProfileAbout() {
   }
   return (
     <div className="profile-about relative mt-4 pt-4 border-t border-app-blue-alpha/50 transition-height">
-      <h3 className="profile-label-about text-lg font-semibold text-app-blue-alpha mb-2">
+      <h3 className="profile-label-about text-lg font-semibold app-text-blue mb-2">
         About me:
       </h3>
       {editAbout ? (
@@ -45,7 +45,7 @@ export function ProfileAbout() {
         className="about-edit-btn absolute top-2 right-1 interactive-orange-text p-2 w-10 h-10 hover:cursor-pointer"
         onClick={toggleAboutForm}
       >
-        <EditIco className={'text-app-blue-alpha/70'} />
+        <EditIco className={'text-app-blue/70'} />
       </div>
     </div>
   )

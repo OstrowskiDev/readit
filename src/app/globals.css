@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --tw-text-orange: rgb(250, 125, 58); /* zamiast starego #c2410c */
+}
+
 /***************** App Background *****************/
 
 body {
@@ -48,8 +52,8 @@ a, .anchor-color {
 }
 
 a:hover, .anchor-color:hover, .btn-color-hover:hover, .btn-color-hover:hover p, .btn-color-hover:hover svg path {
-  color: #c2410c;
-  fill: #c2410c;
+  color: var(--tw-text-orange);
+  fill: var(--tw-text-orange);
 }
 
 .text-12 {
@@ -384,7 +388,7 @@ div.ql-editor {
 
 @layer components {
   .button-orange-strong {
-    @apply bg-app-orange-alpha/40 border border-app-orange-alpha/60 backdrop-blur-md rounded-md shadow-xl text-app-orange-100;
+    @apply border border-app-orange-alpha/60 backdrop-blur-md rounded-md shadow-xl text-app-orange-100;
     box-shadow: inset 0 0 12px 2px rgba(0,0,0,0.25);
     background: radial-gradient(ellipse at 50% 100%, 
       rgba(255, 183, 115, 0.7) 0%, 
@@ -393,7 +397,7 @@ div.ql-editor {
   }
 
   .button-orange-strong:hover {
-    @apply bg-app-orange-alpha/60 border-app-orange-alpha/80 shadow-2xl;
+    @apply border-app-orange-alpha/80 shadow-2xl;
     box-shadow: 0 4px 24px 4px rgba(255,183,115,0.25), inset 0 0 16px 4px rgba(0,0,0,0.30);
     background: radial-gradient(ellipse at 50% 80%, 
       rgba(255, 183, 115, 0.85) 0%, 
@@ -409,6 +413,32 @@ div.ql-editor {
       rgba(255, 183, 115, 0.20) 100%);
     text-shadow: none;
   }
+  
+    .button-silver {
+    @apply border border-gray-500/60 backdrop-blur-md rounded-md shadow-xl text-gray-100;
+    box-shadow: inset 0 0 12px 2px rgba(0,0,0,0.25);
+    background: radial-gradient(ellipse at 50% 100%, 
+      rgba(107, 114, 128, 0.9) 0%, 
+      rgba(107, 114, 128, 0.2) 100%);
+    text-shadow: 2px 2px 3px rgba(0,0,0,0.6);
+  }
+  .button-silver:hover {
+    @apply border-gray-500 shadow-2xl;
+    box-shadow: 0 4px 24px 4px rgba(0,0,0,0.3), inset 0 0 16px 6px rgba(0,0,0,0.4);
+    background: radial-gradient(ellipse at 50% 80%, 
+      rgba(107, 114, 128, 0.8) 0%, 
+      rgba(107, 114, 128, 0.2) 100%);
+    text-shadow: 3px 3px 6px rgba(0,0,0,0.7);
+  }
+  .button-silver:active {
+    @apply border-gray-600 shadow-xl text-gray-950;
+    box-shadow: 0 2px 2px 2px rgba(255,255,255,0.05), inset 0 0 5px 4px rgba(0,0,0,0.2);
+    background: radial-gradient(ellipse at 50% 90%, 
+      rgba(107, 114, 128, 0.7) 0%, 
+      rgba(0, 0, 0, 0.3) 100%);
+    text-shadow: none;
+  }
+
 
 /* !!!! styles for buttons that need to be even 'stronger': * /
 
@@ -526,7 +556,7 @@ div.ql-editor {
 /**************************** Other components: ****************************/
 
 .nav-button {
-  @apply w-full mr-1 md:mr-0 py-2 text-blue-300 transition-all duration-200 shadow-md;
+  @apply w-full mr-1 md:mr-0 py-2 text-app-blue transition-all duration-200 shadow-md;
 }
 
 .mobile-nav-button {

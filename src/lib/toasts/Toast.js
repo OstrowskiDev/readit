@@ -42,7 +42,9 @@ export function Toast({ message, state, forceUpdate }) {
           >
             {capitalizeFirstLetter(state) + '!'}
           </p>
-          <p className="toast-text-message leading-tight text-sm text-gray-700">
+          <p
+            className={`toast-text-message leading-tight text-sm text-app-blue/80`}
+          >
             {message}
           </p>
         </div>
@@ -58,18 +60,18 @@ function capitalizeFirstLetter(string) {
 function containerStateClasses(state) {
   switch (state) {
     case 'success':
-      return 'bg-green-50 border-green-500'
+      return 'glass-blue-soft border-green-400'
     case 'error':
-      return 'bg-red-50 border-red-500'
+      return 'bg-red-200/50 border-red-400'
   }
 }
 
 function textStateClasses(state) {
   switch (state) {
     case 'success':
-      return 'text-green-600'
+      return 'text-green-400'
     case 'error':
-      return 'text-red-600'
+      return 'text-red-400'
   }
 }
 

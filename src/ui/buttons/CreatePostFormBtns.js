@@ -19,7 +19,7 @@ export function CreatePostFormBtns({
         setImageAction={setImageAction}
       />
       <button
-        className="post-reply-cancel-btn btn-gray py-1 px-2 mt-1"
+        className="post-reply-cancel-btn button-silver py-1 px-2 mt-1 text-base"
         type="button"
         onClick={onCancelClick}
       >
@@ -32,7 +32,7 @@ export function CreatePostFormBtns({
       />
       <div className="wrapper-orange-btn-bg mx-2 mt-1">
         <button
-          className="post-reply-submit-btn button-orange-strong h-9 px-2"
+          className="post-reply-submit-btn button-orange-strong h-9 px-2 text-base"
           type="button"
           onClick={onSubmit}
         >

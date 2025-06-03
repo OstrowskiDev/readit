@@ -23,7 +23,7 @@ export function EditPostBtn({ postId }) {
         onClick={onClick}
         className="w-10 p-2 flex justify-center items-center rounded-md hover:bg-gray-200 "
       >
-        <EditIco className={'text-app-blue-alpha/70'} />
+        <EditIco className={'text-app-blue/70'} />
       </button>
     </div>
   )

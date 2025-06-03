@@ -75,7 +75,7 @@ export default function UserInfobox({
               <p className="infobox-posts-number font-orbitron text-18 font-semibold">
                 {postsSum}
               </p>
-              <p className="infobox-comments-text text-12 font-orbitron text-app-blue-alpha/50">
+              <p className="infobox-comments-text text-12 font-orbitron text-app-blue/50">
                 Posts Created
               </p>
             </div>
@@ -83,7 +83,7 @@ export default function UserInfobox({
               <p className="infobox-comments-number font-orbitron text-18 font-semibold">
                 {commentsSum}
               </p>
-              <p className="infobox-comments-text text-12 font-orbitron text-app-blue-alpha/50">
+              <p className="infobox-comments-text text-12 font-orbitron text-app-blue/50">
                 Comment Created
               </p>
             </div>

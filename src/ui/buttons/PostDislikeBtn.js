@@ -77,7 +77,7 @@ export function PostDislikeBtn({ styles }) {
         onClick={onClick}
       >
         {isAlreadyDisliked ? (
-          <DislikeIcoActive className={'text-app-strongorange-400'} />
+          <DislikeIcoActive className={'text-app-strongorange-500'} />
         ) : (
           <DislikeIco className={'text-app-lightblue-400'} />
         )}

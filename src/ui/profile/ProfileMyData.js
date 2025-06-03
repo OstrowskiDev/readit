@@ -25,7 +25,7 @@ export function ProfileMyData() {
         className="profile-my-data relative transition-height mt-4 pt-4 border-t border-app-blue-alpha/50"
         style={{ height: `${editDataHeight}px` }}
       >
-        <h3 className="profile-label-my-data text-lg font-semibold text-app-blue-alpha mb-2">
+        <h3 className="profile-label-my-data text-lg font-semibold app-text-blue mb-2">
           My data:
         </h3>
         {toggleEdit ? (
@@ -38,7 +38,7 @@ export function ProfileMyData() {
           className="my-data-edit-btn absolute top-2 right-1 interactive-orange-text p-2 w-10 h-10 hover:cursor-pointer"
           onClick={toggleUserDataForm}
         >
-          <EditIco className={'text-app-blue-alpha/70'} />
+          <EditIco className={'text-app-blue/70'} />
         </div>
       </div>
     </>

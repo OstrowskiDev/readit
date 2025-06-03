@@ -77,7 +77,7 @@ export function PostLikeBtn({ styles }) {
         onClick={onClick}
       >
         {isAlreadyLiked ? (
-          <LikeIcoActive className={'text-app-strongorange-400'} />
+          <LikeIcoActive className={'text-app-strongorange-500'} />
         ) : (
           <LikeIco className={'text-app-lightblue-400'} />
         )}

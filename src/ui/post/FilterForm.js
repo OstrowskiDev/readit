@@ -19,7 +19,7 @@ export function FilterForm({
   }
 
   const textareaCss =
-    ' glass-blue-soft rounded-md text-app-blue-alpha w-full h-7 px-2  resize-none focus:border-app-blue-alpha focus:outline-none'
+    ' glass-blue-soft rounded-md app-text-blue w-full h-7 px-2  resize-none focus:border-app-blue-alpha focus:outline-none'
 
   return (
     <>
