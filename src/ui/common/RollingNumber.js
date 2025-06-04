@@ -6,12 +6,20 @@ export default function RollingNumber({
   value = 0,
   duration = 750,
   className = '',
+  isMounted,
+  setIsMounted,
 }) {
   const ref = useRef(null)
 
   useEffect(() => {
+    setIsMounted(true)
+  }, [])
+
+  useEffect(() => {
     import('@layflags/rolling-number')
   }, [])
+
+  if (!isMounted) return null
 
   return (
     <layflags-rolling-number
