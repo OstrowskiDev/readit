@@ -125,12 +125,12 @@ export function PostEditForm({ isEditFormVisible, setIsEditFormVisible }) {
   return (
     <>
       {isEditFormVisible && (
-        <div className="post-edit-form px-4 pb-4 my-6 btn-border-blue-strong rounded-md">
+        <div className="post-edit-form px-4 pb-6 mt-6 mb-4 btn-border-blue-strong border-x-0 rounded-none">
           <form>
-            <h2 className="post-edit-header mt-6 ml-1 text-xl font-semibold ">
+            <h2 className="post-edit-header mt-6 ml-1 text-xl font-semibold">
               Edit post:
             </h2>
-            <h3 className="post-edit-form-label ml-2 mt-4 text-md ">title:</h3>
+            <h3 className="post-edit-form-label ml-2 mt-4 text-md">title:</h3>
             <textarea
               className={`post-title-input glass-blue-weak text-app-blue-text w-full h-8 resize-none border-none focus:outline-none ring-1 py-1 px-2 rounded-md ${
                 fieldValidity.title.message.length > 0
