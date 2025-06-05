@@ -134,7 +134,7 @@ export function PostReplyForm({ isCommFormVisible, setIsCommFormVisible }) {
   return (
     <>
       {isCommFormVisible && (
-        <div className="post-reply-form change-border-on-child-focus p-2 ml-4 mr-1 my-1 bg-white border border-slate-300 rounded-lg">
+        <div className="post-reply-form change-border-on-child-focus p-2 m-1 btn-border-blue-soft rounded-lg">
           <form>
             <TextEditor
               editorHeight={162}

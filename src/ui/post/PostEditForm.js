@@ -125,19 +125,17 @@ export function PostEditForm({ isEditFormVisible, setIsEditFormVisible }) {
   return (
     <>
       {isEditFormVisible && (
-        <div className="post-edit-form px-4 pb-4 my-6 border rounded-md border-gray-300 bg-gray-200">
+        <div className="post-edit-form px-4 pb-4 my-6 btn-border-blue-strong rounded-md">
           <form>
             <h2 className="post-edit-header mt-6 ml-1 text-xl font-semibold ">
               Edit post:
             </h2>
-            <h3 className="post-edit-form-label ml-2 mt-4 text-md text-gray-800 ">
-              title:
-            </h3>
+            <h3 className="post-edit-form-label ml-2 mt-4 text-md ">title:</h3>
             <textarea
-              className={`post-title-input w-full h-8 bg-gray-50 resize-none border-none focus:outline-none ring-1 py-1 px-2 rounded-md ${
+              className={`post-title-input glass-blue-weak text-app-blue-text w-full h-8 resize-none border-none focus:outline-none ring-1 py-1 px-2 rounded-md ${
                 fieldValidity.title.message.length > 0
                   ? 'ring-red-400 focus:ring-red-500'
-                  : 'ring-slate-300 focus:ring-blue-400'
+                  : 'ring-app-blue/50 focus:ring-app-blue'
               }`}
               id="title"
               name="title"
@@ -151,17 +149,19 @@ export function PostEditForm({ isEditFormVisible, setIsEditFormVisible }) {
               </label>
               <div
                 className={`post-title-charcount px-2 text-xs ${
-                  formData.title.length <= 60 ? 'text-gray-600' : 'text-red-500'
+                  formData.title.length <= 60
+                    ? 'text-app-blue-text/70'
+                    : 'text-red-500'
                 }`}
               >
                 {formData.title.length}/60
               </div>
             </div>
-            <h3 className="post-edit-form-label ml-2 mt-4 text-md text-gray-800 ">
+            <h3 className="post-edit-form-label ml-2 mt-4 text-md ">
               content:
             </h3>
 
-            <div className="change-border-on-child-focus p-2 mb-4 bg-gray-50 border border-slate-300 rounded-md">
+            <div className="change-border-on-child-focus glass-blue-weak btn-border-blue-soft mb-3 rounded-md">
               <TextEditor
                 onContentChange={onContentChange}
                 formData={formData}

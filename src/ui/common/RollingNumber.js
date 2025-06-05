@@ -8,8 +8,6 @@ export function RollingNumber({ value = 0, duration = 1000, lineHeight = 26 }) {
   const isNegative = typeof value === 'number' && value < 0
   // create array with non-negative (absolute) number strings
   // minus sign (-) will be handled separately, so its not included
-  console.log(value)
-  console.log(typeof value)
   const absoluteDigits =
     typeof value === 'number' ? Math.abs(value).toString().split('') : ['0']
 
@@ -21,7 +19,7 @@ export function RollingNumber({ value = 0, duration = 1000, lineHeight = 26 }) {
           className="digit minus"
           style={{
             lineHeight: `${lineHeight}px`,
-            width: '1ch',
+            width: '1ch', // width of '0' sign in current font
             overflow: 'hidden',
             display: 'inline-flex',
             position: 'relative',
@@ -56,9 +54,9 @@ export function RollingNumber({ value = 0, duration = 1000, lineHeight = 26 }) {
         </span>
       )}
       {/* handle number strings */}
-      {absoluteDigits.map((digit, idx) => (
+      {absoluteDigits.map((digit, i) => (
         <span
-          key={idx}
+          key={i}
           className="digit"
           style={{
             lineHeight: `${lineHeight}px`,
