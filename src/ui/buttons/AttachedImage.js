@@ -32,16 +32,18 @@ export function AttachedImage({
   return (
     <>
       {((hasImage && imageAction !== 'delete') || imageAction === 'update') && (
-        <div className="attached-image-box btn-blue flex flex-row h-8 px-2 pt-[6px] ml-2 mt-1 mr-2 text-sm">
-          <p className="attached-image-info text-gray-100 cursor-default">{`${shortFileName(
-            renderedImage.name,
-          )} ${fileSize(renderedImage.size)}`}</p>
-          <button
-            className="attached-image-disattach ml-2 px-1 mb-2 text-white cursor-pointer"
-            onClick={handleClick}
-          >
-            X
-          </button>
+        <div className="wrapper-orange-btn-bg ml-2 mt-1 mr-2">
+          <div className="attached-image-box button-silver flex flex-row items-center h-9 px-2 text-sm">
+            <p className="attached-image-info text-gray-100 cursor-default">{`${shortFileName(
+              renderedImage.name,
+            )} ${fileSize(renderedImage.size)}`}</p>
+            <button
+              className="attached-image-disattach ml-2 px-1 mb-2 text-white cursor-pointer"
+              onClick={handleClick}
+            >
+              X
+            </button>
+          </div>
         </div>
       )}
     </>

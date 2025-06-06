@@ -70,7 +70,7 @@ export function PostLikeBtn({ styles }) {
   }
 
   return (
-    <form className="post-like-button relative interactive-orange-strong rounded-xl border border-app-blue/0 z-20">
+    <form className="post-like-button relative interactive-blue-strong rounded-xl border border-app-blue/0 z-20">
       <button
         className={styles + ' flex justify-center items-center'}
         type="submit"

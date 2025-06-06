@@ -20,27 +20,30 @@ export function EditFormBtns({
         imageAction={imageAction}
         setImageAction={setImageAction}
       />
+      <div className="wrapper-orange-btn-bg mt-1">
+        <button
+          className="post-edit-cancel-btn button-silver py-1 px-2"
+          type="button"
+          onClick={onCancelClick}
+        >
+          Cancel
+        </button>
+      </div>
 
-      <button
-        className="post-edit-cancel-btn btn-gray py-1 px-2 mt-1"
-        type="button"
-        onClick={onCancelClick}
-      >
-        Cancel
-      </button>
       <AttachFileBtn
         setImageFile={setImageFile}
         setResponse={setResponse}
         setImageAction={setImageAction}
       />
-
-      <button
-        className="post-edit-submit-btn btn-blue py-1 px-3 mx-2 mt-1"
-        type="button"
-        onClick={onSubmit}
-      >
-        Save changes
-      </button>
+      <div className="wrapper-orange-btn-bg mx-2 mt-1">
+        <button
+          className="post-edit-submit-btn button-orange-strong py-1 px-3"
+          type="button"
+          onClick={onSubmit}
+        >
+          Save changes
+        </button>
+      </div>
     </div>
   )
 }

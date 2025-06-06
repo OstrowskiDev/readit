@@ -42,16 +42,23 @@ export default function UserProfile({ params }) {
               {`${userData.name}'s profile:`}
             </h1>
 
-            <div className="users-data-card flex flex-col mx-4 px-4 md:pt-3 pb-3 md:pb-6 md:max-w-[768px] bg-white md:rounded-lg md:shadow-center-md">
+            <div className="users-data-card glass-blue-soft flex flex-col mx-4 px-4 md:pt-3 pb-3 md:pb-6 md:max-w-[768px] md:rounded-lg md:shadow-center-md">
               <ProfilePreview userData={userData} />
-              <p className="users-data text-gray-600 text-14 mt-4 pt-4 font-orbitron border-t border-gray-200">
-                Profession: {userData.profession || 'Data Classified'}
-              </p>
-              <p className="users-data text-gray-600 text-14 my-1 font-orbitron">
-                Organization: {userData.organization || 'Data Classified'}
-              </p>
-              <div className="users-data-about-container relative mt-4 pt-4 border-t below-md:pb-4 below-md:border-b border-gray-200 transition-height">
-                <h3 className="users-data-about-label text-lg font-semibold text-gray-800 mb-2">
+              <div className="users-data flex flex-row items-center my-1 pt-4 border-t border-app-blue/70">
+                <h3 className="font-bold text-14">Profession:</h3>
+                <p className="font-orbitron font-normal text-14 ml-1">
+                  {userData.profession || 'Data Classified'}
+                </p>
+              </div>
+
+              <div className="users-data flex flex-row items-center my-1">
+                <h3 className="font-bold text-14">Organization:</h3>
+                <p className="font-orbitron font-normal text-14 ml-1">
+                  {userData.organization || 'Data Classified'}
+                </p>
+              </div>
+              <div className="users-data-about-container relative mt-4 pt-4 border-t below-md:pb-4 below-md:border-b border-app-blue/70 transition-height">
+                <h3 className="users-data-about-label text-lg font-semibold mb-2">
                   About me:
                 </h3>
                 <p className="users-data-about-text pb-3 pr-2 md:pr-16">
@@ -61,7 +68,7 @@ export default function UserProfile({ params }) {
             </div>
           </div>
           <div className="posts-wrapper flex flex-col w-full md:max-w-[800px]">
-            <h2 className="posts-header relative md:top-6 ml-4 text-xl font-semibold text-gray-900">
+            <h2 className="posts-header relative md:top-6 ml-4 text-xl font-semibold">
               {`${userData.name}'s posts:`}
             </h2>
             <PostsPage

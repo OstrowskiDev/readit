@@ -48,6 +48,7 @@ module.exports = {
             alpha: 'rgb(255, 183, 115)',
           },
           strongorange: {
+            DEFAULT: 'rgb(234, 88, 12)', // #ea580c
             100: 'rgb(255, 236, 222)',
             200: 'rgb(255, 217, 191)',
             300: 'rgb(255, 198, 159)',

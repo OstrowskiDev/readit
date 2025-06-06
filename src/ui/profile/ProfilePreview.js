@@ -11,10 +11,10 @@ export function ProfilePreview() {
           seed={userData.avatar.seed}
           color={userData.avatar.color}
           size={80}
-          border={2}
+          border={3}
         />
         <div className="flex flex-col ml-2">
-          <p className="profile-name font-orbitron-bold text-lg">
+          <p className="profile-name font-orbitron-bold text-app-strongorange text-lg">
             {userData.name}
           </p>
           <AccountCreationDate accountCreatedAt={userData.createdAt} />

@@ -70,7 +70,7 @@ export function PostDislikeBtn({ styles }) {
   }
 
   return (
-    <form className="post-dislike-button relative ml-[1px] interactive-orange-strong rounded-xl border border-app-blue/0 z-20">
+    <form className="post-dislike-button relative ml-[1px] interactive-blue-soft rounded-xl border border-app-blue/0 z-20">
       <button
         className={styles + ' flex justify-center items-center'}
         type="submit"

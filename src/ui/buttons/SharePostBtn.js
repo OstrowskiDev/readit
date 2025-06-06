@@ -42,7 +42,7 @@ export function SharePostBtn() {
   return (
     <div className="btn-container z-20">
       <button
-        className="btn-body relative flex justify-center items-center btn-border-blue-soft interactive-orange-strong h-10 px-4 "
+        className="btn-body relative flex justify-center items-center btn-border-blue-soft interactive-blue-soft h-10 px-4 "
         onClick={copyToClipboard}
       >
         <div className="btn-icon-container w-[22px]">

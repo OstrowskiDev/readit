@@ -2,7 +2,6 @@
 
 import { ReplyBtn } from '@/ui/buttons/ReplyBtn'
 import { ShareCommentBtn } from '@/ui/buttons/ShareCommentBtn'
-import { LikeCount } from '@/ui/utils/LikeCount'
 import { CommentDislikeBtn } from '../buttons/CommentDislikeBtn'
 import { CommentLikeBtn } from '../buttons/CommentLikeBtn'
 import { CommentMenuBtn } from '../buttons/CommentMenuBtn'
@@ -10,6 +9,7 @@ import { CommentEditForm } from './CommentEditForm'
 import { CommentReplyForm } from './CommentReplyForm'
 import { useSession } from 'next-auth/react'
 import { useCommentContext } from '@/lib/context/CommentContextProvider'
+import { CommentLikeCount } from './CommentLikeCount'
 
 export function CommentButtons() {
   const { comment } = useCommentContext()
@@ -23,7 +23,7 @@ export function CommentButtons() {
           className="comment-btn-like"
           styles={'w-11 h-11 px-[10px] py-2'}
         />
-        <LikeCount className="comment-likes-num" />
+        <CommentLikeCount className="comment-likes-num" />
         <CommentDislikeBtn
           className="comment-btn-dislike"
           styles={'w-11 h-11 px-[10px] pt-[9px] pb-[7px]'}
