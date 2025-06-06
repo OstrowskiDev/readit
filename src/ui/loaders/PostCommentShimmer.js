@@ -1,19 +1,36 @@
 import './shimmerStyles.css'
 import { CommentShimmer } from './CommentShimmer'
+import { ShimmerArc } from './ShimmerArc'
 
 export function PostCommentShimmer() {
   return (
-    <div className="relative w-full">
-      <div className="post-shimmer shimmer-border relative flex flex-col justify-between py-1 px-4 my-4 glass-blue-soft rounded-md ">
+    <div className="post-shimmer-container relative w-full">
+      <div className="post-shimmer shimmer-border relative flex flex-col justify-between py-1 px-4 my-4 glass-blue-soft rounded-xl ">
         {/* Post shimmer border */}
         <div className="shimmer-border-line horizontal-top"></div>
         <div className="shimmer-border-line horizontal-bottom"></div>
         <div className="shimmer-border-line vertical-left"></div>
         <div className="shimmer-border-line vertical-right"></div>
-        <div className="shimmer-border-circle top-right"></div>
-        <div className="shimmer-border-circle top-left"></div>
-        <div className="shimmer-border-circle bottom-right"></div>
-        <div className="shimmer-border-circle bottom-left"></div>
+        <ShimmerArc
+          radius={10}
+          strokeWidth={1}
+          className="shimmer-arc top-right below-md:hidden"
+        />
+        <ShimmerArc
+          radius={10}
+          strokeWidth={1}
+          className="shimmer-arc top-left below-md:hidden"
+        />
+        <ShimmerArc
+          radius={10}
+          strokeWidth={1}
+          className="shimmer-arc bottom-right below-md:hidden"
+        />
+        <ShimmerArc
+          radius={10}
+          strokeWidth={1}
+          className="shimmer-arc bottom-left below-md:hidden"
+        />
 
         {/* Post header */}
         <div className="post-shimmer-header relative right-0 flex items-center mt-3">

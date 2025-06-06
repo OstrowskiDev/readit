@@ -4,7 +4,7 @@ import './shimmerStyles.css'
 export function PostShimmer() {
   return (
     <div className="post-shimmer-container relative w-full">
-      <div className="post-shimmer shimmer-border relative flex flex-col justify-between h-[400px] py-1 px-4 md:my-4">
+      <div className="post-shimmer shimmer-border glass-blue-soft relative flex flex-col justify-between h-[400px] py-1 px-4 md:my-4">
         {/* Post shimmer border */}
         <div className="shimmer-border-line horizontal-top"></div>
         <div className="shimmer-border-line horizontal-bottom"></div>

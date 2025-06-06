@@ -48,36 +48,36 @@ export function getAvatarColors(color) {
 
   switch (color) {
     case 'red':
-      bgColor = 'rgb(254 202 202)'
-      borderColor = 'rgb(252 165 165)'
+      bgColor = 'rgb(240, 181, 195)'
+      borderColor = 'rgb(255, 144, 170)'
       break
     case 'orange':
-      bgColor = 'rgb(254 215 170)'
-      borderColor = 'rgb(253 186 116)'
+      bgColor = 'rgb(254, 215, 170)'
+      borderColor = 'rgb(253, 186, 116)'
       break
     case 'yellow':
-      bgColor = 'rgb(254 240 138)'
-      borderColor = 'rgb(253 224 71)'
+      bgColor = 'rgb(255, 253, 237)'
+      borderColor = 'rgb(255, 228, 19)'
       break
     case 'green':
-      bgColor = 'rgb(187 247 208)'
-      borderColor = 'rgb(134 239 172)'
+      bgColor = 'rgb(187, 247, 208)'
+      borderColor = 'rgb(134, 239, 172)'
       break
     case 'blue':
-      bgColor = 'rgb(191 219 254)'
-      borderColor = 'rgb(147 197 253)'
+      bgColor = 'rgb(221, 249, 252)'
+      borderColor = 'rgb(182, 246, 255)'
       break
     case 'pink':
-      bgColor = 'rgb(251 207 232)'
-      borderColor = 'rgb(249 168 212)'
+      bgColor = 'rgb(251, 207, 232)'
+      borderColor = 'rgb(249, 168, 212)'
       break
     case 'violet':
-      bgColor = 'rgb(221 214 254)'
-      borderColor = 'rgb(196 181 253)'
+      bgColor = 'rgb(203, 163, 255)'
+      borderColor = 'rgb(173, 113, 252)'
       break
     case 'background-blue':
-      bgColor = 'rgb(59 130 246)'
-      borderColor = 'rgb(255 255 255)'
+      bgColor = 'rgb(59, 130, 246)'
+      borderColor = 'rgb(255, 255, 255)'
       fillColor = 'FFFFFF'
       break
     default:
