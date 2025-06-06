@@ -69,25 +69,29 @@ export function CommentEditForm() {
 
   function SubmitBtn() {
     return (
-      <button
-        className="comment-edit-submit-btn btn-blue py-1 px-6 mx-2 my-1"
-        type="button"
-        onClick={onSubmit}
-      >
-        Edit
-      </button>
+      <div className="wrapper-orange-btn-bg mx-2 my-1">
+        <button
+          className="comment-edit-submit-btn button-orange-strong py-1 px-6"
+          type="button"
+          onClick={onSubmit}
+        >
+          Edit
+        </button>
+      </div>
     )
   }
 
   function CancelBtn() {
     return (
-      <button
-        className="comment-edit-cancel-btn btn-gray py-1 px-2 my-1"
-        type="button"
-        onClick={onCancelClick}
-      >
-        Cancel
-      </button>
+      <div className="wrapper-orange-btn-bg my-1">
+        <button
+          className="comment-edit-cancel-btn button-silver py-1 px-2"
+          type="button"
+          onClick={onCancelClick}
+        >
+          Cancel
+        </button>
+      </div>
     )
   }
 
@@ -99,12 +103,12 @@ export function CommentEditForm() {
   return (
     <>
       {isEditVisible && (
-        <div className="comment-edit-form change-border-on-child-focus p-2 ml-4 mr-1 my-1 bg-white border border-slate-300 rounded-lg">
+        <div className="comment-edit-form change-border-on-child-focus btn-border-blue-soft p-2 ml-4 mr-1 my-1 rounded-lg">
           <form onClick={(e) => e.preventDefault()}>
             <textarea
               id="content"
               name="content"
-              className="comment-edit-input w-full border-none focus:outline-none"
+              className="comment-edit-input bg-app-blue/0 text-app-blue-text w-full border-none focus:outline-none overflow-y-auto resize-none"
               placeholder="Add yor comment"
               value={input}
               onChange={(e) => setInput(e.target.value)}
