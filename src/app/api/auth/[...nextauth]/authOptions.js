@@ -2,7 +2,7 @@ import { handleFailedLogin } from '@/lib/actions/user'
 import { validateSignIn } from '@/lib/security/validateSignIn'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import bcrypt from 'bcrypt'
-import { getUserByEmail } from '@/lib/actions/auth'
+import { getUserForCredentialsAuth } from '@/lib/actions/auth'
 
 export const authOptions = {
   pages: {
@@ -12,7 +12,7 @@ export const authOptions = {
   callbacks: {
     jwt({ token, user, trigger, session }) {
       if (user) {
-        token.userId = user._id
+        token.userId = user.id
         token.name = user.name
         token.avatar = user.avatar
       }
@@ -22,13 +22,13 @@ export const authOptions = {
       if (trigger === 'update' && session.name) {
         token.name = session.name
       }
-
       return token
     },
     session({ session, token }) {
       session.user.id = token.userId
       session.user.name = token.name
       session.user.avatar = token.avatar
+
       return session
     },
   },
@@ -51,7 +51,7 @@ export const authOptions = {
         const isInputValid = validateSignIn({ email, password })
         if (!isInputValid) return null
 
-        const user = await getUserByEmail(credentials.email)
+        const user = await getUserForCredentialsAuth(credentials.email)
         if (!user) return null
 
         if (user.is_active === false) {
@@ -64,7 +64,6 @@ export const authOptions = {
 
         const match = await bcrypt.compare(credentials.password, user.password)
         if (!match) {
-          console.log('authorize func handleFailedLogin')
           handleFailedLogin(email)
         }
 
