@@ -1,11 +1,11 @@
-import { generateActivationEmailBody } from '../brevo/generateActivationEmailBody'
+import { generatePasswordResetBody } from './generatePasswordResetBody'
 
-export async function sendActivationEmail(name, email, activationToken) {
+export async function sendPasswordResetEmail(email, recoveryToken, name) {
   const API_KEY = process.env.BREVO_API_KEY
   const emailFrom = process.env.BREVO_EMAIL_FROM
 
   try {
-    const body = generateActivationEmailBody(name, activationToken)
+    const body = generatePasswordResetBody(name, recoveryToken)
 
     const res = await fetch('https://api.brevo.com/v3/smtp/email', {
       method: 'POST',
@@ -20,7 +20,7 @@ export async function sendActivationEmail(name, email, activationToken) {
           name: 'Ostrowski Dev',
         },
         to: [{ email, name }],
-        subject: 'Activate Your Account on ReadIt App',
+        subject: 'ReadIt App - Password Recovery',
         htmlContent: body,
       }),
     })
@@ -29,7 +29,7 @@ export async function sendActivationEmail(name, email, activationToken) {
       throw new Error(`Brevo API error: ${res.status} ${res.statusText}`)
     }
   } catch (error) {
-    console.error('Error sending email:', error)
+    console.error('Error sending password recovery email:', error)
     throw error
   }
 }

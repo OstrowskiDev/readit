@@ -5,7 +5,7 @@ const urlPortfolio = env.URL_PORTFOLIO
 const urlAppPage = env.URL_READIT_APP
 const appUrl = env.NEXT_PUBLIC_APP_URL
 
-export function generateEmailBody(username, recovery_token) {
+export function generatePasswordResetBody(username, recovery_token) {
   const urlActivateAccount = `${appUrl}/account/reset-password?recovery_token=${recovery_token}`
 
   return `

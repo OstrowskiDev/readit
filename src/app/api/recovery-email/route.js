@@ -1,6 +1,6 @@
 import { addRecoveryToken } from '@/lib/actions/user'
 import { validateEmail } from '@/lib/security/validateEmail'
-import sendPasswordResetEmail from '@/services/sendgrid/sendPasswordResetEmail'
+import { sendPasswordResetEmail } from '@/services/brevo/sendPasswordResetEmail'
 
 export async function POST(req) {
   try {
