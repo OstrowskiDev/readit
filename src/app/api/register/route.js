@@ -1,8 +1,8 @@
 import { validateSignUp } from '@/lib/security/validateSignUp'
 import { hashPassword } from '@/lib/security/hashPassword'
 import { createUser } from '@/lib/actions/user'
-import { sendActivationEmail } from '@/services/sendgrid/sendActivationEmail'
 import { hasErrors } from '@/lib/security/hasErrors'
+import { sendActivationEmail } from '@/services/brevo/sendActivationEmail'
 
 export async function POST(req) {
   try {
@@ -23,7 +23,7 @@ export async function POST(req) {
     }
 
     const activationToken = results.activation_token
-    sendActivationEmail(name, email, activationToken)
+    await sendActivationEmail(name, email, activationToken)
 
     return new Response(
       JSON.stringify({ message: 'User registered successfully' }),

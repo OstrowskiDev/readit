@@ -5,7 +5,7 @@ const urlPortfolio = env.URL_PORTFOLIO
 const urlAppPage = env.URL_READIT_APP
 const appUrl = env.NEXT_PUBLIC_APP_URL
 
-export function generateEmailBody(username, activation_token) {
+export function generateActivationEmailBody(username, activation_token) {
   const urlActivateAccount = `${appUrl}/api/activate-account?activation_token=${activation_token}`
 
   return `

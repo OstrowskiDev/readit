@@ -15,9 +15,9 @@ import { NextResponse } from 'next/server'
 import { getToken } from 'next-auth/jwt'
 import { RateLimiterMemory } from 'rate-limiter-flexible'
 
-// protection for REGISTER route (60 registration per hour? registration requires email confirmation so being strict here is not necessarly needed)
+// protection for REGISTER route (60 registration per hour? registration requires email confirmation so being strict here is not necessary needed)
 
-// 1. Global protection from DDOS at 1k / mintue
+// 1. Global protection from DDOS at 1k / minute
 const limiterGlobalDDOS = new RateLimiterMemory({
   points: 5000,
   duration: 60,
@@ -57,7 +57,7 @@ export async function middleware(request) {
   const forwarded = request.headers.get('x-forwarded-for')
   const ip = forwarded ? forwarded.split(',')[0] : request.ip || undefined
 
-  // 1. Global protection from DDOS at 1k / mintue
+  // 1. Global protection from DDOS at 1k / minute
   try {
     await limiterGlobalDDOS.consume('global')
   } catch {

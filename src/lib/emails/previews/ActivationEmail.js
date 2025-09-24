@@ -22,7 +22,7 @@ import { LogoIco } from '@/ui/icons/LogoIco'
 //    text-decoration: none;
 // 4. rem needs to be converted to px with 1rem = 16px
 
-export default function generateEmailBody(username, activation_token) {
+export default function ActivationEmailBody(username, activation_token) {
   const urlGitHubRepo = env.URL_GITHUB_PROJECT_REPO
   const urlPortfolio = env.URL_PORTFOLIO
   const urlAppPage = env.URL_READIT_APP
