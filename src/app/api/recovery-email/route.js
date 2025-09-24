@@ -21,7 +21,7 @@ export async function POST(req) {
     }
     const recoveryToken = results.recovery_token
     const userName = results.name
-    sendPasswordResetEmail(email, recoveryToken, userName)
+    await sendPasswordResetEmail(email, recoveryToken, userName)
     return new Response(JSON.stringify('Recovery email sent successfully'), {
       status: 200,
     })
