@@ -34,7 +34,6 @@ export function PostDislikeBtn({ styles }) {
   }, [response])
 
   async function onClick(event) {
-    event.preventDefault()
     handlePostOptimistically()
     const serverResponse = await handlePostLike(postId, 'dislike')
     setResponse(serverResponse)
@@ -70,10 +69,12 @@ export function PostDislikeBtn({ styles }) {
   }
 
   return (
-    <form className="post-dislike-button relative ml-[1px] interactive-blue-soft rounded-xl border border-app-blue/0 z-20">
+    <div className="post-dislike-button relative ml-[1px] interactive-blue-soft rounded-xl border border-app-blue/0 z-20">
       <button
         className={styles + ' flex justify-center items-center'}
-        type="submit"
+        aria-label="Dislike this post"
+        aria-pressed={isAlreadyDisliked}
+        type="button"
         onClick={onClick}
       >
         {isAlreadyDisliked ? (
@@ -82,6 +83,6 @@ export function PostDislikeBtn({ styles }) {
           <DislikeIco className={'text-app-blue-text'} />
         )}
       </button>
-    </form>
+    </div>
   )
 }

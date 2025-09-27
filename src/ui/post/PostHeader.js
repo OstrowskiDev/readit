@@ -39,7 +39,6 @@ export function PostHeader({ author }) {
             {isPostAuthor && <DeletePostBtn postId={postId} />}
             {isPostAuthor && <EditPostBtn postId={postId} />}
             <PostMenuBtn
-              postId={postId}
               isPostMenuVis={isPostMenuVis}
               setIsPostMenuVis={setIsPostMenuVis}
             />

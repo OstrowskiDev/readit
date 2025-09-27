@@ -10,6 +10,10 @@ export function CreateBtn({ isCreateFormVis, setIsCreateFormVis }) {
   return (
     <button
       className="create-new-post-button button-orange-strong h-10 px-4 ml-2 just-md:mr-2 md:mr-0"
+      aria-label={
+        isCreateFormVis ? 'Close create post form' : 'Open create post form'
+      }
+      type="button"
       onClick={onClick}
     >
       Create +

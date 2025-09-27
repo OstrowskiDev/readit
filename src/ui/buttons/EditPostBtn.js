@@ -5,22 +5,32 @@ import { EditIco } from '../icons/EditIco'
 import { usePathname, useRouter } from 'next/navigation'
 
 export function EditPostBtn({ postId }) {
-  const { setIsEditFormVisible } = usePostContext()
+  const { isEditFormVisible, setIsEditFormVisible } = usePostContext()
   const pathname = usePathname()
   const router = useRouter()
+  const userOnPostPage = pathname === `/posts/post/${postId}`
 
-  function onClick(e) {
-    if (pathname === `/posts/post/${postId}`) {
+  function onClick() {
+    if (userOnPostPage) {
       setIsEditFormVisible((prevValue) => !prevValue)
     } else {
-      e.preventDefault()
       router.push(`/posts/post/${postId}?editPost=true`)
     }
   }
+
+  const ariaProps = userOnPostPage
+    ? {
+        'aria-expanded': isEditFormVisible,
+        'aria-label': 'Open edit post form',
+      }
+    : { 'aria-label': 'Navigate to edit post form' }
+
   return (
     <div className="edit-post-btn-container mt-[1px]">
       <button
         onClick={onClick}
+        {...ariaProps}
+        type="button"
         className="edit-post-btn interactive-blue-soft w-10 p-2 flex justify-center items-center rounded-md"
       >
         <EditIco className={'text-app-blue-text'} />

@@ -13,7 +13,6 @@ export function EditCommentBtn({
   const pathname = usePathname()
 
   function onEditClick(event) {
-    event.preventDefault()
     if (pathname === '/posts/favorites') {
       const href = `/posts/post/${comment.rootPostId}?showEditForm=true#${comment._id}`
       router.push(href)

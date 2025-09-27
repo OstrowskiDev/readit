@@ -24,6 +24,7 @@ export function FavoritesBtn({
   return (
     <button
       className="menu-opt-save-btn interactive-blue-soft flex items-center px-8 py-2"
+      aria-label="Add to favorites"
       type="button"
       onClick={onFavoriteSubmit}
     >

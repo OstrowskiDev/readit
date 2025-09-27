@@ -35,7 +35,6 @@ export function DeletePostBtn({ postId }) {
   }
 
   async function onClick(event) {
-    event.preventDefault()
     optimisticUpdate()
     const response = await deletePost(postId)
     setResponse(response)
@@ -48,7 +47,8 @@ export function DeletePostBtn({ postId }) {
     <div className="delete-post-btn-container">
       <button
         className="delete-post-btn interactive-blue-soft w-[38px] p-2 flex justify-center items-center rounded-md"
-        type="submit"
+        aria-label="Delete post"
+        type="button"
         onClick={onClick}
       >
         <DeleteIco className={'text-app-blue-text'} />

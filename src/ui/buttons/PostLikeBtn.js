@@ -74,6 +74,8 @@ export function PostLikeBtn({ styles }) {
       <button
         className={styles + ' flex justify-center items-center'}
         type="submit"
+        aria-label="Like this post"
+        aria-pressed={isAlreadyLiked}
         onClick={onClick}
       >
         {isAlreadyLiked ? (

@@ -7,7 +7,7 @@ export function DeleteCommentBtn({ onDeleteSubmit }) {
     return (
       <button
         className="menu-opt-delete-btn flex items-center px-8 py-2 hover:bg-app-blue/20"
-        type="submit"
+        type="button"
         onClick={onDeleteSubmit}
       >
         <div className="menu-opt-delete-ico w-6 m-1 flex justify-center items-center">
