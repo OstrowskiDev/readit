@@ -8,8 +8,7 @@ export function CommentPostBtn({ setIsCommFormVisible }) {
   const router = useRouter()
   const pathname = usePathname()
 
-  function handleClick(event) {
-    event.preventDefault()
+  function handleClick() {
     if (!session) return signIn()
     if (pathname !== `/posts/post/${postId}`) {
       router.push(`/posts/post/${postId}?createComment=true`)
@@ -22,8 +21,10 @@ export function CommentPostBtn({ setIsCommFormVisible }) {
   return (
     <div className="create-comment-btn-container relative btn-border-blue-soft interactive-blue-soft text-app-blue-text h-10 mt-[1px] z-20">
       <button
-        onClick={handleClick}
         className="create-comment-btn-body flex justify-center items-center px-6 pt-[5px]"
+        aria-label="Submit comment"
+        type="button"
+        onClick={handleClick}
       >
         Comment
       </button>

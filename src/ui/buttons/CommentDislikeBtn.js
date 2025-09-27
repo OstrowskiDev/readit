@@ -19,7 +19,6 @@ export function CommentDislikeBtn({ styles }) {
   const { toastFunctions: toast } = useToastContext()
   const userId = session?.user?.id
   const isAlreadyDisliked = comment.dislikes?.includes(userId)
-  const collection = 'comments'
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
@@ -32,8 +31,7 @@ export function CommentDislikeBtn({ styles }) {
     }
   }, [response])
 
-  async function onClick(event) {
-    event.preventDefault()
+  async function onClick() {
     handleCommentOptimistically()
     const serverResponse = await handleCommentLike(commentId, 'dislike')
     setResponse(serverResponse)
@@ -69,12 +67,14 @@ export function CommentDislikeBtn({ styles }) {
   }
 
   return (
-    <form className="comment-dislike-btn-container interactive-blue-soft ml-[1px] rounded-md">
+    <div className="comment-dislike-btn-container interactive-blue-soft ml-[1px] rounded-md">
       <button
         className={
           'comment-dislike-btn ' + styles + ' flex justify-center items-center'
         }
-        type="submit"
+        aria-label="Dislike this comment"
+        aria-pressed={isAlreadyDisliked}
+        type="button"
         onClick={onClick}
       >
         {isAlreadyDisliked ? (
@@ -83,6 +83,6 @@ export function CommentDislikeBtn({ styles }) {
           <DislikeIco className={'text-app-blue-text'} />
         )}
       </button>
-    </form>
+    </div>
   )
 }

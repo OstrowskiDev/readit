@@ -32,7 +32,6 @@ export function CommentLikeBtn({ styles }) {
   }, [response])
 
   async function onClick(event) {
-    event.preventDefault()
     if (!session) return signIn()
     handleCommentOptimistically()
     const serverResponse = await handleCommentLike(commentId, 'like')
@@ -68,12 +67,14 @@ export function CommentLikeBtn({ styles }) {
   }
 
   return (
-    <form className="comment-like-btn-container interactive-blue-soft rounded-md">
+    <div className="comment-like-btn-container interactive-blue-soft rounded-md">
       <button
         className={
           'comment-like-btn ' + styles + ' flex justify-center items-center'
         }
-        type="submit"
+        aria-label="Like this comment"
+        aria-pressed={isAlreadyLiked}
+        type="button"
         onClick={onClick}
       >
         {isAlreadyLiked ? (
@@ -82,6 +83,6 @@ export function CommentLikeBtn({ styles }) {
           <LikeIco className={'text-app-blue-text'} />
         )}
       </button>
-    </form>
+    </div>
   )
 }

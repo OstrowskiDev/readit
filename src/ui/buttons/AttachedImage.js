@@ -38,6 +38,7 @@ export function AttachedImage({
               renderedImage.name,
             )} ${fileSize(renderedImage.size)}`}</p>
             <button
+              aria-label="Remove attached image"
               className="attached-image-disattach ml-2 px-1 mb-2 text-white cursor-pointer"
               onClick={handleClick}
             >

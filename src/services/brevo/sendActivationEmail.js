@@ -29,7 +29,7 @@ export async function sendActivationEmail(name, email, activationToken) {
       throw new Error(`Brevo API error: ${res.status} ${res.statusText}`)
     }
   } catch (error) {
-    console.error('Error sending email:', error)
+    console.error('Error sending activation email:', error)
     throw error
   }
 }

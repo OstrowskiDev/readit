@@ -19,6 +19,7 @@ export function AuthBtn() {
       {session ? (
         <button
           onClick={handleSighOut}
+          aria-label="Sing out"
           className="nav-button sign-out-button glass-blue-soft interactive-orange-strong py-4"
         >
           Sign out
@@ -26,6 +27,7 @@ export function AuthBtn() {
       ) : (
         <button
           onClick={handleSignIn}
+          aria-label="Sing in"
           className="nav-button sign-in-button glass-blue-soft interactive-orange-strong py-4"
         >
           Sign in

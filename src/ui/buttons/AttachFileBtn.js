@@ -3,9 +3,18 @@
 import { signIn, useSession } from 'next-auth/react'
 import { AttachIco } from '../icons/AttachIco'
 import validateImageFileClient from '@/lib/security/validateImageFileClient'
+import { useRef } from 'react'
 
 export function AttachFileBtn({ setImageFile, setResponse, setImageAction }) {
   const { data: session } = useSession()
+  const inputRef = useRef(null)
+
+  function handleKeyDown(event) {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault()
+      inputRef.current.click()
+    }
+  }
 
   async function handleChange(event) {
     if (!session) return signIn()
@@ -37,11 +46,18 @@ export function AttachFileBtn({ setImageFile, setResponse, setImageAction }) {
   }
 
   return (
-    <label className="attach-image-btn wrapper-orange-btn-bg ml-2 mt-1">
+    <label
+      role="button"
+      aria-label="Attach image file"
+      tabIndex={0}
+      onKeyDown={handleKeyDown}
+      className="attach-image-btn wrapper-orange-btn-bg ml-2 mt-1"
+    >
       <div className="attach-image-icon flex items-center button-orange-strong h-9 w-8 px-2 cursor-pointer">
         <AttachIco />
       </div>
       <input
+        ref={inputRef}
         className="hidden"
         type="file"
         accept="image/*"
