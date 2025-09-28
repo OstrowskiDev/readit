@@ -24,8 +24,7 @@ export function ShareCommentBtn() {
     }
   }, [response])
 
-  function copyToClipboard(event) {
-    event.preventDefault()
+  function copyToClipboard() {
     navigator.clipboard
       .writeText(commentUrl)
       .then(() => {
@@ -43,6 +42,8 @@ export function ShareCommentBtn() {
     <div className="btn-container mt-[1px] rounded-md interactive-blue-soft">
       <button
         className="px-2 h-11 w-[44px] xs:w-[80px]"
+        aria-label="Share comment - copy link to clipboard"
+        type="button"
         onClick={copyToClipboard}
       >
         <div className="btn-icon-container w-[24px] xs:w-full">

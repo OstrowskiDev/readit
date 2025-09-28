@@ -148,6 +148,7 @@ export function PostReplyForm({ isCommFormVisible, setIsCommFormVisible }) {
               onCancelClick={onCancelClick}
               onSubmit={onSubmit}
               handleEditorToggle={handleEditorToggle}
+              toggleTextEditor={toggleTextEditor}
             />
           </form>
         </div>

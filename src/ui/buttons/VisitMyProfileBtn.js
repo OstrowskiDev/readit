@@ -10,6 +10,7 @@ export function VisitMyProfileBtn({ authorId }) {
   return (
     <button
       onClick={onFollowClick}
+      type="button"
       className="visit-btn-container flex justify-center items-center btn-border-blue-strong interactive-orange-soft w-80 h-10 px-4 "
     >
       <div className="visit-btn-icon-container w-[21px]">

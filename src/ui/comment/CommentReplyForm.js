@@ -172,7 +172,10 @@ export function CommentReplyForm({ parentType }) {
             />
             <div className="comment-reply-btns flex justify-end">
               <CancelButton />
-              <ToggleTextEditorBtn handleEditorToggle={handleEditorToggle} />
+              <ToggleTextEditorBtn
+                handleEditorToggle={handleEditorToggle}
+                toggleTextEditor={toggleTextEditor}
+              />
               <SubmitButton />
             </div>
           </form>

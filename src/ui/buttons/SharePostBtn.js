@@ -24,7 +24,6 @@ export function SharePostBtn() {
   }, [response])
 
   function copyToClipboard(event) {
-    event.preventDefault()
     navigator.clipboard
       .writeText(postUrl)
       .then(() => {
@@ -43,6 +42,8 @@ export function SharePostBtn() {
     <div className="btn-container z-20">
       <button
         className="btn-body relative flex justify-center items-center btn-border-blue-soft interactive-blue-soft h-10 px-4 "
+        aria-label="Share post - copy link to clipboard"
+        type="button"
         onClick={copyToClipboard}
       >
         <div className="btn-icon-container w-[22px]">
