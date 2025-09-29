@@ -1,7 +1,7 @@
 /* Shimmer styles below: */
 :root {
-  --shimmer-color-1: #93c5fd;
-  --shimmer-color-2: #bfdbfe;
+  --shimmer-color-1: hsl(214, 50%, 60%);
+  --shimmer-color-2: hsl(214, 50%, 75%);
 }
 
 @keyframes shimmer {
@@ -19,7 +19,12 @@
   animation-iteration-count: infinite;
   animation-name: shimmer;
   animation-timing-function: linear;
-  background: linear-gradient(to right, var(--shimmer-color-2) 8%, var(--shimmer-color-1) 18%, var(--shimmer-color-2) 33%);
+  background: linear-gradient(
+    to right,
+    var(--shimmer-color-2) 0%,
+    var(--shimmer-color-1) 50%,
+    var(--shimmer-color-2) 99%
+  );
   background-size: 800px 104px;
   position: relative;
 }
@@ -28,7 +33,12 @@
 .shimmer-border-line {
   position: absolute;
   animation: shimmer 1.25s infinite linear;
-  background: linear-gradient(to right, var(--shimmer-color-2) 8%, var(--shimmer-color-1) 18%, #eeeeee 33%);
+  background: linear-gradient(
+    to right,
+    var(--shimmer-color-2) 0%,
+    var(--shimmer-color-1) 50%,
+    var(--shimmer-color-2) 99%
+  );
 }
 
 .horizontal-top {
