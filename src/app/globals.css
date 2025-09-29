@@ -9,33 +9,37 @@
 /***************** App Background *****************/
 
 body {
-  background-image: url('/backgrounds/cosmos-blue.jpg'); 
+  background-image: url('/backgrounds/cosmos-blue.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  background-attachment: fixed; 
-  background-color: #000; 
+  background-attachment: fixed;
+  background-color: #000;
 }
-
 
 /********************* Fonts *********************/
 
-h1, h2, h3, h4, h5, h6, p, ul, li {
-  @apply text-app-blue-text
+/* prettier-ignore */
+h1, h2, h3, h4, h5, h6, p, ul, li, label {
+  @apply text-app-blue-text;
 }
 
-body, .font-rubik {
+body,
+.font-rubik {
   font-family: var(--font-rubik), sans-serif;
   line-height: 1.6;
 }
 
-h1, h2, h3, h4, h5, h6, .font-orbitron {
+/* prettier-ignore */
+h1, h2, h3, h4, h5, h6,
+.font-orbitron {
   font-family: var(--font-orbitron), sans-serif;
   font-weight: 400;
   letter-spacing: 0.03em;
 }
 
-button, .btn-orbitron {
+button,
+.btn-orbitron {
   font-family: var(--font-orbitron), sans-serif;
   letter-spacing: 0.03em;
   font-weight: 500;
@@ -47,11 +51,16 @@ button, .btn-orbitron {
   font-weight: 700;
 }
 
-a, .anchor-color {
+a,
+.anchor-color {
   color: #ea580c;
 }
 
-a:hover, .anchor-color:hover, .btn-color-hover:hover, .btn-color-hover:hover p, .btn-color-hover:hover svg path {
+a:hover,
+.anchor-color:hover,
+.btn-color-hover:hover,
+.btn-color-hover:hover p,
+.btn-color-hover:hover svg path {
   color: var(--tw-text-orange);
   fill: var(--tw-text-orange);
 }
@@ -84,7 +93,6 @@ html {
 .grow-2 {
   flex-grow: 2;
 }
-
 
 .max-lines-3 {
   display: -webkit-box;
@@ -144,19 +152,18 @@ html {
 
 .circle-quarter {
   border-radius: 50%;
-  border-color: rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) rgb(163, 244, 255) rgba(0, 0, 0, 0);
+  border-color: rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) rgb(163, 244, 255)
+    rgba(0, 0, 0, 0);
   transform: rotate(45deg);
 }
 
 .transition-height {
   transition: height 0.5s ease-in-out;
-
 }
 
 .will-change-max-height {
   will-change: max-height;
 }
-
 
 /* Toast styles below: */
 .toast {
@@ -263,7 +270,6 @@ mark.spoiler:hover {
   margin: 1em 0;
 }
 
-
 /* React Quill Overwrites */
 
 .ql-editor p {
@@ -277,8 +283,8 @@ div.ql-editor {
 }
 
 .ql-editor {
-  font-size: 1rem !important; 
-  line-height: 1.5 !important; 
+  font-size: 1rem !important;
+  line-height: 1.5 !important;
 }
 
 .ql-container {
@@ -301,13 +307,13 @@ div.ql-editor {
 }
 
 .ql-toolbar * {
-  color: #A3F4FF;
+  color: #a3f4ff;
   stroke: currentColor !important;
 }
 
 .ql-toolbar button:hover svg *,
 .ql-toolbar .dots-btn:hover {
-  color: #FA7D3A !important;
+  color: #fa7d3a !important;
 }
 
 .ql-toolbar button {
@@ -315,7 +321,6 @@ div.ql-editor {
   width: 32px !important;
   height: 32px !important;
 }
-
 
 /***************************** Tailwind classes: ****************************/
 
@@ -326,11 +331,11 @@ div.ql-editor {
   .glass-blue-weak {
     @apply bg-app-blue/5 btn-border-blue-weak;
   }
- .glass-blue-soft {
+  .glass-blue-soft {
     @apply btn-border-blue-soft;
     background-color: rgba(1, 30, 62, 0.7);
   }
- .glass-blue-normal {
+  .glass-blue-normal {
     @apply btn-border-blue-soft;
     background-color: rgba(1, 30, 62, 0.3);
   }
@@ -369,7 +374,8 @@ div.ql-editor {
 
 .input-element {
   @apply backdrop-blur-md rounded-md;
-  box-shadow: 0 0 40px 5px rgba(0, 0, 0,, 0.3), inset 0 0 40px 5px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 0 40px 5px rgba(0, 0, 0, , 0.3),
+    inset 0 0 40px 5px rgba(0, 0, 0, 0.15);
   background: rgba(163, 244, 255, 0.05);
 }
 
@@ -382,69 +388,84 @@ div.ql-editor {
 /* this style targets orange button wrappers that cover app background */
 /* so all orange buttons aplhas will yield the same colors */
 .wrapper-orange-btn-bg {
-  background: #01031a; 
+  background: #01031a;
   border-radius: 6px;
 }
 
 @layer components {
   .button-orange-strong {
     @apply border border-app-orange-alpha/60 backdrop-blur-md rounded-md shadow-xl text-app-orange-100;
-    box-shadow: inset 0 0 12px 2px rgba(0,0,0,0.25);
-    background: radial-gradient(ellipse at 50% 100%, 
-      rgba(255, 183, 115, 0.7) 0%, 
-      rgba(255, 183, 115, 0.25) 100%);
-    text-shadow: 2px 2px 3px rgba(0,0,0,0.6);
+    box-shadow: inset 0 0 12px 2px rgba(0, 0, 0, 0.25);
+    background: radial-gradient(
+      ellipse at 50% 100%,
+      rgba(255, 183, 115, 0.7) 0%,
+      rgba(255, 183, 115, 0.25) 100%
+    );
+    text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.6);
   }
 
   .button-orange-strong:hover {
     @apply border-app-orange-alpha/80 shadow-2xl;
-    box-shadow: 0 4px 24px 4px rgba(255,183,115,0.25), inset 0 0 16px 4px rgba(0,0,0,0.30);
-    background: radial-gradient(ellipse at 50% 80%, 
-      rgba(255, 183, 115, 0.85) 0%, 
-      rgba(255, 183, 115, 0.35) 100%);
-    text-shadow: 3px 3px 6px rgba(0,0,0,0.7);
+    box-shadow: 0 4px 24px 4px rgba(255, 183, 115, 0.25),
+      inset 0 0 16px 4px rgba(0, 0, 0, 0.3);
+    background: radial-gradient(
+      ellipse at 50% 80%,
+      rgba(255, 183, 115, 0.85) 0%,
+      rgba(255, 183, 115, 0.35) 100%
+    );
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.7);
   }
 
   .button-orange-strong:active {
     @apply bg-app-orange-alpha/10 border-app-orange-alpha/60 shadow-xl text-app-orange-alpha;
-    box-shadow: inset 0 0 5px 4px rgba(255,183,115,0.40);
-    background: radial-gradient(ellipse at 50% 90%, 
-      rgba(255, 183, 115, 0.40) 0%, 
-      rgba(255, 183, 115, 0.20) 100%);
+    box-shadow: inset 0 0 5px 4px rgba(255, 183, 115, 0.4);
+    background: radial-gradient(
+      ellipse at 50% 90%,
+      rgba(255, 183, 115, 0.4) 0%,
+      rgba(255, 183, 115, 0.2) 100%
+    );
     text-shadow: none;
   }
-  
-    .button-silver {
+
+  .button-silver {
     @apply border border-gray-500/60 backdrop-blur-md rounded-md shadow-xl text-gray-100;
-    box-shadow: inset 0 0 12px 2px rgba(0,0,0,0.25);
-    background: radial-gradient(ellipse at 50% 100%, 
-      rgba(107, 114, 128, 0.9) 0%, 
-      rgba(107, 114, 128, 0.2) 100%);
-    text-shadow: 2px 2px 3px rgba(0,0,0,0.6);
+    box-shadow: inset 0 0 12px 2px rgba(0, 0, 0, 0.25);
+    background: radial-gradient(
+      ellipse at 50% 100%,
+      rgba(107, 114, 128, 0.9) 0%,
+      rgba(107, 114, 128, 0.2) 100%
+    );
+    text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.6);
   }
   .button-silver:hover {
     @apply border-gray-500 shadow-2xl;
-    box-shadow: 0 4px 24px 4px rgba(0,0,0,0.3), inset 0 0 16px 6px rgba(0,0,0,0.4);
-    background: radial-gradient(ellipse at 50% 80%, 
-      rgba(107, 114, 128, 0.8) 0%, 
-      rgba(107, 114, 128, 0.2) 100%);
-    text-shadow: 3px 3px 6px rgba(0,0,0,0.7);
+    box-shadow: 0 4px 24px 4px rgba(0, 0, 0, 0.3),
+      inset 0 0 16px 6px rgba(0, 0, 0, 0.4);
+    background: radial-gradient(
+      ellipse at 50% 80%,
+      rgba(107, 114, 128, 0.8) 0%,
+      rgba(107, 114, 128, 0.2) 100%
+    );
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.7);
   }
   .button-silver:active {
     @apply border-gray-600 shadow-xl text-gray-950;
-    box-shadow: 0 2px 2px 2px rgba(255,255,255,0.05), inset 0 0 5px 4px rgba(0,0,0,0.2);
-    background: radial-gradient(ellipse at 50% 90%, 
-      rgba(107, 114, 128, 0.7) 0%, 
-      rgba(0, 0, 0, 0.3) 100%);
+    box-shadow: 0 2px 2px 2px rgba(255, 255, 255, 0.05),
+      inset 0 0 5px 4px rgba(0, 0, 0, 0.2);
+    background: radial-gradient(
+      ellipse at 50% 90%,
+      rgba(107, 114, 128, 0.7) 0%,
+      rgba(0, 0, 0, 0.3) 100%
+    );
     text-shadow: none;
   }
 }
 
 /********************* Effects: onHover and onActive: *********************/
-  @layer components {
+@layer components {
   .interactive-blue-weak:hover {
     @apply hover:border-app-blue/60;
-             background-color: rgba(26, 93, 102, 0.2);
+    background-color: rgba(26, 93, 102, 0.2);
   }
 
   .interactive-blue-soft {
@@ -458,7 +479,7 @@ div.ql-editor {
     @apply hover:bg-app-blue/30
            hover:border-app-blue/50
            active:bg-app-blue/40 
-           active:border-app-blue/60; 
+           active:border-app-blue/60;
   }
 
   .interactive-blue-super {
@@ -473,24 +494,24 @@ div.ql-editor {
            hover:bg-app-orange-alpha/20
            hover:border-app-orange-alpha/40 
            active:bg-app-orange-alpha/30
-           active:border-app-orange-alpha/50; 
+           active:border-app-orange-alpha/50;
   }
 
   .interactive-orange-soft:hover p,
   .interactive-orange-soft:hover svg {
     @apply text-app-orange-alpha/70;
   }
-  
+
   .interactive-orange-text:hover,
   .interactive-orange-text:hover p,
   .interactive-orange-text:hover svg {
-    @apply text-app-orange-alpha/70
+    @apply text-app-orange-alpha/70;
   }
 
   .interactive-orange-text:active,
   .interactive-orange-text:active p,
   .interactive-orange-text:active svg {
-    @apply text-app-orange-alpha/90
+    @apply text-app-orange-alpha/90;
   }
 
   .interactive-orange-strong {
@@ -498,7 +519,7 @@ div.ql-editor {
            hover:bg-app-orange-alpha/30
            hover:border-app-orange-alpha/50 
            active:bg-app-orange-alpha/40
-           active:border-app-orange-alpha/60; 
+           active:border-app-orange-alpha/60;
   }
 
   .interactive-orange-strong:hover p,
@@ -511,7 +532,7 @@ div.ql-editor {
            hover:bg-app-orange-alpha/50
            hover:border-app-orange-alpha/70 
            active:bg-app-orange-alpha/60
-           active:border-app-orange-alpha/80; 
+           active:border-app-orange-alpha/80;
   }
 
   .interactive-orange-super:hover p,
@@ -535,40 +556,40 @@ div.ql-editor {
 }
 
 .nav-gradient {
-  @apply bg-gradient-to-b md:bg-gradient-to-r from-gray-100 to-white
+  @apply bg-gradient-to-b md:bg-gradient-to-r from-gray-100 to-white;
 }
 
 .btn-blue {
-  @apply rounded-md bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200
+  @apply rounded-md bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200;
 }
 
 .btn-gray {
-  @apply bg-gray-400 text-white rounded-lg hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-400 transition-colors duration-200
+  @apply bg-gray-400 text-white rounded-lg hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-400 transition-colors duration-200;
 }
 
 .input-gray {
-  @apply rounded-md bg-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500
+  @apply rounded-md bg-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500;
 }
 
 .input-white {
-  @apply rounded-md bg-white border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500
+  @apply rounded-md bg-white border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500;
 }
 
 .label {
-  @apply block text-sm font-medium text-gray-700
+  @apply block text-sm font-medium text-gray-700;
 }
 
 .shadow-center-sm,
 .hover\:shadow-center-sm:hover {
-  @apply shadow-[3px_3px_10px_1px_rgba(0,0,0,0.2)]
+  @apply shadow-[3px_3px_10px_1px_rgba(0,0,0,0.2)];
 }
 
 .shadow-center-md,
 .hover\:shadow-center-md:hover {
-  @apply shadow-[3px_3px_10px_1px_rgba(0,0,0,0.3)]
+  @apply shadow-[3px_3px_10px_1px_rgba(0,0,0,0.3)];
 }
 
 .shadow-center-lg,
 .hover\:shadow-center-lg:hover {
-  @apply shadow-[4px_4px_10px_2px_rgba(0,0,0,0.4)]
+  @apply shadow-[4px_4px_10px_2px_rgba(0,0,0,0.4)];
 }

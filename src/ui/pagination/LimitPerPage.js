@@ -22,13 +22,16 @@ export function LimitPerPage({ filterOptions }) {
       <select
         value={pageLimit}
         onChange={onChange}
+        aria-label="Number of posts to display per page"
         className="limit-select px-1 text-center"
       >
         <option value={10}>10</option>
         <option value={25}>25</option>
         <option value={50}>50</option>
       </select>
-      <p className="limit-per-page-label ml-2 mt-[2px]">per page</p>
+      <p className="limit-per-page-label ml-2 mt-[2px]" aria-hidden="true">
+        per page
+      </p>
     </div>
   )
 }

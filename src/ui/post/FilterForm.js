@@ -27,7 +27,9 @@ export function FilterForm({
         <div className="filter-posts-form glass-blue-soft px-2 py-2 md:pt-6 md:pb-4 md:mb-2 md:rounded-lg md:shadow-center-md below-md:border-t ">
           <form className="filter-form font-orbitron text-14 grid grid-cols-1 2col-filter:grid-cols-2 gap-2">
             <div className="filter-title-container flex px-4">
-              <p className="filter-title-label w-[100px]">title:</p>
+              <label htmlFor="title" className="filter-title-label w-[100px]">
+                title:
+              </label>
               <textarea
                 className={`filter-title-input ${textareaCss}`}
                 id="title"
@@ -44,13 +46,14 @@ export function FilterForm({
               />
             </div>
             <div className="filter-author-container flex px-4">
-              <p
+              <label
+                htmlFor="author"
                 className={`filter-author-label w-[100px] ${
                   disableFilteringByAuthor && 'text-gray-400'
                 }`}
               >
                 author:
-              </p>
+              </label>
               <textarea
                 className={`filter-author-input ${textareaCss} ${
                   disableFilteringByAuthor &&
@@ -71,7 +74,12 @@ export function FilterForm({
               />
             </div>
             <div className="filter-content-container flex px-4">
-              <p className="filter-content-label w-[100px]">content:</p>
+              <label
+                htmlFor="content"
+                className="filter-content-label w-[100px]"
+              >
+                content:
+              </label>
               <textarea
                 className={`filter-content-input ${textareaCss}`}
                 id="content"
@@ -88,7 +96,12 @@ export function FilterForm({
               />
             </div>
             <div className="filter-sort-by-container flex px-4">
-              <p className="filter-sort-by-label w-[100px]">sort by:</p>
+              <label
+                htmlFor="sortBy"
+                className="filter-sort-by-label w-[100px]"
+              >
+                sort by:
+              </label>
               <select
                 className={`filter-sort-by-input ${textareaCss}`}
                 id="sortBy"
@@ -105,7 +118,12 @@ export function FilterForm({
               </select>
             </div>
             <div className="filter-sort-order-container flex px-4">
-              <p className="filter-sort-order-label w-[100px]">order:</p>
+              <label
+                htmlFor="sortOrder"
+                className="filter-sort-order-label w-[100px]"
+              >
+                order:
+              </label>
               <select
                 className={`filter-sort-order-input ${textareaCss}`}
                 id="sortOrder"
