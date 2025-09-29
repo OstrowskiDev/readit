@@ -53,7 +53,7 @@ export default function ResetPassword() {
 
   return (
     <div
-      className="password-change-page w-full bg-white flex justify-center items-center"
+      className="password-change-page w-full flex justify-center items-center"
       style={{ height: `calc(100vh - 72px)` }}
     >
       <div className="password-change-container flex flex-col w-[320px] h-[484px] p-8 rounded-lg bg-blue-500 shadow-lg">

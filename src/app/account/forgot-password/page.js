@@ -39,7 +39,7 @@ export default function ForgotPassword() {
 
   return (
     <div
-      className="password-recovery-page w-full bg-white flex justify-center items-center"
+      className="password-recovery-page w-full flex justify-center items-center"
       style={{ height: `calc(100vh - 72px)` }}
     >
       <div className="password-recovery-container flex flex-col w-[320px] h-[484px] p-8 rounded-lg bg-blue-500 shadow-lg">

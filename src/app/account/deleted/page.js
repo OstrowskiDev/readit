@@ -3,7 +3,7 @@ import { ActivationSuccessIco } from '@/ui/icons/ActivationSuccessIco'
 export default function AccountDeletedPage() {
   return (
     <div
-      className="account-deleted-page w-full bg-white flex justify-center items-center text-center"
+      className="account-deleted-page w-full flex justify-center items-center text-center"
       style={{ height: `calc(100vh - 72px)` }}
     >
       <div className="account-deleted-container w-[320px] h-[484px] p-6 pt-6 rounded-lg bg-blue-500 shadow-lg">

@@ -7,10 +7,10 @@ function QuillLoader() {
   const { editorHeight } = useTextEditorContext()
   return (
     <div
-      className="loader-quill bg-white rounded-md"
+      className="loader-quill rounded-md translate-y-1/2"
       style={{ minHeight: `${editorHeight}px` }}
     >
-      <p className="text-center text-gray-400 pt-4">Loading...</p>
+      <p className="text-center text-gray-300 text-lg">Loading...</p>
     </div>
   )
 }

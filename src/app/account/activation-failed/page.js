@@ -3,7 +3,7 @@ import { ActivationFailedIco } from '@/ui/icons/ActivationFailedIco'
 export default function ActivationFailed() {
   return (
     <div
-      className="activation-failed-page w-full bg-white flex justify-center items-center text-center"
+      className="activation-failed-page w-full flex justify-center items-center text-center"
       style={{ height: `calc(100vh - 72px)` }}
     >
       <div className="activation-failed-container w-[320px] h-[484px] p-8 pt-6 rounded-lg bg-blue-500 shadow-lg">

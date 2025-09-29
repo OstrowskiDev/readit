@@ -70,7 +70,7 @@ export default function SignInForm() {
 
   return (
     <div
-      className="login-page w-full bg-white flex justify-center items-center"
+      className="login-page w-full flex justify-center items-center"
       style={{ height: `calc(100vh - 72px)` }}
     >
       <div className="login-container flex flex-col justify-between w-[320px] h-[484px] p-8 rounded-lg bg-blue-500 shadow-lg">

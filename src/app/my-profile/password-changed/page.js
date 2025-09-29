@@ -4,7 +4,7 @@ import { ActivationSuccessIco } from '@/ui/icons/ActivationSuccessIco'
 export default function PasswordChanged() {
   return (
     <div
-      className="password-changed-page w-full bg-white flex justify-center items-center text-center"
+      className="password-changed-page w-full flex justify-center items-center text-center"
       style={{ height: `calc(100vh - 72px)` }}
     >
       <div className="password-changed-container flex flex-col justify-between w-[320px] h-[484px] p-8 pt-6 rounded-lg bg-blue-500 shadow-lg">

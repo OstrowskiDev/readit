@@ -76,7 +76,7 @@ export default function RegisterForm() {
 
   return (
     <div
-      className="register-page w-full bg-white flex justify-center items-center"
+      className="register-page w-full flex justify-center items-center"
       style={{ height: `calc(100vh - 72px)` }}
     >
       <div className="register-container w-[320px] p-8 rounded-lg bg-blue-500 shadow-lg">
