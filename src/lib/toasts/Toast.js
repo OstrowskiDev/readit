@@ -67,7 +67,7 @@ function containerStateClasses(state) {
     case 'success':
       return 'glass-blue-soft border-green-400'
     case 'error':
-      return 'bg-red-200/50 border-red-400'
+      return 'glass-blue-soft border-red-400'
   }
 }
 
