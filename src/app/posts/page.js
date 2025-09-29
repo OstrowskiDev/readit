@@ -158,9 +158,11 @@ export default function PostsPage({
           {isLoading && (
             <>
               <Loader />
-              <PostShimmer />
-              <PostShimmer />
-              <PostShimmer />
+              <div className="shimmer-container mt-6">
+                <PostShimmer />
+                <PostShimmer />
+                <PostShimmer />
+              </div>
             </>
           )}
 

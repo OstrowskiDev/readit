@@ -1,7 +1,10 @@
 /* Shimmer styles below: */
+
 :root {
-  --shimmer-color-1: hsl(214, 50%, 60%);
-  --shimmer-color-2: hsl(214, 50%, 75%);
+  --shimmer-color-1: theme('colors.app.blue.DEFAULT / 30%');
+  --shimmer-color-2: theme('colors.app.blue.DEFAULT / 20%');
+  --shimmer-color-3: theme('colors.app.blue.DEFAULT / 10%');
+  --shimmer-color-4: theme('colors.app.blue.DEFAULT / 5%');
 }
 
 @keyframes shimmer {
@@ -13,20 +16,39 @@
   }
 }
 
-.shimmer {
+.shimmer,
+.shimmer-button {
+  position: relative;
   animation-duration: 1.25s;
   animation-fill-mode: forwards;
   animation-iteration-count: infinite;
   animation-name: shimmer;
   animation-timing-function: linear;
+}
+
+.shimmer {
   background: linear-gradient(
     to right,
     var(--shimmer-color-2) 0%,
     var(--shimmer-color-1) 50%,
     var(--shimmer-color-2) 99%
   );
+}
+
+.shimmer-button {
+  @apply border border-app-blue/20 rounded-xl;
+  background: linear-gradient(
+    to right,
+    var(--shimmer-color-4) 0%,
+    var(--shimmer-color-3) 50%,
+    var(--shimmer-color-4) 99%
+  );
+}
+
+/* Important! Below rule needs to be AFTER rules that are setting background for .shimmer and .shimmer-button*/
+.shimmer,
+.shimmer-button {
   background-size: 800px 104px;
-  position: relative;
 }
 
 /* Shimmer border styles below:*/

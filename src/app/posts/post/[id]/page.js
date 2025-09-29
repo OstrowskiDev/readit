@@ -55,12 +55,10 @@ export default function PostPage({ params }) {
 
   if (!post || !comments) {
     return (
-      <>
-        <div className="container mx-auto mt-8 px-4 max-w-[800px]">
-          <Loader />
-          <PostCommentShimmer />
-        </div>
-      </>
+      <div className="shimmer-loader-container mx-auto mt-8 w-full max-w-[800px]">
+        <Loader />
+        <PostCommentShimmer />
+      </div>
     )
   }
 
