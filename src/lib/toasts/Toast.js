@@ -27,13 +27,18 @@ export function Toast({ message, state, forceUpdate }) {
   return (
     <div
       className={`toast fixed ml-[120px] below-md:ml-[0px] bottom-0 transform ${moveToastClass} z-50`}
+      aria-live={state === 'error' ? 'assertive' : 'polite'}
+      role={state === 'error' ? 'alert' : 'status'}
+      aria-atomic="true"
     >
       <div
         className={`toast-container flex items-center w-80 h-[74px] mx-auto p-4 mb-16 font-semibold border-2 rounded-xl ${containerStateClasses(
           state,
         )}`}
       >
-        <div className="toast-icon w-10">{renderIcon(state)}</div>
+        <div className="toast-icon w-10" aria-hidden="true">
+          {renderIcon(state)}
+        </div>
         <div className="toast-text-container ml-4">
           <p
             className={`toast-text-state leading-tight text-lg ${textStateClasses(
