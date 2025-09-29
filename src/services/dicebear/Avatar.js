@@ -22,19 +22,19 @@ export function Avatar({ seed, color, size, border }) {
         style={{
           height: `${size}px`,
           width: `${size}px`,
-          borderColor: borderColor,
-          borderWidth: `${border}px`,
-          borderRadius: '100px',
+          borderRadius: '50%',
         }}
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           style={{
             backgroundColor: bgColor,
-            borderRadius: '100px',
+            borderColor: borderColor,
+            borderWidth: `${border}px`,
+            borderRadius: '50%',
           }}
           src={avatar}
-          alt="Avatar"
+          alt=""
         />
       </div>
     </>
