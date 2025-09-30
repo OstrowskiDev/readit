@@ -19,7 +19,7 @@ export function PostHeader({ author }) {
   const sessionUserId = session?.user.id
   const isPostAuthor = userId === sessionUserId
   const pathname = usePathname()
-  const isOnMainPage = pathname.endsWith('/posts')
+  const isOnPostPage = pathname.includes('/posts/post')
 
   return (
     <>
@@ -27,8 +27,8 @@ export function PostHeader({ author }) {
         <div className="header-container relative right-0 flex items-center ">
           {/* authors avatar */}
           <AuthorsInfo
-            size={isOnMainPage ? 32 : 48}
-            border={isOnMainPage ? 1 : 2}
+            size={isOnPostPage ? 48 : 32}
+            border={isOnPostPage ? 2 : 1}
             document={post}
             handleMouseEnter={handleMouseEnter}
             handleMouseLeave={handleMouseLeave}

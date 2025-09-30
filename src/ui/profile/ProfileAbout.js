@@ -33,7 +33,9 @@ export function ProfileAbout() {
         <ProfileAboutForm toggleAboutForm={toggleAboutForm} />
       ) : (
         <>
-          <p className="profile-about pb-2 pr-[10px]">{userData.about}</p>
+          <p className="profile-about pb-2 pr-[10px] h-24 overflow-y-auto overflow-x-hidden blue-scrollbar">
+            {userData.about}
+          </p>
           <div
             className="mimic-buttons-height transition-height"
             style={{ height: buttonsHeight }}

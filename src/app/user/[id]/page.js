@@ -38,11 +38,10 @@ export default function UserProfile({ params }) {
       {userData ? (
         <MyProfileProvider userData={userData}>
           <div className="users-data-container max-w-[800px] w-full">
-            <h1 className="users-data-header flex flex-col mt-3 md:mt-6 md:mb-2 ml-4 text-xl font-semibold text-gray-800">
-              {`${userData.name}'s profile:`}
-            </h1>
-
-            <div className="users-data-card glass-blue-soft flex flex-col mx-4 px-4 md:pt-3 pb-3 md:pb-6 md:max-w-[768px] md:rounded-lg md:shadow-center-md">
+            <div className="users-data-card glass-blue-soft flex flex-col mx-4 mt-3 md:mt-8 px-4 md:pt-3 pb-3 md:pb-6 md:max-w-[768px] md:rounded-lg md:shadow-center-md">
+              <h2 className="users-data-header text-xl font-semibold text-app-blue-800">
+                {`${userData.name}'s profile:`}
+              </h2>
               <ProfilePreview userData={userData} />
               <div className="users-data flex flex-row items-center my-1 pt-4 border-t border-app-blue/70">
                 <h3 className="font-bold text-14">Profession:</h3>
