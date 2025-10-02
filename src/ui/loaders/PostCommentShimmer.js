@@ -1,7 +1,7 @@
 import './shimmerStyles.css'
 import { CommentShimmer } from './CommentShimmer'
 
-export function PostCommentShimmer() {
+export function PostCommentShimmer({ hasImg }) {
   return (
     <div className="post-shimmer-container relative w-full">
       <div className="post-shimmer shimmer-border relative max-w-[800px] py-1 px-4 mx-auto glass-blue-soft rounded-xl ">
@@ -14,7 +14,11 @@ export function PostCommentShimmer() {
         </div>
 
         {/* Post title */}
-        <div className="shimmer text-post-title h-4 w-96 mt-6 mb-2"></div>
+        <div className="shimmer text-post-title h-5 w-96 mt-6 mb-2"></div>
+
+        {hasImg && (
+          <div className="shimmer aspect-[16/9] h-full w-full overflow-hidden rounded-md z-0"></div>
+        )}
 
         {/* Post body */}
         <div className="post-content mt-10 mb-3">

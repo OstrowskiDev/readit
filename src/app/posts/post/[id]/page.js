@@ -16,8 +16,9 @@ import { PostImage } from '@/ui/post/PostImage'
 import { useEffect, useState } from 'react'
 import { Loader } from '@/ui/loaders/Loader'
 
-export default function PostPage({ params }) {
+export default function PostPage({ params, searchParams }) {
   const postId = params.id
+  const hasImg = searchParams?.i === 'true'
   const [post, setPost] = useState(null)
   const [comments, setComments] = useState(null)
   const [infoboxData, setInfoboxData] = useState([])
@@ -57,7 +58,7 @@ export default function PostPage({ params }) {
     return (
       <div className="shimmer-loader-container mx-auto mt-8 w-full max-w-[800px]">
         <Loader />
-        <PostCommentShimmer />
+        <PostCommentShimmer hasImg={hasImg} />
       </div>
     )
   }

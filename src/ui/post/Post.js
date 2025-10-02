@@ -46,7 +46,11 @@ export function Post({
         >
           <div className={`relative w-full ${deleted ? 'hidden' : ''}`}>
             <div className="post-container glass-blue-soft interactive-blue-weak flex flex-col justify-between py-2 md:py-1 px-4 md:my-2 md:rounded-md md:shadow-center-md border-t md:border md:hover:shadow-center-lg hover:cursor-pointer">
-              <PostAnchor postId={postId} title={post.title} />
+              <PostAnchor
+                postId={postId}
+                title={post.title}
+                hasImage={hasImage}
+              />
               <PostHeader author={post.authorData} />
               <PostTitle title={post.title} />
               <PostBody content={post.content} />
