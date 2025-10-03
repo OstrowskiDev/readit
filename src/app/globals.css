@@ -363,6 +363,15 @@ div.ql-editor {
     @apply btn-border-blue-soft;
     background-color: rgba(1, 30, 62, 0.7);
   }
+  .glass-blue-soft-alt {
+    @apply border border-app-blue/40 rounded-xl shadow-lg;
+    background: linear-gradient(
+      135deg,
+      rgba(1, 30, 62, 0.9) 0%,
+      rgba(1, 30, 62, 0.65) 100%
+    );
+  }
+
   .glass-blue-normal {
     @apply btn-border-blue-soft;
     background-color: rgba(1, 30, 62, 0.3);

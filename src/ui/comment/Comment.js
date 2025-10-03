@@ -103,7 +103,7 @@ export function Comment({
             <div
               ref={contentRef}
               className="comment-body-container ml-4"
-              //adjust width of this element when its being deeply nested inside comments tree so it uses available space more efficiently
+              //!!!! adjust width of this element when its being deeply nested inside comments tree so it uses available space more efficiently
               style={
                 isRenderedAsTree
                   ? { width: `calc(100% + ${depth * 4}px) - 10px` }

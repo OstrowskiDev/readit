@@ -89,8 +89,9 @@ export default function PostPage({ params, searchParams }) {
         tempImageUrl={post.temp_image_url}
       >
         <div className="post-page w-full flex flex-col justify-center md:px-4 mt-1 md:my-8 md:mx-auto">
+          {/* Important! Don't use backdrop-filter blur on post-card-container. Some of its descendant also use backdrop filter with blur, and using it on this ancestor element would disable blur effects on all descendants, even when visually they are rendered 'above' it on screen. Instead of glass-blue-soft is used glass-blue-soft-alt that mimics backdrop-filter blur effect */}
           <div
-            className={`post-card-container glass-blue-soft max-w-[800px] w-full mx-auto md:shadow-center-md rounded-md ${
+            className={`post-card-container glass-blue-soft-alt max-w-[800px] w-full mx-auto md:shadow-center-md rounded-md ${
               deleted ? 'hidden' : ''
             }`}
           >
