@@ -33,7 +33,7 @@ export function ProfileAbout() {
         <ProfileAboutForm toggleAboutForm={toggleAboutForm} />
       ) : (
         <>
-          <p className="profile-about pb-2 pr-[10px] h-24 overflow-y-auto overflow-x-hidden blue-scrollbar">
+          <p className="profile-about h-24 pb-2 pr-[10px] mr-10 overflow-y-auto overflow-x-hidden blue-scrollbar">
             {userData.about}
           </p>
           <div

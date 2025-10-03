@@ -324,29 +324,10 @@ div.ql-editor {
 
 /******************* Custom Blue Scrollbar *******************/
 
-/* Custom scrollbar */
-.blue-scrollbar::-webkit-scrollbar {
-  width: 5px;
-}
-
-.blue-scrollbar::-webkit-scrollbar-track {
-  @apply bg-app-blue/20;
-  border-radius: 2.5px;
-}
-
-.blue-scrollbar::-webkit-scrollbar-thumb {
-  @apply bg-app-blue-600;
-  border-radius: 2.5px;
-}
-
-.blue-scrollbar::-webkit-scrollbar-thumb:hover {
-  @apply bg-app-blue;
-}
-
 /* Firefox scrollbar */
 .blue-scrollbar {
   scrollbar-width: thin;
-  scrollbar-color: theme(colors.app.blue.DEFAULT / 0.6)
+  scrollbar-color: theme(colors.app.blue.DEFAULT / 0.4)
     theme(colors.app.blue.DEFAULT / 0.2);
 }
 

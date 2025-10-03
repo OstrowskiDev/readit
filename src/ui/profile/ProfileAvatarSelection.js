@@ -52,7 +52,7 @@ export function ProfileAvatarSelection({ handleAvatarEdit }) {
     <div className="avatar-select-container">
       {userData && (
         <>
-          <h4 className="avatar-select-seed-label ml-4 pt-1 font-normal text-lg text-app-blue-text border-t border-gray-200">
+          <h4 className="avatar-select-seed-label ml-4 pt-1 font-normal text-lg text-app-blue-text">
             select avatar seed:
           </h4>
           <div className="avatar-select-seed flex justify-center flex-wrap  md:ml-l md:mr-4 mb-4">
@@ -64,7 +64,7 @@ export function ProfileAvatarSelection({ handleAvatarEdit }) {
               >
                 <div
                   className={
-                    'avatar-transform-wrapper border rounded-full transform transition-all duration-200 overflow-hidden ' +
+                    'avatar-transform-wrapper rounded-full transform transition-all duration-200 overflow-hidden ' +
                     (selectedAvatar.seed === seed
                       ? 'scale-110'
                       : 'hover:scale-110 opacity-50 hover:shadow-xl')
@@ -89,7 +89,7 @@ export function ProfileAvatarSelection({ handleAvatarEdit }) {
               return (
                 <div key={color}>
                   <div
-                    className={`avatar-color-${color.toLowerCase()} w-12 h-12 m-[6px] border rounded-full hover:cursor-pointer transform transition-all duration-200 hover:scale-110 overflow-hidden 
+                    className={`avatar-color-${color.toLowerCase()} w-12 h-12 m-[6px] border-2 rounded-full hover:cursor-pointer transform transition-all duration-200 hover:scale-110 overflow-hidden 
                       ${selectedAvatar.color === color ? 'scale-110' : ''}
                     `}
                     style={{ background: bgColor, borderColor: borderColor }}
