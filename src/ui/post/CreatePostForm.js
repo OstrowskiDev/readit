@@ -21,7 +21,7 @@ export function CreatePostForm({
     title: '',
     content: '',
     markdown: '',
-    toggleEditor: 'formated_text_editor',
+    toggleEditor: 'formatted_text_editor',
   }
 
   const [formData, setFormData] = useState(initialFormData)
@@ -69,7 +69,7 @@ export function CreatePostForm({
 
   function optimisticUpdate(newPostId) {
     const hasImage = imageAction === 'update' ? true : false
-    const imgaeUrl = imageAction === 'update' ? tempImageUrl : null
+    const imageUrl = imageAction === 'update' ? tempImageUrl : null
 
     const newPost = {
       _id: newPostId,
@@ -77,7 +77,7 @@ export function CreatePostForm({
       title: formData.title,
       content: formData.content,
       has_image: hasImage,
-      temp_image_url: imgaeUrl,
+      temp_image_url: imageUrl,
       comments: [],
       likes: [],
       dislikes: [],

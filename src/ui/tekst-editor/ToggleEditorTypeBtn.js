@@ -6,7 +6,7 @@ export function ToggleEditorTypeBtn() {
   const { formData, setFormData } = useTextEditorContext()
 
   function handleToggleEditor() {
-    if (formData.toggleEditor === 'formated_text_editor') {
+    if (formData.toggleEditor === 'formatted_text_editor') {
       const newMarkdownString = parseHtmlToMarkdown(formData.content)
       setFormData({
         ...formData,
@@ -17,7 +17,7 @@ export function ToggleEditorTypeBtn() {
       const newHtmlString = parseMarkdownToHtml(formData.markdown)
       setFormData({
         ...formData,
-        toggleEditor: 'formated_text_editor',
+        toggleEditor: 'formatted_text_editor',
         content: newHtmlString,
       })
     } else {
@@ -30,7 +30,7 @@ export function ToggleEditorTypeBtn() {
   return (
     <button
       className={`toggle-editor-btn ${
-        isMarkdown ? 'min-w-[240px]' : ' min-w-[210px]'
+        isMarkdown ? 'w-[280px]' : 'w-[240px]'
       } h-[32px] px-[6px] ml-auto text-app-blue-text text-sm hover:text-app-strongorange-500 rounded-full`}
       type="button"
       onClick={handleToggleEditor}

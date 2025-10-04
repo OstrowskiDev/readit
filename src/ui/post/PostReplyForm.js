@@ -18,7 +18,7 @@ export function PostReplyForm({ isCommFormVisible, setIsCommFormVisible }) {
   const initialFormData = {
     content: '',
     markdown: '',
-    toggleEditor: 'formated_text_editor',
+    toggleEditor: 'formatted_text_editor',
   }
   const [formData, setFormData] = useState(initialFormData)
   const { toastFunctions: toast } = useToastContext()

@@ -12,6 +12,10 @@ export function EditPostBtn({ postId }) {
 
   function onClick() {
     if (userOnPostPage) {
+      if (!isEditFormVisible) {
+        const formPosition = document.querySelector('.post-bottom-container')
+        formPosition.scrollIntoView({ behavior: 'smooth' })
+      }
       setIsEditFormVisible((prevValue) => !prevValue)
     } else {
       router.push(`/posts/post/${postId}?editPost=true`)

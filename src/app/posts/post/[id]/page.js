@@ -82,6 +82,7 @@ export default function PostPage({ params, searchParams }) {
         postDislikes={postDislikes}
         handleMouseEnter={handleMouseEnter}
         handleMouseLeave={handleMouseLeave}
+        isEditFormVisible={isEditFormVisible}
         setIsEditFormVisible={setIsEditFormVisible}
         triggerRebuild={triggerRebuild}
         setTriggerRebuild={setTriggerRebuild}
@@ -115,10 +116,7 @@ export default function PostPage({ params, searchParams }) {
 
               <PostContent content={post.content} />
 
-              <PostEditForm
-                isEditFormVisible={isEditFormVisible}
-                setIsEditFormVisible={setIsEditFormVisible}
-              />
+              <PostEditForm />
 
               <PostFooter
                 postId={postId}

@@ -24,7 +24,7 @@ export function CommentReplyForm({ parentType }) {
   const initialFormData = {
     content: '',
     markdown: '',
-    toggleEditor: 'formated_text_editor',
+    toggleEditor: 'formatted_text_editor',
   }
   const [formData, setFormData] = useState(initialFormData)
   const [toggleTextEditor, setToggleTextEditor] = useState(false)

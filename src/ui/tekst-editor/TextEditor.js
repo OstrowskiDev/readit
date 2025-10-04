@@ -21,7 +21,7 @@ export function TextEditor({
       toggleTextEditor={toggleTextEditor}
     >
       <div className="text-editor-container w-full mx-auto">
-        {formData.toggleEditor === 'formated_text_editor' ? (
+        {formData.toggleEditor === 'formatted_text_editor' ? (
           <QuillEditorWithLoader />
         ) : (
           <MarkdownEditor />

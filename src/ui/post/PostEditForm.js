@@ -8,8 +8,10 @@ import { useToastContext } from '@/lib/toasts/ToastProvider'
 import { useEffect, useState } from 'react'
 import { EditFormBtns } from '../buttons/EditFormBtns'
 import { TextEditor } from '../tekst-editor/TextEditor'
+import PostFormTitle from './PostFormTitle'
 
-export function PostEditForm({ isEditFormVisible, setIsEditFormVisible }) {
+export function PostEditForm() {
+  const { isEditFormVisible, setIsEditFormVisible } = usePostContext()
   const [fieldValidity, setFieldValidity] = useState(validationObject)
   const { toastFunctions: toast } = useToastContext()
   const { post, setPost } = usePostContext()
@@ -22,7 +24,7 @@ export function PostEditForm({ isEditFormVisible, setIsEditFormVisible }) {
     title: post.title,
     content: post.content,
     markdown: '',
-    toggleEditor: 'formated_text_editor',
+    toggleEditor: 'formatted_text_editor',
   })
 
   useEffect(() => {
@@ -51,17 +53,19 @@ export function PostEditForm({ isEditFormVisible, setIsEditFormVisible }) {
     }
   }, [response])
 
-  function onTitleChange(event) {
-    setFormData({ ...formData, title: event.target.value })
-  }
-
   function onContentChange(string) {
     setFormData({ ...formData, content: string })
+  }
+
+  function scrollToPost() {
+    const postElement = document.querySelector('.post-container')
+    postElement.scrollIntoView({ behavior: 'smooth' })
   }
 
   function onCancelClick() {
     setFormData({ title: post.title, content: post.content })
     setIsEditFormVisible(false)
+    scrollToPost()
   }
 
   async function onSubmit() {
@@ -75,7 +79,7 @@ export function PostEditForm({ isEditFormVisible, setIsEditFormVisible }) {
 
     // client side image validation is done in AttachImageBtn component
     let imageData = new FormData()
-    if (imageAction === 'no_chagne') {
+    if (imageAction === 'no_change') {
       imageData.append('imageStatus', 'no_change')
     } else if (imageAction === 'update') {
       imageData.append('file', imageFile)
@@ -95,6 +99,7 @@ export function PostEditForm({ isEditFormVisible, setIsEditFormVisible }) {
 
     optimisticUpdate()
     setIsEditFormVisible(false)
+    scrollToPost()
   }
 
   function optimisticUpdate() {
@@ -130,42 +135,23 @@ export function PostEditForm({ isEditFormVisible, setIsEditFormVisible }) {
             <h2 className="post-edit-header mt-6 ml-1 text-xl font-semibold">
               Edit post:
             </h2>
-            <h3 className="post-edit-form-label ml-2 mt-4 text-md">title:</h3>
-            <textarea
-              className={`post-title-input glass-blue-weak text-app-blue-text w-full h-8 resize-none border-none focus:outline-none ring-1 py-1 px-2 rounded-md ${
-                fieldValidity.title.message.length > 0
-                  ? 'ring-red-400 focus:ring-red-500'
-                  : 'ring-app-blue/50 focus:ring-app-blue'
-              }`}
-              id="title"
-              name="title"
-              value={formData.title}
-              onChange={onTitleChange}
+
+            <PostFormTitle
+              fieldValidity={fieldValidity}
+              formData={formData}
+              setFormData={setFormData}
             />
-            <div className="post-title-feedback flex flex-row justify-between">
-              <label className="post-title-error text-xs text-red-500">
-                {fieldValidity.title.message.length > 0 &&
-                  fieldValidity.title.message.join(' ')}
-              </label>
-              <div
-                className={`post-title-charcount px-2 text-xs ${
-                  formData.title.length <= 60
-                    ? 'text-app-blue-text/70'
-                    : 'text-red-500'
-                }`}
-              >
-                {formData.title.length}/60
-              </div>
-            </div>
+
             <h3 className="post-edit-form-label ml-2 mt-4 text-md ">
               content:
             </h3>
 
-            <div className="change-border-on-child-focus glass-blue-weak btn-border-blue-soft mb-3 rounded-md">
+            <div className="change-border-on-child-focus bg-gray-950/20 btn-border-blue-soft mb-3 rounded-md">
               <TextEditor
                 onContentChange={onContentChange}
                 formData={formData}
                 setFormData={setFormData}
+                toggleTextEditor={true}
               />
             </div>
             <EditFormBtns
