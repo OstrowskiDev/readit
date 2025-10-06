@@ -63,7 +63,6 @@ export function PostEditForm() {
   }
 
   function onCancelClick() {
-    setFormData({ title: post.title, content: post.content })
     setIsEditFormVisible(false)
     scrollToPost()
   }
@@ -79,8 +78,12 @@ export function PostEditForm() {
 
     // client side image validation is done in AttachImageBtn component
     let imageData = new FormData()
-    if (imageAction === 'no_change') {
-      imageData.append('imageStatus', 'no_change')
+    const hasImage = post?.has_image
+
+    if (imageAction === 'no_change' && hasImage) {
+      imageData.append('imageStatus', 'no_change_has_image')
+    } else if (imageAction === 'no_change' && !hasImage) {
+      imageData.append('imageStatus', 'no_change_no_image')
     } else if (imageAction === 'update') {
       imageData.append('file', imageFile)
       imageData.append('imageStatus', 'update')
@@ -93,7 +96,6 @@ export function PostEditForm() {
     }
 
     const postData = { title: formData.title, content: formData.content }
-
     const response = await updatePost(post._id, postData, imageData)
     setResponse(response)
 
@@ -103,24 +105,23 @@ export function PostEditForm() {
   }
 
   function optimisticUpdate() {
+    let newPost = {
+      ...post,
+      ...formData,
+    }
+
     if (imageAction === 'update') {
-      const newPost = {
-        ...post,
-        ...formData,
-        has_image: true,
-        temp_image_url: tempImageUrl,
-      }
-      setPost(newPost)
+      newPost.has_image = true
+      newPost.temp_image_url = tempImageUrl
+    } else if (imageAction === 'delete') {
+      newPost.has_image = false
+      newPost.temp_image_url = null
+    } else if (imageAction === 'no_change') {
+      newPost.has_image = post?.has_image
+      newPost.temp_image_url = null
     }
-    if (imageAction === 'delete') {
-      const newPost = {
-        ...post,
-        ...formData,
-        has_image: false,
-        temp_image_url: null,
-      }
-      setPost(newPost)
-    }
+
+    setPost(newPost)
   }
 
   function handleOptimisticError() {

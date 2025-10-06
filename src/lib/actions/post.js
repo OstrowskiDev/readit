@@ -224,8 +224,9 @@ export async function updatePost(postId, formData, imageData) {
 
   // Post mongoDB document update
 
-  const hasImage = imageStatus !== 'delete' ? true : false
-  const imageExtension = imageStatus !== 'delete' ? 'webp' : ''
+  const hasImage =
+    imageStatus !== 'delete' && imageStatus !== 'no_change_no_image'
+  const imageExtension = hasImage ? 'webp' : ''
   const updatedData = new Post({
     title: title,
     content: content,
