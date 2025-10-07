@@ -82,7 +82,7 @@ export default function QuillCustomToolbar() {
 
   return (
     <div
-      className="toolbar-container flex"
+      className="toolbar-container flex h-10"
       ref={containerRef}
       style={{ display: toggleTextEditor ? 'flex' : 'none' }}
     >

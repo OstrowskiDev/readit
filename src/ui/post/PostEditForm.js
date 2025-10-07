@@ -147,12 +147,13 @@ export function PostEditForm() {
               content:
             </h3>
 
-            <div className="change-border-on-child-focus bg-gray-950/20 btn-border-blue-soft mb-3 rounded-md">
+            <div className="text-editor-border change-border-on-child-focus bg-gray-950/20 btn-border-blue-soft mb-3 rounded-md">
               <TextEditor
                 onContentChange={onContentChange}
                 formData={formData}
                 setFormData={setFormData}
                 toggleTextEditor={true}
+                editorHeight={420}
               />
             </div>
             <EditFormBtns

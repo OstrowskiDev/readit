@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root {
-  --tw-text-orange: rgb(250, 125, 58); /* zamiast starego #c2410c */
+  --tw-text-orange: rgb(250, 125, 58);
 }
 
 /***************** App Background *****************/
@@ -325,10 +325,45 @@ div.ql-editor {
 /******************* Custom Blue Scrollbar *******************/
 
 /* Firefox scrollbar */
-.blue-scrollbar {
-  scrollbar-width: thin;
-  scrollbar-color: theme(colors.app.blue.DEFAULT / 0.4)
-    theme(colors.app.blue.DEFAULT / 0.2);
+@-moz-document url-prefix() {
+  .blue-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: theme(colors.app.blue.DEFAULT / 0.4)
+      theme(colors.app.blue.DEFAULT / 0.2);
+  }
+}
+
+/* Chrome, Safari scrollbar */
+
+.blue-scrollbar::-webkit-scrollbar {
+  width: 16px;
+}
+
+.blue-scrollbar::-webkit-scrollbar-thumb {
+  width: 4px;
+  border: 6px solid hsl(210, 100%, 10%);
+  background: theme(colors.app.blue.DEFAULT / 0.4);
+  cursor: pointer;
+}
+
+.blue-scrollbar::-webkit-scrollbar-track {
+  width: 8px;
+  background: theme(colors.app.blue.DEFAULT / 0.1);
+  cursor: pointer; /* ✅ Fix dla cursora */
+}
+
+.blue-scrollbar::-webkit-scrollbar-track-piece {
+  background: hsl(210, 100%, 10%);
+  cursor: pointer; /* ✅ Fix dla cursora */
+}
+
+/* prettier-ignore */
+.blue-resizer::-webkit-resizer {
+  background: hsl(210, 100%, 10%);
+background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg'><path d='M0,12 L12,0 M4,12 L12,4 M8,12 L12,8' stroke='%2368a3cc' stroke-width='1'/></svg>");
+  background-repeat: no-repeat;
+  background-position: bottom right;
+  background-size: 12px 12px;
 }
 
 /***************************** Tailwind classes: ****************************/

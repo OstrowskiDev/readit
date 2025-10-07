@@ -1,15 +1,10 @@
 'use client'
 
 import dynamic from 'next/dynamic'
-import { useTextEditorContext } from '@/lib/context/TextEditorProvider'
 
 function QuillLoader() {
-  const { editorHeight } = useTextEditorContext()
   return (
-    <div
-      className="loader-quill rounded-md translate-y-1/2"
-      style={{ minHeight: `${editorHeight}px` }}
-    >
+    <div className="loader-quill rounded-md h-full translate-y-1/2">
       <p className="text-center text-gray-300 text-lg">Loading...</p>
     </div>
   )

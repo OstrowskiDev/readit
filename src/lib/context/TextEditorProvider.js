@@ -9,6 +9,8 @@ export function TextEditorProvider({
   onContentChange,
   editorHeight,
   toggleTextEditor,
+  textareaHeight,
+  setTextareaHeight,
 }) {
   return (
     <TextEditorContext.Provider
@@ -18,6 +20,8 @@ export function TextEditorProvider({
         onContentChange,
         editorHeight,
         toggleTextEditor,
+        textareaHeight,
+        setTextareaHeight,
       }}
     >
       {children}

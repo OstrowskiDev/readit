@@ -2,7 +2,7 @@
 
 /***************************************************/
 /*  Ensure this component is not server-rendered   */
-/*  Quill instances can only run on clientent      */
+/*  Quill instances can only run on client         */
 /*  Below imports have Quill instances             */
 /***************************************************/
 import '@/services/react-quill/customIcons.js'
@@ -14,11 +14,15 @@ import dynamic from 'next/dynamic'
 import 'react-quill/dist/quill.snow.css'
 import QuillCustomToolbar from './QuillCustomToolbar'
 import { useTextEditorContext } from '@/lib/context/TextEditorProvider'
+import { useCallback, useEffect, useRef } from 'react'
 
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false })
 
 export default function QuillEditor() {
-  const { onContentChange, formData, editorHeight } = useTextEditorContext()
+  const textareaRef = useRef(null)
+
+  const { onContentChange, formData, textareaHeight, setTextareaHeight } =
+    useTextEditorContext()
   const modules = {
     toolbar: {
       container: '#toolbar',
@@ -39,20 +43,44 @@ export default function QuillEditor() {
     'spoiler',
   ]
 
+  const handleResize = useCallback((entries) => {
+    for (let entry of entries) {
+      const { height } = entry.contentRect
+      setTextareaHeight(height)
+    }
+  }, [])
+
+  useEffect(() => {
+    const textarea = textareaRef.current
+    if (!textarea) return
+
+    const resizeObserver = new ResizeObserver(handleResize)
+    resizeObserver.observe(textarea)
+    return () => resizeObserver.disconnect()
+  }, [])
+
   return (
     <div className="quill-container">
-      <div
-        className="quill-editor-container render-html px-4 py-3 rounded-md"
-        style={{ minHeight: `${editorHeight}px` }}
-      >
+      <div className="quill-editor-container h-full  px-4 py-3 rounded-md ">
         <QuillCustomToolbar />
-        <ReactQuill
-          value={formData?.content}
-          onChange={onContentChange}
-          modules={modules}
-          formats={formats}
-          theme="snow"
-        />
+        <div
+          className="quill-editor-input render-html h-full overflow-y-scroll blue-scrollbar blue-resizer"
+          ref={textareaRef}
+          style={{
+            height: `${textareaHeight}px`,
+            minHeight: '200px',
+            maxHeight: '600px',
+            resize: 'vertical',
+          }}
+        >
+          <ReactQuill
+            value={formData?.content}
+            onChange={onContentChange}
+            modules={modules}
+            formats={formats}
+            theme="snow"
+          />
+        </div>
       </div>
     </div>
   )
