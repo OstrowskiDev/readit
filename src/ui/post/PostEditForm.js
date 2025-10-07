@@ -130,6 +130,7 @@ export function PostEditForm() {
 
   return (
     <>
+      <div className="post-edit-form-scroll-target" id="post-edit-form"></div>
       {isEditFormVisible && (
         <div className="post-edit-form px-4 pb-6 mt-6 mb-4 btn-border-blue-strong border-x-0 rounded-none">
           <form>

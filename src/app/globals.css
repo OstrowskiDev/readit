@@ -334,7 +334,6 @@ div.ql-editor {
 }
 
 /* Chrome, Safari scrollbar */
-
 .blue-scrollbar::-webkit-scrollbar {
   width: 16px;
 }
@@ -349,12 +348,12 @@ div.ql-editor {
 .blue-scrollbar::-webkit-scrollbar-track {
   width: 8px;
   background: theme(colors.app.blue.DEFAULT / 0.1);
-  cursor: pointer; /* ✅ Fix dla cursora */
+  cursor: pointer;
 }
 
 .blue-scrollbar::-webkit-scrollbar-track-piece {
   background: hsl(210, 100%, 10%);
-  cursor: pointer; /* ✅ Fix dla cursora */
+  cursor: pointer;
 }
 
 /* prettier-ignore */

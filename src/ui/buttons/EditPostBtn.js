@@ -14,7 +14,7 @@ export function EditPostBtn({ postId }) {
     if (userOnPostPage) {
       setIsEditFormVisible((prevValue) => !prevValue)
       if (!isEditFormVisible) {
-        const formPosition = document.querySelector('.post-bottom-container')
+        const formPosition = document.getElementById('post-edit-form')
         setTimeout(() => {
           formPosition.scrollIntoView({ behavior: 'smooth' })
         }, 50)
