@@ -1,5 +1,5 @@
 export function spoilerPlugin(markdown) {
-  const regex = />!(.*?)!</g
+  const regex = /!>(.*?)<!/g
 
   markdown.core.ruler.push('spoiler', function (state) {
     state.tokens.forEach((topLevelToken) => {
@@ -11,7 +11,7 @@ export function spoilerPlugin(markdown) {
       // jeśli child token nie jest typu tekst (link, obraz etc) jest od razu dodawany do newChildren
       // jeśli jest typu tekst to zostaje sprawdzony czy posiada poszukiwany pattern
       // jeśli nie posiada patternu jest dodawany jako jeden token tekstowy do newChildren
-      // jeśli posiada pattern to jest przekształcany na od 3 do 5 nowych tokenów w zależności od przypadu, tokeny są dodawane do newChildren
+      // jeśli posiada pattern to jest przekształcany na od 3 do 5 nowych tokenów w zależności od przypadku, tokeny są dodawane do newChildren
       // docelowy format: <mark class='spoiler'>ukryty tekst</mark>
       // 1) tekst poprzedzający <mark> // token tekstowy
       // 2) tag otwierajacy <mark> // token open mark
@@ -39,7 +39,7 @@ export function spoilerPlugin(markdown) {
           const matchEnd = regex.lastIndex //indeks końca dopasowania w tekście
           const spoilerText = match[1] //match[1] zwraca zawartość pierwszej grupy przechwytywania regex matcha,
 
-          // Tekst przed spoilerm
+          // Tekst przed spoilerem
           if (matchStart > lastIndex) {
             // new state.Token(type, tag, nesting)
             // nesting: 0 tag samodzielny, 1 tag otwierający, -1 tag zamykający

@@ -12,7 +12,7 @@ export default function QuillCustomToolbar() {
     { class: 'italic' },
     { class: 'crossed' },
     { class: 'script', value: 'super' },
-    { class: 'header' },
+    { class: 'header', value: 2 },
     { class: 'list', value: 'ordered' },
     { class: 'list', value: 'bullet' },
     { class: 'link' },
