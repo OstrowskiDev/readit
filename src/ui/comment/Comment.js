@@ -34,7 +34,6 @@ export function Comment({
 
   const contentRef = useRef()
   const commentRef = useRef()
-  const formRef = useRef()
 
   useEffect(() => {
     const commentElementId = window.location.hash.substring(1)
@@ -75,7 +74,6 @@ export function Comment({
       setIsReplyFormVis={setIsReplyFormVis}
       isEditVisible={isEditVisible}
       setIsEditVisible={setIsEditVisible}
-      formRef={formRef}
     >
       <div
         className="comment-container relative pt-4 px-2"
@@ -85,11 +83,7 @@ export function Comment({
         }}
       >
         {/* comment accordion element */}
-        <DrawConnections
-          contentRef={contentRef}
-          commentRef={commentRef}
-          formRef={formRef}
-        />
+        <DrawConnections contentRef={contentRef} commentRef={commentRef} />
 
         <div ref={commentRef} className="comment-main-content-container">
           {/* authors avatar, user name, comment time, edit time */}
@@ -119,7 +113,7 @@ export function Comment({
             </div>
 
             {/* comment buttons */}
-            <CommentButtons style={adjustOutsideTree} formRef={formRef} />
+            <CommentButtons style={adjustOutsideTree} />
           </div>
 
           {/* comment replies */}

@@ -5,6 +5,9 @@ import { useCommentContext } from '@/lib/context/CommentContextProvider'
 import { useToastContext } from '@/lib/toasts/ToastProvider'
 import { useEffect, useState } from 'react'
 import { cloneDeep } from 'lodash'
+import { ToggleTextEditorBtn } from '../buttons/ToggleTextEditorBtn'
+import { usePostContext } from '@/lib/context/PostContextProvider'
+import { TextEditor } from '../tekst-editor/TextEditor'
 
 export function CommentEditForm() {
   const {
@@ -14,8 +17,18 @@ export function CommentEditForm() {
     comment,
     comments,
     setComments,
+    editFormRef,
   } = useCommentContext()
-  const [input, setInput] = useState(comment.content)
+  const { setTriggerRebuild } = usePostContext()
+
+  const initialFormData = {
+    content: comment.content,
+    markdown: '',
+    toggleEditor: 'formatted_text_editor',
+  }
+
+  const [formData, setFormData] = useState(initialFormData)
+  const [toggleTextEditor, setToggleTextEditor] = useState(false)
   const [oldContent, setOldContent] = useState(null)
   const [response, setResponse] = useState({
     state: null,
@@ -35,12 +48,28 @@ export function CommentEditForm() {
     }
   }, [response])
 
-  async function onSubmit(event) {
-    event.preventDefault()
+  async function onSubmit() {
     setIsEditVisible(!isEditVisible)
     handleOptimistically()
-    const serverResponse = await updateComment(commentId, input)
+    setTriggerRebuild((counter) => counter + 1)
+    const serverResponse = await updateComment(commentId, formData.content)
     setResponse(serverResponse)
+  }
+
+  function onCancelClick() {
+    setIsEditVisible(!isEditVisible)
+    setTriggerRebuild((counter) => counter + 1)
+  }
+
+  // Handle content changes from both ReactQuill and regular HTML inputs
+  // ReactQuill onChange passes content directly as string (no e.target)
+  // Regular inputs pass event object with e.target.value
+  function onContentChange(e) {
+    if (!e.target) {
+      setFormData({ ...formData, content: e })
+    } else {
+      setFormData({ ...formData, content: e.target.value })
+    }
   }
 
   function handleOptimistically() {
@@ -49,7 +78,7 @@ export function CommentEditForm() {
     setOldContent(oldComment.content)
 
     const newComment = cloneDeep(oldComment)
-    newComment.content = input
+    newComment.content = formData.content
     const index = comments.findIndex((comment) => comment._id === commentId)
     newComments[index] = newComment
 
@@ -65,6 +94,11 @@ export function CommentEditForm() {
     oldComments[index] = oldComment
 
     setComments(oldComments)
+  }
+
+  function handleEditorToggle() {
+    setToggleTextEditor(!toggleTextEditor)
+    setTriggerRebuild((counter) => counter + 1)
   }
 
   function SubmitBtn() {
@@ -95,32 +129,29 @@ export function CommentEditForm() {
     )
   }
 
-  function onCancelClick(event) {
-    event.preventDefault()
-    setIsEditVisible(!isEditVisible)
-  }
-
   return (
-    <>
+    <div className="comment-edit-form-wrapper" ref={editFormRef}>
       {isEditVisible && (
-        <div className="comment-edit-form change-border-on-child-focus btn-border-blue-soft p-2 ml-4 mr-1 my-1 rounded-lg">
-          <form onClick={(e) => e.preventDefault()}>
-            <textarea
-              id="content"
-              name="content"
-              className="comment-edit-input bg-app-blue/0 text-app-blue-text w-full border-none focus:outline-none overflow-y-auto resize-none"
-              placeholder="Add yor comment"
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              onClick={(e) => e.preventDefault()}
+        <div className="comment-edit-form change-border-on-child-focus btn-border-blue-soft pr-2 pb-2 ml-4 mr-1 my-1 rounded-lg">
+          <form>
+            <TextEditor
+              editorHeight={142}
+              onContentChange={onContentChange}
+              formData={formData}
+              setFormData={setFormData}
+              toggleTextEditor={toggleTextEditor}
             />
             <div className="comment-edit-btns flex justify-end">
               <CancelBtn />
+              <ToggleTextEditorBtn
+                handleEditorToggle={handleEditorToggle}
+                toggleTextEditor={toggleTextEditor}
+              />
               <SubmitBtn />
             </div>
           </form>
         </div>
       )}
-    </>
+    </div>
   )
 }

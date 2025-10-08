@@ -42,6 +42,9 @@ export function PostReplyForm({ isCommFormVisible, setIsCommFormVisible }) {
     }
   }, [response])
 
+  // Handle content changes from both ReactQuill and regular HTML inputs
+  // ReactQuill onChange passes content directly as string (no e.target)
+  // Regular inputs pass event object with e.target.value
   function onContentChange(e) {
     if (!e.target) {
       setFormData({ ...formData, content: e })

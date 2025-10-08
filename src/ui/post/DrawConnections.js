@@ -7,8 +7,9 @@ export function DrawConnections({ contentRef, commentRef }) {
   const [contentHeight, setContentHeight] = useState(0)
   const [commentHeight, setCommentHeight] = useState(0)
   const [formHeight, setFormHeight] = useState(0)
+  const [editFormHeight, setEditFormHeight] = useState(0)
   const { triggerRebuild } = usePostContext()
-  const { comment, comments, formRef } = useCommentContext()
+  const { comment, comments, formRef, editFormRef } = useCommentContext()
   const pathname = usePathname()
 
   useEffect(() => {
@@ -22,11 +23,14 @@ export function DrawConnections({ contentRef, commentRef }) {
       if (formRef?.current) {
         setFormHeight(formRef?.current?.offsetHeight)
       }
+      if (editFormRef?.current) {
+        setEditFormHeight(editFormRef?.current?.offsetHeight)
+      }
     }
     updateHeight()
     window.addEventListener('resize', updateHeight)
     return () => window.removeEventListener('resize', updateHeight)
-  }, [contentRef, commentRef, formRef, triggerRebuild])
+  }, [contentRef, commentRef, formRef, editFormRef, triggerRebuild])
 
   if (!pathname.includes('/posts/post/')) {
     return null
@@ -68,7 +72,7 @@ export function DrawConnections({ contentRef, commentRef }) {
             <div
               className="line-to-child absolute w-[2px] top-[44px] left-[1px] bg-app-blue"
               style={{
-                height: `${contentHeight + formHeight + 54}px`,
+                height: `${contentHeight + formHeight + editFormHeight + 54}px`,
               }}
             ></div>
           </>

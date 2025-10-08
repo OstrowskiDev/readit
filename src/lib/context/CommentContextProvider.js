@@ -1,4 +1,4 @@
-import { createContext, useContext } from 'react'
+import { createContext, useContext, useRef } from 'react'
 
 const CommentContext = createContext()
 
@@ -13,8 +13,10 @@ export function CommentContextProvider({
   setIsReplyFormVis,
   isEditVisible,
   setIsEditVisible,
-  formRef,
 }) {
+  const formRef = useRef()
+  const editFormRef = useRef()
+
   return (
     <CommentContext.Provider
       value={{
@@ -28,6 +30,7 @@ export function CommentContextProvider({
         setComments,
         postId,
         formRef,
+        editFormRef,
       }}
     >
       {children}

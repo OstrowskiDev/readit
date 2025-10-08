@@ -68,6 +68,9 @@ export function CommentReplyForm({ parentType }) {
     setComments(oldComments)
   }
 
+  // Handle content changes from both ReactQuill and regular HTML inputs
+  // ReactQuill onChange passes content directly as string (no e.target)
+  // Regular inputs pass event object with e.target.value
   function onContentChange(e) {
     if (!e.target) {
       setFormData({ ...formData, content: e })
@@ -165,7 +168,7 @@ export function CommentReplyForm({ parentType }) {
         <div className="comment-reply-form change-border-on-child-focus p-2 ml-4 mr-1 my-1 btn-border-blue-soft bg-black/10 rounded-lg">
           <form>
             <TextEditor
-              editorHeight={162}
+              editorHeight={142}
               onContentChange={onContentChange}
               formData={formData}
               setFormData={setFormData}
