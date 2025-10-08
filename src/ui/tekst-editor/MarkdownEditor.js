@@ -3,9 +3,11 @@
 import { useTextEditorContext } from '@/lib/context/TextEditorProvider'
 import { ToggleEditorTypeBtn } from './ToggleEditorTypeBtn'
 import { useCallback, useEffect, useRef } from 'react'
+import { usePostContext } from '@/lib/context/PostContextProvider'
 
 export function MarkdownEditor() {
   const textareaRef = useRef(null)
+  const { setTriggerRebuild } = usePostContext()
   const {
     formData,
     setFormData,
@@ -18,6 +20,7 @@ export function MarkdownEditor() {
     for (let entry of entries) {
       const { height } = entry.contentRect
       setTextareaHeight(height)
+      setTriggerRebuild((counter) => counter + 1)
     }
   }, [])
 
@@ -44,11 +47,11 @@ export function MarkdownEditor() {
           <ToggleEditorTypeBtn />
         </div>
         <textarea
-          className="markdown-editor-input text-app-blue-text shadow-none bg-blue-950/5 w-full h-full my-0 border-none focus:outline-none  overflow-y-scroll blue-scrollbar blue-resizer"
+          className="markdown-editor-input text-app-blue-text shadow-none bg-blue-950/5 w-full h-full my-0 border-none focus:outline-none  overflow-y-auto blue-scrollbar blue-resizer"
           ref={textareaRef}
           style={{
             height: `${textareaHeight}px`,
-            minHeight: '200px',
+            minHeight: '90px',
             maxHeight: '600px',
             resize: 'vertical',
           }}

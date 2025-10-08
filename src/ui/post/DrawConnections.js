@@ -66,9 +66,9 @@ export function DrawConnections({ contentRef, commentRef }) {
         {hasChildren && (
           <>
             <div
-              className="line-to-child absolute w-[2px] top-[42px] left-[1px] bg-app-blue"
+              className="line-to-child absolute w-[2px] top-[44px] left-[1px] bg-app-blue"
               style={{
-                height: `${contentHeight + formHeight + 52}px`,
+                height: `${contentHeight + formHeight + 54}px`,
               }}
             ></div>
           </>

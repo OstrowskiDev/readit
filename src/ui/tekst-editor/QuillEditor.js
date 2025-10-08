@@ -15,12 +15,13 @@ import 'react-quill/dist/quill.snow.css'
 import QuillCustomToolbar from './QuillCustomToolbar'
 import { useTextEditorContext } from '@/lib/context/TextEditorProvider'
 import { useCallback, useEffect, useRef } from 'react'
+import { usePostContext } from '@/lib/context/PostContextProvider'
 
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false })
 
 export default function QuillEditor() {
   const textareaRef = useRef(null)
-
+  const { setTriggerRebuild } = usePostContext()
   const { onContentChange, formData, textareaHeight, setTextareaHeight } =
     useTextEditorContext()
   const modules = {
@@ -47,6 +48,7 @@ export default function QuillEditor() {
     for (let entry of entries) {
       const { height } = entry.contentRect
       setTextareaHeight(height)
+      setTriggerRebuild((counter) => counter + 1)
     }
   }, [])
 
@@ -64,11 +66,11 @@ export default function QuillEditor() {
       <div className="quill-editor-container h-full  px-4 py-3 rounded-md ">
         <QuillCustomToolbar />
         <div
-          className="quill-editor-input render-html h-full overflow-y-scroll blue-scrollbar blue-resizer"
+          className="quill-editor-input render-html h-full overflow-y-auto blue-scrollbar blue-resizer"
           ref={textareaRef}
           style={{
             height: `${textareaHeight}px`,
-            minHeight: '200px',
+            minHeight: '90px',
             maxHeight: '600px',
             resize: 'vertical',
           }}

@@ -94,6 +94,7 @@ export function CommentReplyForm({ parentType }) {
 
   function handleEditorToggle() {
     setToggleTextEditor(!toggleTextEditor)
+    setTriggerRebuild((counter) => counter + 1)
   }
 
   function optimisticUpdate(newCommentId) {

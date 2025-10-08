@@ -186,7 +186,7 @@ html {
 }
 
 /***** Rendered HTML Elements Styles *****/
-/* React Quill WYGIWYS Visual Overwrites */
+/* React Quill WYSIWYG Visual Overwrites */
 
 .render-html h1,
 .render-html h2,
@@ -196,11 +196,22 @@ html {
   font-weight: bold !important;
 }
 
+.render-html.render-html-comment h1,
+.render-html.render-html-comment h2,
+.render-html.render-html-comment h3 {
+  font-size: 1em !important;
+}
+
 .render-html p {
   font-size: 1em !important;
   margin-top: 0.5em !important;
   margin-bottom: 0.5em !important;
   line-height: 1.6 !important;
+}
+
+.render-html.render-html-comment p {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
 }
 
 .render-html ul,
@@ -445,7 +456,7 @@ background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg
 /******************************** Buttons *******************************/
 
 /* this style targets orange button wrappers that cover app background */
-/* so all orange buttons aplhas will yield the same colors */
+/* so all orange buttons alphas will yield the same colors */
 .wrapper-orange-btn-bg {
   background: #01031a;
   border-radius: 6px;

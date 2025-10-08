@@ -31,7 +31,7 @@ export function ToggleEditorTypeBtn() {
     <button
       className={`toggle-editor-btn ${
         isMarkdown ? 'w-[280px]' : 'w-[240px]'
-      } h-[32px] px-[6px] ml-auto text-app-blue-text text-sm hover:text-app-strongorange-500 rounded-full`}
+      } h-[32px] mx-[6px] ml-auto text-app-blue-text text-sm hover:text-app-strongorange-500 rounded-full`}
       type="button"
       onClick={handleToggleEditor}
     >

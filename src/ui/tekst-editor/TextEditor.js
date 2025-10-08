@@ -28,7 +28,9 @@ export function TextEditor({
       <div
         className="text-editor-container w-full mx-auto"
         style={{
-          height: `${textareaHeight + 70}px`,
+          height: `${
+            toggleTextEditor ? textareaHeight + 70 : textareaHeight
+          }px`,
         }}
       >
         {formData.toggleEditor === 'formatted_text_editor' ? (
