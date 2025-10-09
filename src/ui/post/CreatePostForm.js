@@ -67,7 +67,7 @@ export function CreatePostForm({
     }
   }, [response])
 
-  function optimisticUpdate(newPostId) {
+  function optimisticUpdate(newPostId, contentToSend) {
     const hasImage = imageAction === 'update' ? true : false
     const imageUrl = imageAction === 'update' ? tempImageUrl : null
 
@@ -75,7 +75,7 @@ export function CreatePostForm({
       _id: newPostId,
       user_id: userId,
       title: formData.title,
-      content: formData.content,
+      content: contentToSend,
       has_image: hasImage,
       temp_image_url: imageUrl,
       comments: [],
@@ -138,16 +138,22 @@ export function CreatePostForm({
     if (!session) return signIn()
     setWasSubmitted(true)
 
-    if (formData.toggleEditor === 'markdown_editor') {
-      const newHtmlString = parseMarkdownToHtml(formData.markdown)
-      setFormData({ ...formData, content: newHtmlString })
-    }
+    const contentToSend =
+      formData.toggleEditor === 'formatted_text_editor'
+        ? formData.content
+        : parseMarkdownToHtml(formData.markdown)
 
-    if (hasErrors(fieldValidity)) return
+    const validationResults = validatePost({
+      ...formData,
+      content: contentToSend,
+    })
+    setFieldValidity(validationResults)
+
+    if (hasErrors(validationResults)) return
     // client side image validation  is done in AttachFileBtn component during attachment attempt
 
     const newPostId = uuidv4().toString()
-    optimisticUpdate(newPostId)
+    optimisticUpdate(newPostId, contentToSend)
 
     if (imageFile) {
       const imageData = new FormData()
@@ -166,7 +172,7 @@ export function CreatePostForm({
     const hasImage = imageFile ? true : false
     const serverResponse = await createPost(
       formData.title,
-      formData.content,
+      contentToSend,
       newPostId,
       hasImage,
     )

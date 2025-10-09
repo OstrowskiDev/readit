@@ -9,6 +9,7 @@ import { useEffect, useState } from 'react'
 import { EditFormBtns } from '../buttons/EditFormBtns'
 import { TextEditor } from '../tekst-editor/TextEditor'
 import PostFormTitle from './PostFormTitle'
+import { parseMarkdownToHtml } from '@/lib/text-editor/parseMarkdownToHtml'
 
 export function PostEditForm() {
   const { isEditFormVisible, setIsEditFormVisible } = usePostContext()
@@ -70,8 +71,16 @@ export function PostEditForm() {
   async function onSubmit() {
     setOldPost(post)
 
+    const contentToSend =
+      formData.toggleEditor === 'formatted_text_editor'
+        ? formData.content
+        : parseMarkdownToHtml(formData.markdown)
+
     // !!!! add error messages to title and content
-    const validationResults = validatePost(formData)
+    const validationResults = validatePost({
+      ...formData,
+      content: contentToSend,
+    })
     if (hasErrors(validationResults)) {
       return
     }
@@ -95,19 +104,20 @@ export function PostEditForm() {
       return
     }
 
-    const postData = { title: formData.title, content: formData.content }
+    const postData = { title: formData.title, content: contentToSend }
     const response = await updatePost(post._id, postData, imageData)
     setResponse(response)
 
-    optimisticUpdate()
+    optimisticUpdate(contentToSend)
     setIsEditFormVisible(false)
     scrollToPost()
   }
 
-  function optimisticUpdate() {
+  function optimisticUpdate(contentToSend) {
     let newPost = {
       ...post,
       ...formData,
+      content: contentToSend,
     }
 
     if (imageAction === 'update') {

@@ -90,12 +90,12 @@ export function Comment({
           <CommentAuthorsInfo comment={comment} />
 
           <div
+            ref={contentRef}
             className="adjust-position-when-outside-tree-structure"
             style={adjustOutsideTree}
           >
             {/* comment content */}
             <div
-              ref={contentRef}
               className="comment-body-container render-html render-html-comment ml-4"
               //!!!! adjust width of this element when its being deeply nested inside comments tree so it uses available space more efficiently
               style={

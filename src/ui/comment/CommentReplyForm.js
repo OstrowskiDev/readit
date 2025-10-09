@@ -10,6 +10,7 @@ import { useEffect, useState } from 'react'
 import cloneDeep from 'lodash/cloneDeep'
 import { v4 as uuidv4 } from 'uuid'
 import { usePostContext } from '@/lib/context/PostContextProvider'
+import { parseMarkdownToHtml } from '@/lib/text-editor/parseMarkdownToHtml'
 
 export function CommentReplyForm({ parentType }) {
   const {
@@ -82,11 +83,15 @@ export function CommentReplyForm({ parentType }) {
   async function onSubmit() {
     if (!session) return signIn()
     const newCommentId = uuidv4().toString()
-    optimisticUpdate(newCommentId)
+    const contentToSend =
+      formData.toggleEditor === 'formatted_text_editor'
+        ? formData.content
+        : parseMarkdownToHtml(formData.markdown)
+    optimisticUpdate(newCommentId, contentToSend)
     const serverResponse = await createComment(
       parentId,
       parentType,
-      formData.content,
+      contentToSend,
       newCommentId,
     )
     setResponse(serverResponse)
@@ -100,7 +105,7 @@ export function CommentReplyForm({ parentType }) {
     setTriggerRebuild((counter) => counter + 1)
   }
 
-  function optimisticUpdate(newCommentId) {
+  function optimisticUpdate(newCommentId, contentToSend) {
     const newComment = {
       _id: newCommentId,
       user_id: session.user.id,
@@ -115,7 +120,7 @@ export function CommentReplyForm({ parentType }) {
           seed: session.user.avatar.seed,
         },
       },
-      content: formData.content,
+      content: contentToSend,
       replies: [],
       likes: [],
       dislikes: [],

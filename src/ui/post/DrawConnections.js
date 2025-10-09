@@ -56,8 +56,8 @@ export function DrawConnections({ contentRef, commentRef }) {
       <div className="relative">
         {parentIsComment && (
           <>
-            <div className="line-to-parent absolute w-[30px] h-[30px] top-[-6px] left-[-35px] border-2 circle-quarter"></div>
-            <div className="line-to-parent absolute w-[2px] h-[30px] top-[-20px] left-[-35px] bg-app-blue"></div>
+            <div className="line-to-parent absolute w-[30px] h-[30px] top-[-6px] left-[-36px] border-2 circle-quarter"></div>
+            <div className="line-to-parent absolute w-[2px] h-[30px] top-[-20px] left-[-36px] bg-app-blue"></div>
           </>
         )}
       </div>
@@ -70,9 +70,9 @@ export function DrawConnections({ contentRef, commentRef }) {
         {hasChildren && (
           <>
             <div
-              className="line-to-child absolute w-[2px] top-[44px] left-[1px] bg-app-blue"
+              className="line-to-child absolute w-[2px] top-[44px] left-[0px] bg-app-blue"
               style={{
-                height: `${contentHeight + formHeight + editFormHeight + 54}px`,
+                height: `${contentHeight + formHeight + editFormHeight + 8}px`,
               }}
             ></div>
           </>
@@ -87,7 +87,7 @@ export function DrawConnections({ contentRef, commentRef }) {
         {hasNextSibling() && (
           <>
             <div
-              className="line-to-sibling absolute w-[2px] left-[-35px] bg-app-blue"
+              className="line-to-sibling absolute w-[2px] left-[-36px] bg-app-blue"
               style={{
                 height: `${commentHeight + 12}px`,
               }}

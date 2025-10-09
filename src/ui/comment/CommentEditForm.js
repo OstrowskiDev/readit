@@ -8,6 +8,7 @@ import { cloneDeep } from 'lodash'
 import { ToggleTextEditorBtn } from '../buttons/ToggleTextEditorBtn'
 import { usePostContext } from '@/lib/context/PostContextProvider'
 import { TextEditor } from '../tekst-editor/TextEditor'
+import { parseMarkdownToHtml } from '@/lib/text-editor/parseMarkdownToHtml'
 
 export function CommentEditForm() {
   const {
@@ -50,9 +51,13 @@ export function CommentEditForm() {
 
   async function onSubmit() {
     setIsEditVisible(!isEditVisible)
-    handleOptimistically()
+    const contentToSend =
+      formData.toggleEditor === 'formatted_text_editor'
+        ? formData.content
+        : parseMarkdownToHtml(formData.markdown)
+    handleOptimistically(contentToSend)
     setTriggerRebuild((counter) => counter + 1)
-    const serverResponse = await updateComment(commentId, formData.content)
+    const serverResponse = await updateComment(commentId, contentToSend)
     setResponse(serverResponse)
   }
 
@@ -72,13 +77,13 @@ export function CommentEditForm() {
     }
   }
 
-  function handleOptimistically() {
+  function handleOptimistically(contentToSend) {
     const newComments = cloneDeep(comments)
     const oldComment = comments.find((comment) => comment._id === commentId)
     setOldContent(oldComment.content)
 
     const newComment = cloneDeep(oldComment)
-    newComment.content = formData.content
+    newComment.content = contentToSend
     const index = comments.findIndex((comment) => comment._id === commentId)
     newComments[index] = newComment
 

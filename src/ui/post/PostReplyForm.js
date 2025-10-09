@@ -57,17 +57,17 @@ export function PostReplyForm({ isCommFormVisible, setIsCommFormVisible }) {
     const parentType = 'post'
     if (!session) return signIn()
 
-    if (formData.toggleEditor === 'markdown_editor') {
-      const newHtmlString = parseMarkdownToHtml(formData.markdown)
-      setFormData({ ...formData, content: newHtmlString })
-    }
+    const contentToSend =
+      formData.toggleEditor === 'formatted_text_editor'
+        ? formData.content
+        : parseMarkdownToHtml(formData.markdown)
 
     const newCommentId = uuidv4().toString()
-    optimisticUpdate(newCommentId)
+    optimisticUpdate(newCommentId, contentToSend)
     const serverResponse = await createComment(
       parentId,
       parentType,
-      formData.content,
+      contentToSend,
       newCommentId,
     )
 
@@ -88,7 +88,7 @@ export function PostReplyForm({ isCommFormVisible, setIsCommFormVisible }) {
     setToggleTextEditor(!toggleTextEditor)
   }
 
-  function optimisticUpdate(newCommentId) {
+  function optimisticUpdate(newCommentId, contentToSend) {
     const newComment = {
       _id: newCommentId,
       user_id: userId,
@@ -96,7 +96,7 @@ export function PostReplyForm({ isCommFormVisible, setIsCommFormVisible }) {
         type: 'post',
         _id: parentId,
       },
-      content: formData.content,
+      content: contentToSend,
       replies: [],
       likes: [],
       dislikes: [],
