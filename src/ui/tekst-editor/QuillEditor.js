@@ -21,7 +21,8 @@ const ReactQuill = dynamic(() => import('react-quill'), { ssr: false })
 
 export default function QuillEditor() {
   const textareaRef = useRef(null)
-  const { setTriggerRebuild } = usePostContext()
+  // setting below values for cases when editor is used out of PostContext
+  const { setTriggerRebuild = false } = usePostContext() || {}
   const { onContentChange, formData, textareaHeight, setTextareaHeight } =
     useTextEditorContext()
   const modules = {
@@ -48,9 +49,11 @@ export default function QuillEditor() {
     for (let entry of entries) {
       const { height } = entry.contentRect
       setTextareaHeight(height)
-      setTriggerRebuild((counter) => counter + 1)
+      if (setTriggerRebuild) {
+        setTriggerRebuild?.((counter) => counter + 1)
+      }
     }
-  }, [])
+  })
 
   useEffect(() => {
     const textarea = textareaRef.current

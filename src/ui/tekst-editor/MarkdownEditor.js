@@ -7,7 +7,8 @@ import { usePostContext } from '@/lib/context/PostContextProvider'
 
 export function MarkdownEditor() {
   const textareaRef = useRef(null)
-  const { setTriggerRebuild } = usePostContext()
+  // setting below values for cases when editor is used out of PostContext
+  const { setTriggerRebuild = false } = usePostContext() || {}
   const {
     formData,
     setFormData,
@@ -20,7 +21,9 @@ export function MarkdownEditor() {
     for (let entry of entries) {
       const { height } = entry.contentRect
       setTextareaHeight(height)
-      setTriggerRebuild((counter) => counter + 1)
+      if (setTriggerRebuild) {
+        setTriggerRebuild((counter) => counter + 1)
+      }
     }
   }, [])
 
