@@ -131,7 +131,7 @@ export function CommentReplyForm({ parentType }) {
 
   function SubmitButton() {
     return (
-      <div className="wrapper-orange-btn-bg mx-2 mt-1">
+      <div className="wrapper-orange-btn-bg mx-2">
         <button
           className="comment-reply-submit-btn button-orange-strong h-9 py-1 px-2"
           type="button"
@@ -150,9 +150,9 @@ export function CommentReplyForm({ parentType }) {
 
   function CancelButton() {
     return (
-      <div className="wrapper-orange-btn-bg mt-1">
+      <div className="wrapper-orange-btn-bg">
         <button
-          className="comment-reply-cancel-btn button-silver py-1 px-2"
+          className="comment-reply-cancel-btn button-silver h-9 py-1 px-2"
           type="button"
           onClick={onCancelClick}
         >
@@ -174,7 +174,7 @@ export function CommentReplyForm({ parentType }) {
               setFormData={setFormData}
               toggleTextEditor={toggleTextEditor}
             />
-            <div className="comment-reply-btns flex justify-end">
+            <div className="comment-reply-btns flex justify-end items-center">
               <CancelButton />
               <ToggleTextEditorBtn
                 handleEditorToggle={handleEditorToggle}

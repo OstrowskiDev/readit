@@ -9,7 +9,7 @@ export function ToggleTextEditorBtn({ handleEditorToggle, toggleTextEditor }) {
     : 'plain text editor'
 
   return (
-    <div className="wrapper-orange-btn-bg ml-2 mt-1">
+    <div className="wrapper-orange-btn-bg ml-2 leading-none">
       <button
         className="post-reply-text-editor-btn button-orange-strong w-8 h-9 p-1"
         type="button"

@@ -7,10 +7,10 @@ export function ReplyFormBtns({
   toggleTextEditor,
 }) {
   return (
-    <div className="post-reply-btns flex justify-end">
-      <div className="wrapper-orange-btn-bg mt-1">
+    <div className="post-reply-btns flex justify-end items-center">
+      <div className="wrapper-orange-btn-bg">
         <button
-          className="post-reply-cancel-btn button-silver py-1 px-2"
+          className="post-reply-cancel-btn button-silver h-9 py-1 px-2"
           type="button"
           onClick={onCancelClick}
         >
@@ -21,9 +21,9 @@ export function ReplyFormBtns({
         handleEditorToggle={handleEditorToggle}
         toggleTextEditor={toggleTextEditor}
       />
-      <div className="wrapper-orange-btn-bg mx-2 mt-1">
+      <div className="wrapper-orange-btn-bg mx-2">
         <button
-          className="post-reply-submit-btn button-orange-strong py-1 px-2"
+          className="post-reply-submit-btn button-orange-strong h-9 py-1 px-2"
           type="button"
           aria-label="Submit comment"
           onClick={onSubmit}

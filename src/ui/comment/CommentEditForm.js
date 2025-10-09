@@ -105,7 +105,7 @@ export function CommentEditForm() {
     return (
       <div className="wrapper-orange-btn-bg mx-2 my-1">
         <button
-          className="comment-edit-submit-btn button-orange-strong py-1 px-6"
+          className="comment-edit-submit-btn button-orange-strong h-9 py-1 px-6"
           type="button"
           onClick={onSubmit}
         >
@@ -117,9 +117,9 @@ export function CommentEditForm() {
 
   function CancelBtn() {
     return (
-      <div className="wrapper-orange-btn-bg my-1">
+      <div className="wrapper-orange-btn-bg">
         <button
-          className="comment-edit-cancel-btn button-silver py-1 px-2"
+          className="comment-edit-cancel-btn button-silver h-9 py-1 px-2"
           type="button"
           onClick={onCancelClick}
         >
@@ -141,7 +141,7 @@ export function CommentEditForm() {
               setFormData={setFormData}
               toggleTextEditor={toggleTextEditor}
             />
-            <div className="comment-edit-btns flex justify-end">
+            <div className="comment-edit-btns flex justify-end items-center pt-2">
               <CancelBtn />
               <ToggleTextEditorBtn
                 handleEditorToggle={handleEditorToggle}

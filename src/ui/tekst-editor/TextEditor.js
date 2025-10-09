@@ -26,10 +26,10 @@ export function TextEditor({
       setTextareaHeight={setTextareaHeight}
     >
       <div
-        className="text-editor-container w-full mx-auto"
+        className="text-editor-container w-full mx-auto overflow-hidden"
         style={{
           height: `${
-            toggleTextEditor ? textareaHeight + 70 : textareaHeight
+            toggleTextEditor ? textareaHeight + 55 : textareaHeight
           }px`,
         }}
       >

@@ -63,10 +63,10 @@ export default function QuillEditor() {
 
   return (
     <div className="quill-container">
-      <div className="quill-editor-container h-full  px-4 py-3 rounded-md ">
+      <div className="quill-editor-container pl-4 pr-2 pt-3 rounded-md ">
         <QuillCustomToolbar />
         <div
-          className="quill-editor-input render-html h-full overflow-y-auto blue-scrollbar blue-resizer"
+          className="quill-editor-input render-html overflow-y-auto blue-scrollbar blue-resizer"
           ref={textareaRef}
           style={{
             height: `${textareaHeight}px`,
