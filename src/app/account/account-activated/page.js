@@ -7,7 +7,7 @@ export default function AccountActivated() {
       className="account-activated-page w-full flex justify-center items-center text-center"
       style={{ height: `calc(100vh - 72px)` }}
     >
-      <div className="account-activated-container flex flex-col justify-between w-[320px] h-[484px] p-8 pt-6 glass-blue-soft">
+      <div className="account-activated-container flex flex-col justify-between w-[320px] h-[484px] p-8 pt-6 rounded-lg bg-blue-500 shadow-lg">
         <div className="account-activated-header flex flex-col items-center mb-6">
           <div className="account-activated-icon w-40 mb-2">
             <ActivationSuccessIco />

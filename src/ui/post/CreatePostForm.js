@@ -199,7 +199,7 @@ export function CreatePostForm({
         <form>
           <div className="post-title-container mb-2 ">
             <textarea
-              className={`post-title-input glass-blue-soft text-app-blue-text w-full h-8 px-2 py-1 rounded-md border-none resize-none focus:outline-none ring-1 ${
+              className={`post-title-input glass-blue-soft text-app-blue-text w-full h-8 px-2 py-1 rounded-md border-none resize-none focus:outline-none ring-1 overflow-hidden ${
                 wasSubmitted && fieldValidity.title.message.length > 0
                   ? 'ring-red-400 focus:ring-red-500'
                   : 'ring-app-blue/30 hover:ring-app-blue/70 focus:ring-app-blue'

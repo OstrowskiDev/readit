@@ -15,10 +15,10 @@ export default function AccountDeletedPage() {
             Account Deleted
           </h1>
         </div>
-        <p className="account-deleted-message mt-8 font-bold text-white">
+        <p className="account-deleted-message mt-6 font-bold text-white">
           Your account has been successfully deleted as requested
         </p>
-        <p className="account-deleted-message mt-8 text-white text-base">
+        <p className="account-deleted-message mt-6 text-white text-sm">
           All personal information has been permanently removed. Thank you for
           your interest in our application and for being with us.
         </p>
