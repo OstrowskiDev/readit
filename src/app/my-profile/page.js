@@ -66,8 +66,8 @@ export default function MyProfile() {
           setUserData={setUserData}
           setResponse={setResponse}
         >
-          <div className="relative main-container flex justify-center items-center mx-auto mt-3 md:mt-8 px-4 md:w-[800px]">
-            <div className="profile-container glass-blue-soft md:px-6 md:pt-3 pb-6 rounded-lg md:shadow-center-md grow">
+          <div className="relative main-container flex justify-center items-center mx-auto mt-3 lg:mt-8 px-4 lg:w-[800px]">
+            <div className="profile-container glass-blue-soft lg:px-6 lg:pt-3 pb-6 rounded-lg lg:shadow-center-md grow">
               <ProfileHeader />
               <ProfileAbout />
               <ProfileMyData />

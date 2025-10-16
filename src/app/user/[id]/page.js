@@ -36,7 +36,7 @@ export default function UserProfile({ params }) {
       {userData ? (
         <MyProfileProvider userData={userData}>
           <div className="users-data-container max-w-[800px] w-full min-w-[520px]">
-            <div className="users-data-card glass-blue-soft flex flex-col md:max-w-[768px] h-[480px] mx-4 mt-3 md:mt-8 px-4 md:pt-3 pb-3 md:rounded-lg md:shadow-center-md">
+            <div className="users-data-card glass-blue-soft flex flex-col lg:max-w-[768px] h-[480px] mx-4 mt-3 lg:mt-8 px-4 lg:pt-3 pb-3 lg:rounded-lg lg:shadow-center-md">
               <h2 className="users-data-header text-xl font-semibold text-app-blue-800">
                 {`${userData.name}'s profile:`}
               </h2>
@@ -70,18 +70,18 @@ export default function UserProfile({ params }) {
                 </p>
               </div>
 
-              <div className="users-data-about-container relative mt-4 pt-4 border-t below-md:pb-4 border-app-blue/70 transition-height ">
+              <div className="users-data-about-container relative mt-4 pt-4 border-t below-lg:pb-4 border-app-blue/70 transition-height ">
                 <h3 className="users-data-about-label text-lg font-semibold mb-2">
                   About me:
                 </h3>
-                <p className="users-data-about-text h-[110px] pr-2 md:pr-16 overflow-y-auto blue-scrollbar">
+                <p className="users-data-about-text h-[110px] pr-2 lg:pr-16 overflow-y-auto blue-scrollbar">
                   {userData.about}
                 </p>
               </div>
             </div>
           </div>
-          <div className="posts-wrapper flex flex-col w-full md:max-w-[800px]">
-            <h2 className="posts-header relative md:top-6 ml-4 text-xl font-semibold">
+          <div className="posts-wrapper flex flex-col w-full lg:max-w-[800px]">
+            <h2 className="posts-header relative lg:top-6 ml-4 text-xl font-semibold">
               {`${userData.name}'s posts:`}
             </h2>
             <PostsPage

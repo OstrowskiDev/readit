@@ -55,10 +55,10 @@ export function ProfileAvatarSelection({ handleAvatarEdit }) {
           <h4 className="avatar-select-seed-label ml-4 pt-1 font-normal text-lg text-app-blue-text">
             select avatar seed:
           </h4>
-          <div className="avatar-select-seed flex justify-center flex-wrap  md:ml-l md:mr-4 mb-4">
+          <div className="avatar-select-seed flex justify-center flex-wrap  lg:ml-l lg:mr-4 mb-4">
             {avatarSeeds.map((seed) => (
               <div
-                className={`avatar-seed-${seed.toLowerCase()} m-1 md:m-2 hover:cursor-pointer rounded-full `}
+                className={`avatar-seed-${seed.toLowerCase()} m-1 lg:m-2 hover:cursor-pointer rounded-full `}
                 key={seed}
                 onClick={() => handleSelection('seed', seed)}
               >

@@ -71,10 +71,10 @@ export default function PostsPage({
         infoboxData={infoboxData}
         setInfoboxData={setInfoboxData}
       >
-        <div className="posts-page mx-auto mt-2 md:mt-8 px-0 md:px-4 w-full max-w-[800px]">
-          <div className="posts-container flex flex-col xs:flex-row below-xs:mb-2 md:mb-4">
+        <div className="posts-page mx-auto mt-2 lg:mt-8 px-0 lg:px-4 w-full max-w-[800px]">
+          <div className="posts-container flex flex-col xs:flex-row below-xs:mb-2 lg:mb-4">
             {pageTitle && (
-              <h1 className="posts-title grow below-md:hidden text-2xl font-semibold mr-4">
+              <h1 className="posts-title grow below-lg:hidden text-2xl font-semibold mr-4">
                 {pageTitle}
               </h1>
             )}
@@ -87,7 +87,7 @@ export default function PostsPage({
               isFilterFormVis={isFilterFormVis}
               setIsFilterFormVis={setIsFilterFormVis}
             />
-            <div className="search-btns flex mx-2 xs:ml-0 md:mr-2">
+            <div className="search-btns flex ml-2 xs:ml-0">
               <FilterBtn
                 isFilterFormVis={isFilterFormVis}
                 setIsFilterFormVis={setIsFilterFormVis}

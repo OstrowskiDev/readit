@@ -26,7 +26,7 @@ export function Toast({ message, state, forceUpdate }) {
 
   return (
     <div
-      className={`toast fixed ml-[120px] below-md:ml-[0px] bottom-0 transform ${moveToastClass} z-50`}
+      className={`toast fixed ml-[120px] below-lg:ml-[0px] bottom-0 transform ${moveToastClass} z-50`}
       aria-live={state === 'error' ? 'assertive' : 'polite'}
       role={state === 'error' ? 'alert' : 'status'}
       aria-atomic="true"

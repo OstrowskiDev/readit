@@ -192,18 +192,19 @@ export function CreatePostForm({
   return (
     <>
       <div
-        className={`post-create-form glass-blue-normal p-4 md:mb-2 rounded-lg inner-blue-shadow ${
+        className={`post-create-form glass-blue-normal p-4 lg:mb-2 rounded-lg inner-blue-shadow ${
           isCreateFormVis ? '' : 'hidden'
         }`}
       >
         <form>
           <div className="post-title-container mb-2 ">
-            <textarea
+            <input
               className={`post-title-input glass-blue-soft text-app-blue-text w-full h-8 px-2 py-1 rounded-md border-none resize-none focus:outline-none ring-1 overflow-hidden ${
                 wasSubmitted && fieldValidity.title.message.length > 0
                   ? 'ring-red-400 focus:ring-red-500'
                   : 'ring-app-blue/30 hover:ring-app-blue/70 focus:ring-app-blue'
               }`}
+              type="text"
               id="title"
               name="title"
               placeholder="Type post title here"

@@ -4,7 +4,7 @@ export function FilterBtn({ isFilterFormVis, setIsFilterFormVis }) {
   }
 
   return (
-    <div className="wrapper-orange-btn-bg md:ml-2 ml-0">
+    <div className="wrapper-orange-btn-bg lg:ml-2 ml-0">
       <button
         onClick={onFilterClick}
         type="button"

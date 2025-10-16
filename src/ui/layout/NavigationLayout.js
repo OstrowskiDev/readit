@@ -16,12 +16,12 @@ export default function NavigationLayout() {
   return (
     <>
       {/* Mobile layout: */}
-      <div className="mobile-layout-top md:hidden h-[72px] w-full "></div>
-      <div className="mobile-layout md:hidden fixed flex flex-col top-0 left-0 w-full z-50">
-        <div className="mobile-navigation bg-blue-500 below-md:flex md:rounded-md shadow-md">
+      <div className="mobile-layout-top lg:hidden h-[72px] w-full mb-8 below-md:mb-4"></div>
+      <div className="mobile-layout lg:hidden glass-blue-soft rounded-none border-x-0 fixed flex flex-col top-0 left-0 w-full z-50">
+        <div className="mobile-navigation max-w-[800px] w-full mx-auto px-2 below-lg:flex lg:rounded-md shadow-md">
           <MobileMenu setToggleCollapse={setToggleCollapse} />
           <MobileLogo />
-          <div className="mobile-separator md:hidden ml-auto"></div>
+          <div className="mobile-separator lg:hidden ml-auto"></div>
           <MobileAvatar />
           <MobileSignIn />
         </div>
@@ -29,11 +29,11 @@ export default function NavigationLayout() {
       </div>
 
       {/* Desktop layout: */}
-      <div className="desktop-layout below-md:hidden fixed flex flex-col h-screen p-2">
+      <div className="desktop-layout below-lg:hidden fixed flex flex-col h-screen p-2">
         <DesktopLogo />
         {/* Desktop navigation: */}
-        <nav className="desktop-navigation-container flex below-md:hidden items-center w-full h-full flex-col mt-2">
-          <div className="desktop-navigation-anchors flex md:flex-col w-full h-full space-y-2">
+        <nav className="desktop-navigation-container flex below-lg:hidden items-center w-full h-full flex-col mt-2">
+          <div className="desktop-navigation-anchors flex lg:flex-col w-full h-full space-y-2">
             <NavbarPosts />
             <a
               href="/my-profile"

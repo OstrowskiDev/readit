@@ -18,20 +18,21 @@ export function FilterForm({
     })
   }
 
-  const textareaCss =
+  const inputCss =
     ' glass-blue-soft rounded-md text-app-blue-text w-full h-7 px-2  resize-none focus:border-app-blue focus:outline-none'
 
   return (
     <>
       {isFilterFormVis && (
-        <div className="filter-posts-form glass-blue-soft px-2 py-2 md:pt-6 md:pb-4 md:mb-2 md:rounded-lg md:shadow-center-md below-md:border-t ">
+        <div className="filter-posts-form glass-blue-soft px-2 py-2 lg:pt-6 lg:pb-4 lg:mb-2 lg:rounded-lg lg:shadow-center-md below-lg:border-t ">
           <form className="filter-form font-orbitron text-14 grid grid-cols-1 2col-filter:grid-cols-2 gap-2">
             <div className="filter-title-container flex px-4">
               <label htmlFor="title" className="filter-title-label w-[100px]">
                 title:
               </label>
-              <textarea
-                className={`filter-title-input ${textareaCss}`}
+              <input
+                className={`filter-title-input ${inputCss}`}
+                type="text"
                 id="title"
                 name="title"
                 placeholder=""
@@ -54,11 +55,12 @@ export function FilterForm({
               >
                 author:
               </label>
-              <textarea
-                className={`filter-author-input ${textareaCss} ${
+              <input
+                className={`filter-author-input ${inputCss} ${
                   disableFilteringByAuthor &&
                   'bg-gray-100 border-gray-200 cursor-not-allowed'
                 }`}
+                type="text"
                 id="author"
                 name="author"
                 placeholder=""
@@ -80,8 +82,9 @@ export function FilterForm({
               >
                 content:
               </label>
-              <textarea
-                className={`filter-content-input ${textareaCss}`}
+              <input
+                className={`filter-content-input ${inputCss}`}
+                type="text"
                 id="content"
                 name="content"
                 placeholder=""
@@ -103,7 +106,7 @@ export function FilterForm({
                 sort by:
               </label>
               <select
-                className={`filter-sort-by-input ${textareaCss}`}
+                className={`filter-sort-by-input ${inputCss}`}
                 id="sortBy"
                 name="sortBy"
                 placeholder=""
@@ -125,7 +128,7 @@ export function FilterForm({
                 order:
               </label>
               <select
-                className={`filter-sort-order-input ${textareaCss}`}
+                className={`filter-sort-order-input ${inputCss}`}
                 id="sortOrder"
                 name="sortOrder"
                 placeholder=""

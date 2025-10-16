@@ -6,7 +6,7 @@ export function ProfileAvatar() {
   const { userData } = useMyProfileContext()
   return (
     <>
-      <div className="profile-avatar-name flex items-center pt-4 md:mb-4 border-gray-200">
+      <div className="profile-avatar-name flex items-center pt-4 lg:mb-4 border-gray-200">
         <Avatar
           seed={userData.avatar.seed}
           color={userData.avatar.color}

@@ -102,7 +102,7 @@ export function UserDataForm({ toggleUserDataForm }) {
         />
       </div>
 
-      <div className="btns-position-correction relative md:left-[-26px]">
+      <div className="btns-position-correction relative lg:left-[-26px]">
         <ProfileFormButtons
           handleSubmit={handleSubmit}
           handleCancel={handleCancel}

@@ -5,9 +5,9 @@ import './shimmerStyles.css'
 
 export function MyProfileShimmer() {
   return (
-    <div className="shimmer-main-container mx-auto mt-3 md:mt-8 px-4 md:w-[800px]">
+    <div className="shimmer-main-container mx-auto mt-3 lg:mt-8 px-4 lg:w-[800px]">
       {/* Profile preview: */}
-      <div className="shimmer-profile-container md:px-6 md:pt-3 pb-6 mmd:rounded-lg md:shadow-center-sm glass-blue-soft grow">
+      <div className="shimmer-profile-container lg:px-6 lg:pt-3 pb-6 mlg:rounded-lg lg:shadow-center-sm glass-blue-soft grow">
         <div className="shimmer-profile-header-container relative">
           <ShimmerHeader width="170px" classes="mt-2 mb-3" />
 

@@ -614,19 +614,19 @@ background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg
 /**************************** Other components: ****************************/
 
 .nav-button {
-  @apply w-full mr-1 md:mr-0 py-2 text-app-blue-text transition-all duration-200 shadow-md;
+  @apply w-full mr-1 lg:mr-0 py-2 text-app-blue-text transition-all duration-200 shadow-md;
 }
 
 .mobile-nav-button {
-  @apply flex items-center relative w-full text-15 mr-1 mt-1 py-3 pl-4 bg-blue-50 hover:bg-blue-200 focus:bg-blue-200 md:focus:outline-none md:focus:ring-2;
+  @apply flex items-center relative w-full text-15 mr-1 mt-1 py-3 pl-4 bg-blue-50 hover:bg-blue-200 focus:bg-blue-200 lg:focus:outline-none lg:focus:ring-2;
 }
 
 .nav-sub-button {
-  @apply w-full mr-1 md:mr-0 py-2 transition-all duration-200;
+  @apply w-full mr-1 lg:mr-0 py-2 transition-all duration-200;
 }
 
 .nav-gradient {
-  @apply bg-gradient-to-b md:bg-gradient-to-r from-gray-100 to-white;
+  @apply bg-gradient-to-b lg:bg-gradient-to-r from-gray-100 to-white;
 }
 
 .btn-blue {
@@ -655,7 +655,7 @@ background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg
 }
 
 .shadow-center-md,
-.hover\:shadow-center-md:hover {
+.hover\:shadow-center-lg:hover {
   @apply shadow-[3px_3px_10px_1px_rgba(0,0,0,0.3)];
 }
 

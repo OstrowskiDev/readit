@@ -23,7 +23,7 @@ export function MobileAvatar() {
           <div className="relative">
             <Avatar
               seed={userData.avatar.seed}
-              color={'background-blue'}
+              color={'mobile'}
               size={40}
               border={3}
             />

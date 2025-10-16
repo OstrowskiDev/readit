@@ -75,10 +75,10 @@ export function getAvatarColors(color) {
       bgColor = 'rgb(203, 163, 255)'
       borderColor = 'rgb(173, 113, 252)'
       break
-    case 'background-blue':
-      bgColor = 'rgb(59, 130, 246)'
-      borderColor = 'rgb(255, 255, 255)'
-      fillColor = 'FFFFFF'
+    case 'mobile':
+      bgColor = 'transparent'
+      borderColor = 'rgb(163, 244, 255)'
+      fillColor = 'A3F4FF'
       break
     default:
       bgColor = 'transparent'

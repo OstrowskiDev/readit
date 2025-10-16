@@ -7,7 +7,7 @@ export function UserProfileShimmer() {
     <div className="shimmer-main-container flex flex-col justify-center items-center mt-8 w-full">
       {/* Profile preview: */}
 
-      <div className="shimmer-profile-container glass-blue-soft md:max-w-[768px] w-full h-[480px] px-4 pt-4 pb-6 rounded-lg shadow-center-sm">
+      <div className="shimmer-profile-container glass-blue-soft lg:max-w-[768px] w-full h-[480px] px-4 pt-4 pb-6 rounded-lg shadow-center-sm">
         <ShimmerHeader width="280px" height="24px" classes="mb-4 mb-3" />
 
         <div className="shimmer-profile-header-container relative">
