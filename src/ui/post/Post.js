@@ -49,7 +49,7 @@ export function Post({
               className="post-container 
             glass-blue-soft interactive-blue-weak 
             flex flex-col justify-between 
-            py-2 lg:py-1 px-4 lg:my-2 
+            py-2 md:py-1 px-4 md:my-2 
             lg:rounded-md lg:shadow-center-md 
             border-t lg:border lg:hover:shadow-center-lg 
             below-md:rounded-none below-md:border-x-0

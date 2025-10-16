@@ -16,7 +16,7 @@ export default function NavigationLayout() {
   return (
     <>
       {/* Mobile layout: */}
-      <div className="mobile-layout-top lg:hidden h-[72px] w-full mb-8 below-md:mb-4"></div>
+      <div className="mobile-layout-top lg:hidden h-[72px] w-full mb-6 below-md:mb-4"></div>
       <div className="mobile-layout lg:hidden glass-blue-soft rounded-none border-x-0 fixed flex flex-col top-0 left-0 w-full z-50">
         <div className="mobile-navigation max-w-[800px] w-full mx-auto px-2 below-lg:flex lg:rounded-md shadow-md">
           <MobileMenu setToggleCollapse={setToggleCollapse} />

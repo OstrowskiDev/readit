@@ -2,7 +2,7 @@ import { usePostsFilter } from '@/lib/hooks/usePostsFilter'
 import { useSearchParams } from 'next/navigation'
 import { useState } from 'react'
 
-export function LimitPerPage({ filterOptions }) {
+export function LimitPerPage({ filterOptions, className }) {
   const searchParams = useSearchParams()
 
   let postsPerPage = Number(searchParams.get('limit'))
@@ -18,7 +18,7 @@ export function LimitPerPage({ filterOptions }) {
   }
 
   return (
-    <div className="limit-per-page-container flex justify-left">
+    <div className={`limit-per-page-container flex justify-left ${className}`}>
       <select
         value={pageLimit}
         onChange={onChange}

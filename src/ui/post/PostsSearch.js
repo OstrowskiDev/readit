@@ -46,7 +46,7 @@ export function PostsSearch({
   }, 1000)
 
   return (
-    <div className="flex grow-2 below-lg:mb-2 mr-2">
+    <div className="flex grow-2 below-lg:mb-2 xs:mr-2">
       <input
         ref={inputRef}
         type="text"

@@ -13,13 +13,13 @@ module.exports = {
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
       screens: {
-        xs: '481px',
+        xs: '540px',
         md: '768px', // controls mobile/desktop layout bp
         lg: '992px', // controls sidebar/hamburger menu bp
-        'below-xs': { max: '480px' },
+        'below-xs': { max: '540px' },
         'below-md': { max: '768px' },
         'below-lg': { max: '992px' },
-        'just-md': { min: '481px', max: '992px' },
+        'just-md': { min: '540px', max: '992px' },
         '2col-filter': '860px',
         '2col': { min: '900px', max: '1297px' },
         '2xl': { min: '1535px' },

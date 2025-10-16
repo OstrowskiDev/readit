@@ -19,7 +19,8 @@ export function PaginationBar({ postsNum, filterOptions }) {
       <div className="pagination-container flex justify-center">
         <PaginationBtn
           disabled={currentPage === 1 ? true : false}
-          name={'<<prev'}
+          name="<<prev"
+          shortName="<<"
           value={currentPage - 1}
           filterOptions={filterOptions}
         />
@@ -40,6 +41,7 @@ export function PaginationBar({ postsNum, filterOptions }) {
         })}
         <PaginationBtn
           name={'next>>'}
+          shortName=">>"
           value={currentPage + 1}
           filterOptions={filterOptions}
           disabled={currentPage === paginationNum ? true : false}

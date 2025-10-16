@@ -4,6 +4,7 @@ export function PaginationBtn({
   disabled = false,
   active = false,
   name,
+  shortName = name,
   value,
   filterOptions,
 }) {
@@ -26,7 +27,8 @@ export function PaginationBtn({
 
   return (
     <button className={btnClass} onClick={handleClick} disabled={disabled}>
-      {name}
+      <span className="below-xs:hidden">{name}</span>
+      <span className="xs:hidden">{shortName}</span>
     </button>
   )
 }

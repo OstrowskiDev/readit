@@ -10,11 +10,9 @@ import { CreatePostForm } from '@/ui/post/CreatePostForm'
 import { FilterPostsForm } from '@/ui/post/FilterPostsForm'
 import { Post } from '@/ui/post/Post'
 import { PostsSearch } from '@/ui/post/PostsSearch'
-import { PaginationBar } from '@/ui/pagination/PaginationBar'
 import { Spacer } from '@/ui/common/Spacer'
-import { ResultsPerPage } from '@/ui/pagination/ResultsPerPage'
-import { LimitPerPage } from '@/ui/pagination/LimitPerPage'
 import { filterPosts } from '@/lib/actions/filter'
+import PaginationSection from '@/ui/pagination/PaginationSection'
 
 export default function PostsPage({
   searchParams,
@@ -71,7 +69,7 @@ export default function PostsPage({
         infoboxData={infoboxData}
         setInfoboxData={setInfoboxData}
       >
-        <div className="posts-page mx-auto mt-2 lg:mt-8 px-0 lg:px-4 w-full max-w-[800px]">
+        <div className="posts-page mx-auto mt-2 lg:mt-8 px-0 md:px-4 w-full max-w-[800px] min-w-[360px]">
           <div className="posts-container flex flex-col xs:flex-row below-xs:mb-2 lg:mb-4">
             {pageTitle && (
               <h1 className="posts-title grow below-lg:hidden text-2xl font-semibold mr-4">
@@ -87,7 +85,7 @@ export default function PostsPage({
               isFilterFormVis={isFilterFormVis}
               setIsFilterFormVis={setIsFilterFormVis}
             />
-            <div className="search-btns flex ml-2 xs:ml-0">
+            <div className="search-btns flex">
               <FilterBtn
                 isFilterFormVis={isFilterFormVis}
                 setIsFilterFormVis={setIsFilterFormVis}
@@ -138,19 +136,10 @@ export default function PostsPage({
           )}
 
           {posts && (
-            <>
-              <div className="pagination-plus-limit-container flex flex-row justify-between mt-2">
-                <ResultsPerPage
-                  filterOptions={filterOptions}
-                  postsNum={postsCount}
-                />
-                <PaginationBar
-                  filterOptions={filterOptions}
-                  postsNum={postsCount}
-                />
-                <LimitPerPage filterOptions={filterOptions} />
-              </div>
-            </>
+            <PaginationSection
+              filterOptions={filterOptions}
+              postsCount={postsCount}
+            />
           )}
 
           {posts && <Spacer height={128} />}
