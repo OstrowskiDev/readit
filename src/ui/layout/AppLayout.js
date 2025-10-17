@@ -5,7 +5,7 @@ import NavigationLayout from '@/ui/layout/NavigationLayout'
 
 export default function AppLayout({ children }) {
   return (
-    <div className="lg:flex">
+    <div className="lg:flex min-w-[380px]">
       <div className="w-full flex-none lg:w-60">
         <NavigationLayout />
       </div>

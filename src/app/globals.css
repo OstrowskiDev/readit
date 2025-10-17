@@ -415,6 +415,10 @@ background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg
   .glass-blue-super {
     @apply bg-app-blue/40 btn-border-blue-super;
   }
+  .glass-blue-mobile-menu {
+    @apply border-r border-t border-app-blue/30 backdrop-blur-md shadow-md;
+    background-color: rgba(1, 30, 62, 0.98);
+  }
 
   .btn-border-blue-weak {
     @apply border border-app-blue/30 rounded-xl shadow-md;
@@ -618,7 +622,7 @@ background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg
 }
 
 .mobile-nav-button {
-  @apply flex items-center relative w-full text-15 mr-1 mt-1 py-3 pl-4 bg-blue-50 hover:bg-blue-200 focus:bg-blue-200 lg:focus:outline-none lg:focus:ring-2;
+  @apply flex items-center relative w-full text-15 mr-1 mt-1 py-3 pl-4  hover:bg-[hsl(211,50%,25%,0.7)] focus:bg-[hsl(211,50%,25%,0.8)] lg:focus:outline-none lg:focus:ring-2;
 }
 
 .nav-sub-button {

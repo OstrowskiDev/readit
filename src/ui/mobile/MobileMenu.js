@@ -10,7 +10,7 @@ export function MobileMenu({ setToggleCollapse }) {
       className="mobile-menu-container lg:hidden w-10 h-10 p-[2px] mx-3 my-4 hover:cursor-pointer"
       onClick={handleClick}
     >
-      <MenuIco className="text-app-blue" />
+      <MenuIco className="text-app-blue hover:text-app-strongorange-500" />
     </div>
   )
 }
