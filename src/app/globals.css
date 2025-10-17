@@ -91,8 +91,17 @@ a:hover,
 }
 
 /******************** General ********************/
-html {
-  overflow-y: scroll;
+
+@media (min-width: 768px) {
+  html {
+    overflow-y: scroll;
+  }
+}
+
+@media (max-width: 767px) {
+  html {
+    overflow-y: auto;
+  }
 }
 
 .grow-2 {
