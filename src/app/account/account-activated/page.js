@@ -1,34 +1,19 @@
-import Link from 'next/link'
 import { ActivationSuccessIco } from '@/ui/icons/ActivationSuccessIco'
+import SimpleCardWrapper from '@/ui/layout/SimpleCardWrapper'
+import SimpleCardButton from '@/ui/layout/SimpleCardButton'
 
 export default function AccountActivated() {
   return (
-    <div
-      className="account-activated-page w-full flex justify-center items-center text-center"
-      style={{ height: `calc(100vh - 72px)` }}
+    <SimpleCardWrapper
+      name="account-activated"
+      header="Success"
+      message={`Congratulations, 
+        your account has been 
+        activated successfully!`}
+      messageClasses="pb-0 text-center"
+      ico={<ActivationSuccessIco />}
     >
-      <div className="account-activated-container flex flex-col justify-between w-[320px] h-[484px] p-8 pt-6 rounded-lg bg-blue-500 shadow-lg">
-        <div className="account-activated-header flex flex-col items-center mb-6">
-          <div className="account-activated-icon w-40 mb-2">
-            <ActivationSuccessIco />
-          </div>
-          <h1 className="account-activated-title uppercase text-2xl text-white">
-            Success
-          </h1>
-        </div>
-
-        <p className="account-activated-message text-white text-lg">
-          Congratulations, your account has been activated successfully!
-        </p>
-        <Link href="/login">
-          <button
-            className="w-full h-12 mt-6 bg-white text-blue-500 py-2 rounded-lg hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200 font-bold active:bg-blue-200 hover:text-lg"
-            type="button"
-          >
-            Login
-          </button>
-        </Link>
-      </div>
-    </div>
+      <SimpleCardButton text="Login" href="login" />
+    </SimpleCardWrapper>
   )
 }

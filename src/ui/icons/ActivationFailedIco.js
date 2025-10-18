@@ -8,7 +8,7 @@ export function ActivationFailedIco() {
         style={{
           opacity: 0.91886,
           fill: 'none',
-          stroke: '#fff',
+          stroke: 'currentColor',
           strokeWidth: 0.594584,
           strokeLinecap: 'round',
           strokeLinejoin: 'round',
@@ -22,7 +22,7 @@ export function ActivationFailedIco() {
         style={{
           opacity: 0.91886,
           fill: 'none',
-          stroke: '#fff',
+          stroke: 'currentColor',
           strokeWidth: 1.85208,
           strokeLinecap: 'round',
           strokeLinejoin: 'round',

@@ -8,7 +8,7 @@ export function ActivationSuccessIco() {
         style={{
           opacity: 0.91886,
           fill: 'none',
-          stroke: '#ffffff',
+          stroke: 'currentColor',
           strokeWidth: '0.52916667',
           strokeLinecap: 'square',
           strokeMiterlimit: 0,
@@ -22,7 +22,7 @@ export function ActivationSuccessIco() {
         style={{
           opacity: 0.91886,
           fill: 'none',
-          stroke: '#ffffff',
+          stroke: 'currentColor',
           strokeWidth: '1.85208',
           strokeLinecap: 'round',
           strokeLinejoin: 'round',

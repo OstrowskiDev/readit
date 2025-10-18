@@ -7,6 +7,7 @@ import Link from 'next/link'
 import { ErrorTriangleIco } from '@/ui/icons/ErrorTriangleIco'
 import { validateSignIn } from '@/lib/security/validateSignIn'
 import { AlreadySignedIn } from '@/ui/layout/AlreadySignedIn'
+import SimpleCardWrapper from '@/ui/layout/SimpleCardWrapper'
 
 export default function SignInForm() {
   const router = useRouter()
@@ -69,90 +70,82 @@ export default function SignInForm() {
   }
 
   return (
-    <div
-      className="login-page w-full flex justify-center items-center"
-      style={{ height: `calc(100vh - 72px)` }}
-    >
-      <div className="login-container flex flex-col justify-between w-[320px] h-[484px] p-8 rounded-lg bg-blue-500 shadow-lg">
-        <h1 className="login-title text-2xl font-semibold text-white">Login</h1>
-        <form className="login-form" onSubmit={handleSubmit} noValidate>
-          {errorMessage && (
-            <div className="login-error-container flex w-full items-center mb-4 px-4 py-2 rounded-lg text-red-500 text-sm bg-red-50">
-              <div className="login-error-ico w-12">
-                <ErrorTriangleIco color="red" />
-              </div>
-              <p className="login-error-text ml-4">{errorMessage}</p>
+    <SimpleCardWrapper name="login" header="Login" headerClasses="capitalize">
+      <form className="login-form" onSubmit={handleSubmit} noValidate>
+        {errorMessage && (
+          <div className="login-error-container flex w-full items-center mb-4 px-4 py-2 rounded-lg text-red-500 text-sm bg-red-50">
+            <div className="login-error-ico w-12">
+              <ErrorTriangleIco color="red" />
             </div>
-          )}
-          <div className="login-email">
-            <label
-              className="login-email-label text-white block mb-1"
-              htmlFor="email"
-            >
-              Email
-            </label>
-            <input
-              className={`login-email-input w-full px-4 py-2 rounded-lg bg-blue-100 focus:bg-white focus:outline-none ring-2 ${
-                errorMessage
-                  ? 'ring-red-400 focus:ring-red-500'
-                  : 'ring-blue-500 focus:ring-blue-400'
-              } `}
-              type="email"
-              name="email"
-              id="email"
-              required
-              placeholder="Enter your email"
-            />
+            <p className="login-error-text ml-4">{errorMessage}</p>
           </div>
-          <div className="login-password mt-4">
-            <label
-              htmlFor="password"
-              className="login-password-label text-white block mb-1"
-            >
-              Password
-            </label>
-            <input
-              className={`login-password-input w-full px-4 py-2 rounded-lg bg-blue-100 focus:bg-white focus:outline-none ring-2 ${
-                errorMessage
-                  ? 'ring-red-400 focus:ring-red-500'
-                  : 'ring-blue-500 focus:ring-blue-400'
-              } `}
-              type="password"
-              name="password"
-              id="password"
-              required
-              placeholder="Enter your password"
-            />
-          </div>
-          <div className="forgot-password-container text-right">
-            <Link href="/account/forgot-password">
-              <span className="text-gray-300 text-sm cursor-pointer hover:underline">
-                Forgot password?
-              </span>
-            </Link>
-          </div>
-
-          <div className="login-submit mt-4">
-            <button
-              className="login-submit-button w-full h-12 bg-white text-blue-500 py-2 rounded-lg hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200 font-bold active:bg-blue-200 hover:text-lg"
-              type="submit"
-            >
-              Login
-            </button>
-          </div>
-        </form>
-
-        <div className="register-container mt-6 text-center">
-          <span className="text-white text-sm">
-            Don&apos;t have an account?
-          </span>
-          <Link href="/register">
-            <span className="ml-1 text-white text-sm font-semibold cursor-pointer hover:underline">
-              Register now
+        )}
+        <div className="login-email">
+          <label
+            className="login-email-label text-white block mb-1"
+            htmlFor="email"
+          >
+            Email
+          </label>
+          <input
+            className={`login-email-input w-full px-4 py-2 rounded-lg bg-blue-100 focus:bg-white focus:outline-none ring-2 ${
+              errorMessage
+                ? 'ring-red-400 focus:ring-red-500'
+                : 'ring-blue-500 focus:ring-blue-400'
+            } `}
+            type="email"
+            name="email"
+            id="email"
+            required
+            placeholder="Enter your email"
+          />
+        </div>
+        <div className="login-password mt-4">
+          <label
+            htmlFor="password"
+            className="login-password-label text-white block mb-1"
+          >
+            Password
+          </label>
+          <input
+            className={`login-password-input w-full px-4 py-2 rounded-lg bg-blue-100 focus:bg-white focus:outline-none ring-2 ${
+              errorMessage
+                ? 'ring-red-400 focus:ring-red-500'
+                : 'ring-blue-500 focus:ring-blue-400'
+            } `}
+            type="password"
+            name="password"
+            id="password"
+            required
+            placeholder="Enter your password"
+          />
+        </div>
+        <div className="forgot-password-container text-right">
+          <Link href="/account/forgot-password">
+            <span className="text-gray-300 text-sm cursor-pointer hover:underline">
+              Forgot password?
             </span>
           </Link>
         </div>
+
+        <div className="login-submit mt-4">
+          <button
+            className="login-submit-button w-full h-12 bg-white text-blue-500 py-2 rounded-lg hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200 font-bold active:bg-blue-200 hover:text-lg"
+            type="submit"
+          >
+            Login
+          </button>
+        </div>
+      </form>
+
+      <div className="register-container mt-6 text-center">
+        <span className="text-white text-sm">Don&apos;t have an account?</span>
+        <Link href="/register">
+          <span className="ml-1 text-white text-sm font-semibold cursor-pointer hover:underline">
+            Register now
+          </span>
+        </Link>
       </div>
-    </div>
+    </SimpleCardWrapper>
   )
 }

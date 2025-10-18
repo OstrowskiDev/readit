@@ -664,3 +664,23 @@ div.ql-editor {
 .hover\:shadow-center-lg:hover {
   @apply shadow-[4px_4px_10px_2px_rgba(0,0,0,0.4)];
 }
+
+/* Firefox Autofill Override - zachowuje glass-blue-soft background */
+.input-autofill-override:-moz-autofill,
+.input-autofill-override:-moz-autofill:hover,
+.input-autofill-override:-moz-autofill:focus,
+.input-autofill-override:-moz-autofill:active {
+  box-shadow: 0 0 0 1000px rgba(1, 30, 62, 0.7) inset !important;
+  -webkit-text-fill-color: inherit !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+/* Webkit Autofill Override (Chrome, Safari, Edge) */
+.input-autofill-override:-webkit-autofill,
+.input-autofill-override:-webkit-autofill:hover,
+.input-autofill-override:-webkit-autofill:focus,
+.input-autofill-override:-webkit-autofill:active {
+  box-shadow: 0 0 0 1000px rgba(1, 30, 62, 0.7) inset !important;
+  -webkit-text-fill-color: inherit !important;
+  transition: background-color 5000s ease-in-out 0s;
+}

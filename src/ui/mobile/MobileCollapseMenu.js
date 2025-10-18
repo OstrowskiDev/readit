@@ -16,7 +16,7 @@ export function MobileCollapseMenu() {
   return (
     <div
       className="mobile-menu btn-orbitron uppercase fixed flex flex-col top-[72px] left-0 w-[320px] p-4 z-10 glass-blue-mobile-menu"
-      style={{ height: `calc(100vh - 72px)` }}
+      style={{ height: `calc(100vh - 96px)` }}
     >
       <h3 className="mobile-nav-label px-2 pt-2 tracking-widest font-semibold text-app-blue-text text-center">
         Posts:

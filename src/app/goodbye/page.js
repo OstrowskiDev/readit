@@ -12,7 +12,7 @@ export default async function GoodbyePage() {
   return (
     <div
       className="w-full flex justify-center items-center"
-      style={{ height: `calc(100vh - 72px)` }}
+      style={{ height: `calc(100vh - 96px)` }}
     >
       <div className="goodbye-container flex flex-col items-center w-full lg:w-[480px] px-2 lg:px-8 py-5 bg-blue-500 lg:rounded-xl shadow-lg">
         <h1 className="goodbye-title below-xs:text-2xl text-3xl pt-1 text-center font-bold  text-white">
