@@ -92,18 +92,6 @@ a:hover,
 
 /******************** General ********************/
 
-@media (min-width: 768px) {
-  html {
-    overflow-y: scroll;
-  }
-}
-
-@media (max-width: 767px) {
-  html {
-    overflow-y: auto;
-  }
-}
-
 .grow-2 {
   flex-grow: 2;
 }
@@ -356,7 +344,7 @@ div.ql-editor {
   .blue-scrollbar {
     scrollbar-width: thin;
     scrollbar-color: theme(colors.app.blue.DEFAULT / 0.4)
-      theme(colors.app.blue.DEFAULT / 0.2);
+      theme(colors.app.blue.DEFAULT / 0.15);
   }
 }
 
@@ -386,7 +374,7 @@ div.ql-editor {
 /* prettier-ignore */
 .blue-resizer::-webkit-resizer {
   background: hsl(210, 100%, 10%);
-background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg'><path d='M0,12 L12,0 M4,12 L12,4 M8,12 L12,8' stroke='%2368a3cc' stroke-width='1'/></svg>");
+  background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg'><path d='M0,12 L12,0 M4,12 L12,4 M8,12 L12,8' stroke='%2368a3cc' stroke-width='1'/></svg>");
   background-repeat: no-repeat;
   background-position: bottom right;
   background-size: 12px 12px;

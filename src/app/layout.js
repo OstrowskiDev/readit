@@ -28,7 +28,10 @@ export const metadata = {
 export default async function RootLayout({ children }) {
   const session = await getServerSession(authOptions)
   return (
-    <html lang="en">
+    <html
+      lang="en"
+      className="overflow-y-auto md:overflow-y-scroll blue-scrollbar"
+    >
       <body
         className={`${rubik.variable} ${orbitron.variable} ${inter.variable}`}
       >
