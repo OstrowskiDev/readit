@@ -8,6 +8,8 @@ import { useEffect, useState } from 'react'
 import axios from 'axios'
 import Link from 'next/link'
 import SimpleCardWrapper from '@/ui/layout/SimpleCardWrapper'
+import SimpleCardInput from '@/ui/layout/SimpleCardInput'
+import SimpleCardSubmitBtn from '@/ui/layout/SimpleCardSubmitBtn'
 
 // !!!! do poprawy: podczas rejestracji po naciśnięciu przycisku register pojawia się błąd pod jednym z pól
 // !!!! add custom checkbox icon in free time
@@ -77,105 +79,57 @@ export default function RegisterForm() {
 
   return (
     <SimpleCardWrapper name="register">
-      <h1 className="register-title text-2xl font-semibold text-white mb-4">
-        Register
-      </h1>
+      <h1 className="register-title text-2xl font-semibold mb-4">Register</h1>
+
       <form className="register-form" onSubmit={handleSubmit} noValidate>
-        <div className="register-name mt-4">
-          <label
-            className="register-name-label text-white block mb-1"
-            htmlFor="name"
-          >
-            Username
-          </label>
-          <input
-            className={`register-name-input w-full px-4 py-2 rounded-lg bg-blue-100 focus:bg-white focus:outline-none ring-2 ${
-              fieldValidity.name.message.length > 0 && submitAttempted
-                ? 'ring-red-400 focus:ring-red-500'
-                : 'ring-blue-500 focus:ring-blue-400'
-            }`}
-            id="name"
-            type="text"
-            name="name"
-            value={formData.name}
-            onChange={onInputChange}
-            placeholder="Enter your username"
-            required
-          />
-          <label className="register-name-error text-xs text-red-200">
-            {fieldValidity.name.message.length > 0 &&
-              submitAttempted &&
-              fieldValidity.name.message.join(' ')}
-          </label>
-        </div>
-        <div className="register-email mt-4">
-          <label
-            className="register-email-label text-white block mb-1"
-            htmlFor="email"
-          >
-            Email
-          </label>
-          <input
-            className={`register-email-input w-full px-4 py-2 rounded-lg bg-blue-100 focus:bg-white focus:outline-none ring-2 ${
-              fieldValidity.email.message.length > 0 && submitAttempted
-                ? 'ring-red-400 focus:ring-red-500'
-                : 'ring-blue-500 focus:ring-blue-400'
-            }`}
-            id="email"
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={onInputChange}
-            placeholder="Enter your email"
-            required
-          />
-          <label className="register-email-error text-xs text-red-200">
-            {fieldValidity.email.message.length > 0 &&
-              submitAttempted &&
-              fieldValidity.email.message.join(' ')}
-          </label>
-          <label className="register-email-already-taken text-xs text-red-200">
-            {!isEmailAvailable &&
-              submitAttempted &&
-              'An account with this email already exists. Please login or reset your password.'}
-          </label>
-        </div>
-        <div className="register-password mt-4">
-          <label
-            className="register-password-label text-white block mb-1"
-            htmlFor="password"
-          >
-            Password
-          </label>
-          <input
-            className={`register-password-input w-full px-4 py-2 rounded-lg bg-blue-100 focus:bg-white focus:outline-none ring-2 ${
-              fieldValidity.password.message.length > 0 && submitAttempted
-                ? 'ring-red-400 focus:ring-red-500'
-                : 'ring-blue-500 focus:ring-blue-400'
-            }`}
-            id="password"
-            type="password"
-            name="password"
-            value={formData.password}
-            onChange={onInputChange}
-            placeholder="Enter your password"
-            required
-          />
-          <label className="register-password-error text-xs text-red-200">
-            {fieldValidity.password.message.length > 0 &&
-              submitAttempted &&
-              fieldValidity.password.message.join(' ')}
-          </label>
-        </div>
-        <div className="register-policy flex flex-col mt-6">
+        <SimpleCardInput
+          className="!mt-4"
+          elementName="register-name"
+          name="name"
+          type="text"
+          label="Username"
+          placeholder="Enter your username"
+          fieldValidity={fieldValidity}
+          submitAttempted={submitAttempted}
+          value={formData.name}
+          onChange={onInputChange}
+        />
+
+        <SimpleCardInput
+          className="!mt-4"
+          elementName="register-email"
+          name="email"
+          type="email"
+          label="Email"
+          placeholder="Enter your email"
+          fieldValidity={fieldValidity}
+          submitAttempted={submitAttempted}
+          value={formData.email}
+          onChange={onInputChange}
+        />
+
+        <SimpleCardInput
+          className="!mt-4"
+          elementName="register-password"
+          name="password"
+          type="password"
+          label="Password"
+          placeholder="Enter your password"
+          fieldValidity={fieldValidity}
+          submitAttempted={submitAttempted}
+          value={formData.password}
+          onChange={onInputChange}
+        />
+
+        <div className="register-policy flex flex-col mt-4">
           <div className="register-policy-wrapper flex">
             <label
-              className="register-policy-label w-44 ml-4 text-sm text-white block mb-1"
+              className="register-policy-label w-44 ml-4 text-sm block mb-1"
               htmlFor="privacyPolicy"
             >
               {'I have read and agree to the '}
               <a
-                className="register-policy-anchor font-bold"
+                className="register-policy-anchor font-bold text-app-blue-text"
                 href="/posts/post/privacy_policy"
                 target="_blank"
               >
@@ -199,24 +153,20 @@ export default function RegisterForm() {
               fieldValidity.privacyPolicy.message.join(' ')}
           </label>
         </div>
+
         {/* Honeypot field */}
         <div className="register-fullName hidden">
           <label htmlFor="fullName">Full Name</label>
           <input type="text" name="fullName" id="fullName" />
         </div>
-        <div className="register-submit mt-10">
-          <button
-            className="w-full h-12 bg-white text-blue-500 py-2 rounded-lg hover:bg-blue-100 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all duration-200 font-bold active:bg-blue-200 hover:text-lg"
-            type="submit"
-          >
-            Register!
-          </button>
-        </div>
+
+        <SimpleCardSubmitBtn text="Register!" className="!mt-10" />
       </form>
-      <div className="login-container mt-6 text-center">
-        <span className="text-white text-sm">Already have an account?</span>
+
+      <div className="login-container text-app-blue-text mt-6 text-center">
+        <span className="text-sm">Already have an account?</span>
         <Link href="/login">
-          <span className="ml-1 text-white text-sm font-semibold cursor-pointer hover:underline">
+          <span className="ml-1 text-sm font-semibold cursor-pointer hover:underline text-app-blue-text">
             Login now
           </span>
         </Link>
