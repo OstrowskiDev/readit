@@ -80,6 +80,7 @@ export default function SignInForm() {
             <p className="login-error-text ml-4">{errorMessage}</p>
           </div>
         )}
+
         <div className="login-email">
           <label
             className="login-email-label text-white block mb-1"
@@ -100,6 +101,7 @@ export default function SignInForm() {
             placeholder="Enter your email"
           />
         </div>
+
         <div className="login-password mt-4">
           <label
             htmlFor="password"
@@ -120,6 +122,7 @@ export default function SignInForm() {
             placeholder="Enter your password"
           />
         </div>
+
         <div className="forgot-password-container text-right">
           <Link href="/account/forgot-password">
             <span className="text-gray-300 text-sm cursor-pointer hover:underline">

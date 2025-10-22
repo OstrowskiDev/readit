@@ -1,3 +1,5 @@
+import WelcomeContent from '@/content/welcome'
+
 export default function Root() {
   return (
     <div
@@ -5,19 +7,19 @@ export default function Root() {
       style={{ height: `calc(100vh - 96px)` }}
     >
       <div
-        className="            
-            flex flex-col items-center justify-center 
-            w-full md:w-[480px] 
-            h-32
+        className="
+            welcome-container
+            flex flex-col items-left justify-start 
+            w-full md:w-[640px] 
+            h-[320px]
             px-8 py-5 
             glass-blue-soft 
             rounded-none md:rounded-xl
             below-md:border-x-0
-            shadow-lg"
+            shadow-lg
+            overflow-y-auto blue-scrollbar"
       >
-        <h1 className="text-2xl font-semibold text-white">
-          Welcome to ReadIt app!
-        </h1>
+        <WelcomeContent />
       </div>
     </div>
   )
