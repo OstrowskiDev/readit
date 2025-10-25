@@ -80,6 +80,11 @@ export function getAvatarColors(color) {
       borderColor = 'rgb(163, 244, 255)'
       fillColor = 'A3F4FF'
       break
+    case 'mobile-hover':
+      bgColor = 'transparent'
+      borderColor = 'rgb(250, 124, 56)'
+      fillColor = 'fa7c38'
+      break
     default:
       bgColor = 'transparent'
       borderColor = 'transparent'

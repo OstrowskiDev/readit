@@ -70,6 +70,8 @@ a:hover,
   fill: var(--tw-text-orange);
 }
 
+/******************** Font sizes ********************/
+
 .text-12 {
   font-size: 12px;
 }
@@ -88,6 +90,16 @@ a:hover,
 
 .text-20 {
   font-size: 20px;
+}
+
+/*** Dicebear overrides for mobile profile avatar ***/
+
+.mobile-avatar-container:hover .normal-avatar {
+  opacity: 0;
+}
+
+.mobile-avatar-container:hover .hover-avatar {
+  opacity: 1;
 }
 
 /******************** General ********************/

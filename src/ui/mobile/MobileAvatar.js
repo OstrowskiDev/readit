@@ -21,12 +21,22 @@ export function MobileAvatar() {
       {userData?.avatar && (
         <a className="mobile-avatar-container my-4 mx-2" href="/my-profile">
           <div className="relative">
-            <Avatar
-              seed={userData.avatar.seed}
-              color={'mobile'}
-              size={40}
-              border={3}
-            />
+            <div className="normal-avatar opacity-1">
+              <Avatar
+                seed={userData.avatar.seed}
+                color={'mobile'}
+                size={40}
+                border={3}
+              />
+            </div>
+            <div className="hover-avatar opacity-0 absolute top-0 left-0 z-50">
+              <Avatar
+                seed={userData.avatar.seed}
+                color={'mobile-hover'}
+                size={40}
+                border={3}
+              />
+            </div>
           </div>
         </a>
       )}
