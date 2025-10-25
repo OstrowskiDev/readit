@@ -12,7 +12,7 @@ export default function Root() {
             flex flex-col items-left justify-start 
             w-full md:w-[640px] 
             h-[320px]
-            px-8 py-5 
+            px-8 py-10 
             glass-blue-soft 
             rounded-none md:rounded-xl
             below-md:border-x-0
