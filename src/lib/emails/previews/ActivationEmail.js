@@ -55,7 +55,7 @@ export default function ActivationEmailBody(username, activation_token) {
           <p className="email-main-greetings mt-14">{`Hello ${username}!`}</p>
           <p className="email-main-text-1 mt-10">
             Your account has been created but its not active yet. Click button
-            below to activate it.{' '}
+            below to activate it.
           </p>
           <div className="email-main-activation-btn mt-8 p-2 w-44 h-10 bg-blue-500 text-white text-center font-bold rounded-md hover:cursor-pointer hover:bg-blue-600 active:bg-blue-700 active:shadow-inner active:scale-95">
             <a

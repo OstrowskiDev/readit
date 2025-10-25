@@ -35,7 +35,7 @@ export default function ResetPasswordEmail() {
           <p className="email-main-greetings mt-14">{`Hello ${username}!`}</p>
           <p className="email-main-text-1 mt-10">
             The request was send to change your ReadIt account password. Click
-            button to create new one.{' '}
+            button to create new one.
           </p>
           <div className="email-main-activation-btn mt-8 p-2 w-44 h-10 bg-blue-500 text-white text-center font-bold rounded-md hover:cursor-pointer hover:bg-blue-600 active:bg-blue-700 active:shadow-inner active:scale-95">
             <a
