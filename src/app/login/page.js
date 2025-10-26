@@ -8,6 +8,7 @@ import { ErrorTriangleIco } from '@/ui/icons/ErrorTriangleIco'
 import { validateSignIn } from '@/lib/security/validateSignIn'
 import { AlreadySignedIn } from '@/ui/layout/AlreadySignedIn'
 import SimpleCardWrapper from '@/ui/layout/SimpleCardWrapper'
+import SimpleCardSubmitBtn from '@/ui/layout/SimpleCardSubmitBtn'
 
 export default function SignInForm() {
   const router = useRouter()
@@ -71,7 +72,7 @@ export default function SignInForm() {
 
   return (
     <SimpleCardWrapper name="login" header="Login" headerClasses="capitalize">
-      <form className="login-form" onSubmit={handleSubmit} noValidate>
+      <form className="login-form my-4" onSubmit={handleSubmit} noValidate>
         {errorMessage && (
           <div className="login-error-container flex w-full items-center mb-4 px-4 py-2 rounded-lg text-red-500 text-sm bg-red-50">
             <div className="login-error-ico w-12">
@@ -83,17 +84,22 @@ export default function SignInForm() {
 
         <div className="login-email">
           <label
-            className="login-email-label text-white block mb-1"
+            className="login-email-label text-app-blue-text block mb-1"
             htmlFor="email"
           >
             Email
           </label>
           <input
-            className={`login-email-input w-full px-4 py-2 rounded-lg bg-blue-100 focus:bg-white focus:outline-none ring-2 ${
-              errorMessage
-                ? 'ring-red-400 focus:ring-red-500'
-                : 'ring-blue-500 focus:ring-blue-400'
-            } `}
+            className={`login-email-input 
+              w-full px-4 py-2 
+              rounded-lg glass-blue-soft
+              text-app-blue-text 
+              resize-none 
+              focus:outline-none 
+              input-autofill-override
+              ${
+                errorMessage ? 'focus:border-red-500' : 'focus:border-app-blue'
+              } `}
             type="email"
             name="email"
             id="email"
@@ -105,16 +111,22 @@ export default function SignInForm() {
         <div className="login-password mt-4">
           <label
             htmlFor="password"
-            className="login-password-label text-white block mb-1"
+            className="login-password-label text-app-blue-text block mb-1"
           >
             Password
           </label>
           <input
-            className={`login-password-input w-full px-4 py-2 rounded-lg bg-blue-100 focus:bg-white focus:outline-none ring-2 ${
-              errorMessage
-                ? 'ring-red-400 focus:ring-red-500'
-                : 'ring-blue-500 focus:ring-blue-400'
-            } `}
+            className={`login-password-input 
+              w-full 
+              px-4 py-2 
+              rounded-lg glass-blue-soft
+              text-app-blue-text 
+              resize-none 
+              focus:outline-none 
+              input-autofill-override
+              ${
+                errorMessage ? 'focus:border-red-500' : 'focus:border-app-blue'
+              } `}
             type="password"
             name="password"
             id="password"
@@ -125,30 +137,25 @@ export default function SignInForm() {
 
         <div className="forgot-password-container text-right">
           <Link href="/account/forgot-password">
-            <span className="text-gray-300 text-sm cursor-pointer hover:underline">
+            <span className="text-app-blue-text text-sm cursor-pointer hover:underline">
               Forgot password?
             </span>
           </Link>
         </div>
 
-        <div className="login-submit mt-4">
-          <button
-            className="login-submit-button w-full h-12 bg-white text-blue-500 py-2 rounded-lg hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200 font-bold active:bg-blue-200 hover:text-lg"
-            type="submit"
-          >
-            Login
-          </button>
+        <SimpleCardSubmitBtn text="Login" className="!mt-14" />
+
+        <div className="register-container mt-2 text-center">
+          <span className="text-app-blue-text text-sm">
+            Don&apos;t have an account?
+          </span>
+          <Link href="/register">
+            <span className="ml-1 text-app-blue-text text-sm font-semibold cursor-pointer hover:underline">
+              Register now
+            </span>
+          </Link>
         </div>
       </form>
-
-      <div className="register-container mt-6 text-center">
-        <span className="text-white text-sm">Don&apos;t have an account?</span>
-        <Link href="/register">
-          <span className="ml-1 text-white text-sm font-semibold cursor-pointer hover:underline">
-            Register now
-          </span>
-        </Link>
-      </div>
     </SimpleCardWrapper>
   )
 }
