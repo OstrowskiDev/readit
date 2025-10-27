@@ -3,7 +3,7 @@ const mock_data = {
   author: 'Fiona Wilson',
   createdAt: '2025-05-21T08:00:00.000Z',
   content: `
-**Harnessing Volcanic Power on Vulcanis Prime: Mega-Thermal Plants**
+**Harnessing Volcanic Power on Vulcanis Prime: Mega-Thermal Plants** 
 
 Building on our habitat discussions, here’s a proposal for **orbital-fed geothermal power stations** anchored above active lava fields:
 

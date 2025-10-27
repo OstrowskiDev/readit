@@ -3,7 +3,7 @@ const mock_data = {
   author: 'Fiona Wilson',
   createdAt: '2025-05-19T06:00:00.000Z',
   content: `
-**Why Surface Colonies on Volcanic Worlds Are a Bad Idea** 🌋🚫
+**Why Surface Colonies on Volcanic Worlds Are a Bad Idea**  
 
 After reviewing thermal, environmental, and safety data, it’s clear that building permanent settlements on high-temperature, volcanically active planets poses extreme challenges:
 
@@ -85,7 +85,7 @@ Surface colonies get no such luxury.
       author: 'Alice Johnson',
       createdAt: '2025-05-19T14:00:00.000Z',
       content: `
-Let’s focus investment on building a prototype ring station around Vulcanis Prime.  
+Let’s focus investment on building a prototype ring station.  
 Once orbital extraction skimmers prove efficient, surface outposts can remain emergency shelters only.
       `,
     },

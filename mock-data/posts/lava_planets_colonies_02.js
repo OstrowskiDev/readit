@@ -3,7 +3,7 @@ const mock_data = {
   author: 'Bob Smith',
   createdAt: '2025-05-20T06:30:00.000Z',
   content: `
-**Orbital Habitat Construction Plan for Vulcanis Prime**
+**Orbital Habitat Construction Plan for Vulcanis Prime** 
 
 Following consensus to build off-planet rather than surface, here’s the high-level blueprint for the **Vulcanis Orbital Ring**:
 

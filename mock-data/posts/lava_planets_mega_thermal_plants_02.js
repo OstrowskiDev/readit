@@ -3,7 +3,7 @@ const mock_data = {
   author: 'Fiona Wilson',
   createdAt: '2025-05-22T10:00:00.000Z',
   content: `
-**Post-Incident Review: Meta-Thermal Plant #3 Failure Modes & Design Updates**
+**Post-Incident Review: Meta-Thermal Plant #3 Failure Modes & Design Updates** 
 
 During the third 5 GW plant’s pulse test on Vulcanis Prime, a breach occurred in the magmatic heat exchanger manifold at 720 °C / 95 bar. Rapid pressure oscillations coupled with particulate erosion led to a coolant leak and an unscheduled shutdown. 
 
@@ -35,8 +35,8 @@ Recommend adding compliant slip-joint liners between composite strata.
           author: 'Fiona Wilson',
           createdAt: '2025-05-22T12:00:00.000Z',
           content: `
-Slip joints could work—will specify high-temperature braided metal bellows there.  
-Placement: every 2 m along the manifold run.
+                Slip joints could work—will specify high-temperature braided metal bellows there.  
+                Placement: every 2 m along the manifold run.
           `,
           replies: [
             {
@@ -44,8 +44,8 @@ Placement: every 2 m along the manifold run.
               author: 'Bob Smith',
               createdAt: '2025-05-22T12:30:00.000Z',
               content: `
-Braided bellows rated to 800 °C are available.  
-Ensure welds use nickel-based filler to match creep rates.
+                  Braided bellows rated to 800 °C are available.  
+                  Ensure welds use nickel-based filler to match creep rates.
               `,
             },
           ],
@@ -57,8 +57,8 @@ Ensure welds use nickel-based filler to match creep rates.
       author: 'Charlie Brown',
       createdAt: '2025-05-22T13:45:00.000Z',
       content: `
-Cyclonic separators are fine, but what about valve freeze-up if dust cake forms?  
-Maybe schedule micro-backflush cycles every 30 min.
+          Cyclonic separators are fine, but what about valve freeze-up if dust cake forms?  
+          Maybe schedule micro-backflush cycles every 30 min.
       `,
       replies: [
         {
@@ -66,7 +66,7 @@ Maybe schedule micro-backflush cycles every 30 min.
           author: 'Alice Johnson',
           createdAt: '2025-05-22T14:30:00.000Z',
           content: `
-Backflush idea is solid. Incorporate a small reserve of high-pressure gas (argon) for pulse cleaning—won’t contaminate coolant.
+            Backflush idea is solid. Incorporate a small reserve of high-pressure gas (argon) for pulse cleaning—won’t contaminate coolant.
           `,
         },
       ],
@@ -76,8 +76,8 @@ Backflush idea is solid. Incorporate a small reserve of high-pressure gas (argon
       author: 'Fiona Wilson',
       createdAt: '2025-05-23T06:00:00.000Z',
       content: `
-Acoustic sensors: planning array of piezo pickups every 1 m, linked to FPGA analysis for frequency shifts.  
-Concerned about false positives from normal flow noise—ideas?
+          Acoustic sensors: planning array of piezo pickups every 1 m, linked to FPGA analysis for frequency shifts.  
+          Concerned about false positives from normal flow noise—ideas?
       `,
     },
     {
@@ -85,8 +85,8 @@ Concerned about false positives from normal flow noise—ideas?
       author: 'Bob Smith',
       createdAt: '2025-05-23T07:20:00.000Z',
       content: `
-Use band-pass filters tuned to erosion signature frequencies (~8–12 kHz).  
-That should reject pump and flow noise under 2 kHz.
+        Use band-pass filters tuned to erosion signature frequencies (~8–12 kHz).  
+        That should reject pump and flow noise under 2 kHz.
       `,
     },
     {
@@ -94,8 +94,8 @@ That should reject pump and flow noise under 2 kHz.
       author: 'Charlie Brown',
       createdAt: '2025-05-23T08:45:00.000Z',
       content: `
-We’ll need a small on-site test rig—maybe repurpose Plant #1 manifold section for a stress cycle bench.  
-Can we allocate drone time for that?
+        We’ll need a small on-site test rig—maybe repurpose Plant #1 manifold section for a stress cycle bench.  
+        Can we allocate drone time for that?
       `,
       replies: [
         {
@@ -103,8 +103,8 @@ Can we allocate drone time for that?
           author: 'Alice Johnson',
           createdAt: '2025-05-23T09:15:00.000Z',
           content: `
-Drone availability is tight, but we can carve out a 12 h slot tomorrow on the maintenance window.  
-Scheduling update incoming.
+        Drone availability is tight, but we can carve out a 12 h slot tomorrow on the maintenance window.  
+        Scheduling update incoming.
           `,
         },
       ],
@@ -114,8 +114,8 @@ Scheduling update incoming.
       author: 'Fiona Wilson',
       createdAt: '2025-05-23T10:30:00.000Z',
       content: `
-Perfect—once we validate the backflush and acoustic tuning, we can roll changes into all three plants.  
-Thanks team!
+        Perfect—once we validate the backflush and acoustic tuning, we can roll changes into all three plants.  
+        Thanks team!
       `,
     },
   ],

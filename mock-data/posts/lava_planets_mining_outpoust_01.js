@@ -3,7 +3,7 @@ const mock_data = {
   author: 'Charlie Brown',
   createdAt: '2025-05-16T09:00:00.000Z',
   content: `
-**Mining Operations on Volcanic Worlds: Realistic or Reckless?**
+**Mining Operations on Mercury: Realistic or Reckless?** 
 
 We’re evaluating a proposal to establish **surface and subsurface** extraction facilities on high-temperature volcanic planets—think Io-class bodies with average surface temps exceeding 700 K. Key questions:
 
