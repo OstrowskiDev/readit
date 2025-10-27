@@ -24,6 +24,7 @@ export default function PostPage({ params, searchParams }) {
   const [infoboxData, setInfoboxData] = useState([])
   const [isCommFormVisible, setIsCommFormVisible] = useState(false)
   const [isEditFormVisible, setIsEditFormVisible] = useState(false)
+  const [postNotFound, setPostNotFound] = useState(false)
   const [deleted, setDeleted] = useState(false)
   const [triggerRebuild, setTriggerRebuild] = useState(0)
 
@@ -48,11 +49,26 @@ export default function PostPage({ params, searchParams }) {
         getPostData(postId),
         getPostCommentsData(postId),
       ])
+      console.log('postData:', postData)
+      if (!postData) {
+        console.log('setting post not found to true')
+        setPostNotFound(true)
+      }
       setPost(postData)
       setComments(commentsData)
     }
     fetchData()
   }, [])
+
+  if (postNotFound) {
+    return (
+      <div className="post-not-found mx-auto mt-8 w-full max-w-[800px]">
+        <h1 className="post-not-found-header mt-20 text-center text-2xl font-semibold">
+          Post not found
+        </h1>
+      </div>
+    )
+  }
 
   if (!post || !comments) {
     return (
