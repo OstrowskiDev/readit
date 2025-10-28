@@ -1,7 +1,7 @@
 'use client'
 
 import { useSession } from 'next-auth/react'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { deleteComment } from '@/lib/actions/comment'
 import { useCommentContext } from '@/lib/context/CommentContextProvider'
 import { useToastContext } from '@/lib/toasts/ToastProvider'
@@ -13,7 +13,7 @@ export function CommentOptMenu({ isMenuVisible, setIsMenuVisible }) {
   const { isEditVisible, setIsEditVisible, comment, commentId } =
     useCommentContext()
   const { setTriggerRebuild, comments, setComments } = usePostContext()
-  const [oldComments, setOldComments] = useState(null)
+  const oldCommentsRef = useRef(null)
   const { data: session } = useSession()
   const { toastFunctions: toast } = useToastContext()
   const usersId = session?.user.id
@@ -25,7 +25,7 @@ export function CommentOptMenu({ isMenuVisible, setIsMenuVisible }) {
   })
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // delete has its own response handling due to it triggering dismount of this commponent, but favorites still needs below effect for toast handling:
+  // delete has its own response handling due to it triggering dismount of this component, but favorites still needs below effect for toast handling:
   useEffect(() => {
     if (response?.state === 'success') {
       toast.success(response.message)
@@ -49,7 +49,7 @@ export function CommentOptMenu({ isMenuVisible, setIsMenuVisible }) {
   }
 
   function handleDeleteOptimistically() {
-    setOldComments(comments)
+    oldCommentsRef.current = comments
 
     let newComments = [...comments]
     newComments = newComments.filter((comm) => comm._id !== commentId)
@@ -70,7 +70,7 @@ export function CommentOptMenu({ isMenuVisible, setIsMenuVisible }) {
   }
 
   function handleOptimisticallyDeleteError() {
-    setComments(oldComments)
+    setComments(oldCommentsRef.current)
   }
 
   return (

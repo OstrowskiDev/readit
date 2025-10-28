@@ -49,9 +49,7 @@ export default function PostPage({ params, searchParams }) {
         getPostData(postId),
         getPostCommentsData(postId),
       ])
-      console.log('postData:', postData)
       if (!postData) {
-        console.log('setting post not found to true')
         setPostNotFound(true)
       }
       setPost(postData)
