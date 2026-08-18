@@ -1,16 +1,26 @@
+import { sendKeepAlive } from '@/services/brevo/sendKeepAlive'
+
 export async function POST(req) {
   const secret = process.env.KEEP_ALIVE_SECRET
-  const { secret: reqSecret, target } = await req.json()
+
+  let body
+  try {
+    body = await req.json()
+  } catch {
+    return new Response('Invalid JSON', { status: 400 })
+  }
+
+  const { secret: reqSecret, target } = body
 
   const emails = [
     {
       from: 'no-reply@ostrowskidev.com',
-      apiKey: process.env.BREVO_NO_REPLY_OSTROWSKIDEV_KEY,
+      apiKey: process.env.BREVO_API_KEY,
       to: 'marcin.ostrowski.coding@gmail.com',
     },
     {
       from: 'contact@ostrowskidev.com',
-      apiKey: process.env.BREVO_CONTACT_OSTROWSKIDEV_KEY,
+      apiKey: process.env.BREVO_API_KEY,
       to: 'marcin.ostrowski.coding@gmail.com',
     },
   ]
@@ -22,14 +32,17 @@ export async function POST(req) {
   }
 
   try {
-    const response = sendKeepAlive({
+    const response = await sendKeepAlive({
       emailTo: email.to,
       emailFrom: email.from,
       apiKey: email.apiKey,
     })
-    if (response.state === 'success') {
+
+    if (response?.state === 'success') {
       return new Response(`Keep-alive ${target} email sent`, { status: 200 })
     }
+
+    return new Response('Failed to send email', { status: 500 })
   } catch (error) {
     console.error(`Error sending keep-alive ${target} email`, error)
     return new Response('Error sending email', { status: 500 })
