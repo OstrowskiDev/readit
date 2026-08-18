@@ -1,7 +1,7 @@
 import { generatePasswordResetBody } from './generatePasswordResetBody'
 
 export async function sendPasswordResetEmail(email, recoveryToken, name) {
-  const API_KEY = process.env.BREVO_NO_REPLY_OSTROWSKIDEV_KEY
+  const API_KEY = process.env.BREVO_API_KEY
   const emailFrom = process.env.BREVO_EMAIL_FROM
 
   try {
